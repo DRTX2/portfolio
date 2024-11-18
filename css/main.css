@@ -317,6 +317,7 @@ body {
 .main-menu {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background-color: rgb(51, 51, 51);
   padding: 1rem;
   font-size: 1.5rem;
@@ -361,7 +362,7 @@ body {
 
 .presentation {
   display: flex;
-  gap: 2rem;
+  gap: 7rem;
   width: 85vw;
   margin: 0 auto;
   padding: 4rem 0;
@@ -398,8 +399,23 @@ body {
   color: inherit;
 }
 
+.my-icon {
+  width: 13vw;
+  height: 13rem;
+  overflow: hidden;
+}
+.my-icon img {
+  width: 100%;
+  height: auto;
+  border-radius: 1.5em;
+  box-shadow: 0 4px 6px rgb(82, 98, 87);
+}
+
 .about-me {
   padding: 2rem;
+}
+.about-me h2 {
+  text-align: center;
 }
 
 .about-me h2 span {
@@ -486,6 +502,11 @@ body {
   border-radius: 1rem;
   margin-bottom: 1rem;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.education article:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .institute-img img {
@@ -498,6 +519,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
 }
 
 .institute-description > p:last-child {

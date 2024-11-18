@@ -29,17 +29,17 @@
       <div class="left-title-menu">David Manjarres</div>
       <nav class="right-title-menu">
         <ul class="right-items-menu">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Skills</a></li>
-          <li><a href="#">Education</a></li>
-          <li><a href="#">Projects</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="#presentation">Home</a></li>
+          <li><a href="#about-me">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <!-- <li><a href="#">Contact</a></li> -->
         </ul>
       </nav>
     </header>
     <main>
-      <section class="presentation">
+      <section class="presentation" id="presentation">
         <article class="information">
           <h2>Hi There, I'm David Manjarres</h2>
           <p>I am into <span class="develop-areas"></span></p>
@@ -61,10 +61,12 @@
             <li><a href="#">CV</a></li>
           </ul>
         </article>
-        <article class="my-icon"></article>
+        <article class="my-icon">
+          <img src="assets/img/f1.jpg" alt="Me" />
+        </article>
       </section>
       <hr />
-      <section class="about-me">
+      <section class="about-me" id="about-me">
         <h2>About <span>Me</span></h2>
         <h3 class="position">Full Stack Developer</h3>
         <p>
@@ -89,7 +91,7 @@
         </a>
       </section>
       <hr />
-      <section class="skills-habilities">
+      <section class="skills-habilities" id="skills">
         <h2>Skills & Abilities</h2>
         <article class="front">
           <h3>Frontend</h3>
@@ -261,19 +263,129 @@
         </article>
       </section>
       <hr />
-      <section class="education projects">
+      <section class="education projects" id="education">
         <h2>Projects <span class="projects-made">Made</span></h2>
         <article class="edu-school">
           <div class="institute-img">
             <img src="assets/img/amazon.png" alt="" />
           </div>
           <div class="institute-description">
-            <h3><a href="https://copying-amazon.vercel.app/" target="_blank">Ecommerce</a></h3>
-            <p>This personal project consists of an Amazon clone, developed as a full ecommerce. It allows users to browse products, add them to the cart and make simulated purchases. It uses technologies such as React to provide a seamless experience.</p>
+            <h3>
+              <a href="https://copying-amazon.vercel.app/" target="_blank"
+                >Ecommerce</a
+              >
+            </h3>
+            <p>
+              This personal project consists of an Amazon clone, developed as a
+              full ecommerce. It allows users to browse products, add them to
+              the cart and make simulated purchases. It uses technologies such
+              as React to provide a seamless experience.
+            </p>
+          </div>
+        </article>
+        <article class="edu-school">
+          <div class="institute-img">
+            <img src="assets/img/typing_game.jpeg" alt="" />
+          </div>
+          <div class="institute-description">
+            <h3>
+              <a
+                href="https://github.com/DRTX2/proyecto-edd.git"
+                target="_blank"
+                >Typing Game</a
+              >
+            </h3>
+            <p>
+              It is a Java game that measures typing speed and accuracy.
+              Designed for multiple players, it divides the keyboard into halves
+              to compete simultaneously. Players type random words in rounds
+              where errors affect the score. After eliminations, the best
+              players advance and the top three places are announced at the end.
+              It's a fun and competitive experience to improve typing skills.
+            </p>
+          </div>
+        </article>
+        <article class="edu-school">
+          <div class="institute-img">
+            <img src="assets/img/blog.jpeg" alt="" />
+          </div>
+          <div class="institute-description">
+            <h3>
+              <a
+                href="https://github.com/DRTX2/proyecto-mds.git"
+                target="_blank"
+                >My Creative Portfolio
+              </a>
+            </h3>
+            <p>
+              My Creative Portfolio is an interactive platform that facilitates
+              the creation and customization of personal portfolios. Users can
+              manage publications and projects intuitively, showcasing their
+              work in a professional manner. The application also encourages
+              social interaction through comments and collaboration options,
+              creating a creative community. Developed with modern technologies
+              such as Bootstrap for responsive design, PHP and MySQL for data
+              management, and JavaScript for dynamism, it is an ideal tool to
+              highlight skills online.
+            </p>
+          </div>
+        </article>
+        <article class="edu-school" id="projects">
+          <div class="institute-img">
+            <img
+              src="assets/img/uta_page.jpeg"
+              alt="Pagina de candidatos de la universidad"
+            />
+          </div>
+          <div class="institute-description">
+            <h3>
+              <a
+                href="https://gitlab.com/personalprojects5531442/manejo-proyecto/"
+                target="_blank"
+                >UTA Elections Page</a
+              >
+            </h3>
+            <p>
+              It is a digital platform created to support the campaign of Dr.
+              Mary Cruz Lascano in the rectorial elections of the Technical
+              University of Ambato (2024-2028). Designed to inform and connect
+              students, teachers and administrators, it includes details of the
+              campaign team, proposals, events, news and statistics in real time
+              for a transparent visualization of the support received. Developed
+              with Laravel for data management, Bootstrap for a modern design,
+              and MySQL as database, the site combines functionality and
+              usability.
+            </p>
+          </div>
+        </article>
+        <article class="edu-school">
+          <div class="institute-img">
+            <img src="assets/img/capibara.jpeg" alt="Juego Capibara" />
+          </div>
+          <div class="institute-description">
+            <h3>
+              <a href="https://github.com/DRTX2/Capigochi" target="_blank"
+                >Capigochi</a
+              >
+            </h3>
+            <p>
+              Capigochi is an interactive application inspired by the classic
+              Tamagotchi classic Tamagotchis, where users take care of a virtual
+              pet by managing virtual pet by managing statistics such as life,
+              hunger, energy, joy and grooming, happiness and grooming. These
+              change according to the actions performed, such as playing,
+              feeding or bathing the pet. It includes a store to resources, an
+              inventory to manage them, and the option to restart the game if
+              the pet's life restart the game if the pet's life reaches zero.
+              With MySQL integration, it allows saving and loading progress,
+              offering a continuous experience. The graphics, created in
+              Aseprite, stand out for their retro pixel art style.
+            </p>
           </div>
         </article>
       </section>
-      <hr />
+<br><br><br><br>
+      <!-- 
       <section class="contact">
         <h2>Get in <span>Touch</span></h2>
         <article class="contact-with-me">
@@ -286,6 +398,7 @@
           </form>
         </article>
       </section>
+       -->
     </main>
     <footer></footer>
     <script src="cv.js"></script>

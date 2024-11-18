@@ -4,7 +4,7 @@
 
 .presentation{
     display: flex;
-    gap: 2rem;
+    gap: 7rem;
     width: 85vw;
     margin: 0 auto;
     h2{
@@ -45,5 +45,17 @@
             text-decoration: none;
             color: inherit;
          }
+    }
+}
+
+.my-icon{
+    width: 13vw;
+    height: 13rem;
+    overflow: hidden;
+    img{
+        width: 100%;
+        height: auto;
+        border-radius: 1.5em;
+        box-shadow: 0 4px 6px $color-secondary;
     }
 }

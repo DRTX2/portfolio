@@ -7,6 +7,26 @@ document.addEventListener('scroll', () => {
     }
 });
 
+function scrollNav() {
+    const navLinks = document.querySelectorAll(".main-menu a");
+  
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+  
+        const sectionScroll = e.target.getAttribute("href");
+        const section = document.querySelector(sectionScroll);
+  
+        if (section === null) {
+          return;
+        }
+  
+        section.scrollIntoView({ behavior: "smooth" });
+      });
+    });
+  }
+  scrollNav();
+
  const options = {
     strings: ["Web Development.", "Frontend Development.", "Backend Development."],
     typeSpeed: 50, // Velocidad de escritura (ms por carácter)
