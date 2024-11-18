@@ -1,3 +1,40 @@
+@use "../abstracts/variables" as *;
+
 .education{
     text-align: center;
+    width: 60vw;
+    margin: 0 auto;
+    h2,
+    h3{
+        color:$color-primary;
+    }
+}
+.education article{
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    border: thin solid $color-dark;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.institute-img img{
+    width: 14rem;
+    height: 100%;
+}
+.iinstitute-description{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.institute-description > p:last-child{
+    color:$color-secondary;
+}
+
+.projects h3 a{
+    text-decoration: none;
+    color: inherit;
 }

@@ -463,6 +463,43 @@ body {
 
 .education {
   text-align: center;
+  width: 60vw;
+  margin: 0 auto;
+}
+.education h2,
+.education h3 {
+  color: rgb(179, 159, 155);
+}
+
+.education article {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  border: thin solid rgb(5.1, 10.2, 11.4);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.institute-img img {
+  width: 14rem;
+  height: 100%;
+}
+
+.iinstitute-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.institute-description > p:last-child {
+  color: rgb(82, 98, 87);
+}
+
+.projects h3 a {
+  text-decoration: none;
+  color: inherit;
 }
 
 /*# sourceMappingURL=main.css.map */
