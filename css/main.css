@@ -370,6 +370,13 @@ body {
   font-size: 2rem;
   color: rgb(179, 159, 155);
 }
+.presentation p {
+  font-size: 1.5rem;
+}
+.presentation p span {
+  color: rgb(179, 159, 155);
+}
+
 .social-networks {
   list-style: none;
   margin: 0;
