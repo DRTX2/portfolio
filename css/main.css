@@ -327,13 +327,11 @@ body {
   z-index: 100;
   transition: background-color 0.3s ease;
 }
-
-.main-menu.sticky {
-  background-color: rgba(51, 51, 51, 0.85);
-}
-
 .main-menu * {
   color: #ccc;
+}
+.main-menu.sticky {
+  background-color: rgba(51, 51, 51, 0.85);
 }
 
 .right-title-menu ul {
@@ -377,6 +375,12 @@ body {
 .presentation p span {
   color: rgb(179, 159, 155);
 }
+@media (max-width: 768px) {
+  .presentation {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
 
 .social-networks {
   list-style: none;
@@ -410,36 +414,38 @@ body {
   border-radius: 1.5em;
   box-shadow: 0 4px 6px rgb(82, 98, 87);
 }
+@media (max-width: 768px) {
+  .my-icon {
+    width: 50vw;
+    height: auto;
+  }
+}
 
 .about-me {
   padding: 2rem;
 }
 .about-me h2 {
   text-align: center;
+  font-size: 1.5rem;
 }
-
 .about-me h2 span {
   color: rgb(115, 132, 120);
   /* color: #ffc86b;*/
 }
-
 .about-me p span {
   color: rgb(82, 98, 87);
   /* color: #ffc86b;*/
 }
-
 .about-me .position {
   /*color: rgb(8132, 114, 111);*/
   /*color: rgb(80, 68, 66);*/
   color: rgb(179, 159, 155);
 }
-
 .skills-habilities h2 {
   color: rgb(179, 159, 155);
   text-align: center;
   font-size: 2rem;
 }
-
 .skills-habilities h3 {
   color: rgb(179, 159, 155);
   text-align: center;
@@ -457,11 +463,9 @@ body {
   margin-bottom: 1.5rem;
   height: auto;
 }
-
 .skill-mention:nth-child(2) {
   grid-template-rows: repeat(1, 1fr);
 }
-
 .skill-mention div {
   display: flex;
   flex-direction: column;
@@ -473,12 +477,10 @@ body {
   padding: 1rem;
   border-radius: 1rem;
 }
-
 .skill-mention div:hover {
   transform: scale(1.05);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
-
 .skill-mention img {
   max-width: 100%;
   height: auto;
@@ -493,7 +495,6 @@ body {
 .education h3 {
   color: rgb(179, 159, 155);
 }
-
 .education article {
   display: flex;
   gap: 1rem;
@@ -508,10 +509,20 @@ body {
   transform: scale(1.05);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 }
+@media (max-width: 760px) {
+  .education article {
+    flex-direction: column;
+  }
+}
 
 .institute-img img {
   width: 14rem;
   height: 100%;
+}
+@media (max-width: 760px) {
+  .institute-img img {
+    width: 100%;
+  }
 }
 
 .iinstitute-description {
@@ -521,8 +532,7 @@ body {
   align-items: center;
   padding: 1rem;
 }
-
-.institute-description > p:last-child {
+.iinstitute-description > p:last-child {
   color: rgb(82, 98, 87);
 }
 

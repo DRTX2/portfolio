@@ -2,12 +2,13 @@
 @use "./../abstracts/mixins" as mix;
 
 
-.skills-habilities h2{
-    @include mix.centered-text($color-primary, 2rem);
-
-}
-.skills-habilities h3{
-    @include mix.centered-text($color-primary, 1.5rem);
+.skills-habilities {
+    h2{
+        @include mix.centered-text($color-primary, 2rem);
+    }
+    h3{
+        @include mix.centered-text($color-primary, 1.5rem);
+    }
 }
 
 .skill-mention{
@@ -20,32 +21,31 @@
     margin-right: auto;
     margin-bottom: 1.5rem;
     height: auto;
-}
 
-.skill-mention:nth-child(2){
-    grid-template-rows:repeat(1,1fr);
-}
+    &:nth-child(2){
+        grid-template-rows:repeat(1,1fr);
+    }
 
+    div{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+        border: thin solid $color-dark;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 1rem;
+        border-radius: 1rem;
 
-.skill-mention div{
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-    border: thin solid $color-dark;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 1rem;
-    border-radius: 1rem;
-}
+        &:hover{
+            transform: scale(1.05);
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+         }
+    }
 
-.skill-mention div:hover{
-    transform: scale(1.05);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
- }
-
-
-.skill-mention img{
-    max-width: 100%;
-    height: auto;
+    img{
+        max-width: 100%;
+        height: auto;
+    }
+    
 }

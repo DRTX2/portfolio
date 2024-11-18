@@ -4,27 +4,26 @@
     padding: 2rem;
     h2{
         text-align: center;
+        font-size: 1.5rem;
+
+        span{
+            color: rgb(115, 132, 120);
+           /* color: #ffc86b;*/
+        
+        }
     }
+    
+    p span{
+        color: rgb(82, 98, 87);
+       /* color: #ffc86b;*/
+    }
+    .position{
+        /*color: rgb(8132, 114, 111);*/
+        /*color: rgb(80, 68, 66);*/
+        color: rgb(179, 159, 155);
+    }
+    button{
+        @extend .button;
+    }
+    
 }
-.about-me h2 span{
-    color: rgb(115, 132, 120);
-   /* color: #ffc86b;*/
-
-}
-
-.about-me p span{
-    color: rgb(82, 98, 87);
-   /* color: #ffc86b;*/
-}
- 
-.about-me .position{
-    /*color: rgb(8132, 114, 111);*/
-    /*color: rgb(80, 68, 66);*/
-    color: rgb(179, 159, 155);
-
-}
-
-.about-me button{
-    @extend .button;
-}
-

@@ -10,13 +10,15 @@
     top: 0;
     z-index: 100;
     transition: background-color 0.3s ease; 
-}
-.main-menu.sticky {
-    background-color: rgba(51, 51, 51, 0.85); 
-}
+    
+    * {
+        color: #ccc;
+    }
 
-.main-menu * {
-    color: #ccc;
+    &.sticky {
+        background-color: rgba(51, 51, 51, 0.85); 
+    }
+
 }
 
 .right-title-menu ul{

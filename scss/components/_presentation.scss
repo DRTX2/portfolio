@@ -7,6 +7,8 @@
     gap: 7rem;
     width: 85vw;
     margin: 0 auto;
+    padding: 4rem 0;
+
     h2{
         font-size: 2rem;
         color: $color-primary;
@@ -17,7 +19,11 @@
             color: $color-primary;
         }
     }
-    padding: 4rem 0;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
 
 .information{
@@ -57,5 +63,9 @@
         height: auto;
         border-radius: 1.5em;
         box-shadow: 0 4px 6px $color-secondary;
+    }
+    @media (max-width: 768px) {
+        width: 50vw;
+        height: auto;
     }
 }
