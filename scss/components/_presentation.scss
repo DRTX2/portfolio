@@ -1,0 +1,49 @@
+@use "button";
+@use "../abstracts/variables" as *;
+@use "../abstracts/variables";
+
+.presentation{
+    display: flex;
+    gap: 2rem;
+    width: 85vw;
+    margin: 0 auto;
+    h2{
+        font-size: 2rem;
+        color: $color-primary;
+    }
+    p{
+
+        span{
+
+        }
+    }
+    padding: 4rem 0;
+}
+
+.information{
+    
+    button{
+        @extend .button;
+    }
+}
+
+.social-networks{
+    list-style: none;
+    margin: 0;
+    padding: 1rem 0;
+    display: flex;
+    gap: 0.5rem;
+    li{
+        display: flex;
+        width: 1.5rem;
+        align-items: center;
+        justify-content: center;
+        border: thin solid $color-secondary;
+        padding: 0.5rem;
+        border-radius: 50%;
+        a{
+            text-decoration: none;
+            color: inherit;
+         }
+    }
+}
