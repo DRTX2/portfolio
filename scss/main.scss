@@ -1,1 +1,7 @@
 @use "base/normalize";
+
+@use "layout/header";
+@use "components/presentation";
+@use "components/aboutMe";
+@use "components/skills";
+@use "components/Education";

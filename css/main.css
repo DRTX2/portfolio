@@ -307,4 +307,237 @@ template {
   display: none;
 }
 
+.main-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(51, 51, 51);
+  padding: 1rem;
+  font-size: 1.5rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+}
+.main-menu * {
+  color: #ccc;
+}
+.main-menu.sticky {
+  background-color: rgba(51, 51, 51, 0.85);
+}
+
+.right-title-menu ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.right-items-menu li a {
+  text-decoration: none;
+}
+
+.button, .about-me button, .information button {
+  background-color: rgb(15, 35, 21);
+  color: rgb(82, 98, 87);
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: opacity 0.3s ease;
+}
+.button:hover, .about-me button:hover, .information button:hover {
+  opacity: 0.7;
+}
+
+/* Color primario */
+/* Color secundario */
+.presentation {
+  display: flex;
+  gap: 7rem;
+  width: 85vw;
+  margin: 0 auto;
+  padding: 4rem 0;
+}
+.presentation h2 {
+  font-size: 2rem;
+  color: rgb(179, 159, 155);
+}
+.presentation p {
+  font-size: 1.5rem;
+}
+.presentation p span {
+  color: rgb(179, 159, 155);
+}
+@media (max-width: 768px) {
+  .presentation {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.social-networks {
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0;
+  display: flex;
+  gap: 0.5rem;
+}
+.social-networks li {
+  display: flex;
+  width: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  border: thin solid rgb(82, 98, 87);
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+.social-networks li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.my-icon {
+  width: 13vw;
+  height: 13rem;
+  overflow: hidden;
+}
+.my-icon img {
+  width: 100%;
+  height: auto;
+  border-radius: 1.5em;
+  box-shadow: 0 4px 6px rgb(82, 98, 87);
+}
+@media (max-width: 768px) {
+  .my-icon {
+    width: 50vw;
+    height: auto;
+  }
+}
+
+.about-me {
+  padding: 2rem;
+}
+.about-me h2 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+.about-me h2 span {
+  color: rgb(115, 132, 120);
+  /* color: #ffc86b;*/
+}
+.about-me p span {
+  color: rgb(82, 98, 87);
+  /* color: #ffc86b;*/
+}
+.about-me .position {
+  /*color: rgb(8132, 114, 111);*/
+  /*color: rgb(80, 68, 66);*/
+  color: rgb(179, 159, 155);
+}
+.skills-habilities h2 {
+  color: rgb(179, 159, 155);
+  text-align: center;
+  font-size: 2rem;
+}
+.skills-habilities h3 {
+  color: rgb(179, 159, 155);
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.skill-mention {
+  width: 80vw;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3rem 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5rem;
+  height: auto;
+}
+.skill-mention:nth-child(2) {
+  grid-template-rows: repeat(1, 1fr);
+}
+.skill-mention div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  border: thin solid rgb(5.1, 10.2, 11.4);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.skill-mention div:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+.skill-mention img {
+  max-width: 100%;
+  height: auto;
+}
+
+.education {
+  text-align: center;
+  width: 60vw;
+  margin: 0 auto;
+}
+.education h2,
+.education h3 {
+  color: rgb(179, 159, 155);
+}
+.education article {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  border: thin solid rgb(5.1, 10.2, 11.4);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.education article:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 760px) {
+  .education article {
+    flex-direction: column;
+  }
+}
+
+.institute-img img {
+  width: 14rem;
+  height: 100%;
+}
+@media (max-width: 760px) {
+  .institute-img img {
+    width: 100%;
+  }
+}
+
+.iinstitute-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.iinstitute-description > p:last-child {
+  color: rgb(82, 98, 87);
+}
+
+.projects h3 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.enfasis-title {
+  color: rgb(82, 98, 87);
+}
+
 /*# sourceMappingURL=main.css.map */
