@@ -1,0 +1,11 @@
+@mixin apply-section-color($selector, $color) {
+  #{$selector} h2 span {
+    color: $color;
+  }
+}
+
+@mixin centered-text($color, $font-size) {
+  color: $color;
+  text-align: center;
+  font-size: $font-size;
+}
