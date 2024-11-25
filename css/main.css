@@ -343,6 +343,9 @@ body {
 .right-items-menu li a {
   text-decoration: none;
 }
+.right-items-menu li a:hover {
+  color: rgb(179, 159, 155);
+}
 
 .button, .about-me button, .information button {
   background-color: rgb(15, 35, 21);
@@ -480,6 +483,7 @@ body {
 .skill-mention div:hover {
   transform: scale(1.05);
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  color: rgb(179, 159, 155);
 }
 .skill-mention img {
   max-width: 100%;
