@@ -307,6 +307,13 @@ template {
   display: none;
 }
 
+/* Color primario */
+/* Color secundario */
+body {
+  background-color: #31333b;
+  color: #ccc;
+}
+
 .main-menu {
   display: flex;
   align-items: center;
@@ -351,8 +358,6 @@ template {
   opacity: 0.7;
 }
 
-/* Color primario */
-/* Color secundario */
 .presentation {
   display: flex;
   gap: 7rem;
