@@ -10,7 +10,7 @@
     top: 0;
     z-index: 100;
     transition: background-color 0.3s ease; 
-    
+    caret-color: transparent;    
     * {
         color: #ccc;
     }
@@ -20,6 +20,8 @@
     }
 
 }
+
+
 
 .right-title-menu ul{
     list-style: none;
