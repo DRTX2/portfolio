@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const menuToggle = document.getElementById("menu-toggle");
+  const menu = document.querySelector(".right-title-menu");
+
+  menuToggle.addEventListener("click", e =>menu.classList.toggle("active"));
+});
+
 document.addEventListener('scroll', () => {
     const menu = document.querySelector('.main-menu');
     if (window.scrollY > 50) {
@@ -37,3 +44,6 @@ function scrollNav() {
   };
 
   const typed = new Typed(".develop-areas", options);
+
+  
+  

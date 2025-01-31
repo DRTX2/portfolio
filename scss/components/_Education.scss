@@ -1,61 +1,145 @@
 @use "../abstracts/variables" as *;
 
-.education{
+.education {
     text-align: center;
-    width: 60vw;
+    width: 90vw;
     margin: 0 auto;
+    padding: 2rem 0;
 
-    h2,
-    h3{
-        color:$color-primary;
+    h2 {
+        color: $color-primary;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem; // Más espacio debajo del título
     }
-    article{
+
+    p {
+        font-style: italic;
+        color: $color-secondary;
+        margin-bottom: 2.5rem; 
+        @media (max-width: 768px) {
+            text-align: center;
+        }
+    }
+
+    .education-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem; // Más espacio entre columnas
+
+        @media (max-width: 760px) {
+            grid-template-columns: 1fr;
+            gap: 1.5rem; // Menos espacio en móviles
+        }
+    }
+
+    article {
         display: flex;
-        gap: 1rem;
-        justify-content: flex-start;
-        border: thin solid $color-dark;
+        gap: 1.5rem;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.1);
         border-radius: 1rem;
-        margin-bottom: 1rem;
-        overflow: hidden;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem; // Más espacio entre artículos
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        &:hover{
-            transform: scale(1.05);
+
+        &:hover {
+            transform: translateY(-5px);
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
         }
 
-        @media (max-width:760px) {
+        @media (max-width: 760px) {
             flex-direction: column;
+            text-align: center;
+            gap: 1rem;
+        }
+    }
+
+    .university {
+        grid-column: 1 / 2;
+    }
+
+    .certificates {
+        grid-column: 2 / 3;
+
+        @media (max-width: 760px) {
+            grid-column: 1 / 2;
         }
     }
 }
 
-.institute-img img{
-    width: 14rem;
-    height: 100%;
-    @media (max-width:760px) {
+.institute-img {
+    position: relative;
+    width: 7.5rem;
+    height: 7.5rem;
+
+    img {
         width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid $color-secondary;
+    }
+
+    .page_badgeLogo__cOzKx {
+        position: absolute;
+        bottom: 35%;
+        left: 50%;
+        transform: translateX(-50%);
+        border:none;
+        border-radius: 0;
+        width: 70%;
+        height: auto;
+    }
+    
+    @media (max-width: 768px) {
+        width: 40vw;
+        height: 40vw;
+    }
+
+    @media (max-width: 480px) {
+        width: 60vw;
+        height: 60vw;
     }
 }
 
-.iinstitute-description{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-
-    > p:last-child{
-        color:$color-secondary;
+.institute-description {
+    text-align: left;
+    flex: 1;
+    a{
+        color: inherit;
+        text-decoration: none;
+    }
+    h3 {
+        color: $color-primary;
+        font-size: 1.5rem;
+        margin-bottom: 1rem; // Más espacio debajo del título
     }
 
+    p {
+        color: $color-secondary;
+        margin: 0.5rem 0; // Más espacio entre párrafos
+        font-size: 1rem;
+    }
+
+    > p:last-child {
+        color: #ccc; // Color más suave para detalles
+        margin-top: 0.75rem; // Espacio adicional para el último párrafo
+    }
 }
 
-
-.projects h3 a{
-    text-decoration: none;
-    color: inherit;
-}
-
-.enfasis-title{
+.enfasis-title {
     color: $color-secondary;
+    font-weight: bold;
+}
+
+.institute-description {
+    p {
+        color: #f0f0f0; // Color claro para fondos oscuros
+        margin: 0.25rem 0;
+        font-size: 1rem;
+    }
+
+    > p:last-child {
+        color: #ccc; // Color más suave para detalles
+    }
 }

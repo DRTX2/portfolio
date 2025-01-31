@@ -60,7 +60,7 @@
 
     @media (max-width: 480px) { // Para móviles pequeños
         grid-template-columns: repeat(1, 1fr); // 1 columna en móviles pequeños
-        width: 95vw;
+        width: 80vw;
         gap: 1rem;
     }
 

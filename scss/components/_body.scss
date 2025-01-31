@@ -4,6 +4,7 @@ body{
     background-color: $back-color;
     // background-color: $color-dark;
     color: #ccc;
+    overflow-x: hidden;
 }
 
 $sections: ".about-me", ".skills-habilities", ".education", ".projects";
