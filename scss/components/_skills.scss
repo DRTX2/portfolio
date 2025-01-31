@@ -17,9 +17,7 @@
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows:repeat(2,1fr);
     gap: 3rem 1rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.5rem;
+    margin: 0 auto 1.5rem auto;
     height: auto;
 
     &:nth-child(2){
@@ -47,5 +45,23 @@
         max-width: 100%;
         height: auto;
     }
+ 
     
+    @media (max-width: 1024px) { // Para tablets
+        grid-template-columns: repeat(3, 1fr); // 3 columnas en tablet
+        gap: 2rem 1rem;
+    }
+
+    @media (max-width: 768px) { // Para móviles grandes
+        grid-template-columns: repeat(2, 1fr); // 2 columnas en móviles grandes
+        gap: 1.5rem 1rem;
+        width: 90vw; // Un poco más ancho en móviles
+    }
+
+    @media (max-width: 480px) { // Para móviles pequeños
+        grid-template-columns: repeat(1, 1fr); // 1 columna en móviles pequeños
+        width: 95vw;
+        gap: 1rem;
+    }
+
 }

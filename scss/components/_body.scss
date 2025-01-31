@@ -5,3 +5,17 @@ body{
     // background-color: $color-dark;
     color: #ccc;
 }
+
+$sections: ".about-me", ".skills-habilities", ".education", ".projects";
+#{$sections}{
+    width: 75vw;
+    margin: 0 auto;
+    // segun gpt deberia jalar con esto en toda media query
+    @media (max-width:768px) {
+        width: 90vw;
+    }
+
+    @media (max-width:480px) {
+        width: 95vw;
+    }
+}
