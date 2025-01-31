@@ -577,12 +577,11 @@ body {
 .education .education-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 @media (max-width: 760px) {
   .education .education-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
   }
 }
 .education article {
@@ -590,9 +589,8 @@ body {
   gap: 1.5rem;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .education article:hover {
@@ -608,37 +606,57 @@ body {
 }
 .education .university {
   grid-column: 1/2;
+  grid-row: 1/3;
+  flex-direction: column;
+  height: 91%;
+}
+.education .university .institute-img {
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
 }
 .education .certificates {
   grid-column: 2/3;
 }
+.education .full-width {
+  grid-column: 1/3;
+}
 @media (max-width: 760px) {
-  .education .certificates {
+  .education .full-width {
     grid-column: 1/2;
   }
 }
 
 .institute-img {
   position: relative;
-  width: 7.5rem;
-  height: 7.5rem;
+  width: 12rem;
+  height: 12rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .institute-img img {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  border-radius: 0;
   object-fit: cover;
-  border: 3px solid rgb(82, 98, 87);
+  border: 2px solid rgb(82, 98, 87);
 }
-.institute-img .page_badgeLogo__cOzKx {
+.institute-img .image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.institute-img .badge-logo {
   position: absolute;
-  bottom: 35%;
+  bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
-  border: none;
-  border-radius: 0;
   width: 70%;
   height: auto;
+  border: none;
+  border-radius: 0;
 }
 @media (max-width: 768px) {
   .institute-img {
@@ -664,23 +682,8 @@ body {
 .institute-description h3 {
   color: rgb(179, 159, 155);
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
-.institute-description p {
-  color: rgb(82, 98, 87);
-  margin: 0.5rem 0;
-  font-size: 1rem;
-}
-.institute-description > p:last-child {
-  color: #ccc;
-  margin-top: 0.75rem;
-}
-
-.enfasis-title {
-  color: rgb(82, 98, 87);
-  font-weight: bold;
-}
-
 .institute-description p {
   color: #f0f0f0;
   margin: 0.25rem 0;
@@ -688,6 +691,12 @@ body {
 }
 .institute-description > p:last-child {
   color: #ccc;
+  margin-top: 0.5rem;
+}
+
+.enfasis-title {
+  color: rgb(82, 98, 87);
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=main.css.map */
