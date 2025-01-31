@@ -1,0 +1,111 @@
+@use "../abstracts/variables" as *;
+
+.projects {
+    text-align: center;
+    width: 90vw;
+    margin: 0 auto;
+    padding: 2rem 0;
+
+    h2 {
+        color: $color-primary;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Diseño responsive
+        gap: 2rem; // Espacio entre proyectos
+
+        @media (max-width: 768px) {
+            gap: 1.5rem; // Menos espacio en móviles
+        }
+    }
+
+    .project {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .project-image {
+        width: 100%;
+        height: 200px; // Altura fija para la imagen
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; // Asegura que la imagen cubra el espacio
+        }
+    }
+
+    .project-content {
+        padding: 1.5rem;
+        text-align: left;
+
+        h3 {
+            color: $color-primary;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #f0f0f0;
+            font-size: 1rem;
+            margin-bottom: 1.5rem; // Más espacio debajo del párrafo
+            line-height: 1.5; // Mejor legibilidad
+        }
+
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem; // Más espacio debajo de las tecnologías
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                background-color: rgba(255, 255, 255, 0.1);
+                padding: 0.5rem 0.75rem; // Más padding para mejor apariencia
+                border-radius: 0.25rem;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.2); // Efecto hover sutil
+                }
+            }
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+
+            a {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: $color-secondary;
+                text-decoration: none;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: $color-primary;
+                }
+            }
+        }
+    }
+}
+
+.enfasis-title {
+    color: $color-secondary;
+    font-weight: bold;
+}
