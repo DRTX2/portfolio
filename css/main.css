@@ -796,10 +796,11 @@ body {
 }
 
 .technologies span {
-  max-height: 1.5rem;
+  max-height: 2rem;
+  font-size: 2rem;
 }
 .technologies span img {
-  height: 1.5rem;
+  height: 2rem;
 }
 
 /*# sourceMappingURL=main.css.map */
