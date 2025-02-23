@@ -795,4 +795,11 @@ body {
   font-weight: bold;
 }
 
+.technologies span {
+  max-height: 1.5rem;
+}
+.technologies span img {
+  height: 1.5rem;
+}
+
 /*# sourceMappingURL=main.css.map */

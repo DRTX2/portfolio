@@ -17,7 +17,9 @@
   <link rel="stylesheet" href="css/main.css" />
 
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/devicon/devicon-original.svg" />
 </head>
 
 <body>
@@ -198,7 +200,7 @@
       </article>
     </section>
     <hr />
-    <section class="education">
+    <section class="education" id="education">
       <h2>
         My <span class="enfasis-title">Education</span> &
         <span class="enfasis-title">Certificates</span>
@@ -295,7 +297,7 @@
       </div>
     </section>
     <hr />
-    <section class="projects">
+    <section class="projects" id="projects">
       <h2>My <span class="enfasis-title">Projects</span></h2>
       <div class="projects-grid">
         <!-- Proyecto 1: Inventory Management System -->
@@ -311,13 +313,34 @@
               generating dynamic PDF reports and guarantees security with JWT.
             </p>
             <div class="technologies">
-              <span><i class="fab fa-laravel"></i> Laravel</span>
-              <span><i class="fab fa-react"></i> React</span>
-              <span><i class="fas fa-database"></i> MySQL</span>
+              <span><i class="devicon-laravel-original colored"></i>
+                Laravel</span>
+              <span>
+                <i class="devicon-react-original colored"></i>
+                React</span>
+              <span>
+                <i class="devicon-mysql-original colored"></i>
+
+                <!-- <i class="devicon-mysql-original"></i> -->
+                MySQL</span>
+              <span>
+                <i class="devicon-materialui-plain colored"></i>
+                MUI</span>
+              <span>
+                <i class="devicon-figma-plain"></i>
+
+                Figma</span>
+              <span>
+                <i>
+                  <img src="assets/img/icons8-json-web-token.svg" alt="" />
+                </i>
+                JWT
+              </span>
+              <span><i class="devicon-axios-plain colored"></i>Axios</span>
             </div>
             <div class="project-links">
-              <a href="https://copying-amazon.vercel.app/" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Live Site
+              <a href="https://github.com/DRTX2/maintenance-system" target="_blank">
+                <i class="fab fa-github"></i> Repository
               </a>
             </div>
           </div>
@@ -337,13 +360,27 @@
               such as React to provide a seamless experience.
             </p>
             <div class="technologies">
-              <span><i class="fab fa-react"></i> React</span>
-              <span><i class="fab fa-css3-alt"></i> CSS</span>
-              <span><i class="fab fa-js"></i> JavaScript</span>
+              <span>
+                <i class="devicon-react-original colored"></i>
+                React</span>
+              <span>
+                <i class="devicon-css3-plain colored"></i>
+
+                CSS</span>
+
+                <span>
+                  
+            <i class="devicon-typescript-plain colored"></i>
+          
+  
+                  TypeScript</span>
             </div>
             <div class="project-links">
               <a href="https://copying-amazon.vercel.app/" target="_blank">
                 <i class="fas fa-external-link-alt"></i> Live Site
+              </a>
+              <a href="https://github.com/DRTX2/copying-amazon" target="_blank">
+                <i class="fab fa-github"></i> Repository
               </a>
             </div>
           </div>
@@ -390,8 +427,24 @@
               community through comments and collaboration.
             </p>
             <div class="technologies">
-              <span><i class="fab fa-react"></i> React</span>
-              <span><i class="fab fa-node"></i> Node.js</span>
+              <span>
+                <i class="devicon-php-plain colored"></i>
+                PHP</span>
+              <span>
+                <i class="devicon-javascript-plain colored"></i>
+                JavaScript</span>
+              <span><i class="devicon-axios-plain colored"></i>Axios</span>
+
+              <span>
+                <i class="devicon-mysql-original colored"></i>
+
+                <!-- <i class="devicon-mysql-original"></i> -->
+                MySQL</span>
+              <span>
+                <i class="devicon-bootstrap-plain colored"></i>
+
+                <!-- <i class="devicon-mysql-original"></i> -->
+                Bootstrap</span>
             </div>
             <div class="project-links">
               <a href="https://github.com/DRTX2/proyecto-mds.git" target="_blank">
@@ -417,9 +470,21 @@
               modern design.
             </p>
             <div class="technologies">
-              <span><i class="fab fa-laravel"></i> Laravel</span>
-              <span><i class="fab fa-bootstrap"></i> Bootstrap</span>
-              <span><i class="fas fa-database"></i> MySQL</span>
+              <span><i class="devicon-laravel-original colored"></i>
+                Laravel</span>
+                <span>
+                  <i class="devicon-javascript-plain colored"></i>
+                  JavaScript</span>
+                <span>
+                  <i class="devicon-bootstrap-plain colored"></i>
+  
+                  <!-- <i class="devicon-mysql-original"></i> -->
+                  Bootstrap</span>
+                  <span>
+                    <i class="devicon-mysql-original colored"></i>
+    
+                    <!-- <i class="devicon-mysql-original"></i> -->
+                    MySQL</span>
             </div>
             <div class="project-links">
               <a href="https://gitlab.com/personalprojects5531442/manejo-proyecto/" target="_blank">
@@ -437,15 +502,16 @@
           <div class="project-content">
             <h3>Capigochi</h3>
             <p>
-              Capigochi is an interactive app inspired by Tamagotchis, where
-              users care for a virtual pet by managing stats like hunger,
-              energy, and joy. Actions like feeding or playing affect the pet,
-              and players can restart if its life reaches zero.
+              Capigochi is an interactive app inspired by Tamagotchis, where users take care of a virtual pet by managing stats such as hunger, energy, and joy. Actions like feeding or playing affect the pet's well-being, and players can restart if its life reaches zero. For this project, I implemented design patterns such as Observer, Factory, Strategy, and Singleton.
             </p>
             <div class="technologies">
-              <span><i class="fab fa-js"></i> JavaScript</span>
-              <span><i class="fab fa-html5"></i> HTML</span>
-              <span><i class="fab fa-css3-alt"></i> CSS</span>
+              <span><i class="devicon-javascript-plain colored"></i> JavaScript</span>
+              <span>
+                <i class="devicon-html5-plain colored"></i>
+               HTML</span>
+              <span>
+                <i class="devicon-css3-plain colored"></i>
+               CSS</span>
             </div>
             <div class="project-links">
               <a href="https://github.com/DRTX2/Capigochi" target="_blank">
