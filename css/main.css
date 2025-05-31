@@ -315,17 +315,17 @@ body {
   overflow-x: hidden;
 }
 
-.about-me, .skills-habilities, .education, .projects {
+.presentation, .about-me, .skills-habilities, .education, .projects {
   width: 75vw;
   margin: 0 auto;
 }
 @media (max-width: 768px) {
-  .about-me, .skills-habilities, .education, .projects {
+  .presentation, .about-me, .skills-habilities, .education, .projects {
     width: 90vw;
   }
 }
 @media (max-width: 480px) {
-  .about-me, .skills-habilities, .education, .projects {
+  .presentation, .about-me, .skills-habilities, .education, .projects {
     width: 95vw;
   }
 }
@@ -410,8 +410,6 @@ body {
 .presentation {
   display: flex;
   gap: 7rem;
-  width: 85vw;
-  margin: 0 auto;
   padding: 4rem 0;
 }
 .presentation h2 {
