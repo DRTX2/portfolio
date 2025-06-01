@@ -7,7 +7,7 @@ body{
     overflow-x: hidden;
 }
 
-$sections: ".about-me", ".skills-habilities", ".education", ".projects";
+$sections: ".presentation",".about-me", ".skills-habilities", ".education", ".projects";
 #{$sections}{
     width: 75vw;
     margin: 0 auto;

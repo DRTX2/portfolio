@@ -5,8 +5,7 @@
 .presentation{
     display: flex;
     gap: 7rem;
-    width: 85vw;
-    margin: 0 auto;
+    
     padding: 4rem 0;
 
     h2{
@@ -30,6 +29,19 @@
     
     button{
         @extend .button;
+        color: $color-light;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+        &:hover{
+            transform: scale(1.05);
+            background-color: lighten($color-secondary, 8%);
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
     }
 }
 
