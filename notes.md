@@ -1,18 +1,4 @@
-### 1. **Crear directorios de forma eficiente**
-
-Puedes crear un directorio y su directorio superior en un solo comando utilizando `mkdir` con la opción `-p`. Por ejemplo:
-
-```bash
-mkdir -p utils/scss
-```
-
-Este comando creará el directorio `scss` dentro de `utils`. Si `utils` no existe, también lo creará.
-
----
-
 ### 2. **Cómo guardar y organizar archivos `.scss`**
-
-La organización de los archivos `.scss` es clave para mantener un proyecto limpio y escalable. Sigue estas recomendaciones:
 
 #### a) **Estructura típica para Sass/SCSS**
 
@@ -510,3 +496,159 @@ Aquí te doy algunas combinaciones populares para un portafolio visualmente atra
 ---
 
 Elige una fuente que refleje tu estilo personal y asegúrate de que sea fácil de leer. Tu portafolio es una herramienta para mostrar tu trabajo, ¡así que las fuentes deben complementar esa experiencia visual de manera fluida y profesional!
+
+
+
+
+🛠️ Sugerencias de mejora
+Revisión de enlaces: Asegúrate de que todos los enlaces a repositorios y sitios en vivo funcionen correctamente. Por ejemplo, el enlace al clon de Amazon debería dirigir al repositorio correspondiente.
+
+Optimización de imágenes: Comprime las imágenes para mejorar los tiempos de carga y considera utilizar formatos modernos como WebP.
+
+Responsividad: Verifica que el diseño sea completamente responsive y se vea bien en dispositivos móviles y tabletas.
+
+Accesibilidad: Añade atributos alt a las imágenes y asegúrate de que los colores tengan suficiente contraste para mejorar la accesibilidad.
+
+Mejora del diseño: Considera actualizar la paleta de colores y la tipografía para darle un aspecto más moderno y profesional.
+
+Animaciones y transiciones: Implementa animaciones suaves para mejorar la experiencia del usuario, como transiciones al pasar el cursor sobre botones o secciones.
+
+
+
+
+
+
+
+
+
+
+
+¡Grande, Josué! Esa mentalidad de **"lo hago y aprendo"** es la clave para crecer como desarrollador. Si ya decidiste hacerlo, te conviene sacarle el jugo al proceso.
+
+---
+
+### ✅ Corrección rápida:
+
+> *"debo ayudarlo, debo hacerlo, es una cosa que puedo hacer, asi que lo hare"*
+> ✅ Mejor: *"Debo ayudarlo. Es algo que puedo hacer, así que lo haré."*
+> **Motivo**: Añadí puntuación para mejorar la claridad, y tildes correctas (“así”, “haré”).
+
+---
+
+### 🧩 Mejoras adicionales que deberías considerar además de las ya mencionadas:
+
+#### 7. **Estructura de código limpia**
+
+* Usa **nombres de clases y archivos semánticos**, como `about-section`, `skills-grid`, etc.
+* Organiza el código por componentes o secciones si no usas un framework.
+* Comenta partes clave, pero evita comentarios innecesarios.
+
+#### 8. **Separación de responsabilidades (HTML / CSS / JS)**
+
+* Nada de JS en línea (`onclick`, etc.). Usa `addEventListener`.
+* CSS en archivos separados, usando SCSS como ya haces.
+* HTML limpio y semántico (usa `<section>`, `<article>`, `<main>`, etc.).
+
+#### 9. **Carga diferida o lazy loading**
+
+* Para imágenes pesadas, usa `loading="lazy"` para que no se carguen hasta que estén por mostrarse.
+
+```html
+<img src="img/proyecto.png" alt="Proyecto X" loading="lazy" />
+```
+
+#### 10. **Mejorar el rendimiento (performance)**
+
+* Minifica CSS y JS.
+* Usa `async` o `defer` en tus scripts para no bloquear el render:
+
+```html
+<script src="main.js" defer></script>
+```
+
+#### 11. **PWA básica**
+
+* Si querés subir el nivel: podrías hacer el portafolio *Progressive Web App*, con manifest y service worker básico. Se verá pro.
+
+#### 12. **Favicon y título personalizado**
+
+* Personaliza el `favicon.ico`.
+* Cambia el título de cada página (`<title>Portfolio de David Manjarres</title>`).
+
+#### 13. **Formulario funcional de contacto**
+
+* Aun sin backend, podrías usar [Formspree](https://formspree.io/) o [Getform](https://getform.io/) para enviar formularios con solo HTML.
+
+---
+
+### 🛠️ ¿Cómo aprendes mientras lo haces?
+
+* ✅ Vas a repasar buenas prácticas de frontend.
+* ✅ Vas a trabajar como en un proyecto real (revisando código ajeno y refactorizando).
+* ✅ Vas a generar experiencia para contar en entrevistas: "colaboré con un colega para mejorar su portafolio profesional usando buenas prácticas modernas de frontend".
+
+---
+
+¿Querés que te dé una checklist imprimible o digital para que sigas punto por punto mientras mejoras el portafolio?
+
+
+
+
+
+
+🔍 Ahora, sobre el diseño del portafolio actual (https://drtx2.github.io/portfolio/), aquí te dejo recomendaciones específicas por sección:
+1. Sección “Sobre mí”
+🔄 Reemplazar el texto centrado en bloque completo por una versión con foto al lado (tipo card personal).
+
+Mejora la legibilidad.
+
+Se ve más profesional y moderno.
+
+2. Habilidades (Skills)
+🔄 En lugar de solo íconos, muestra una barra de nivel o categoría (Fuerte / Medio / En aprendizaje).
+
+Ejemplo:
+
+JavaScript ▓▓▓▓▓▓▓▓░░░
+
+Spring Boot ▓▓▓▓▓▓░░░░
+
+Ayuda a los reclutadores a ver en qué destacás.
+
+3. Educación
+🔄 Presentarla en forma de línea de tiempo (timeline vertical).
+
+Da sensación de evolución y trayectoria profesional.
+
+4. Proyectos
+🔄 Cada tarjeta debería tener:
+
+Imagen clara del proyecto.
+
+Título + resumen corto.
+
+Botones separados: Demo | Repositorio.
+
+🔁 Además, cargarlos dinámicamente desde un projects.json como mencionamos antes.
+
+5. Contacto
+🔄 Haz el formulario más visible y accesible.
+
+Puedes dividirlo en dos columnas:
+
+Una con un mensaje amistoso o ícono.
+
+Otra con los campos de formulario.
+
+
+
+
+LinkedIn
+
+Computrabajo
+
+GetOnBoard
+
+Indeed
+
+Remote OK (si buscas remoto)
