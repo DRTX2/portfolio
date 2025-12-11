@@ -1,0 +1,63 @@
+---
+import '../styles/main.scss';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Full Stack Developer specializing in Java Spring Boot, React, TypeScript, and microservices. 4+ years building scalable applications with 90%+ test coverage, CI/CD pipelines, and cloud deployments."
+		/>
+		<meta
+			name="keywords"
+			content="Full Stack Developer, Java Spring Boot, React TypeScript, Microservices, REST APIs, PostgreSQL, Redis, CI/CD, Jenkins, Azure, Node.js, NestJS, Clean Architecture, TailwindCSS"
+		/>
+		<meta name="author" content="David Manjarres" />
+		<meta property="og:title" content="David Manjarres | Full Stack Developer" />
+		<meta property="og:description" content="Full Stack Developer specializing in Java, Spring Boot, React, and modern web technologies" />
+		<meta property="og:type" content="website" />
+		<meta name="theme-color" content="#0f172a" />
+
+		<title>{title}</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+		/>
+		<link
+			rel="icon"
+			href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/devicon/devicon-original.svg"
+		/>
+
+		<script is:inline src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+	</head>
+	<body>
+		<slot />
+		
+		<script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+		<script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+		<script type="module" src="/src/scripts/main.js"></script>
+		<script is:inline src="/animations.js"></script>
+	</body>
+</html>

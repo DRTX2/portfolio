@@ -1,0 +1,71 @@
+---
+/**
+ * Hero/Presentation Component
+ * Main hero section with typing effect and social links
+ */
+
+interface SocialLink {
+  href: string;
+  icon: string;
+  label: string;
+}
+
+interface Props {
+  name?: string;
+  socialLinks?: SocialLink[];
+}
+
+const { 
+  name = 'David Manjarres',
+  socialLinks = [
+    {
+      href: 'https://www.linkedin.com/in/david-manjarres-quintero-056823211/',
+      icon: 'devicon-linkedin-plain',
+      label: 'Visit my LinkedIn profile'
+    },
+    {
+      href: 'https://github.com/DRTX2',
+      icon: 'devicon-github-original',
+      label: 'Visit my GitHub profile'
+    },
+    {
+      href: '/assets/docs/David_Oswaldo_Manjarres_Quintero_FULL.pdf',
+      icon: 'fas fa-file-pdf',
+      label: 'Download my resume as PDF'
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="presentation" id="presentation">
+  <article class="information" id="information">
+    <h2>
+      Hi There, I'm <span class="gradient-text">{name}</span>
+    </h2>
+    <p>I am into <span class="develop-areas"></span></p>
+    <a href="#about-me" class="btn-about-me">
+      <button aria-label="Learn more about me">About Me</button>
+    </a>
+    <ul class="social-networks">
+      {socialLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={link.label}
+          >
+            <i class={link.icon} aria-hidden="true"></i>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </article>
+  <article class="my-icon">
+    <img
+      src="/assets/img/f1.jpg"
+      alt={`${name} - Full Stack Developer`}
+      loading="lazy"
+    />
+  </article>
+</section>

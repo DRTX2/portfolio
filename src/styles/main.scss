@@ -1,0 +1,11 @@
+@use 'base/normalize';
+@use 'components/body';
+
+@use 'layout/header';
+@use 'components/presentation';
+@use 'components/aboutMe';
+@use 'components/skills';
+@use 'components/education';
+@use 'components/projects';
+@use 'components/contact-cta';
+@use 'layout/footer';

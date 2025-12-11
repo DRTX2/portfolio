@@ -1,0 +1,56 @@
+@use "../abstracts/variables" as *;
+
+.main-footer {
+  background-color: darken($back-color, 5%);
+  padding: 2rem 0;
+  // margin-top: 4rem; // Removed to eliminate extra space
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  .footer-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    p {
+      margin: 0;
+      color: darken(#ccc, 20%);
+      font-size: 0.9rem;
+    }
+  }
+
+  .footer-links {
+    a {
+      color: $color-primary;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      
+      // Flexbox for perfect centering
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      
+      width: 40px;  // Fixed size
+      height: 40px; // Fixed size
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.05);
+      text-decoration: none; // Ensure no underline
+
+      &:hover {
+        color: $color-secondary;
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
