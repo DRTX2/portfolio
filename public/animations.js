@@ -117,11 +117,13 @@ const initAnimations = () => {
   }, { trigger: ".projects", start: "top 70%" }); // Selector correjido .projects
 
   // --- Contact CTA ---
-  const ctaTrigger = { trigger: ".contact-cta", toggleActions: "play none none none" };
-  animate(".contact-cta h2", { y: 20, opacity: 0 }, ctaTrigger);
-  animate(".contact-cta .cta-subtitle", { y: 15, opacity: 0, duration: 0.6, delay: 0.1 }, { ...ctaTrigger, start: "top 75%" });
-  animate(".contact-cta .cta-button", { y: 15, opacity: 0, duration: 0.5, stagger: 0.1, delay: 0.2 }, { ...ctaTrigger, start: "top 70%" });
-  animate(".contact-cta .stat-item", { y: 20, opacity: 0, duration: 0.5, stagger: 0.08 }, { trigger: ".cta-stats", start: "top 85%", toggleActions: "play none none none" });
+  // const ctaTrigger = { trigger: ".contact-cta", toggleActions: "play none none none" };
+  // animate(".contact-cta h2", { y: 20, opacity: 0 }, ctaTrigger);
+  // animate(".contact-cta .cta-subtitle", { y: 15, opacity: 0, duration: 0.6, delay: 0.1 }, { ...ctaTrigger, start: "top 75%" });
+  
+  // DISABLED to fix visibility issues
+  // animate(".contact-cta .cta-button", { y: 15, opacity: 0, duration: 0.5, stagger: 0.1, delay: 0.2 }, { ...ctaTrigger, start: "top 70%" });
+  // animate(".contact-cta .stat-item", { y: 20, opacity: 0, duration: 0.5, stagger: 0.08 }, { trigger: ".cta-stats", start: "top 85%", toggleActions: "play none none none" });
 
   // --- Animación Contadores (Stats) ---
   initCounters();
