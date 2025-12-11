@@ -56,9 +56,9 @@ const initAnimations = () => {
     .from("#information h2", { x: -50, opacity: 0, duration: 1 })
     .from("#information p", { x: -50, opacity: 0, duration: 1 }, "-=0.8")
     .from("#information button", { y: 20, opacity: 0, ease: "back.out(1.7)" }, "-=0.6")
-    .from(".social-networks li", { 
-      y: 20, opacity: 0, stagger: 0.15, duration: 0.6 
-    }, "-=0.4")
+    // .from(".social-networks li", { 
+    //   y: 20, opacity: 0, stagger: 0.15, duration: 0.6 
+    // }, "-=0.4")
     .from(".my-icon", {
       scale: 0.8, opacity: 0, duration: 1.2, ease: "elastic.out(1, 0.5)"
     }, "-=1");
@@ -112,9 +112,10 @@ const initAnimations = () => {
 
   // --- Projects ---
   animate(".projects h2", { ...config.presets.popIn, scale: 0.9, duration: 1 });
-  animate(".projects .project", { 
-    y: 60, opacity: 0, duration: 1, stagger: 0.2 
-  }, { trigger: ".projects", start: "top 70%" }); // Selector correjido .projects
+  // DISABLED to fix visibility issues
+  // animate(".projects .project", { 
+  //   y: 60, opacity: 0, duration: 1, stagger: 0.2 
+  // }, { trigger: ".projects", start: "top 70%" }); // Selector correjido .projects
 
   // --- Contact CTA ---
   // const ctaTrigger = { trigger: ".contact-cta", toggleActions: "play none none none" };

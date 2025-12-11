@@ -1,13 +1,24 @@
-.button{
-    background-color: rgb(15, 35, 21);
-    color: rgb(82, 98, 87);
+@use "../abstracts/variables" as *;
+
+.button {
+    background: $brand-gradient;
+    color: white;
     border: none;
-    font-size: 1.5rem;
-    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
     cursor: pointer;
-    border-radius: 0.5rem;
-    transition: opacity 0.3s ease;
-    &:hover{
-        opacity: 0.7;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        opacity: 0.95;
+    }
+
+    &:active {
+        transform: translateY(0);
     }
 }

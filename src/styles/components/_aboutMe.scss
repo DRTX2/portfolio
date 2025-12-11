@@ -2,52 +2,59 @@
 @use "../abstracts/variables" as *;
 @use "button" as *;
 
-.about-me{
+.about-me {
     padding: 2rem;
     max-width: 850px;
-    h2{
-        text-align: center;
-        font-size: 1.5rem;
 
-        span{
-            color: rgb(115, 132, 120);
-           /* color: #ffc86b;*/
-        
+    h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: $color-text;
+
+        span {
+            color: $color-primary; // Vibrant purple
+            font-weight: 700;
         }
     }
     
-    p span{
-        color: rgb(82, 98, 87);
-       /* color: #ffc86b;*/
-    }
-    .position{
-        /*color: rgb(8132, 114, 111);*/
-        /*color: rgb(80, 68, 66);*/
-        color: rgb(179, 159, 155);
-    }
-    button{
-        @extend .button;
-        color: $color-light;
-        padding: 0.75rem 2rem;
-        font-size: 1rem;
-        border-radius: 8px;
-        border: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: $color-text-muted;
         
-        &:hover{
-            transform: scale(1.05);
-            background-color: color.adjust($color-secondary, $lightness: 8%);
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        span {
+            color: $color-text;
+            font-weight: 600;
         }
     }
-    .contact-info{
-        span{
+
+    .position {
+        color: $color-secondary; // Indigo for subtitle
+        font-weight: 500;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    button {
+        @extend .button; // Now inherits modern gradient button
+        margin-top: 1.5rem;
+    }
+
+    .contact-info {
+        margin-top: 1.5rem;
+        
+        span {
             color: $color-primary;
         }
-        .my-email{
+        .my-email {
             text-decoration: none;
-        color: inherit;
+            color: $color-text;
+            transition: color 0.3s;
+            
+            &:hover {
+                color: $color-accent;
+            }
         }
     }    
 }
