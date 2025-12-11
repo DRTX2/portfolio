@@ -2,7 +2,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const menuToggle = document.getElementById("menu-toggle");
   const menu = document.querySelector(".right-title-menu");
 
-  menuToggle.addEventListener("click", (e) => menu.classList.toggle("active"));
+  menuToggle.addEventListener("click", (e) => {
+    menu.classList.toggle("active");
+    menuToggle.classList.toggle("active");
+  });
+
+  // Cerrar menú al hacer click en un enlace (móvil)
+  const menuLinks = document.querySelectorAll(".right-title-menu a");
+  menuLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      menu.classList.remove("active");
+      menuToggle.classList.remove("active");
+    });
+  });
 });
 
 document.addEventListener("scroll", () => {
@@ -15,20 +27,28 @@ document.addEventListener("scroll", () => {
 });
 
 function scrollNav() {
-  const navLinks = document.querySelectorAll(".main-menu a");
+  const navLinks = document.querySelectorAll(".main-menu a, .btn-about-me");
 
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.preventDefault();
+      const href = link.getAttribute("href");
+      
+      // Solo prevenir default si es un anchor link (#)
+      if (href && href.startsWith("#")) {
+        e.preventDefault();
+        const section = document.querySelector(href);
 
-      const sectionScroll = e.target.getAttribute("href");
-      const section = document.querySelector(sectionScroll);
+        if (section) {
+          const headerOffset = 80;
+          const elementPosition = section.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-      if (section === null) {
-        return;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
       }
-
-      section.scrollIntoView({ behavior: "smooth" });
     });
   });
 }
@@ -49,4 +69,3 @@ const options = {
 
 const typed = new Typed(".develop-areas", options);
 
-AOS.init();

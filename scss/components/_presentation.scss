@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "button";
 @use "../abstracts/variables" as *;
 
@@ -51,7 +52,7 @@
 
     &:hover {
       transform: scale(1.05);
-      background-color: lighten($color-secondary, 8%);
+      background-color: color.adjust($color-secondary, $lightness: 8%);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
   }
