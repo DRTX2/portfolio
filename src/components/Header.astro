@@ -1,0 +1,33 @@
+---
+/**
+ * Header Component
+ * Navigation menu with mobile hamburger support
+ */
+
+interface Props {
+  navItems?: Array<{ href: string; label: string }>;
+}
+
+const { navItems = [
+  { href: '#presentation', label: 'Home' },
+  { href: '#about-me', label: 'About' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#education', label: 'Education' },
+  { href: '#projects', label: 'Projects' },
+] } = Astro.props;
+---
+
+<header class="main-menu">
+  <div class="left-title-menu" id="dev-name">David Manjarres</div>
+
+  <nav class="right-title-menu">
+    <ul class="right-items-menu">
+      {navItems.map(item => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+
+  <!-- Hamburger button -->
+  <div id="menu-toggle" class="hamburger">☰</div>
+</header>

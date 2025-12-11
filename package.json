@@ -3,10 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch ./scss/main.scss css/main.css"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@astrojs/react": "^4.4.2",
+    "astro": "^5.16.5",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "sass": "^1.96.0"
+  }
 }

@@ -1,0 +1,27 @@
+---
+/**
+ * Footer Component
+ * Site footer with back-to-top link
+ */
+
+interface Props {
+  year?: number;
+  author?: string;
+}
+
+const {
+  year = new Date().getFullYear(),
+  author = 'David Manjarres'
+} = Astro.props;
+---
+
+<footer class="main-footer">
+  <div class="footer-content">
+    <p>&copy; {year} {author}. Built with passion and code.</p>
+    <div class="footer-links">
+      <a href="#presentation" aria-label="Back to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</footer>

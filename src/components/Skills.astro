@@ -1,0 +1,27 @@
+---
+/**
+ * Skills Component
+ * Displays skill categories and items
+ */
+import { skillCategories } from '../data/skills.js';
+
+const DEVICON_BASE = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/';
+---
+
+<section class="skills-habilities" id="skills">
+  <h2>Skills & <span class="enfasis-title">Abilities</span></h2>
+  
+  {skillCategories.map(category => (
+    <article class={category.id}>
+      <h3>{category.title}</h3>
+      <div class="skill-mention">
+        {category.skills.map(skill => (
+          <div>
+            <img src={`${DEVICON_BASE}${skill.icon}`} alt={skill.name} />
+            {skill.name}
+          </div>
+        ))}
+      </div>
+    </article>
+  ))}
+</section>

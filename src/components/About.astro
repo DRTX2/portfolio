@@ -1,0 +1,95 @@
+---
+/**
+ * About Component
+ * About section with highlights, expertise, and contact info
+ */
+
+interface Highlight {
+  icon: string;
+  text: string;
+}
+
+interface Props {
+  highlights?: Highlight[];
+  expertise?: string[];
+  email?: string;
+  location?: string;
+  resumeUrl?: string;
+}
+
+const {
+  highlights = [
+    {
+      icon: 'fas fa-rocket',
+      text: 'Specialized in building <strong>scalable, cloud-native applications</strong> using modern technologies like Java Spring Boot, NestJS, and React. Experienced in microservices, event-driven architectures, and cloud platforms (Azure, AWS).'
+    },
+    {
+      icon: 'fas fa-code',
+      text: 'Strong foundation in <strong>Clean Architecture</strong> and <strong>Hexagonal Architecture</strong> patterns. Proficient in building RESTful APIs, working with message brokers (RabbitMQ, Kafka), and implementing CI/CD pipelines.'
+    },
+    {
+      icon: 'fas fa-graduation-cap',
+      text: 'Currently pursuing a <strong>B.Sc. in Software Engineering</strong> at Technical University of Ambato (2021-2026), Ecuador. Continuously learning and applying best practices in software development.'
+    },
+    {
+      icon: 'fas fa-puzzle-piece',
+      text: 'Passionate about solving complex problems through code. Experienced in both relational (PostgreSQL, MySQL) and NoSQL databases (MongoDB, Redis), containerization (Docker, Kubernetes), and DevOps practices.'
+    }
+  ],
+  expertise = [
+    'Full-Stack Engineering',
+    'Cloud Architecture',
+    'Microservices Design',
+    'Event-Driven Systems',
+    'DevOps & CI/CD',
+    'Database Design',
+    'RESTful APIs',
+    'Clean Code Practices'
+  ],
+  email = 'davidmanjarres2004@gmail.com',
+  location = 'Ambato, Ecuador',
+  resumeUrl = '/assets/docs/David_Oswaldo_Manjarres_Quintero.pdf'
+} = Astro.props;
+---
+
+<section class="about-me" id="about-me">
+  <h2>About <span class="enfasis-title">Me</span></h2>
+  <h3 class="position" aria-label="Professional Title">
+    Full-Stack Developer • Cloud Engineer • Ecuador 🇪🇨
+  </h3>
+
+  <div class="about-content">
+    {highlights.map(highlight => (
+      <div class="about-highlight">
+        <i class={highlight.icon}></i>
+        <p set:html={highlight.text} />
+      </div>
+    ))}
+  </div>
+
+  <div class="expertise-areas">
+    <h4>Areas of Expertise</h4>
+    <div class="expertise-tags">
+      {expertise.map(area => (
+        <span class="tag">{area}</span>
+      ))}
+    </div>
+  </div>
+
+  <div class="contact-info">
+    <p>
+      <span class="my-contact-email">Email: </span>
+      <a href={`mailto:${email}`} class="my-email">{email}</a>
+    </p>
+    <p><span class="my-contact-place">Place: </span>{location}</p>
+    <a
+      href={resumeUrl}
+      class="resume-button"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Download my resume as PDF"
+    >
+      <button class="resume">Download Resume</button>
+    </a>
+  </div>
+</section>
