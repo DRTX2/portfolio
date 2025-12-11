@@ -44,12 +44,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1rem; // Reduced from 1.5rem
   max-width: 600px;
 
   button {
     @extend .button;
     align-self: flex-start; // Botón a la izquierda
+    margin-top: 0.5rem; // Add a small explicit margin
   }
 
   @media (max-width: 900px) {
@@ -64,7 +65,7 @@
 
 .social-networks {
   list-style: none;
-  margin: 1.5rem 0 0 0;
+  margin: 0.5rem 0 0 0; // Minimal top margin
   padding: 0;
   display: flex;
   gap: 1rem;

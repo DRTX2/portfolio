@@ -55,7 +55,7 @@ const initAnimations = () => {
   heroTl
     .from("#information h2", { x: -50, opacity: 0, duration: 1 })
     .from("#information p", { x: -50, opacity: 0, duration: 1 }, "-=0.8")
-    .from("#information button", { y: 20, opacity: 0, ease: "back.out(1.7)" }, "-=0.6")
+    // .from("#information button", { y: 20, opacity: 0, ease: "back.out(1.7)" }, "-=0.6")
     // .from(".social-networks li", { 
     //   y: 20, opacity: 0, stagger: 0.15, duration: 0.6 
     // }, "-=0.4")
@@ -79,15 +79,16 @@ const initAnimations = () => {
   animate(".about-me h2", { y: 50, opacity: 0, duration: 1 });
   animate(".about-me h3", { x: -30, opacity: 0, delay: 0.2 }, { start: "top 75%" });
   
-  animate(".about-highlight", { 
-    x: -30, opacity: 0, stagger: 0.15 
-  }, { trigger: ".about-me", toggleActions: "play none none none" });
+  // DISABLED to fix visibility issues
+  // animate(".about-highlight", { 
+  //   x: -30, opacity: 0, stagger: 0.15 
+  // }, { trigger: ".about-me", toggleActions: "play none none none" });
 
-  animate(".expertise-areas", { y: 20, opacity: 0 }, { start: "top 85%", toggleActions: "play none none none" });
+  // animate(".expertise-areas", { y: 20, opacity: 0 }, { start: "top 85%", toggleActions: "play none none none" });
 
-  animate(".expertise-tags .tag", { 
-    y: 15, opacity: 0, duration: 0.5, stagger: 0.08 
-  }, { trigger: ".expertise-areas", toggleActions: "play none none none" });
+  // animate(".expertise-tags .tag", { 
+  //   y: 15, opacity: 0, duration: 0.5, stagger: 0.08 
+  // }, { trigger: ".expertise-areas", toggleActions: "play none none none" });
 
   animate(".about-me > p", { ...config.presets.fadeInUp }, { start: "top 85%" });
   animate(".contact-info", { ...config.presets.fadeInUp, duration: 1 }, { start: "top 85%" });

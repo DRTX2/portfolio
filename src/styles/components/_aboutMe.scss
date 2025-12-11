@@ -3,59 +3,196 @@
 @use "button" as *;
 
 .about-me {
-    padding: 2rem;
-    max-width: 850px;
-
+    padding: 6rem 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    
+    // Títulos
     h2 {
         text-align: center;
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-        color: $color-text;
-
-        span {
-            color: $color-primary; // Vibrant purple
-            font-weight: 700;
-        }
-    }
-    
-    p {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        color: $color-text-muted;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        color: $color-primary;
         
-        span {
-            color: $color-text;
-            font-weight: 600;
+        .enfasis-title {
+            color: $color-text; // "Me" en blanco/claro
         }
     }
 
     .position {
-        color: $color-secondary; // Indigo for subtitle
+        display: block; // Asegurar que sea bloque
+        text-align: center;
+        color: $color-secondary;
+        font-size: 1.1rem;
         font-weight: 500;
-        margin-bottom: 1rem;
-        display: block;
+        margin: 0 auto 3rem auto;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        max-width: 800px;
     }
 
-    button {
-        @extend .button; // Now inherits modern gradient button
-        margin-top: 1.5rem;
+    // Contenido Highlights (Icono + Texto)
+    .about-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
     }
 
-    .contact-info {
-        margin-top: 1.5rem;
-        
-        span {
-            color: $color-primary;
+    .about-highlight {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+        padding: 1.5rem;
+        background: rgba(30, 41, 59, 0.4); // Fondo tarjeta sutil
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+
+        i {
+            font-size: 1.8rem;
+            color: $color-accent; // Icono destacado
+            flex-shrink: 0;
+            margin-top: 0.2rem; // Alinear visualmente con la primera línea
         }
-        .my-email {
-            text-decoration: none;
-            color: $color-text;
-            transition: color 0.3s;
-            
-            &:hover {
-                color: $color-accent;
+
+        p {
+            margin: 0;
+            color: $color-text-muted;
+            line-height: 1.6;
+            font-size: 1.05rem;
+
+            strong {
+                color: $color-text; // Destacar negritas
+                font-weight: 600;
             }
         }
-    }    
-}
 
+        &:hover {
+            transform: translateY(-3px);
+            border-color: rgba($color-accent, 0.3);
+            background: rgba(30, 41, 59, 0.7);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    // Áreas de Experiencia (Tags)
+    .expertise-areas {
+        margin-bottom: 3rem;
+        text-align: center;
+
+        h4 {
+            color: $color-text;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            
+            &::after {
+                content: '';
+                display: block;
+                width: 50%;
+                height: 3px;
+                background: $brand-gradient;
+                margin: 0.5rem auto 0;
+                border-radius: 2px;
+            }
+        }
+    }
+
+    .expertise-tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.8rem;
+
+        .tag {
+            background: rgba($color-primary, 0.1);
+            color: $color-primary;
+            border: 1px solid rgba($color-primary, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px; // Pill shape
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+
+            &:hover {
+                background: rgba($color-primary, 0.2);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba($color-primary, 0.15);
+            }
+        }
+    }
+
+    // Información de Contacto
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+        p {
+            color: $color-text-muted;
+            font-size: 1.1rem;
+            margin: 0;
+
+            span {
+                color: $color-text;
+                font-weight: 600;
+                margin-right: 0.5rem;
+            }
+        }
+
+        .my-email {
+            color: $color-accent;
+            text-decoration: none;
+            transition: color 0.2s;
+
+            &:hover {
+                color: lighten($color-accent, 10%);
+                text-decoration: underline;
+            }
+        }
+
+        .resume-button {
+            margin-top: 1.5rem;
+            text-decoration: none; // Quitar subrayado del enlace envolvente
+            
+            button {
+                @extend .button; // Heredar estilos modernos de botón
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                
+                // Icono de descarga visual (opcional si lo agregas al html)
+                &::before {
+                    content: '\f019'; // FontAwesome download icon code
+                    font-family: "Font Awesome 5 Free";
+                    font-weight: 900;
+                }
+            }
+        }
+    }
+    
+    // Media Query para móviles
+    @media (max-width: 768px) {
+        .about-highlight {
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+            align-items: center;
+            
+            i {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+        
+        .contact-info {
+           text-align: center;
+        }
+    }
+}
