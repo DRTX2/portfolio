@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 export default defineConfig({
   // TUS DATOS DE GITHUB PAGES (DESCOMENTAR Y EDITAR):
   site: 'https://DRTX2.github.io', 
-  base: import.meta.env.PROD ? '/portfolio' : '/', // En desarrollo local usa '/', en producción usa '/portfolio'
+  base: import.meta.env.PROD ? '/portfolio/' : '/', // En desarrollo local usa '/', en producción usa '/portfolio/'
   
   integrations: [react()],
   vite: {
