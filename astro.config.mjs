@@ -4,8 +4,8 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   // TUS DATOS DE GITHUB PAGES (DESCOMENTAR Y EDITAR):
-  // site: 'https://DRTX2.github.io', 
-  // base: '/portfolio', // Si tu repo se llama 'portfolio', mantén esto. Si es raíz, bórralo.
+  site: 'https://DRTX2.github.io', 
+  base: import.meta.env.PROD ? '/portfolio' : '/', // En desarrollo local usa '/', en producción usa '/portfolio'
   
   integrations: [react()],
   vite: {
