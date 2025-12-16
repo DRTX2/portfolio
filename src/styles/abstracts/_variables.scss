@@ -1,11 +1,11 @@
-$font-primary: 'Roboto', sans-serif;
+$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
 // Modern Palette - Deep Dark Theme with Vibrant Accents
-$color-primary: #a78bfa;      // Light Purple (Textos destacados, Títulos)
-$color-secondary: #818cf8;    // Indigo (Hover, Subtítulos)
-$color-accent: #667eea;       // Accent Blue
-$color-text: #e2e8f0;         // Text color (Slate-200)
-$color-text-muted: #94a3b8;   // Muted text (Slate-400)
+$color-primary: #c4b5fd;      // Lighter Purple (Mejor contraste para títulos)
+$color-secondary: #a5b4fc;    // Lighter Indigo (Mejor legibilidad)
+$color-accent: #818cf8;       // Accent Blue
+$color-text: #f1f5f9;         // Text color (Slate-100 - Más claro)
+$color-text-muted: #cbd5e1;   // Muted text (Slate-300 - Más legible)
 
 $color-dark: #0f172a;         // Slate-900 (Darker background)
 $back-color: #1e293b;         // Slate-800 (Main background)
