@@ -16,64 +16,179 @@ import Footer from '../components/Footer.astro';
     <hr />
     <Skills />
     <hr />
-    
+
     <section class="education" id="education">
-      <h2>My <span class="enfasis-title">Education</span> & <span class="enfasis-title">Certificates</span></h2>
+      <h2>
+        My <span class="enfasis-title">Education</span> & <span class="enfasis-title"
+          >Certificates</span>
+      </h2>
       <p><i>Education is not the learning of facts, but the training of the mind to think.</i></p>
       <div class="education-grid">
         <article class="university">
-          <div class="institute-img"><img src={`${import.meta.env.BASE_URL}assets/img/uta.jpg`} alt="Universidad Técnica de Ambato" /></div>
+          <div class="institute-img">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/uta.jpg`}
+              alt="Universidad Técnica de Ambato"
+            />
+          </div>
           <div class="institute-description">
-            <h3><a href="https://www.uta.edu.ec/v4.0/" target="_blank">Universidad Técnica de Ambato</a></h3>
+            <h3>
+              <a href="https://www.uta.edu.ec/v4.0/" target="_blank"
+                >Universidad Técnica de Ambato</a>
+            </h3>
             <p>Software Engineering</p><p>2021 - Now</p>
-            <p>During my time at the Universidad Técnica de Ambato, I have gained a solid foundation in software development, including programming, algorithms, and system design. I have also participated in various projects that have honed my problem-solving and teamwork skills.</p>
+            <p>
+              During my time at the Universidad Técnica de Ambato, I have gained a solid foundation
+              in software development, including programming, algorithms, and system design. I have
+              also participated in various projects that have honed my problem-solving and teamwork
+              skills.
+            </p>
           </div>
         </article>
         <article class="certificates">
-          <div class="institute-img"><img src="https://img-c.udemycdn.com/course/240x135/5241962_0546.jpg" alt="GraphQL and Node.js" /></div>
+          <div class="institute-img">
+            <img
+              src="https://img-c.udemycdn.com/course/240x135/5241962_0546.jpg"
+              alt="GraphQL and Node.js"
+            />
+          </div>
           <div class="institute-description">
-            <h3><a href="https://www.udemy.com/certificate/UC-c05cdc6d-e2c7-45cd-baec-2c64499f6ca7/" target="_blank">GraphQL and Node.js: Modern and efficient applications</a></h3>
+            <h3>
+              <a
+                href="https://www.udemy.com/certificate/UC-c05cdc6d-e2c7-45cd-baec-2c64499f6ca7/"
+                target="_blank">GraphQL and Node.js: Modern and efficient applications</a>
+            </h3>
             <p>Udemy - 2024</p>
-            <p>This course provided me with advanced skills in building modern and efficient applications using GraphQL and Node.js. I learned how to design scalable APIs and integrate them with front-end frameworks.</p>
+            <p>
+              This course provided me with advanced skills in building modern and efficient
+              applications using GraphQL and Node.js. I learned how to design scalable APIs and
+              integrate them with front-end frameworks.
+            </p>
           </div>
         </article>
         <article class="certificates">
-          <div class="institute-img"><img src="https://img-c.udemycdn.com/course/240x135/4813286_d96b_4.jpg" alt="FullStack and Desktop Programming" /></div>
+          <div class="institute-img">
+            <img
+              src="https://img-c.udemycdn.com/course/240x135/4813286_d96b_4.jpg"
+              alt="FullStack and Desktop Programming"
+            />
+          </div>
           <div class="institute-description">
-            <h3><a href="https://www.udemy.com/certificate/UC-4cf24303-9098-4a60-9787-adf82c453a46/" target="_blank">FullStack and Desktop Programming from ZERO to PROFESSIONAL</a></h3>
+            <h3>
+              <a
+                href="https://www.udemy.com/certificate/UC-4cf24303-9098-4a60-9787-adf82c453a46/"
+                target="_blank">FullStack and Desktop Programming from ZERO to PROFESSIONAL</a>
+            </h3>
             <p>Udemy - 2022</p>
-            <p>In this course, I mastered full-stack development, from front-end technologies like HTML, CSS, and JavaScript to back-end frameworks like Node.js and databases. I also gained experience in desktop application development.</p>
+            <p>
+              In this course, I mastered full-stack development, from front-end technologies like
+              HTML, CSS, and JavaScript to back-end frameworks like Node.js and databases. I also
+              gained experience in desktop application development.
+            </p>
           </div>
         </article>
         <article class="full-width">
           <div class="institute-img">
             <div class="image-container">
-              <img src="https://cdn.efset.org/efset-widget/img/v2/social-media/certificate/cefr-badge-B2.svg" alt="EF SET Certificate" />
-              <img class="badge-logo" src="https://a.storyblok.com/f/246158/103x24/eb1cf2418f/efset-logo_white.svg" alt="EF SET Logo" />
+              <img
+                src="https://cdn.efset.org/efset-widget/img/v2/social-media/certificate/cefr-badge-B2.svg"
+                alt="EF SET Certificate"
+              />
+              <img
+                class="badge-logo"
+                src="https://a.storyblok.com/f/246158/103x24/eb1cf2418f/efset-logo_white.svg"
+                alt="EF SET Logo"
+              />
             </div>
           </div>
           <div class="institute-description">
-            <h3><a href="https://cert.efset.org/vmT4Vg" target="_blank">B2 Upper Intermediate</a></h3>
+            <h3>
+              <a href="https://cert.efset.org/vmT4Vg" target="_blank">B2 Upper Intermediate</a>
+            </h3>
             <p>EF SET - 2025</p>
-            <p>This certification demonstrates my proficiency in English at the B2 level, enabling me to communicate effectively in professional and academic environments.</p>
+            <p>
+              This certification demonstrates my proficiency in English at the B2 level, enabling me
+              to communicate effectively in professional and academic environments.
+            </p>
           </div>
         </article>
       </div>
     </section>
     <hr />
-    
+
     <section class="projects" id="projects">
       <h2>My <span class="enfasis-title">Projects</span></h2>
       <div class="projects-grid">
         <article class="project">
-          <div class="project-image"><img src={`${import.meta.env.BASE_URL}assets/img/amazon.png`} alt="E-Commerce Marketplace Platform" /></div>
+          <div class="project-image">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/gasoline-system.png`}
+              alt="Fleet & Driver Management Microservices Platform"
+            />
+          </div>
+
+          <div class="project-content">
+            <h3>Fleet & Driver Management Platform</h3>
+
+            <p>
+              Distributed <strong>microservices-based platform</strong> for managing drivers, license
+              types, vehicles (light/heavy), routes, and operational performance. Built with <strong
+                >NestJS microservices</strong
+              > integrated via <strong>Eureka Service Discovery</strong> and <strong>gRPC</strong>,
+              exposing a unified API Gateway. Supports real-time route tracking using GPS-based
+              APIs, performance indicators, fuel consumption metrics, and <strong
+                >PDF report generation</strong
+              >. Implements asynchronous messaging with <strong>RabbitMQ</strong>, optimized queries
+              in <strong>PostgreSQL</strong>, and a <strong>React dashboard</strong> for system administration
+              and analytics.
+            </p>
+
+            <div class="technologies">
+              <span><i class="devicon-nestjs-plain colored"></i> NestJS</span>
+              <span><i class="devicon-nodejs-plain colored"></i> Node.js</span>
+              <span><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
+              <span><i class="devicon-rabbitmq-original colored"></i> RabbitMQ</span>
+              <span><i class="devicon-docker-plain colored"></i> Docker</span>
+              <span><i class="devicon-react-original colored"></i> React</span>
+              <span><i class="devicon-grpc-plain colored"></i> gRPC</span>
+              <span><i class="devicon-linux-plain colored"></i> Linux</span>
+            </div>
+
+            <div class="project-links">
+              <a href="https://github.com/DavidJosueP2/Distributed-Gasoline-System" target="_blank">
+                <i class="fab fa-github"></i> Backend Repo
+              </a>
+              <a
+                href="https://github.com/JoelBonillaG/Distributed-Gasoline-System-Frontend"
+                target="_blank"
+              >
+                <i class="fab fa-github"></i> Frontend Repo
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-image">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/amazon.png`}
+              alt="E-Commerce Marketplace Platform"
+            />
+          </div>
           <div class="project-content">
             <h3>E-Commerce Marketplace Platform</h3>
-            <p>Complete marketplace serving <strong>5,000+ users</strong> with Spring Boot backend and React/TypeScript frontend. Features RESTful APIs with JWT/RBAC security, pagination, and content moderation. Achieved <strong>85% response time improvement</strong> (300ms → 45ms) through Redis multi-layer caching and database optimization. Deployed with CI/CD using Jenkins, SonarQube, and Azure Container Apps with <strong>90% test coverage</strong> and 95+ Lighthouse score.</p>
+            <p>
+              Complete marketplace serving <strong>5,000+ users</strong> with Spring Boot backend and
+              React/TypeScript frontend. Features RESTful APIs with JWT/RBAC security, pagination, and
+              content moderation. Achieved <strong>85% response time improvement</strong> (300ms → 45ms)
+              through Redis multi-layer caching and database optimization. Deployed with CI/CD using Jenkins,
+              SonarQube, and Azure Container Apps with <strong>90% test coverage</strong> and 95+ Lighthouse
+              score.
+            </p>
             <div class="technologies">
               <span><i class="devicon-spring-original colored"></i> Spring Boot</span>
               <span><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
-              <span><i class="devicon-redis-original colored"></i> Redis</span>
+              <span><i class="devicon-redis-plain colored"></i> Redis</span>
               <span><i class="devicon-react-original colored"></i> React</span>
               <span><i class="devicon-typescript-plain colored"></i> TypeScript</span>
               <span><i class="devicon-tailwindcss-original colored"></i> TailwindCSS</span>
@@ -81,35 +196,123 @@ import Footer from '../components/Footer.astro';
               <span><i class="devicon-azure-plain colored"></i> Azure</span>
             </div>
             <div class="project-links">
-              <a href="https://drtx2.github.io/copying-amazon/#/" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-              <a href="https://github.com/DRTX2/ecomerce.git" target="_blank"><i class="fab fa-github"></i> Backend Repo</a>
-              <a href="https://github.com/DRTX2/copying-amazon" target="_blank"><i class="fab fa-github"></i> Frontend Repo</a>
+              <!-- <a href="https://drtx2.github.io/copying-amazon/#/" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a> -->
+              <a href="https://github.com/DavidJosueP2/Marketplace_Link" target="_blank"
+                ><i class="fab fa-github"></i> Backend Source Code</a
+              >
+              <a href="https://github.com/DavidJosueP2/Marketplace-Link-Front" target="_blank"
+                ><i class="fab fa-github"></i> Frontend Source Code</a
+              >
             </div>
           </div>
         </article>
 
         <article class="project">
-          <div class="project-image"><img src={`${import.meta.env.BASE_URL}assets/img/in_proccess.png`} alt="Medical Clinic Management System" /></div>
+          <div class="project-image">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/clinic-front.jpeg`}
+              alt="Medical Clinic Management System"
+            />
+          </div>
           <div class="project-content">
             <h3>Medical Clinic Management System</h3>
-            <p>HIPAA-compliant full-stack healthcare system with Clean Architecture backend managing appointments, medical history, and audit trails. Features rate limiting, cache invalidation, and <strong>60% faster medical records retrieval</strong> through 3NF normalization and indexing. Includes responsive React admin dashboard with PDF generation and React Native mobile app (iOS/Android) with push notifications and offline capabilities.</p>
+            <p>
+              HIPAA-compliant full-stack healthcare system with a <strong
+                >Clean Architecture backend</strong
+              > managing appointments, medical history, and audit trails. Includes <strong
+                >React admin dashboard</strong
+              > for system administrators and <strong
+                >React dashboard for healthcare professionals</strong
+              > to manage their patients and schedules. Features <strong
+                >React Native mobile app</strong
+              > for patients to view medical history, receive notifications, discover doctors, and manage
+              their profile. Optimized data retrieval with <strong
+                >3NF normalization and indexing</strong
+              >, achieving <strong>60% faster access to medical records</strong>, plus <strong
+                >rate limiting</strong
+              > and <strong>cache invalidation</strong> for reliability.
+            </p>
+
             <div class="technologies">
               <span><i class="devicon-spring-original colored"></i> Spring Boot</span>
               <span><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
-              <span><i class="devicon-redis-original colored"></i> Redis</span>
+              <span><i class="devicon-redis-plain colored"></i> Redis</span>
               <span><i class="devicon-react-original colored"></i> React</span>
               <span><i class="devicon-react-original colored"></i> React Native</span>
               <span><i class="devicon-tailwindcss-original colored"></i> TailwindCSS</span>
-              <span><i><img src={`${import.meta.env.BASE_URL}assets/img/icons8-json-web-token.svg`} alt="" /></i> JWT/RBAC</span>
+              <span
+                ><i
+                  ><img
+                    src={`${import.meta.env.BASE_URL}assets/img/icons8-json-web-token.svg`}
+                    alt=""
+                  /></i
+                > JWT/RBAC</span
+              >
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/DRTX2/clinic" target="_blank"
+                ><i class="fab fa-github"></i> Repository</a
+              >
             </div>
           </div>
         </article>
 
         <article class="project">
-          <div class="project-image"><img src={`${import.meta.env.BASE_URL}assets/img/maintenance_system.png`} alt="SmartNotes Microservices Platform" /></div>
+          <div class="project-image">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/maintenance_system.png`}
+              alt="Inventory Management and Judicial Audits System"
+            />
+          </div>
+          <div class="project-content">
+            <h3>Inventory Management and Judicial Audits System</h3>
+            <p>
+              Web system for state entities that manages inventories, users with custom roles, and
+              mandatory maintenance compliance per Ecuadorian law. Tracks asset maintenance
+              schedules, generates dynamic PDF reports for judicial audits, and ensures security
+              with JWT authentication. Features performance and compliance reporting aligned with
+              public sector regulations.
+            </p>
+            <div class="technologies">
+              <span><i class="devicon-laravel-original colored"></i> Laravel</span>
+              <span><i class="devicon-react-original colored"></i> React</span>
+              <span><i class="devicon-mysql-original colored"></i> MySQL</span>
+              <span><i class="devicon-materialui-plain colored"></i> Material UI</span>
+              <span><i class="devicon-figma-plain colored"></i> Figma</span>
+              <span
+                ><i
+                  ><img
+                    src={`${import.meta.env.BASE_URL}assets/img/icons8-json-web-token.svg`}
+                    alt=""
+                  /></i
+                > JWT</span
+              >
+              <span><i class="devicon-axios-plain colored"></i> Axios</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/DRTX2/maintenance-system" target="_blank"
+                ><i class="fab fa-github"></i> Repository</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-image">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/smartnotes.png`}
+              alt="SmartNotes Microservices Platform"
+            />
+          </div>
           <div class="project-content">
             <h3>SmartNotes Platform — Microservices Architecture</h3>
-            <p>Scalable note-taking platform built with microservices architecture using NestJS and TypeScript. Implements event-driven communication with RabbitMQ, NGINX as API Gateway for routing and authentication, and secure MongoDB/PostgreSQL schemas with proper indexing. Features JWT + RBAC authentication, containerized services with Docker, and comprehensive testing with Jest.</p>
+            <p>
+              Scalable note-taking platform built with microservices architecture using NestJS and
+              TypeScript. Implements event-driven communication with RabbitMQ, NGINX as API Gateway
+              for routing and authentication, and secure MongoDB/PostgreSQL schemas with proper
+              indexing. Features JWT + RBAC authentication, containerized services with Docker, and
+              comprehensive testing with Jest.
+            </p>
             <div class="technologies">
               <span><i class="devicon-nestjs-original colored"></i> NestJS</span>
               <span><i class="devicon-typescript-plain colored"></i> TypeScript</span>
@@ -119,14 +322,29 @@ import Footer from '../components/Footer.astro';
               <span><i class="devicon-nginx-original colored"></i> NGINX</span>
               <span><i class="devicon-docker-plain colored"></i> Docker</span>
             </div>
+            <div class="project-links">
+              <a href="https://github.com/DRTX2/note-app" target="_blank"
+                ><i class="fab fa-github"></i> Repository</a
+              >
+            </div>
           </div>
         </article>
 
         <article class="project">
-          <div class="project-image"><img src={`${import.meta.env.BASE_URL}assets/img/uta_page.jpeg`} alt="UTA Elections Page" /></div>
+          <div class="project-image">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/uta_page.jpeg`}
+              alt="UTA Elections Page"
+            />
+          </div>
           <div class="project-content">
             <h3>UTA Elections Page</h3>
-            <p>A digital platform supporting Dr. Mary Cruz Lascano's 2024-2028 rectorial campaign at the Technical University of Ambato. It informs and connects stakeholders with campaign details, proposals, events, news, and real-time statistics. Built with Laravel, Bootstrap, and MySQL, it ensures functionality and modern design.</p>
+            <p>
+              A digital platform supporting Dr. Mary Cruz Lascano's 2024-2028 rectorial campaign at
+              the Technical University of Ambato. It informs and connects stakeholders with campaign
+              details, proposals, events, news, and real-time statistics. Built with Laravel,
+              Bootstrap, and MySQL, it ensures functionality and modern design.
+            </p>
             <div class="technologies">
               <span><i class="devicon-laravel-original colored"></i> Laravel</span>
               <span><i class="devicon-javascript-plain colored"></i> JavaScript</span>
@@ -134,16 +352,27 @@ import Footer from '../components/Footer.astro';
               <span><i class="devicon-mysql-original colored"></i> MySQL</span>
             </div>
             <div class="project-links">
-              <a href="https://gitlab.com/personalprojects5531442/manejo-proyecto/" target="_blank"><i class="fab fa-github"></i> Repository</a>
+              <a href="https://gitlab.com/personalprojects5531442/manejo-proyecto/" target="_blank"
+                ><i class="fab fa-github"></i> Repository</a
+              >
             </div>
           </div>
         </article>
 
         <article class="project">
-          <div class="project-image"><img src={`${import.meta.env.BASE_URL}assets/img/blog.jpeg`} alt="My Creative Portfolio" /></div>
+          <div class="project-image">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/blog.jpeg`}
+              alt="My Creative Portfolio"
+            />
+          </div>
           <div class="project-content">
             <h3>My Creative Portfolio</h3>
-            <p>My Creative Portfolio is an interactive platform for creating and customizing personal portfolios. It allows users to showcase work professionally, manage projects, and engage with a creative community through comments and collaboration.</p>
+            <p>
+              My Creative Portfolio is an interactive platform for creating and customizing personal
+              portfolios. It allows users to showcase work professionally, manage projects, and
+              engage with a creative community through comments and collaboration.
+            </p>
             <div class="technologies">
               <span><i class="devicon-php-plain colored"></i> PHP</span>
               <span><i class="devicon-javascript-plain colored"></i> JavaScript</span>
@@ -152,39 +381,64 @@ import Footer from '../components/Footer.astro';
               <span><i class="devicon-bootstrap-plain colored"></i> Bootstrap</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/DRTX2/proyecto-mds.git" target="_blank"><i class="fab fa-github"></i> Repository</a>
+              <a href="https://github.com/DRTX2/proyecto-mds.git" target="_blank"
+                ><i class="fab fa-github"></i> Repository</a
+              >
             </div>
           </div>
         </article>
 
         <article class="project">
-          <div class="project-image"><img src={`${import.meta.env.BASE_URL}assets/img/capibara.jpeg`} alt="Capigochi" /></div>
+          <div class="project-image">
+            <img src={`${import.meta.env.BASE_URL}assets/img/capibara.jpeg`} alt="Capigochi" />
+          </div>
           <div class="project-content">
             <h3>Capigochi</h3>
-            <p>Capigochi is an interactive app inspired by Tamagotchis, where users take care of a virtual pet by managing stats such as hunger, energy, and joy. Actions like feeding or playing affect the pet's well-being, and players can restart if its life reaches zero. For this project, I implemented design patterns such as Observer, Factory, Strategy, and Singleton.</p>
+            <p>
+              Capigochi is an interactive app inspired by Tamagotchis, where users take care of a
+              virtual pet by managing stats such as hunger, energy, and joy. Actions like feeding or
+              playing affect the pet's well-being, and players can restart if its life reaches zero.
+              For this project, I implemented design patterns such as Observer, Factory, Strategy,
+              and Singleton.
+            </p>
             <div class="technologies">
               <span><i class="devicon-java-plain colored"></i> Java</span>
               <span><i class="devicon-mysql-original colored"></i> MySQL</span>
             </div>
             <div class="project-links">
-              <a href="https://github.com/DRTX2/Capigochi" target="_blank"><i class="fab fa-github"></i> Repository</a>
+              <a href="https://github.com/DRTX2/Capigochi" target="_blank"
+                ><i class="fab fa-github"></i> Repository</a
+              >
             </div>
           </div>
         </article>
 
         <article class="project">
-          <div class="project-image"><img src={`${import.meta.env.BASE_URL}assets/img/consulting-firm.avif`} alt="Consulting firm" /></div>
+          <div class="project-image">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/img/consulting-firm.avif`}
+              alt="Consulting firm"
+            />
+          </div>
           <div class="project-content">
             <h3>Web Agency</h3>
-            <p>A responsive website built with Bootstrap, replicating a professional web agency's platform. This project showcases service packages for web development, highlighting modern design, usability, and mobile-first responsiveness.</p>
+            <p>
+              A responsive website built with Bootstrap, replicating a professional web agency's
+              platform. This project showcases service packages for web development, highlighting
+              modern design, usability, and mobile-first responsiveness.
+            </p>
             <div class="technologies">
               <span><i class="devicon-javascript-plain colored"></i> JavaScript</span>
               <span><i class="devicon-html5-plain colored"></i> HTML</span>
               <span><i class="devicon-bootstrap-plain colored"></i> Bootstrap</span>
             </div>
             <div class="project-links">
-              <a href="https://drtx2.github.io/consulting-firm/" target="_blank"><i class="fas fa-external-link-alt"></i> Live Site</a>
-              <a href="https://github.com/DRTX2/consulting-firm/" target="_blank"><i class="fab fa-github"></i> Repository</a>
+              <a href="https://drtx2.github.io/consulting-firm/" target="_blank"
+                ><i class="fas fa-external-link-alt"></i> Live Site</a
+              >
+              <a href="https://github.com/DRTX2/consulting-firm/" target="_blank"
+                ><i class="fab fa-github"></i> Repository</a
+              >
             </div>
           </div>
         </article>
@@ -194,23 +448,51 @@ import Footer from '../components/Footer.astro';
     <section class="contact-cta" id="contact">
       <div class="cta-container">
         <h2>Let's Work <span class="enfasis-title">Together</span></h2>
-        <p class="cta-subtitle">I'm always interested in hearing about new projects and opportunities. Whether you need a full-stack solution, backend architecture, or frontend excellence, let's create something amazing together.</p>
+        <p class="cta-subtitle">
+          I'm always interested in hearing about new projects and opportunities. Whether you need a
+          full-stack solution, backend architecture, or frontend excellence, let's create something
+          amazing together.
+        </p>
         <div class="cta-buttons">
-          <a href="https://www.linkedin.com/in/david-manjarres-quintero-056823211/" target="_blank" rel="noopener noreferrer" class="cta-button primary" aria-label="Connect with me on LinkedIn">
+          <a
+            href="https://www.linkedin.com/in/david-manjarres-quintero-056823211/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cta-button primary"
+            aria-label="Connect with me on LinkedIn"
+          >
             <i class="devicon-linkedin-plain" aria-hidden="true"></i> Connect on LinkedIn
           </a>
-          <a href="https://github.com/DRTX2" target="_blank" rel="noopener noreferrer" class="cta-button secondary" aria-label="View my projects on GitHub">
+          <a
+            href="https://github.com/DRTX2"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cta-button secondary"
+            aria-label="View my projects on GitHub"
+          >
             <i class="devicon-github-original" aria-hidden="true"></i> View GitHub
           </a>
-          <a href="mailto:davidmanjarres2004@gmail.com" class="cta-button secondary" aria-label="Send me an email">
+          <a
+            href="mailto:davidmanjarres2004@gmail.com"
+            class="cta-button secondary"
+            aria-label="Send me an email"
+          >
             <i class="fas fa-envelope" aria-hidden="true"></i> Email Me
           </a>
         </div>
         <div class="cta-stats">
-          <div class="stat-item"><span class="stat-number">4+</span><span class="stat-label">Years Experience</span></div>
-          <div class="stat-item"><span class="stat-number">10+</span><span class="stat-label">Projects Delivered</span></div>
-          <div class="stat-item"><span class="stat-number">5K+</span><span class="stat-label">Users Served</span></div>
-          <div class="stat-item"><span class="stat-number">80%+</span><span class="stat-label">Test Coverage</span></div>
+          <div class="stat-item">
+            <span class="stat-number">4+</span><span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">10+</span><span class="stat-label">Projects Delivered</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">12+</span><span class="stat-label">Backend Services Built</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">80%</span><span class="stat-label">Max Test Coverage (E-Commerce)</span>
+          </div>
         </div>
       </div>
     </section>
