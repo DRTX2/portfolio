@@ -147,6 +147,7 @@
         .project-links {
             display: flex;
             gap: 1rem;
+            flex-wrap: wrap; // Allow wrapping on small screens or long text
 
             a {
                 display: flex;
@@ -155,6 +156,7 @@
                 color: $color-secondary;
                 text-decoration: none;
                 transition: color 0.3s ease;
+                white-space: nowrap; // Prevent text from breaking inside the link
 
                 &:hover {
                     color: $color-primary;
