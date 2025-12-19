@@ -1,4 +1,8 @@
 {
+  "site": {
+    "title": "David Manjarres | Full Stack Developer",
+    "description": "Full Stack Developer specializing in Java Spring Boot, React, TypeScript, and microservices. 4+ years building scalable applications with 90%+ test coverage, CI/CD pipelines, and cloud deployments."
+  },
   "hero": {
     "greeting": "Hi There, I'm",
     "name": "David Manjarres",

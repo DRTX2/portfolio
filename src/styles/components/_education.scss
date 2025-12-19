@@ -36,19 +36,29 @@
     }
 
     article {
-        background-color: rgba(30, 41, 59, 0.4); // Default glass
-        // To add contrast as requested, we need it to be distinct from the body bg.
-        // Assuming body is dark, let's make this slightly lighter/bluer or use a border.
-        background-color: rgba(255, 255, 255, 0.03); // Lighter overlay for contrast
+        background-color: rgba(255, 255, 255, 0.03); // Lighter overlay for contrast (Dark Mode)
         border: 1px solid rgba(255, 255, 255, 0.05); // Subtle border
         border-radius: 12px;
         overflow: hidden;
         transition: all 0.3s ease;
         display: flex; // Default to flex
 
+        // Light Mode Override for better contrast
+        @at-root [data-theme="light"] & {
+            background-color: rgba(255, 255, 255, 0.8); // White-ish background
+            border: 1px solid rgba(0, 0, 0, 0.1); // Visible border
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+            &:hover {
+                background-color: #ffffff;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                border-color: var(--color-primary); // Highlight on hover
+            }
+        }
+
         &:hover {
             transform: translateY(-5px);
-            background-color: rgba(255, 255, 255, 0.06); // Lighter on hover
+            background-color: rgba(255, 255, 255, 0.06); // Lighter on hover (Dark Mode)
             border-color: var(--accent-30);
             box-shadow: 0 10px 25px var(--primary-10);
 

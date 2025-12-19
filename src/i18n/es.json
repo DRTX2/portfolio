@@ -1,4 +1,8 @@
 {
+  "site": {
+    "title": "David Manjarres | Desarrollador Full Stack",
+    "description": "Desarrollador Full Stack especializado en Java Spring Boot, React, TypeScript y microservicios. +4 años construyendo aplicaciones escalables con +90% de cobertura de pruebas, pipelines CI/CD y despliegues en la nube."
+  },
   "hero": {
     "greeting": "Hola, soy",
     "name": "David Manjarres",

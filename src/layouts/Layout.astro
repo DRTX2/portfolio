@@ -1,63 +1,129 @@
 ---
 import '../styles/main.scss';
+import { useTranslations } from '../i18n/utils';
 
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
+const t = useTranslations('en');
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta
-			name="description"
-			content="Full Stack Developer specializing in Java Spring Boot, React, TypeScript, and microservices. 4+ years building scalable applications with 90%+ test coverage, CI/CD pipelines, and cloud deployments."
-		/>
-		<meta
-			name="keywords"
-			content="Full Stack Developer, Java Spring Boot, React TypeScript, Microservices, REST APIs, PostgreSQL, Redis, CI/CD, Jenkins, Azure, Node.js, NestJS, Clean Architecture, TailwindCSS"
-		/>
-		<meta name="author" content="David Manjarres" />
-		<meta property="og:title" content="David Manjarres | Full Stack Developer" />
-		<meta property="og:description" content="Full Stack Developer specializing in Java, Spring Boot, React, and modern web technologies" />
-		<meta property="og:type" content="website" />
-		<meta name="theme-color" content="#0f172a" />
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      // Anti-FOUC (Flash of Untranslated Content) script
+      (function () {
+        try {
+          var lang = localStorage.getItem('lang');
+          if (lang && lang !== 'en') {
+            document.documentElement.classList.add('translating');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      html.translating body {
+        opacity: 0;
+        pointer-events: none;
+      }
+      body {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={t.site.description} />
+    <meta
+      name="keywords"
+      content="Full Stack Developer, Java Spring Boot, React TypeScript, Microservices, REST APIs, PostgreSQL, Redis, CI/CD, Jenkins, Azure, Node.js, NestJS, Clean Architecture, TailwindCSS"
+    />
+    <meta name="author" content="David Manjarres" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={t.site.description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0f172a" />
 
-		<title>{title}</title>
+    <title>{title}</title>
 
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-			rel="stylesheet"
-		/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-		/>
-		<link
-			rel="icon"
-			href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/devicon/devicon-original.svg"
-		/>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/devicon/devicon-original.svg"
+    />
 
-		<script is:inline src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-	</head>
-	<body>
-		<slot />
-		
-		<script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-		<script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-		<script src="../scripts/main.js"></script>
-		<script is:inline src={`${import.meta.env.BASE_URL}animations.js`}></script>
-	</body>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  </head>
+  <body>
+    <slot />
+
+    <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"
+    ></script>
+    <script src="../scripts/main.js"></script>
+    <script is:inline src={`${import.meta.env.BASE_URL}animations.js`}></script>
+
+    <script>
+      import en from '../i18n/en.json';
+      import es from '../i18n/es.json';
+
+      const translations: any = { en, es };
+
+      function updateSiteMeta() {
+        const lang = localStorage.getItem('lang') || 'en';
+        const t = translations[lang];
+
+        if (t && t.site) {
+          // Update Title
+          document.title = t.site.title;
+
+          // Update Description
+          const metaDesc = document.querySelector('meta[name="description"]');
+          if (metaDesc) metaDesc.setAttribute('content', t.site.description);
+          const ogDesc = document.querySelector('meta[property="og:description"]');
+          if (ogDesc) ogDesc.setAttribute('content', t.site.description);
+          const ogTitle = document.querySelector('meta[property="og:title"]');
+          if (ogTitle) ogTitle.setAttribute('content', t.site.title);
+
+          // Update HTML lang
+          document.documentElement.lang = lang;
+        }
+      }
+
+      function revealContent() {
+        // Remove translating class to reveal content
+        // Small timeout to ensure scripts have run
+        requestAnimationFrame(() => {
+          document.documentElement.classList.remove('translating');
+        });
+      }
+
+      // Run immediately to minimize flash (though strictly script[type=module] defers)
+      updateSiteMeta();
+      // Hook into DOMContentLoaded for both updates and reveal
+      document.addEventListener('DOMContentLoaded', () => {
+        updateSiteMeta();
+        revealContent();
+      });
+      window.addEventListener('languagechange', updateSiteMeta);
+    </script>
+  </body>
 </html>
