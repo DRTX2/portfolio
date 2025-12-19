@@ -1,8 +1,13 @@
 ---
 /**
- * Hero/Presentation Component
+ * Hero/Presentation Component with i18n support
  * Main hero section with typing effect and social links
  */
+
+import { useTranslations } from '../i18n/utils';
+
+// Get language - default to 'en', will be updated client-side
+const t = useTranslations('en');
 
 interface SocialLink {
   href: string;
@@ -15,50 +20,51 @@ interface Props {
   socialLinks?: SocialLink[];
 }
 
-const { 
+const {
   name = 'David Manjarres',
   socialLinks = [
     {
       href: 'https://www.linkedin.com/in/david-manjarres-quintero-056823211/',
       icon: 'devicon-linkedin-plain',
-      label: 'Visit my LinkedIn profile'
+      label: 'Visit my LinkedIn profile',
     },
     {
       href: 'https://github.com/DRTX2',
       icon: 'devicon-github-original',
-      label: 'Visit my GitHub profile'
+      label: 'Visit my GitHub profile',
     },
     {
       href: `${import.meta.env.BASE_URL}assets/docs/David_Oswaldo_Manjarres_Quintero_FULL.pdf`,
       icon: 'fas fa-file-pdf',
-      label: 'Download my resume as PDF'
-    }
-  ]
+      label: 'Download my resume as PDF',
+    },
+  ],
 } = Astro.props;
 ---
 
 <section class="presentation" id="presentation">
   <article class="information" id="information">
     <h2>
-      Hi There, I'm <span class="gradient-text">{name}</span>
+      <span data-i18n="hero.greeting">{t.hero.greeting}</span>
+      <span class="gradient-text" data-i18n="hero.name">{t.hero.name}</span>
     </h2>
-    <p>I am into <span class="develop-areas">Backend Development, Cloud Architecture, Microservices</span></p>
+    <p>
+      <span data-i18n="hero.rolePrefix">{t.hero.rolePrefix}</span>{' '}
+      <span class="develop-areas"></span>
+    </p>
     <a href="#about-me" class="btn-about-me">
-      <button aria-label="Learn more about me">About Me</button>
+      <button aria-label="Learn more about me" data-i18n="hero.cta">{t.hero.cta}</button>
     </a>
     <ul class="social-networks">
-      {socialLinks.map(link => (
-        <li>
-          <a
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={link.label}
-          >
-            <i class={link.icon} aria-hidden="true"></i>
-          </a>
-        </li>
-      ))}
+      {
+        socialLinks.map((link) => (
+          <li>
+            <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+              <i class={link.icon} aria-hidden="true" />
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </article>
   <article class="my-icon">
@@ -69,3 +75,45 @@ const {
     />
   </article>
 </section>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+  import { initTypingEffect } from '../scripts/typing.js';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value) break;
+    }
+    return value || key;
+  }
+
+  function updateHeroContent() {
+    const lang = localStorage.getItem('lang') || 'en';
+    const elements = document.querySelectorAll('[data-i18n]');
+
+    elements.forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (key) {
+        const translation = getTranslation(key, lang);
+        if (el.tagName === 'BUTTON' || el.tagName === 'SPAN' || el.tagName === 'P') {
+          el.textContent = translation;
+        }
+      }
+    });
+
+    // Update typing effect
+    const typingStrings = translations[lang].hero.typing;
+    if (typingStrings) {
+      initTypingEffect(typingStrings);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', updateHeroContent);
+  window.addEventListener('languagechange', updateHeroContent);
+</script>

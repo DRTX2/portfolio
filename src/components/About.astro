@@ -1,95 +1,85 @@
 ---
 /**
- * About Component
+ * About Component with i18n support
  * About section with highlights, expertise, and contact info
  */
 
+import { useTranslations } from '../i18n/utils';
+
+// Get language - default to 'en', will be updated client-side
+const t = useTranslations('en');
+
 interface Highlight {
   icon: string;
-  text: string;
+  textKey: string;
 }
 
 interface Props {
-  highlights?: Highlight[];
-  expertise?: string[];
   email?: string;
   location?: string;
   resumeUrl?: string;
 }
 
 const {
-  highlights = [
-    {
-      icon: 'fas fa-rocket',
-      text: 'Building <strong>scalable, cloud-native applications</strong> with Spring Boot, NestJS, React, and TypeScript.'
-    },
-    {
-      icon: 'fas fa-code',
-      text: 'Designing <strong>RESTful APIs</strong> with <strong>Clean & Hexagonal Architecture</strong>, implementing CI/CD pipelines and microservices.'
-    },
-    {
-      icon: 'fas fa-database',
-      text: 'Experienced with <strong>PostgreSQL, MySQL, MongoDB, Redis</strong> for relational and NoSQL solutions.'
-    },
-    {
-      icon: 'fas fa-server',
-      text: 'Proficient in message brokers (<strong>RabbitMQ</strong>), containerization (<strong>Docker</strong>), cloud deployment (<strong>Azure</strong>), and familiar with <strong>Laravel</strong>.'
-    },
-    {
-      icon: 'fas fa-graduation-cap',
-      text: 'B.Sc. in Software Engineering (2021-2026) at Technical University of Ambato, Ecuador.'
-    },
-    {
-      icon: 'fas fa-lightbulb',
-      text: 'Passionate about writing maintainable, high-quality code and solving complex problems.'
-    }
-  ],
-  expertise = [
-    'Full-Stack Engineering',
-    'Cloud Architecture',
-    'Microservices Design',
-    'Event-Driven Systems',
-    'DevOps & CI/CD',
-    'Database Design',
-    'RESTful APIs',
-    'Clean Code Practices'
-  ],
   email = 'davidmanjarres2004@gmail.com',
   location = 'Ambato, Ecuador',
-  resumeUrl = `${import.meta.env.BASE_URL}assets/docs/David_Oswaldo_Manjarres_Quintero_FULL.pdf`
+  resumeUrl = `${import.meta.env.BASE_URL}assets/docs/David_Oswaldo_Manjarres_Quintero_FULL.pdf`,
 } = Astro.props;
+
+// Icons remain the same across languages
+const highlightIcons = [
+  'fas fa-rocket',
+  'fas fa-code',
+  'fas fa-database',
+  'fas fa-server',
+  'fas fa-graduation-cap',
+  'fas fa-lightbulb',
+];
 ---
 
 <section class="about-me" id="about-me">
-  <h2>About <span class="enfasis-title">Me</span></h2>
-  <h3 class="position" aria-label="Professional Title">
-    Full-Stack Developer • Cloud Engineer • Ecuador 🇪🇨
+  <h2>
+    <span data-i18n="about.title">{t.about.title}</span>
+    <span class="enfasis-title" data-i18n="about.titleHighlight">{t.about.titleHighlight}</span>
+  </h2>
+  <h3 class="position" aria-label="Professional Title" data-i18n="about.subtitle">
+    {t.about.subtitle}
   </h3>
 
   <div class="about-content">
-    {highlights.map(highlight => (
-      <div class="about-highlight">
-        <i class={highlight.icon}></i>
-        <p set:html={highlight.text} />
-      </div>
-    ))}
+    {
+      highlightIcons.map((icon, index) => (
+        <div class="about-highlight">
+          <i class={icon} />
+          <p data-i18n={`about.highlights.${index}`} set:html={t.about.highlights[index]} />
+        </div>
+      ))
+    }
   </div>
 
   <div class="expertise-areas">
-    <h4>Areas of Expertise</h4>
+    <h4 data-i18n="about.expertise">{t.about.expertise}</h4>
     <div class="expertise-tags">
-      {expertise.map(area => (
-        <span class="tag">{area}</span>
-      ))}
+      {
+        t.about.expertiseTags.map((area: string, index: number) => (
+          <span class="tag" data-i18n={`about.expertiseTags.${index}`}>
+            {area}
+          </span>
+        ))
+      }
     </div>
   </div>
 
   <div class="contact-info">
     <p>
-      <span class="my-contact-email">Email: </span>
+      <span class="my-contact-email" data-i18n="about.emailLabel">{t.about.emailLabel}</span>
       <a href={`mailto:${email}`} class="my-email">{email}</a>
     </p>
-    <p><span class="my-contact-place">Place: </span>{location}</p>
+    <p>
+      <span class="my-contact-place" data-i18n="about.placeLabel">{t.about.placeLabel}</span>{
+        location
+      }
+    </p>
     <a
       href={resumeUrl}
       class="resume-button"
@@ -97,7 +87,48 @@ const {
       rel="noopener noreferrer"
       aria-label="Download my resume as PDF"
     >
-      <button class="resume">Download Resume</button>
+      <button class="resume" data-i18n="about.downloadResume">Download Resume</button>
     </a>
   </div>
 </section>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value && value !== 0) break;
+    }
+    return value || key;
+  }
+
+  function updateAboutContent() {
+    const lang = localStorage.getItem('lang') || 'en';
+
+    // Update all elements with data-i18n attribute
+    const elements = document.querySelectorAll('[data-i18n]');
+
+    elements.forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (key) {
+        const translation = getTranslation(key, lang);
+
+        // Handle HTML content for highlights
+        if (key.startsWith('about.highlights')) {
+          el.innerHTML = translation;
+        } else {
+          el.textContent = translation;
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', updateAboutContent);
+  window.addEventListener('languagechange', updateAboutContent);
+</script>

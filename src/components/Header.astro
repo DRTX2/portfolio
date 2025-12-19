@@ -1,43 +1,99 @@
 ---
 /**
  * Header Component
- * Navigation menu with mobile hamburger support
+ * Navigation menu with mobile hamburger support and i18n
  */
 
 import ThemeToggle from './ThemeToggle.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { useTranslations } from '../i18n/utils';
+
+// Get language from localStorage (client-side will handle this)
+const lang = 'en'; // Default, will be updated client-side
+const t = useTranslations(lang as 'en' | 'es');
 
 interface Props {
-  navItems?: Array<{ href: string; label: string }>;
+  navItems?: Array<{ href: string; key: string }>;
 }
 
 const {
   navItems = [
-    { href: '#presentation', label: 'Home' },
-    { href: '#about-me', label: 'About' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#education', label: 'Education' },
-    { href: '#projects', label: 'Projects' },
+    { href: '#presentation', key: 'nav.home' },
+    { href: '#about-me', key: 'nav.about' },
+    { href: '#skills', key: 'nav.skills' },
+    { href: '#education', key: 'nav.education' },
+    { href: '#projects', key: 'nav.projects' },
   ],
 } = Astro.props;
+
+// Helper to get nested translation
+function getTranslation(key: string) {
+  const keys = key.split('.');
+  let value: any = t;
+  for (const k of keys) {
+    value = value?.[k];
+  }
+  return value || key;
+}
 ---
 
 <header class="main-menu">
   <div class="left-title-menu" id="dev-name">David Manjarres</div>
 
   <nav class="right-title-menu">
-    <ul class="right-items-menu">
+    <ul class="right-items-menu" id="nav-items">
       {
         navItems.map((item) => (
           <li>
-            <a href={item.href}>{item.label}</a>
+            <a href={item.href} data-i18n-key={item.key}>
+              {getTranslation(item.key)}
+            </a>
           </li>
         ))
       }
     </ul>
   </nav>
 
-  <ThemeToggle />
-
-  <!-- Hamburger button -->
-  <div id="menu-toggle" class="hamburger">☰</div>
+  <div class="menu-controls">
+    <LanguageSwitcher />
+    <ThemeToggle />
+    <!-- Hamburger button -->
+    <div id="menu-toggle" class="hamburger">☰</div>
+  </div>
 </header>
+
+<script>
+  // This script runs client-side to handle language updates
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value) break;
+    }
+    return value || key;
+  }
+
+  function updateNavLabels() {
+    const lang = localStorage.getItem('lang') || 'en';
+    const navLinks = document.querySelectorAll('[data-i18n-key]');
+
+    navLinks.forEach((link) => {
+      const key = link.getAttribute('data-i18n-key');
+      if (key) {
+        link.textContent = getTranslation(key, lang);
+      }
+    });
+  }
+
+  // Update on load
+  document.addEventListener('DOMContentLoaded', updateNavLabels);
+
+  // Listen for language changes
+  window.addEventListener('languagechange', updateNavLabels);
+</script>
