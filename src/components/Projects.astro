@@ -3,13 +3,21 @@ import ImageLightbox from './ImageLightbox.astro';
 import ProjectCard from './ProjectCard.astro';
 import ProjectDetailModal from './ProjectDetailModal.astro';
 import { projects } from '../data/projects';
+import { useTranslations } from '../i18n/utils';
+import { getTranslatedProjects } from '../utils/projectsI18n';
+
+const t = useTranslations('en');
+const translatedProjects = getTranslatedProjects(projects, t);
 ---
 
 <section class="projects" id="projects">
-  <h2>My <span class="enfasis-title">Projects</span></h2>
+  <h2 data-i18n="projects.title">
+    {t.projects.title.split(' ')[0]}
+    <span class="enfasis-title">{t.projects.title.split(' ').slice(1).join(' ')}</span>
+  </h2>
   <div class="projects-grid">
     {
-      projects.map((project) => (
+      translatedProjects.map((project) => (
         <ProjectCard
           title={project.title}
           image={project.image}
@@ -25,11 +33,146 @@ import { projects } from '../data/projects';
 </section>
 
 <!-- Pass projects data to client-side JS -->
-<div id="projects-data" data-projects={JSON.stringify(projects)} style="display: none;"></div>
+<div id="projects-data" data-projects={JSON.stringify(translatedProjects)} style="display: none;">
+</div>
 
 <script>
-  // This script helps the ImageLightbox find the new elements if they are added dynamically,
-  // though here they are server-rendered so standard DOMContentLoaded works fine.
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+  import { projects } from '../data/projects';
+  import type { ProjectData } from '../data/projects';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value && value !== 0) break;
+    }
+    return value || key;
+  }
+
+  function getTranslatedProjects(lang: string): ProjectData[] {
+    const t = translations[lang];
+    return projects.map((project) => {
+      const translatedData = t.projects.items?.[project.slug];
+
+      if (!translatedData) {
+        return project;
+      }
+
+      return {
+        ...project,
+        title: translatedData.title || project.title,
+        description: translatedData.description || project.description,
+        highlights: translatedData.highlights || project.highlights,
+        detailedDescription: translatedData.detailedDescription || project.detailedDescription,
+        challenges: translatedData.challenges || project.challenges,
+        solutions: translatedData.solutions || project.solutions,
+      };
+    });
+  }
+
+  function updateProjects() {
+    const lang = localStorage.getItem('lang') || 'en';
+
+    // Update title
+    const titleElement = document.querySelector('#projects [data-i18n="projects.title"]');
+    if (titleElement) {
+      const translation = getTranslation('projects.title', lang);
+      const words = translation.split(' ');
+      const firstWord = words[0];
+      const rest = words.slice(1).join(' ');
+      titleElement.innerHTML = `${firstWord} <span class="enfasis-title">${rest}</span>`;
+    }
+
+    // Update projects data
+    const translatedProjects = getTranslatedProjects(lang);
+    const dataContainer = document.getElementById('projects-data');
+    if (dataContainer) {
+      dataContainer.dataset.projects = JSON.stringify(translatedProjects);
+    }
+
+    // Update project cards
+    const projectCards = document.querySelectorAll('.project[data-slug]');
+    projectCards.forEach((card) => {
+      const slug = card.getAttribute('data-slug');
+      const project = translatedProjects.find((p) => p.slug === slug);
+      if (!project) return;
+
+      // Update title
+      const titleEl = card.querySelector('h3');
+      if (titleEl) titleEl.textContent = project.title;
+
+      // Update highlights if they exist
+      const highlightsContainer = card.querySelector('.project-highlights');
+      if (highlightsContainer && project.highlights) {
+        highlightsContainer.innerHTML = '';
+        project.highlights.forEach((h) => {
+          const li = document.createElement('li');
+          const strong = document.createElement('strong');
+          strong.textContent = h.label + ':';
+          const span = document.createElement('span');
+          span.innerHTML = ' ' + h.text;
+          li.appendChild(strong);
+          li.appendChild(span);
+          highlightsContainer.appendChild(li);
+        });
+      }
+
+      // Update "Overview" button text
+      const viewDetailsBtn = card.querySelector(
+        '.view-details-btn[data-i18n="projects.viewDetails"]'
+      );
+      if (viewDetailsBtn) {
+        viewDetailsBtn.innerHTML = `<i class="fas fa-layer-group"></i> ${getTranslation('projects.viewDetails', lang)}`;
+      }
+
+      // Update "Source Code" links text
+      const links = card.querySelectorAll('.project-links a');
+      links.forEach((link) => {
+        const href = link.getAttribute('href');
+        if (href && href.includes('github')) {
+          const icon = link.querySelector('i');
+          const originalLabel = link.textContent.trim();
+
+          let translatedLabel = originalLabel;
+          if (lang === 'es') {
+            // "Backend Source Code" → "Código Fuente del Backend"
+            // "Frontend Source Code" → "Código Fuente del Frontend"
+            // "Source Code" → "Código Fuente"
+            if (originalLabel.includes('Backend Source Code')) {
+              translatedLabel = 'Código Fuente del Backend';
+            } else if (originalLabel.includes('Frontend Source Code')) {
+              translatedLabel = 'Código Fuente del Frontend';
+            } else if (originalLabel.includes('Source Code')) {
+              translatedLabel = 'Código Fuente';
+            }
+          } else {
+            // Reverse: Spanish to English
+            if (originalLabel.includes('Código Fuente del Backend')) {
+              translatedLabel = 'Backend Source Code';
+            } else if (originalLabel.includes('Código Fuente del Frontend')) {
+              translatedLabel = 'Frontend Source Code';
+            } else if (originalLabel.includes('Código Fuente')) {
+              translatedLabel = 'Source Code';
+            }
+          }
+
+          // Only update if it actually changed
+          if (translatedLabel !== originalLabel) {
+            const iconClass = icon ? icon.className : 'fab fa-github';
+            link.innerHTML = `<i class="${iconClass}"></i> ${translatedLabel}`;
+          }
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', updateProjects);
+  window.addEventListener('languagechange', updateProjects);
 </script>
 
 <ImageLightbox />

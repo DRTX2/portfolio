@@ -4,24 +4,74 @@
  * Displays skill categories and items
  */
 import { skillCategories } from '../data/skills.js';
+import { useTranslations } from '../i18n/utils';
 
 const DEVICON_BASE = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/';
+const t = useTranslations('en');
 ---
 
 <section class="skills-habilities" id="skills">
-  <h2>Skills & <span class="enfasis-title">Abilities</span></h2>
-  
-  {skillCategories.map(category => (
-    <article class={category.id}>
-      <h3>{category.title}</h3>
-      <div class="skill-mention">
-        {category.skills.map(skill => (
-          <div>
-            <img src={`${DEVICON_BASE}${skill.icon}`} alt={skill.name} />
-            {skill.name}
-          </div>
-        ))}
-      </div>
-    </article>
-  ))}
+  <h2 data-i18n="skills.title">
+    {t.skills.title.split('& ')[0]}& <span class="enfasis-title"
+      >{t.skills.title.split('& ')[1]}</span
+    >
+  </h2>
+
+  {
+    skillCategories.map((category) => (
+      <article class={category.id}>
+        <h3 data-i18n={`skills.${category.id}`}>{t.skills[category.id]}</h3>
+        <div class="skill-mention">
+          {category.skills.map((skill) => (
+            <div>
+              <img src={`${DEVICON_BASE}${skill.icon}`} alt={skill.name} />
+              {skill.name}
+            </div>
+          ))}
+        </div>
+      </article>
+    ))
+  }
 </section>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value && value !== 0) break;
+    }
+    return value || key;
+  }
+
+  function updateSkillsContent() {
+    const lang = localStorage.getItem('lang') || 'en';
+
+    // Update all elements with data-i18n attribute
+    const elements = document.querySelectorAll('#skills [data-i18n]');
+
+    elements.forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (key) {
+        const translation = getTranslation(key, lang);
+
+        // Handle the title specially to keep the span formatting
+        if (key === 'skills.title') {
+          const parts = translation.split('& ');
+          el.innerHTML = `${parts[0]}& <span class="enfasis-title">${parts[1]}</span>`;
+        } else {
+          el.textContent = translation;
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', updateSkillsContent);
+  window.addEventListener('languagechange', updateSkillsContent);
+</script>

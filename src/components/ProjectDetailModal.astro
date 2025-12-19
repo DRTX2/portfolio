@@ -9,19 +9,23 @@
 
       <div class="modal-scroll-content">
         <section class="modal-section overview">
-          <h3>Overview</h3>
+          <h3 data-i18n="projects.modal.overview">Overview</h3>
           <p id="modalDescription"></p>
           <div id="modalContext" class="context-box"></div>
         </section>
 
         <div class="two-column-grid">
           <section class="modal-section" id="modalChallengesSection">
-            <h3><i class="fas fa-fire-alt"></i> Key Challenges</h3>
+            <h3 data-i18n="projects.modal.keyChallenges">
+              <i class="fas fa-fire-alt"></i> Key Challenges
+            </h3>
             <ul id="modalChallenges"></ul>
           </section>
 
           <section class="modal-section" id="modalSolutionsSection">
-            <h3><i class="fas fa-check-circle"></i> Technical Solutions</h3>
+            <h3 data-i18n="projects.modal.technicalSolutions">
+              <i class="fas fa-check-circle"></i> Technical Solutions
+            </h3>
             <ul id="modalSolutions"></ul>
           </section>
         </div>
@@ -159,4 +163,56 @@
       }
     });
   });
+</script>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value && value !== 0) break;
+    }
+    return value || key;
+  }
+
+  function updateModalTranslations() {
+    const lang = localStorage.getItem('lang') || 'en';
+
+    // Update all modal headers with data-i18n
+    const modalHeaders = document.querySelectorAll('#projectDetailModal [data-i18n]');
+    modalHeaders.forEach((header) => {
+      const key = header.getAttribute('data-i18n');
+      if (key) {
+        const translation = getTranslation(key, lang);
+
+        // Check if header has an icon
+        if (key === 'projects.modal.keyChallenges') {
+          header.innerHTML = `<i class="fas fa-fire-alt"></i> ${translation}`;
+        } else if (key === 'projects.modal.technicalSolutions') {
+          header.innerHTML = `<i class="fas fa-check-circle"></i> ${translation}`;
+        } else {
+          header.textContent = translation;
+        }
+      }
+    });
+
+    // Update "Context & Goal:" text if present
+    const contextBox = document.getElementById('modalContext');
+    if (contextBox && contextBox.innerHTML && contextBox.style.display !== 'none') {
+      const contextLabel = getTranslation('projects.modal.contextGoal', lang);
+      const description = contextBox.innerHTML.split('</strong> ')[1];
+      if (description) {
+        contextBox.innerHTML = `<strong>${contextLabel}:</strong> ${description}`;
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', updateModalTranslations);
+  window.addEventListener('languagechange', updateModalTranslations);
 </script>

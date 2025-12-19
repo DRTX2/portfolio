@@ -21,10 +21,13 @@ interface Props {
   slug?: string;
 }
 
+import { useTranslations } from '../i18n/utils';
+
 const { title, image, description, technologies, links, slug, highlights } = Astro.props;
+const t = useTranslations('en');
 ---
 
-<article class="project">
+<article class="project" data-slug={slug}>
   <div class="project-image">
     <img src={image} alt={title} />
   </div>
@@ -73,8 +76,8 @@ const { title, image, description, technologies, links, slug, highlights } = Ast
       }
       {
         slug && (
-          <button class="view-details-btn" data-slug={slug}>
-            <i class="fas fa-layer-group" /> Overview
+          <button class="view-details-btn" data-slug={slug} data-i18n="projects.viewDetails">
+            <i class="fas fa-layer-group" /> {t.projects.viewDetails}
           </button>
         )
       }

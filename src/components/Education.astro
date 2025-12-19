@@ -1,26 +1,47 @@
+---
+/**
+ * Education Component with i18n support
+ * Displays educational background and certifications
+ */
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations('en');
+---
+
 <section class="education" id="education">
-  <h2>
-    My <span class="enfasis-title">Education</span> & <span class="enfasis-title">Certificates</span
-    >
+  <h2 data-i18n="education.title">
+    {
+      (() => {
+        const parts = t.education.title.split('&').map((p) => p.trim());
+        const firstWords = parts[0].split(' ');
+        return (
+          <>
+            {firstWords.slice(0, -1).join(' ')}{' '}
+            <span class="enfasis-title">{firstWords[firstWords.length - 1]}</span>
+            {' & '}
+            <span class="enfasis-title">{parts[1]}</span>
+          </>
+        );
+      })()
+    }
   </h2>
-  <p><i>Education is not the learning of facts, but the training of the mind to think.</i></p>
+  <p data-i18n="education.quote"><i>{t.education.quote}</i></p>
   <div class="education-grid">
     <article class="university">
       <div class="institute-img">
         <img
           src={`${import.meta.env.BASE_URL}assets/img/uta.jpg`}
-          alt="Universidad Técnica de Ambato"
+          alt={t.education.university.name}
         />
       </div>
       <div class="institute-description">
         <h3>
-          <a href="https://www.uta.edu.ec/v4.0/" target="_blank">Universidad Técnica de Ambato</a>
+          <a href="https://www.uta.edu.ec/v4.0/" target="_blank">{t.education.university.name}</a>
         </h3>
-        <p>Software Engineering</p><p>2021 - Now</p>
-        <p>
-          During my time at the Universidad Técnica de Ambato, I have gained a solid foundation in
-          software development, including programming, algorithms, and system design. I have also
-          participated in various projects that have honed my problem-solving and teamwork skills.
+        <p data-i18n="education.university.degree">{t.education.university.degree}</p>
+        <p data-i18n="education.university.period">{t.education.university.period}</p>
+        <p data-i18n="education.university.description">
+          {t.education.university.description}
         </p>
       </div>
     </article>
@@ -35,14 +56,16 @@
         <h3>
           <a
             href="https://www.udemy.com/certificate/UC-c05cdc6d-e2c7-45cd-baec-2c64499f6ca7/"
-            target="_blank">GraphQL and Node.js: Modern and efficient applications</a
+            target="_blank"
+            data-i18n="education.certificates.graphql.title"
+            >{t.education.certificates.graphql.title}</a
           >
         </h3>
-        <p>Udemy - 2024</p>
-        <p>
-          This course provided me with advanced skills in building modern and efficient applications
-          using GraphQL and Node.js. I learned how to design scalable APIs and integrate them with
-          front-end frameworks.
+        <p data-i18n="education.certificates.graphql.issuer">
+          {t.education.certificates.graphql.issuer}
+        </p>
+        <p data-i18n="education.certificates.graphql.description">
+          {t.education.certificates.graphql.description}
         </p>
       </div>
     </article>
@@ -57,14 +80,16 @@
         <h3>
           <a
             href="https://www.udemy.com/certificate/UC-4cf24303-9098-4a60-9787-adf82c453a46/"
-            target="_blank">FullStack and Desktop Programming from ZERO to PROFESSIONAL</a
+            target="_blank"
+            data-i18n="education.certificates.fullstack.title"
+            >{t.education.certificates.fullstack.title}</a
           >
         </h3>
-        <p>Udemy - 2022</p>
-        <p>
-          In this course, I mastered full-stack development, from front-end technologies like HTML,
-          CSS, and JavaScript to back-end frameworks like Node.js and databases. I also gained
-          experience in desktop application development.
+        <p data-i18n="education.certificates.fullstack.issuer">
+          {t.education.certificates.fullstack.issuer}
+        </p>
+        <p data-i18n="education.certificates.fullstack.description">
+          {t.education.certificates.fullstack.description}
         </p>
       </div>
     </article>
@@ -84,14 +109,66 @@
       </div>
       <div class="institute-description">
         <h3>
-          <a href="https://cert.efset.org/vmT4Vg" target="_blank">B2 Upper Intermediate</a>
+          <a
+            href="https://cert.efset.org/vmT4Vg"
+            target="_blank"
+            data-i18n="education.certificates.efset.title">{t.education.certificates.efset.title}</a
+          >
         </h3>
-        <p>EF SET - 2025</p>
-        <p>
-          This certification demonstrates my proficiency in English at the B2 level, enabling me to
-          communicate effectively in professional and academic environments.
+        <p data-i18n="education.certificates.efset.issuer">
+          {t.education.certificates.efset.issuer}
+        </p>
+        <p data-i18n="education.certificates.efset.description">
+          {t.education.certificates.efset.description}
         </p>
       </div>
     </article>
   </div>
 </section>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value && value !== 0) break;
+    }
+    return value || key;
+  }
+
+  function updateEducationContent() {
+    const lang = localStorage.getItem('lang') || 'en';
+
+    // Update all elements with data-i18n attribute
+    const elements = document.querySelectorAll('#education [data-i18n]');
+
+    elements.forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (key) {
+        const translation = getTranslation(key, lang);
+
+        // Handle the title specially to keep the span formatting
+        if (key === 'education.title') {
+          const parts = translation.split('&').map((p) => p.trim());
+          const firstWords = parts[0].split(' ');
+          const prefix = firstWords.slice(0, -1).join(' ');
+          const lastWord = firstWords[firstWords.length - 1];
+          el.innerHTML = `${prefix} <span class="enfasis-title">${lastWord}</span> & <span class="enfasis-title">${parts[1]}</span>`;
+        } else if (key === 'education.quote') {
+          el.innerHTML = `<i>${translation}</i>`;
+        } else {
+          el.textContent = translation;
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', updateEducationContent);
+  window.addEventListener('languagechange', updateEducationContent);
+</script>
