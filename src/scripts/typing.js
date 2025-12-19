@@ -7,7 +7,9 @@
  * Initializes the typing effect using Typed.js
  * Requires Typed.js to be loaded globally
  */
-export function initTypingEffect() {
+export let typedInstance = null;
+
+export function initTypingEffect(customStrings = null) {
   const selector = '.develop-areas';
   
   if (!document.querySelector(selector)) return;
@@ -18,12 +20,20 @@ export function initTypingEffect() {
     return;
   }
 
-  new Typed(selector, {
-    strings: [
-      'Web Development.',
-      'Frontend Development.',
-      'Backend Development.',
-    ],
+  // Destroy previous instance if exists
+  if (typedInstance) {
+    typedInstance.destroy();
+    typedInstance = null;
+  }
+
+  const strings = customStrings || [
+    'Web Development.',
+    'Frontend Development.',
+    'Backend Development.',
+  ];
+
+  typedInstance = new Typed(selector, {
+    strings: strings,
     typeSpeed: 50,
     backSpeed: 25,
     backDelay: 1000,
