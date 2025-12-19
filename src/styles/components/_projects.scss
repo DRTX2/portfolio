@@ -28,7 +28,7 @@
         justify-content: space-between;
         height: 100%;
         min-height: 550px;
-        
+
         // Modern card style
         background-color: rgba(30, 41, 59, 0.4);
         border: 1px solid rgba(255, 255, 255, 0.05);
@@ -85,6 +85,7 @@
             img {
                 transform: scale(1.1);
             }
+
             &::after {
                 opacity: 1;
             }
@@ -99,6 +100,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         h3 {
             color: $color-primary;
             font-size: 1.5rem;
@@ -116,18 +118,18 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.6rem;
-            margin-bottom: 1.5rem; 
+            margin-bottom: 1.5rem;
 
             span {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
-                
+
                 // Modern tech tag
                 background-color: rgba($color-accent, 0.1);
                 color: $color-text;
                 border: 1px solid rgba($color-accent, 0.2);
-                
+
                 padding: 0.4rem 0.8rem;
                 border-radius: 20px; // Pill shape
                 font-size: 0.85rem;
@@ -217,11 +219,52 @@
             color: $color-primary;
         }
     }
+
+    .zoom-controls {
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 1002;
+
+        button {
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background-color: $color-primary;
+                border-color: $color-primary;
+                transform: scale(1.1);
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+    }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .enfasis-title {
@@ -229,15 +272,16 @@
     font-weight: bold;
 }
 
-.technologies{
-    span{
+.technologies {
+    span {
         max-height: 2rem;
         font-size: 2rem;
-        img{
+
+        img {
             height: 2rem;
         }
-        
+
     }
-    
-    
+
+
 }

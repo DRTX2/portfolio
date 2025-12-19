@@ -1,6 +1,11 @@
 <!-- Image Lightbox Modal -->
 <div id="imageModal" class="image-modal">
   <span class="close-modal">&times;</span>
+  <div class="zoom-controls">
+    <button id="zoomIn" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+    <button id="zoomOut" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+    <button id="resetZoom" title="Reset"><i class="fas fa-compress-arrows-alt"></i></button>
+  </div>
   <div class="modal-content">
     <img id="modalImage" src="" alt="Project Full View" />
   </div>
@@ -13,7 +18,38 @@
     const closeBtn = document.querySelector('.close-modal');
     const projectImageContainers = document.querySelectorAll('.project-image');
 
+    // Zoom controls
+    const zoomInBtn = document.getElementById('zoomIn');
+    const zoomOutBtn = document.getElementById('zoomOut');
+    const resetZoomBtn = document.getElementById('resetZoom');
+
+    let currentZoom = 1;
+    const ZOOM_STEP = 0.25;
+    const MAX_ZOOM = 3;
+    const MIN_ZOOM = 0.5;
+
     if (!modal || !modalImg || !closeBtn) return;
+
+    // Reset zoom function
+    const resetZoom = () => {
+      currentZoom = 1;
+      modalImg.style.transform = `scale(${currentZoom})`;
+      modalImg.style.cursor = 'default';
+    };
+
+    // Update image transform
+    const updateZoom = () => {
+      modalImg.style.transform = `scale(${currentZoom})`;
+
+      // Allow dragging if zoomed in
+      if (currentZoom > 1) {
+        modalImg.style.cursor = 'grab';
+      } else {
+        modalImg.style.cursor = 'default';
+        modalImg.style.left = '0';
+        modalImg.style.top = '0';
+      }
+    };
 
     projectImageContainers.forEach((container) => {
       container.addEventListener('click', (e) => {
@@ -21,29 +57,70 @@
         if (img) {
           modal.classList.add('active');
           modalImg.src = img.src;
-          document.body.style.overflow = 'hidden'; // Prevent scrolling
+          resetZoom(); // Reset zoom when opening new image
+          document.body.style.overflow = 'hidden';
         }
       });
     });
 
     const closeModal = () => {
       modal.classList.remove('active');
-      document.body.style.overflow = ''; // Restore scrolling
+      document.body.style.overflow = '';
+      resetZoom();
     };
 
     closeBtn.addEventListener('click', closeModal);
 
-    // Close on click outside
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         closeModal();
       }
     });
 
-    // Close on Esc key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('active')) {
         closeModal();
+      }
+    });
+
+    // Zoom Event Listeners
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent closing modal
+        if (currentZoom < MAX_ZOOM) {
+          currentZoom += ZOOM_STEP;
+          updateZoom();
+        }
+      });
+    }
+
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (currentZoom > MIN_ZOOM) {
+          currentZoom -= ZOOM_STEP;
+          updateZoom();
+        }
+      });
+    }
+
+    if (resetZoomBtn) {
+      resetZoomBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetZoom();
+      });
+    }
+
+    // Optional: Add wheel zoom support
+    modal.addEventListener('wheel', (e: WheelEvent) => {
+      if (modal.classList.contains('active')) {
+        e.preventDefault();
+        if (e.deltaY < 0 && currentZoom < MAX_ZOOM) {
+          currentZoom += ZOOM_STEP;
+        } else if (e.deltaY > 0 && currentZoom > MIN_ZOOM) {
+          currentZoom -= ZOOM_STEP;
+        }
+        updateZoom();
       }
     });
   });
