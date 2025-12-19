@@ -30,8 +30,8 @@
         min-height: 550px;
 
         // Modern card style
-        background-color: rgba(30, 41, 59, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
 
         border-radius: 0.75rem;
         overflow: hidden;
@@ -39,8 +39,8 @@
 
         &:hover {
             transform: translateY(-5px);
-            background-color: rgba(30, 41, 59, 0.8);
-            border-color: rgba($color-accent, 0.3);
+            background-color: var(--color-dark); // Solid background on hover
+            border-color: var(--accent-30); // Use utility variable instead of SASS function
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
     }
@@ -71,7 +71,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.5); // Keep black overlay for contrast
             display: flex;
             align-items: center;
             justify-content: center;
@@ -108,7 +108,7 @@
         }
 
         p {
-            color: #f0f0f0;
+            color: var(--color-text-muted); // Used specific var for better theme support
             font-size: 1rem;
             margin-bottom: 1.5rem; // Más espacio debajo del párrafo
             line-height: 1.5; // Mejor legibilidad
@@ -126,9 +126,9 @@
                 gap: 0.5rem;
 
                 // Modern tech tag
-                background-color: rgba($color-accent, 0.1);
+                background-color: var(--tag-bg);
                 color: $color-text;
-                border: 1px solid rgba($color-accent, 0.2);
+                border: 1px solid var(--tag-border);
 
                 padding: 0.4rem 0.8rem;
                 border-radius: 20px; // Pill shape
@@ -137,8 +137,8 @@
                 transition: all 0.3s ease;
 
                 &:hover {
-                    background-color: rgba($color-accent, 0.2);
-                    border-color: rgba($color-accent, 0.4);
+                    background-color: var(--tag-border); // Slightly darken
+                    border-color: $color-accent;
                     transform: translateY(-1px);
                 }
             }
@@ -158,8 +158,8 @@
                 white-space: nowrap;
 
                 // Button Reset & New Styles for Source Code
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: var(--btn-ghost-bg);
+                border: 1px solid var(--btn-ghost-border);
                 color: $color-secondary;
 
                 font-family: inherit;
@@ -169,9 +169,9 @@
                 cursor: pointer;
 
                 &:hover {
-                    background-color: rgba(255, 255, 255, 0.15);
-                    border-color: rgba(255, 255, 255, 0.5);
-                    color: white;
+                    background-color: var(--btn-ghost-border);
+                    border-color: var(--color-text);
+                    color: var(--color-text);
                     transform: translateY(-2px);
                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
                 }
@@ -191,17 +191,17 @@
 
                 // Specific styles for Overview button - purple theme
                 color: $color-text;
-                background-color: rgba($color-primary, 0.2);
-                border: 1px solid rgba($color-primary, 0.5);
+                background-color: var(--btn-primary-bg);
+                border: 1px solid var(--btn-primary-border);
                 padding: 0.4rem 0.8rem;
                 border-radius: 6px;
                 font-size: 0.9rem;
 
                 &:hover {
-                    background-color: rgba($color-primary, 0.4);
+                    background-color: $color-primary; // Solid primary on hover
                     border-color: $color-primary;
-                    color: white;
-                    box-shadow: 0 4px 10px rgba($color-primary, 0.3);
+                    color: white; // Always white text on solid primary
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Generic shadow
                     transform: translateY(-2px);
                 }
             }

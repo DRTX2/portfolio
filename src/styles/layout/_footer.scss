@@ -1,10 +1,10 @@
 @use "../abstracts/variables" as *;
 
 .main-footer {
-  background-color: darken($back-color, 5%);
+  background-color: var(--footer-bg); // Use semantic variable
   padding: 2rem 0;
   // margin-top: 4rem; // Removed to eliminate extra space
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--card-border);
 
   .footer-content {
     width: 90%;
@@ -24,7 +24,7 @@
 
     p {
       margin: 0;
-      color: darken(#ccc, 20%);
+      color: var(--color-text-muted); // Dynamic secondary text
       font-size: 0.9rem;
     }
   }
@@ -34,21 +34,21 @@
       color: $color-primary;
       font-size: 1.2rem;
       transition: all 0.3s ease;
-      
+
       // Flexbox for perfect centering
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      
-      width: 40px;  // Fixed size
+
+      width: 40px; // Fixed size
       height: 40px; // Fixed size
       border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: var(--btn-ghost-bg); // Use semantic var
       text-decoration: none; // Ensure no underline
 
       &:hover {
         color: $color-secondary;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: var(--btn-ghost-border); // Use semantic var
         transform: translateY(-3px);
       }
     }

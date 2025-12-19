@@ -6,14 +6,14 @@
     padding: 6rem 1rem;
     max-width: 1000px;
     margin: 0 auto;
-    
+
     // Títulos
     h2 {
         text-align: center;
         font-size: 2.5rem;
         margin-bottom: 0.5rem;
         color: $color-primary;
-        
+
         .enfasis-title {
             color: $color-text; // "Me" en blanco/claro
         }
@@ -87,7 +87,7 @@
             margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
-            
+
             &::after {
                 content: '';
                 display: block;
@@ -107,9 +107,9 @@
         gap: 0.8rem;
 
         .tag {
-            background: rgba($color-primary, 0.1);
+            background: var(--primary-10);
             color: $color-primary;
-            border: 1px solid rgba($color-primary, 0.2);
+            border: 1px solid var(--primary-20);
             padding: 0.5rem 1rem;
             border-radius: 50px; // Pill shape
             font-size: 0.95rem;
@@ -118,9 +118,9 @@
             cursor: default;
 
             &:hover {
-                background: rgba($color-primary, 0.2);
+                background: var(--primary-20);
                 transform: translateY(-2px);
-                box-shadow: 0 4px 10px rgba($color-primary, 0.15);
+                box-shadow: 0 4px 10px var(--primary-20); // Close enough to 0.15
             }
         }
     }
@@ -152,7 +152,7 @@
             transition: color 0.2s;
 
             &:hover {
-                color: lighten($color-accent, 10%);
+                color: $color-secondary; // Use distinct secondary color instead of lighten()
                 text-decoration: underline;
             }
         }
@@ -160,13 +160,13 @@
         .resume-button {
             margin-top: 1.5rem;
             text-decoration: none; // Quitar subrayado del enlace envolvente
-            
+
             button {
                 @extend .button; // Heredar estilos modernos de botón
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
-                
+
                 // Icono de descarga visual (opcional si lo agregas al html)
                 &::before {
                     content: '\f019'; // FontAwesome download icon code
@@ -176,7 +176,7 @@
             }
         }
     }
-    
+
     // Media Query para móviles
     @media (max-width: 768px) {
         .about-highlight {
@@ -184,15 +184,15 @@
             gap: 0.5rem;
             text-align: center;
             align-items: center;
-            
+
             i {
                 font-size: 2rem;
                 margin-bottom: 0.5rem;
             }
         }
-        
+
         .contact-info {
-           text-align: center;
+            text-align: center;
         }
     }
 }

@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgba(51, 51, 51, 1);
+  background-color: var(--color-dark); // Dynamic background
   padding: 1rem 2rem;
   font-size: 1.5rem;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -15,20 +15,29 @@
   caret-color: transparent;
 
   * {
-    color: #ccc;
+    color: var(--color-text); // Dynamic text color
   }
 
   &.sticky {
-    background-color: rgba(51, 51, 51, 0.85);
-    backdrop-filter: blur(3px); //cuan mas grande sea el valor mas borroso sera
+    background-color: var(--color-dark); // Solid for now, or add specific var for transparent if needed
+    opacity: 0.95; // Simple transparency for sticky state
+    backdrop-filter: blur(5px);
   }
 }
 
 // Estilos del menú
-.right-title-menu ul {
-  list-style: none;
+.right-title-menu {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .right-items-menu li a {
@@ -50,7 +59,7 @@
     width: 100%;
     height: 2px;
     background-color: $color-secondary;
-    
+
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
@@ -68,7 +77,8 @@
     top: 2.85em;
     right: 0;
     //   background-color: inherit;
-    background-color: rgba(51, 51, 51, 0.8);
+    background-color: var(--color-dark);
+    border-bottom: 1px solid var(--card-border);
     width: 100%;
     display: none;
     flex-direction: column;
@@ -91,7 +101,7 @@
     display: block;
     font-size: 2rem;
     cursor: pointer;
-    color: #ccc;
+    color: var(--color-text);
   }
 }
 
