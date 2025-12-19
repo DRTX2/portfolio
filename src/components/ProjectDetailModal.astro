@@ -1,0 +1,162 @@
+<div id="projectDetailModal" class="detail-modal">
+  <div class="detail-modal-content">
+    <span class="close-detail-modal">&times;</span>
+    <div class="modal-body">
+      <header class="modal-header">
+        <h2 id="modalTitle">Project Title</h2>
+        <div class="modal-tech-stack" id="modalTechStack"></div>
+      </header>
+
+      <div class="modal-scroll-content">
+        <section class="modal-section overview">
+          <h3>Overview</h3>
+          <p id="modalDescription"></p>
+          <div id="modalContext" class="context-box"></div>
+        </section>
+
+        <div class="two-column-grid">
+          <section class="modal-section" id="modalChallengesSection">
+            <h3><i class="fas fa-fire-alt"></i> Key Challenges</h3>
+            <ul id="modalChallenges"></ul>
+          </section>
+
+          <section class="modal-section" id="modalSolutionsSection">
+            <h3><i class="fas fa-check-circle"></i> Technical Solutions</h3>
+            <ul id="modalSolutions"></ul>
+          </section>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <div id="modalLinks" class="modal-links"></div>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('projectDetailModal');
+    const closeBtn = document.querySelector('.close-detail-modal');
+    // We need to parse the projects data from the DOM
+    const dataContainer = document.getElementById('projects-data');
+
+    if (!dataContainer || !modal || !closeBtn) return;
+
+    const projects = JSON.parse(dataContainer.dataset.projects || '[]');
+
+    const openButtons = document.querySelectorAll('.view-details-btn');
+
+    const populateModal = (slug) => {
+      const project = projects.find((p) => p.slug === slug);
+      if (!project) return;
+
+      const modalTitle = document.getElementById('modalTitle');
+      if (modalTitle) modalTitle.textContent = project.title;
+
+      const modalDesc = document.getElementById('modalDescription');
+      if (modalDesc) modalDesc.innerHTML = project.description;
+
+      // Tech Stack
+      const techContainer = document.getElementById('modalTechStack');
+      if (techContainer) {
+        techContainer.innerHTML = '';
+        project.technologies.forEach((tech) => {
+          const span = document.createElement('span');
+          span.innerHTML = `${tech.iconClass ? `<i class="${tech.iconClass}"></i> ` : ''}${tech.name}`;
+          techContainer.appendChild(span);
+        });
+      }
+
+      // Detailed Context
+      const contextContainer = document.getElementById('modalContext');
+      if (contextContainer) {
+        if (project.detailedDescription) {
+          contextContainer.innerHTML = `<strong>Context & Goal:</strong> ${project.detailedDescription}`;
+          contextContainer.style.display = 'block';
+        } else {
+          contextContainer.style.display = 'none';
+        }
+      }
+
+      // Challenges
+      const challengesList = document.getElementById('modalChallenges');
+      const challengesSection = document.getElementById('modalChallengesSection');
+
+      if (challengesList && challengesSection) {
+        challengesList.innerHTML = '';
+        if (project.challenges && project.challenges.length > 0) {
+          project.challenges.forEach((c) => {
+            const li = document.createElement('li');
+            li.textContent = c;
+            challengesList.appendChild(li);
+          });
+          challengesSection.style.display = 'block';
+        } else {
+          challengesSection.style.display = 'none';
+        }
+      }
+
+      // Solutions
+      const solutionsList = document.getElementById('modalSolutions');
+      const solutionsSection = document.getElementById('modalSolutionsSection');
+
+      if (solutionsList && solutionsSection) {
+        solutionsList.innerHTML = '';
+        if (project.solutions && project.solutions.length > 0) {
+          project.solutions.forEach((s) => {
+            const li = document.createElement('li');
+            li.textContent = s;
+            solutionsList.appendChild(li);
+          });
+          solutionsSection.style.display = 'block';
+        } else {
+          solutionsSection.style.display = 'none';
+        }
+      }
+
+      // Links
+      const linksContainer = document.getElementById('modalLinks');
+      if (linksContainer) {
+        linksContainer.innerHTML = '';
+        project.links.forEach((link) => {
+          const a = document.createElement('a');
+          a.href = link.url;
+          a.target = '_blank';
+          a.innerHTML = `${link.iconClass ? `<i class="${link.iconClass}"></i> ` : ''}${link.label}`;
+          linksContainer.appendChild(a);
+        });
+      }
+    };
+
+    openButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation(); // Avoid triggering the global click listeners if any
+        const slug = btn.getAttribute('data-slug');
+        populateModal(slug);
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeModal = () => {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+  });
+</script>

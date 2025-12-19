@@ -1,244 +1,8 @@
 ---
 import ImageLightbox from './ImageLightbox.astro';
-import ProjectCard, { type Technology, type Link } from './ProjectCard.astro';
-
-interface Project {
-  title: string;
-  image: string;
-  description: string;
-  technologies: Technology[];
-  links: Link[];
-}
-
-const projects: Project[] = [
-  {
-    title: 'Fleet & Driver Management Platform',
-    image: `${import.meta.env.BASE_URL}assets/img/gasoline-system.png`,
-    description: `Distributed <strong>microservices-based platform</strong> for managing drivers, license types,
-          vehicles (light/heavy), routes, and operational performance. Built with <strong
-            >NestJS microservices</strong
-          > integrated via <strong>Eureka Service Discovery</strong> and <strong>gRPC</strong>,
-          exposing a unified API Gateway. Supports real-time route tracking using GPS-based APIs,
-          performance indicators, fuel consumption metrics, and <strong
-            >PDF report generation</strong
-          >. Implements asynchronous messaging with <strong>RabbitMQ</strong>, optimized queries in <strong
-            >PostgreSQL</strong
-          >, and a <strong>React dashboard</strong> for system administration and analytics.`,
-    technologies: [
-      { name: 'NestJS', iconClass: 'devicon-nestjs-plain' },
-      { name: 'Node.js', iconClass: 'devicon-nodejs-plain' },
-      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'RabbitMQ', iconClass: 'devicon-rabbitmq-original' },
-      { name: 'Docker', iconClass: 'devicon-docker-plain' },
-      { name: 'React', iconClass: 'devicon-react-original' },
-      { name: 'gRPC', iconClass: 'devicon-grpc-plain' },
-      { name: 'Linux', iconClass: 'devicon-linux-plain' },
-    ],
-    links: [
-      {
-        url: 'https://github.com/DavidJosueP2/Distributed-Gasoline-System',
-        label: 'Backend Source Code',
-        iconClass: 'fab fa-github',
-      },
-      {
-        url: 'https://github.com/JoelBonillaG/Distributed-Gasoline-System-Frontend',
-        label: 'Frontend Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-  },
-  {
-    title: 'E-Commerce Marketplace Platform',
-    image: `${import.meta.env.BASE_URL}assets/img/amazon.png`,
-    description: `Complete marketplace serving <strong>5,000+ users</strong> with Spring Boot backend and React/TypeScript
-          frontend. Features RESTful APIs with JWT/RBAC security, pagination, and content moderation.
-          Achieved <strong>85% response time improvement</strong> (300ms → 45ms) through Redis multi-layer
-          caching and database optimization. Deployed with CI/CD using Jenkins, SonarQube, and Azure Container
-          Apps with <strong>90% test coverage</strong> and 95+ Lighthouse score.`,
-    technologies: [
-      { name: 'Spring Boot', iconClass: 'devicon-spring-original' },
-      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'Redis', iconClass: 'devicon-redis-plain' },
-      { name: 'React', iconClass: 'devicon-react-original' },
-      { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
-      { name: 'TailwindCSS', iconClass: 'devicon-tailwindcss-original' },
-      { name: 'Jenkins', iconClass: 'devicon-jenkins-plain' },
-      { name: 'Azure', iconClass: 'devicon-azure-plain' },
-    ],
-    links: [
-      {
-        url: 'https://github.com/DavidJosueP2/Marketplace_Link',
-        label: 'Backend Source Code',
-        iconClass: 'fab fa-github',
-      },
-      {
-        url: 'https://github.com/DavidJosueP2/Marketplace-Link-Front',
-        label: 'Frontend Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-  },
-  {
-    title: 'Medical Clinic Management System',
-    image: `${import.meta.env.BASE_URL}assets/img/clinic-front.jpeg`,
-    description: `HIPAA-compliant full-stack healthcare system with a <strong
-            >Clean Architecture backend</strong
-          > managing appointments, medical history, and audit trails. Includes <strong
-            >React admin dashboard</strong
-          > for system administrators and <strong
-            >React dashboard for healthcare professionals</strong
-          > to manage their patients and schedules. Features <strong>React Native mobile app</strong
-          > for patients to view medical history, receive notifications, discover doctors, and manage
-          their profile. Optimized data retrieval with <strong
-            >3NF normalization and indexing</strong
-          >, achieving <strong>60% faster access to medical records</strong>, plus <strong
-            >rate limiting</strong
-          > and <strong>cache invalidation</strong> for reliability.`,
-    technologies: [
-      { name: 'Spring Boot', iconClass: 'devicon-spring-original' },
-      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'Redis', iconClass: 'devicon-redis-plain' },
-      { name: 'React', iconClass: 'devicon-react-original' },
-      { name: 'React Native', iconClass: 'devicon-react-original' },
-      { name: 'TailwindCSS', iconClass: 'devicon-tailwindcss-original' },
-      {
-        name: 'JWT/RBAC',
-        iconImg: `${import.meta.env.BASE_URL}assets/img/icons8-json-web-token.svg`,
-      },
-    ],
-    links: [
-      {
-        url: 'https://github.com/DRTX2/clinic',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-  },
-  {
-    title: 'Inventory Management and Judicial Audits System',
-    image: `${import.meta.env.BASE_URL}assets/img/maintenance_system.png`,
-    description: `Web system for state entities that manages inventories, users with custom roles, and
-          mandatory maintenance compliance per Ecuadorian law. Tracks asset maintenance schedules,
-          generates dynamic PDF reports for judicial audits, and ensures security with JWT
-          authentication. Features performance and compliance reporting aligned with public sector
-          regulations.`,
-    technologies: [
-      { name: 'Laravel', iconClass: 'devicon-laravel-original' },
-      { name: 'React', iconClass: 'devicon-react-original' },
-      { name: 'MySQL', iconClass: 'devicon-mysql-original' },
-      { name: 'Material UI', iconClass: 'devicon-materialui-plain' },
-      { name: 'Figma', iconClass: 'devicon-figma-plain' },
-      {
-        name: 'JWT',
-        iconImg: `${import.meta.env.BASE_URL}assets/img/icons8-json-web-token.svg`,
-      },
-      { name: 'Axios', iconClass: 'devicon-axios-plain' },
-    ],
-    links: [
-      {
-        url: 'https://github.com/DRTX2/maintenance-system',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-  },
-  {
-    title: 'SmartNotes Platform — Microservices Architecture',
-    image: `${import.meta.env.BASE_URL}assets/img/smartnotes.png`,
-    description: `Scalable note-taking platform built with microservices architecture using NestJS and
-          TypeScript. Implements event-driven communication with RabbitMQ, NGINX as API Gateway for
-          routing and authentication, and secure MongoDB/PostgreSQL schemas with proper indexing.
-          Features JWT + RBAC authentication, containerized services with Docker, and comprehensive
-          testing with Jest.`,
-    technologies: [
-      { name: 'NestJS', iconClass: 'devicon-nestjs-original' },
-      { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
-      { name: 'RabbitMQ', iconClass: 'devicon-rabbitmq-original' },
-      { name: 'MongoDB', iconClass: 'devicon-mongodb-original' },
-      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'NGINX', iconClass: 'devicon-nginx-original' },
-      { name: 'Docker', iconClass: 'devicon-docker-plain' },
-    ],
-    links: [
-      {
-        url: 'https://github.com/DRTX2/note-app',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-  },
-  {
-    title: 'UTA Elections Page',
-    image: `${import.meta.env.BASE_URL}assets/img/uta_page.jpeg`,
-    description: `A digital platform supporting Dr. Mary Cruz Lascano's 2024-2028 rectorial campaign at the
-          Technical University of Ambato. It informs and connects stakeholders with campaign
-          details, proposals, events, news, and real-time statistics. Built with Laravel, Bootstrap,
-          and MySQL, it ensures functionality and modern design.`,
-    technologies: [
-      { name: 'Laravel', iconClass: 'devicon-laravel-original' },
-      { name: 'JavaScript', iconClass: 'devicon-javascript-plain' },
-      { name: 'Bootstrap', iconClass: 'devicon-bootstrap-plain' },
-      { name: 'MySQL', iconClass: 'devicon-mysql-original' },
-    ],
-    links: [
-      {
-        url: 'https://gitlab.com/personalprojects5531442/manejo-proyecto/',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-  },
-  {
-    title: 'My Creative Portfolio',
-    image: `${import.meta.env.BASE_URL}assets/img/blog.jpeg`,
-    description: `My Creative Portfolio is an interactive platform for creating and customizing personal
-          portfolios. It allows users to showcase work professionally, manage projects, and engage
-          with a creative community through comments and collaboration.`,
-    technologies: [
-      { name: 'PHP', iconClass: 'devicon-php-plain' },
-      { name: 'JavaScript', iconClass: 'devicon-javascript-plain' },
-      { name: 'Axios', iconClass: 'devicon-axios-plain' },
-      { name: 'MySQL', iconClass: 'devicon-mysql-original' },
-      { name: 'Bootstrap', iconClass: 'devicon-bootstrap-plain' },
-    ],
-    links: [
-      {
-        url: 'https://github.com/DRTX2/proyecto-mds.git',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-  },
-  {
-    title: 'Clean Architecture Adventure',
-    image: `${import.meta.env.BASE_URL}assets/img/capibara.jpeg`,
-    description: `A <strong>Unity 2D adventure game</strong> built as a <strong>technical showcase</strong> of
-          <strong>Clean Architecture</strong> and <strong>SOLID principles</strong>. Players
-          traverse
-          <strong>parkour-style levels</strong> and engage in combat against diverse enemies, while the
-          system manages <strong>user authentication</strong>, <strong>level progression</strong>,
-          and
-          <strong>SQLite-based persistence</strong> for game state and player data. The project features
-          a
-          <strong>highly decoupled and scalable codebase</strong> implementing design patterns such as
-          <strong>Singleton, Observer, Factory, Abstract Factory, Strategy, and Event Bus</strong>,
-          demonstrating how <strong>enterprise-grade software architecture</strong> can be effectively
-          applied to game development.`,
-    technologies: [
-      { name: 'C#', iconClass: 'devicon-csharp-plain' },
-      { name: 'Unity', iconClass: 'devicon-unity-plain' },
-      { name: 'SQLite', iconClass: 'devicon-sqlite-plain' },
-      { name: '.NET', iconClass: 'devicon-dotnetcore-plain' },
-    ],
-    links: [
-      {
-        url: 'https://github.com/DRTX2/PatternsProject/tree/develop',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-  },
-];
+import ProjectCard from './ProjectCard.astro';
+import ProjectDetailModal from './ProjectDetailModal.astro';
+import { projects } from '../data/projects';
 ---
 
 <section class="projects" id="projects">
@@ -250,13 +14,18 @@ const projects: Project[] = [
           title={project.title}
           image={project.image}
           description={project.description}
+          highlights={project.highlights}
           technologies={project.technologies}
           links={project.links}
+          slug={project.slug}
         />
       ))
     }
   </div>
 </section>
+
+<!-- Pass projects data to client-side JS -->
+<div id="projects-data" data-projects={JSON.stringify(projects)} style="display: none;"></div>
 
 <script>
   // This script helps the ImageLightbox find the new elements if they are added dynamically,
@@ -264,3 +33,4 @@ const projects: Project[] = [
 </script>
 
 <ImageLightbox />
+<ProjectDetailModal />

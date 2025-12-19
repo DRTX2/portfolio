@@ -1,0 +1,202 @@
+@use "../abstracts/variables" as *;
+
+.detail-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .detail-modal-content {
+        background-color: #1a1a2e; // Dark theme bg
+        width: 90%;
+        max-width: 900px;
+        height: 85vh;
+        border-radius: 12px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        color: #f0f0f0;
+
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+
+    &.active .detail-modal-content {
+        transform: translateY(0);
+    }
+
+    .close-detail-modal {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 2rem;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.7);
+        z-index: 10;
+        line-height: 1;
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
+    .modal-body {
+        padding: 30px;
+        overflow-y: auto;
+        height: 100%;
+
+        // Custom scrollbar
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+    }
+
+    .modal-header {
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 1rem;
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: $color-primary;
+        }
+
+        .modal-tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+
+            span {
+                font-size: 0.85rem;
+                background: rgba($color-accent, 0.15);
+                color: $color-accent;
+                padding: 0.3rem 0.8rem;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+        }
+    }
+
+    .modal-section {
+        margin-bottom: 2rem;
+
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+
+            i {
+                color: $color-secondary;
+            }
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cccccc;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                background: rgba(255, 255, 255, 0.03);
+                margin-bottom: 0.5rem;
+                padding: 0.8rem;
+                border-radius: 6px;
+                border-left: 3px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+
+    .context-box {
+        background-color: rgba($color-secondary, 0.1);
+        border-left: 4px solid $color-secondary;
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 0 4px 4px 0;
+        font-style: italic;
+    }
+
+    .two-column-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+
+        @media(min-width: 768px) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        #modalChallengesSection ul li {
+            border-left-color: #ff6b6b; // Red-ish for challenges
+        }
+
+        #modalSolutionsSection ul li {
+            border-left-color: $color-primary; // Green-ish for solutions
+        }
+    }
+
+    .modal-footer {
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        .modal-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+
+            a {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                text-decoration: none;
+
+                // Button Style
+                color: $color-text;
+                background-color: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                padding: 0.6rem 1.2rem;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                font-size: 0.95rem;
+
+                &:hover {
+                    background-color: rgba($color-primary, 0.2);
+                    border-color: $color-primary;
+                    color: white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                }
+            }
+        }
+    }
+}

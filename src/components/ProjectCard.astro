@@ -17,9 +17,11 @@ interface Props {
   description: string;
   technologies: Technology[];
   links: Link[];
+  highlights?: { label: string; text: string }[];
+  slug?: string;
 }
 
-const { title, image, description, technologies, links } = Astro.props;
+const { title, image, description, technologies, links, slug, highlights } = Astro.props;
 ---
 
 <article class="project">
@@ -30,7 +32,19 @@ const { title, image, description, technologies, links } = Astro.props;
   <div class="project-content">
     <h3>{title}</h3>
 
-    <p set:html={description} />
+    {
+      highlights && highlights.length > 0 ? (
+        <ul class="project-highlights">
+          {highlights.map((item) => (
+            <li>
+              <strong>{item.label}:</strong> <span set:html={item.text} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p set:html={description} />
+      )
+    }
 
     <div class="technologies">
       {
@@ -56,6 +70,13 @@ const { title, image, description, technologies, links } = Astro.props;
             {link.label}
           </a>
         ))
+      }
+      {
+        slug && (
+          <button class="view-details-btn" data-slug={slug}>
+            <i class="fas fa-layer-group" /> Overview
+          </button>
+        )
       }
     </div>
   </div>

@@ -153,18 +153,62 @@
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
-                color: $color-secondary;
                 text-decoration: none;
-                transition: color 0.3s ease;
-                white-space: nowrap; // Prevent text from breaking inside the link
+                transition: all 0.3s ease;
+                white-space: nowrap;
+
+                // Button Reset & New Styles for Source Code
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: $color-secondary;
+
+                font-family: inherit;
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+                border-radius: 6px;
+                cursor: pointer;
 
                 &:hover {
-                    color: $color-primary;
+                    background-color: rgba(255, 255, 255, 0.15);
+                    border-color: rgba(255, 255, 255, 0.5);
+                    color: white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                }
+            }
+
+            .view-details-btn {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                white-space: nowrap;
+                background: none;
+                border: none;
+                font-family: inherit;
+                cursor: pointer;
+
+                // Specific styles for Overview button - purple theme
+                color: $color-text;
+                background-color: rgba($color-primary, 0.2);
+                border: 1px solid rgba($color-primary, 0.5);
+                padding: 0.4rem 0.8rem;
+                border-radius: 6px;
+                font-size: 0.9rem;
+
+                &:hover {
+                    background-color: rgba($color-primary, 0.4);
+                    border-color: $color-primary;
+                    color: white;
+                    box-shadow: 0 4px 10px rgba($color-primary, 0.3);
+                    transform: translateY(-2px);
                 }
             }
         }
     }
 }
+
 
 // Image Lightbox Modal Styles
 .image-modal {
@@ -274,16 +318,16 @@
     font-weight: bold;
 }
 
-.technologies {
-    span {
-        max-height: 2rem;
-        font-size: 2rem;
+.projects {
+    .technologies {
+        span {
+            max-height: 2rem;
+            font-size: 2rem;
 
-        img {
-            height: 2rem;
+            img {
+                height: 2rem;
+            }
+
         }
-
     }
-
-
 }

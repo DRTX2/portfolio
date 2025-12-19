@@ -1,0 +1,286 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.title} | Project Details`}>
+  <main class="project-details">
+    <div class="container">
+      <a href="/#projects" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Projects
+      </a>
+
+      <header class="project-header">
+        <h1>{project.title}</h1>
+        <div class="project-meta">
+          <div class="technologies">
+            {
+              project.technologies.map((tech) => (
+                <span>
+                  {tech.iconClass && <i class={`${tech.iconClass} colored`} />}
+                  {tech.name}
+                </span>
+              ))
+            }
+          </div>
+          <div class="project-links">
+            {
+              project.links.map((link) => (
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  {link.iconClass && <i class={link.iconClass} />}
+                  {link.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </header>
+
+      <div class="project-image-container">
+        <img src={project.image} alt={project.title} />
+      </div>
+
+      <div class="project-content-grid">
+        <section class="overview">
+          <h2>Overview</h2>
+          <p set:html={project.description} />
+          {
+            project.detailedDescription && (
+              <div class="detailed-description">
+                <h3>Context & Goal</h3>
+                <p>{project.detailedDescription}</p>
+              </div>
+            )
+          }
+        </section>
+
+        {
+          project.challenges && project.challenges.length > 0 && (
+            <section class="challenges">
+              <h2>Key Challenges</h2>
+              <ul>
+                {project.challenges.map((challenge) => (
+                  <li>
+                    <i class="fas fa-exclamation-circle text-accent" /> {challenge}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          project.solutions && project.solutions.length > 0 && (
+            <section class="solutions">
+              <h2>Technical Solutions</h2>
+              <ul>
+                {project.solutions.map((solution) => (
+                  <li>
+                    <i class="fas fa-check-circle text-primary" /> {solution}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  @use '../../styles/abstracts/variables' as *;
+
+  .project-details {
+    padding: 100px 0 50px; // account for fixed header
+    min-height: 100vh;
+    color: $color-text;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $color-secondary;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  .project-header {
+    margin-bottom: 3rem;
+    text-align: center;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, $color-secondary, $color-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .project-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    .technologies {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: rgba($color-accent, 0.1);
+        border: 1px solid rgba($color-accent, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+      }
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: white;
+        text-decoration: none;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 0.7rem 1.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+
+        &:hover {
+          background-color: rgba($color-primary, 0.2);
+          border-color: $color-primary;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .project-image-container {
+    margin-bottom: 4rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  .project-content-grid {
+    display: grid;
+    gap: 3rem;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: $color-primary;
+      border-bottom: 2px solid rgba($color-primary, 0.3);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    h3 {
+      color: $color-secondary;
+      margin: 1.5rem 0 1rem;
+      font-size: 1.5rem;
+    }
+
+    p {
+      line-height: 1.8;
+      font-size: 1.1rem;
+      color: #e0e0e0;
+      margin-bottom: 1.5rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 1rem;
+
+      li {
+        background-color: rgba(30, 41, 59, 0.4);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        line-height: 1.6;
+        border-left: 3px solid transparent;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: rgba(30, 41, 59, 0.6);
+          transform: translateX(5px);
+        }
+
+        i {
+          margin-top: 4px;
+        }
+      }
+    }
+
+    .challenges li {
+      border-left-color: $color-accent;
+      i {
+        color: $color-accent;
+      }
+    }
+
+    .solutions li {
+      border-left-color: $color-primary;
+      i {
+        color: $color-primary;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .project-content-grid {
+      grid-template-columns: 1fr 1fr;
+
+      .overview {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+</style>
