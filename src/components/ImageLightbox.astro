@@ -1,0 +1,50 @@
+<!-- Image Lightbox Modal -->
+<div id="imageModal" class="image-modal">
+  <span class="close-modal">&times;</span>
+  <div class="modal-content">
+    <img id="modalImage" src="" alt="Project Full View" />
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage') as HTMLImageElement;
+    const closeBtn = document.querySelector('.close-modal');
+    const projectImageContainers = document.querySelectorAll('.project-image');
+
+    if (!modal || !modalImg || !closeBtn) return;
+
+    projectImageContainers.forEach((container) => {
+      container.addEventListener('click', (e) => {
+        const img = container.querySelector('img');
+        if (img) {
+          modal.classList.add('active');
+          modalImg.src = img.src;
+          document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+      });
+    });
+
+    const closeModal = () => {
+      modal.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+
+    // Close on click outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Close on Esc key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+  });
+</script>
