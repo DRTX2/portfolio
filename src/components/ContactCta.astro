@@ -1,10 +1,19 @@
+---
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations('en');
+---
+
 <section class="contact-cta" id="contact">
   <div class="cta-container">
-    <h2>Let's Work <span class="enfasis-title">Together</span></h2>
-    <p class="cta-subtitle">
-      I'm always interested in hearing about new projects and opportunities. Whether you need a
-      full-stack solution, backend architecture, or frontend excellence, let's create something
-      amazing together.
+    <h2>
+      <span data-i18n="contact.title">{t.contact.title}</span>
+      <span class="enfasis-title" data-i18n="contact.titleHighlight"
+        >{t.contact.titleHighlight}</span
+      >
+    </h2>
+    <p class="cta-subtitle" data-i18n="contact.subtitle">
+      {t.contact.subtitle}
     </p>
     <div class="cta-buttons">
       <a
@@ -13,8 +22,10 @@
         rel="noopener noreferrer"
         class="cta-button primary"
         aria-label="Connect with me on LinkedIn"
+        data-i18n="contact.linkedin"
       >
-        <i class="devicon-linkedin-plain" aria-hidden="true"></i> Connect on LinkedIn
+        <i class="devicon-linkedin-plain" aria-hidden="true"></i>
+        {t.contact.linkedin}
       </a>
       <a
         href="https://github.com/DRTX2"
@@ -22,32 +33,92 @@
         rel="noopener noreferrer"
         class="cta-button secondary"
         aria-label="View my projects on GitHub"
+        data-i18n="contact.github"
       >
-        <i class="devicon-github-original" aria-hidden="true"></i> View GitHub
+        <i class="devicon-github-original" aria-hidden="true"></i>
+        {t.contact.github}
       </a>
       <a
         href="mailto:davidmanjarres2004@gmail.com"
         class="cta-button secondary"
         aria-label="Send me an email"
+        data-i18n="contact.email"
       >
-        <i class="fas fa-envelope" aria-hidden="true"></i> Email Me
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+        {t.contact.email}
       </a>
     </div>
     <div class="cta-stats">
       <div class="stat-item">
-        <span class="stat-number">4+</span><span class="stat-label">Years Experience</span>
+        <span class="stat-number">4+</span><span
+          class="stat-label"
+          data-i18n="contact.stats.experience">{t.contact.stats.experience}</span
+        >
       </div>
       <div class="stat-item">
-        <span class="stat-number">10+</span><span class="stat-label">Projects Delivered</span>
+        <span class="stat-number">10+</span><span
+          class="stat-label"
+          data-i18n="contact.stats.projects">{t.contact.stats.projects}</span
+        >
       </div>
       <div class="stat-item">
-        <span class="stat-number">12+</span><span class="stat-label">Backend Services Built</span>
+        <span class="stat-number">12+</span><span
+          class="stat-label"
+          data-i18n="contact.stats.services">{t.contact.stats.services}</span
+        >
       </div>
       <div class="stat-item">
-        <span class="stat-number">80%</span><span class="stat-label"
-          >Max Test Coverage (E-Commerce)</span
+        <span class="stat-number">80%</span><span
+          class="stat-label"
+          data-i18n="contact.stats.coverage">{t.contact.stats.coverage}</span
         >
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value && value !== 0) break;
+    }
+    return value || key;
+  }
+
+  function updateContactContent() {
+    const lang = localStorage.getItem('lang') || 'en';
+
+    // Update simple text elements
+    const elements = document.querySelectorAll('#contact [data-i18n]');
+    elements.forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (key) {
+        const translation = getTranslation(key, lang);
+
+        // Handle elements with icons (buttons)
+        if (el.tagName === 'A' && el.classList.contains('cta-button')) {
+          // Preserve icon
+          const icon = el.querySelector('i');
+          const iconClone = icon ? icon.cloneNode(true) : null;
+          el.textContent = ' ' + translation;
+          if (iconClone) {
+            el.prepend(iconClone);
+          }
+        } else {
+          el.textContent = translation;
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', updateContactContent);
+  window.addEventListener('languagechange', updateContactContent);
+</script>

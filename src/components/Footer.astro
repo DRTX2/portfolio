@@ -3,25 +3,67 @@
  * Footer Component
  * Site footer with back-to-top link
  */
+import { useTranslations } from '../i18n/utils';
 
 interface Props {
   year?: number;
   author?: string;
 }
 
-const {
-  year = new Date().getFullYear(),
-  author = 'David Manjarres'
-} = Astro.props;
+const { year = new Date().getFullYear(), author = 'David Manjarres' } = Astro.props;
+
+const t = useTranslations('en');
 ---
 
 <footer class="main-footer">
   <div class="footer-content">
-    <p>&copy; {year} {author}. Built with passion and code.</p>
+    <p>&copy; {year} {author}. <span data-i18n="footer.builtWith">{t.footer.builtWith}</span></p>
     <div class="footer-links">
-      <a href="#presentation" aria-label="Back to top">
+      <a href="#presentation" aria-label={t.footer.backToTop} data-i18n-aria="footer.backToTop">
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
       </a>
     </div>
   </div>
 </footer>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  function getTranslation(key: string, lang: string) {
+    const keys = key.split('.');
+    let value: any = translations[lang];
+    for (const k of keys) {
+      value = value?.[k];
+      if (!value && value !== 0) break;
+    }
+    return value || key;
+  }
+
+  function updateFooterContent() {
+    const lang = localStorage.getItem('lang') || 'en';
+
+    // Update text content
+    const textElements = document.querySelectorAll('.main-footer [data-i18n]');
+    textElements.forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (key) {
+        el.textContent = getTranslation(key, lang);
+      }
+    });
+
+    // Update aria-labels
+    const ariaElements = document.querySelectorAll('.main-footer [data-i18n-aria]');
+    ariaElements.forEach((el) => {
+      const key = el.getAttribute('data-i18n-aria');
+      if (key) {
+        el.setAttribute('aria-label', getTranslation(key, lang));
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', updateFooterContent);
+  window.addEventListener('languagechange', updateFooterContent);
+</script>
