@@ -117,6 +117,15 @@
             }
         }
 
+        // Specific icon colors
+        &#modalChallengesSection h3 i {
+            color: #ff6b6b; // Fire color
+        }
+
+        &#modalSolutionsSection h3 i {
+            color: $color-primary; // Check/Solution color
+        }
+
         p {
             line-height: 1.6;
             color: var(--color-text-muted);

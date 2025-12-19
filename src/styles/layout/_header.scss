@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem; // Space between elements
   // Glassmorphism Base
   background-color: rgba(15, 23, 42, 0.7); // Semi-transparent dark blue (Slate-900)
   backdrop-filter: blur(12px); // Strong blur for the "frosted" look
@@ -62,6 +63,12 @@
   }
 }
 
+.menu-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .right-items-menu li a {
   text-decoration: none;
   color: $color-primary;
@@ -93,10 +100,10 @@
 }
 
 // 🎨 Estilos Responsive
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .right-title-menu {
     position: absolute;
-    top: 2.85em;
+    top: 100%; // Position directly below header
     right: 0;
     //   background-color: inherit;
     background-color: var(--color-dark);
@@ -106,6 +113,9 @@
     flex-direction: column;
     text-align: center;
     padding: 1rem 0;
+
+    // Ensure shadow when open
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   }
 
   .right-title-menu ul {
@@ -120,7 +130,7 @@
 
   // Botón de hamburguesa
   .hamburger {
-    display: block;
+    display: block; // Visible en móvil/tablet
     font-size: 2rem;
     cursor: pointer;
     color: var(--color-text);
@@ -128,7 +138,7 @@
 }
 
 // 📌 Ocultar el botón de hamburguesa en pantallas grandes
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
   .hamburger {
     display: none;
   }

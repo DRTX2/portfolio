@@ -39,19 +39,19 @@
             min-height: 120px;
 
             // Use semantic variables
-            background: rgba(30, 41, 59, 0.4); // Darker transparency
-            border: 1px solid var(--accent-30);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--card-bg); // Dynamic theme background
+            border: 1px solid var(--card-border);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
             transition: all 0.3s ease;
             padding: 1.2rem 1rem;
             border-radius: 12px;
-            color: $color-text;
+            color: var(--color-text); // Dynamic text color
 
             &:hover {
                 transform: translateY(-4px);
-                background: rgba(30, 41, 59, 0.8);
-                border-color: $color-accent;
+                background: var(--color-dark);
+                border-color: var(--color-accent);
                 box-shadow: 0 10px 25px var(--accent-30);
             }
         }
