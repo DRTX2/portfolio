@@ -232,7 +232,7 @@ export const projects: ProjectData[] = [
   },
   {
     slug: 'clean-architecture-game',
-    title: 'Clean Architecture Adventure',
+    title: 'Unity Game',
     image: `${import.meta.env.BASE_URL}assets/img/capibara.jpeg`,
     description: `Unity 2D game showcasing enterprise architecture patterns.`,
     highlights: [
