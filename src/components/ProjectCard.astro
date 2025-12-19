@@ -1,0 +1,62 @@
+---
+export interface Technology {
+  name: string;
+  iconClass?: string; // e.g., "devicon-nestjs-plain"
+  iconImg?: string; // e.g., "assets/img/icon.svg"
+}
+
+export interface Link {
+  url: string;
+  label: string;
+  iconClass?: string; // e.g., "fab fa-github"
+}
+
+interface Props {
+  title: string;
+  image: string;
+  description: string;
+  technologies: Technology[];
+  links: Link[];
+}
+
+const { title, image, description, technologies, links } = Astro.props;
+---
+
+<article class="project">
+  <div class="project-image">
+    <img src={image} alt={title} />
+  </div>
+
+  <div class="project-content">
+    <h3>{title}</h3>
+
+    <p set:html={description} />
+
+    <div class="technologies">
+      {
+        technologies.map((tech) => (
+          <span>
+            {tech.iconClass && <i class={`${tech.iconClass} colored`} />}
+            {tech.iconImg && (
+              <i>
+                <img src={tech.iconImg} alt="" style="height: 1em; width: auto;" />
+              </i>
+            )}
+            {tech.name}
+          </span>
+        ))
+      }
+    </div>
+
+    <div class="project-links">
+      {
+        links.map((link) => (
+          <a href={link.url} target="_blank" rel="noopener noreferrer">
+            {link.iconClass && <i class={link.iconClass} />}
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</article>
