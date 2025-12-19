@@ -1,0 +1,228 @@
+{
+  "hero": {
+    "greeting": "Hi There, I'm",
+    "name": "David Manjarres",
+    "rolePrefix": "I am into",
+    "typing": [
+      "Web Development",
+      "Frontend Development",
+      "Backend Development"
+    ],
+    "cta": "About Me"
+  },
+  "about": {
+    "title": "About",
+    "titleHighlight": "Me",
+    "subtitle": "FULL-STACK DEVELOPER • CLOUD ENGINEER • ECUADOR 🇪🇨",
+    "highlights": [
+      "Building <strong>scalable, cloud-native applications</strong> with Spring Boot, NestJS, React, and TypeScript.",
+      "Designing <strong>RESTful APIs</strong> with <strong>Clean & Hexagonal Architecture</strong>, implementing CI/CD pipelines and microservices.",
+      "Experienced with <strong>PostgreSQL, MySQL, MongoDB, Redis</strong> for relational and NoSQL solutions.",
+      "Proficient in message brokers (<strong>RabbitMQ</strong>), containerization (<strong>Docker</strong>), cloud deployment (<strong>Azure</strong>), and building APIs with <strong>Spring Boot & NestJS</strong>.",
+      "Software Engineering Degree (2021-2026) at Technical University of Ambato, Ecuador.",
+      "Passionate about writing maintainable, high-quality code and solving complex problems."
+    ],
+    "expertise": "Areas of Expertise",
+    "expertiseTags": [
+      "Backend Architecture",
+      "Cloud Infrastructure",
+      "Microservices",
+      "API Design",
+      "Database Optimization",
+      "CI/CD Pipelines",
+      "System Integration"
+    ],
+    "downloadResume": "Download Resume",
+    "emailLabel": "Email:",
+    "placeLabel": "Place:"
+  },
+  "skills": {
+    "title": "Skills & Abilities",
+    "backend": "Backend Development",
+    "databases": "Databases & Cache",
+    "frontend": "Frontend Development",
+    "cloud": "Cloud & DevOps",
+    "messaging": "Message Brokers & Event Streaming"
+  },
+  "education": {
+    "title": "My Education & Certificates",
+    "quote": "Education is not the learning of facts, but the training of the mind to think.",
+    "university": {
+      "name": "Universidad Técnica de Ambato",
+      "degree": "Software Engineering",
+      "period": "2021 - Now",
+      "description": "During my time at the Universidad Técnica de Ambato, I have gained a solid foundation in software development, including programming, algorithms, and system design. I have also participated in various projects that have honed my problem-solving and teamwork skills."
+    },
+    "certificates": {
+      "graphql": {
+        "title": "GraphQL and Node.js: Modern and efficient applications",
+        "issuer": "Udemy - 2024",
+        "description": "This course provided me with advanced skills in building modern and efficient applications using GraphQL and Node.js. I learned how to design scalable APIs and integrate them with front-end frameworks."
+      },
+      "fullstack": {
+        "title": "FullStack and Desktop Programming from ZERO to PROFESSIONAL",
+        "issuer": "Udemy - 2022",
+        "description": "In this course, I mastered full-stack development, from front-end technologies like HTML, CSS, and JavaScript to back-end frameworks like Node.js and databases. I also gained experience in desktop application development."
+      },
+      "efset": {
+        "title": "B2 Upper Intermediate",
+        "issuer": "EF SET - 2025",
+        "description": "This certification demonstrates my proficiency in English at the B2 level, enabling me to communicate effectively in professional and academic environments."
+      }
+    }
+  },
+  "projects": {
+    "title": "My Projects",
+    "viewSource": "Source Code",
+    "viewDetails": "Overview",
+    "close": "Close",
+    "modal": {
+      "overview": "Overview",
+      "contextGoal": "Context & Goal",
+      "keyChallenges": "Key Challenges",
+      "technicalSolutions": "Technical Solutions"
+    },
+    "items": {
+      "gasoline-system": {
+        "title": "Fleet & Driver Management Platform",
+        "description": "Distributed microservices platform for managing drivers, vehicles, and operations.",
+        "highlights": [
+          { "label": "Architecture", "text": "Distributed microservices with NestJS, RabbitMQ, and gRPC." },
+          { "label": "Performance", "text": "Real-time GPS tracking and reporting for fleet operations." },
+          { "label": "Infrastructure", "text": "Dockerized environment with Eureka Service Discovery." }
+        ],
+        "detailedDescription": "This project was born out of the need to modernize a legacy fleet management system. The goal was to create a scalable, fault-tolerant system capable of handling thousands of concurrent requests from vehicle GPS trackers and administrative users. We chose a microservices architecture to allow independent scaling of the ingestion services (receiving GPS data) and the reporting services.",
+        "challenges": [
+          "Handling real-time data ingestion from hundreds of simultaneous connections without blocking the main event loop.",
+          "Ensuring data consistency across distributed services using eventual consistency patterns.",
+          "Managing complex permission levels for different types of administrative roles."
+        ],
+        "solutions": [
+          "Implemented a message queue system (RabbitMQ) to buffer incoming GPS data.",
+          "Used Eureka for dynamic service discovery and load balancing.",
+          "Developed a custom RBAC guard in NestJS to manage permissions efficiently."
+        ]
+      },
+      "marketplace-platform": {
+        "title": "E-Commerce Marketplace Platform",
+        "description": "Complete marketplace serving 5,000+ users with high-performance backend.",
+        "highlights": [
+          { "label": "Performance", "text": "<strong>85% faster response</strong> (300ms → 45ms) via Redis caching." },
+          { "label": "Quality", "text": "<strong>90% test coverage</strong> with Jenkins CI/CD pipeline." },
+          { "label": "Scalability", "text": "Deployed on Azure Container Apps." }
+        ],
+        "detailedDescription": "A high-performance e-commerce solution designed to handle high traffic loads during flash sales. The system emphasizes security, speed, and reliability.",
+        "challenges": [
+          "Reducing database load during peak traffic times.",
+          "Ensuring secure transactions and user data protection.",
+          "Maintaining code quality and automated deployments."
+        ],
+        "solutions": [
+          "Implemented a multi-layer Redis caching strategy for product listings and user sessions.",
+          "Set up a robust CI/CD pipeline with Jenkins and SonarQube.",
+          "Used 3NF database design and indexing to optimize query performance."
+        ]
+      },
+      "medical-clinic": {
+        "title": "Medical Clinic Management System",
+        "description": "HIPAA-compliant full-stack healthcare system.",
+        "highlights": [
+          { "label": "Impact", "text": "<strong>60% faster</strong> medical record access via 3NF normalization." },
+          { "label": "Architecture", "text": "Spring Boot backend following <strong>Clean Architecture</strong>." },
+          { "label": "Security", "text": "RBAC & JWT authentication for HIPAA compliance." }
+        ],
+        "detailedDescription": "HIPAA-compliant full-stack healthcare system handling appointments, medical history, and audit trails. Includes admin dashboards and a mobile app for patients. The focus was on data integrity, security, and performance.",
+        "challenges": [
+          "Ensuring strict data privacy compliance (HIPAA).",
+          "Handling complex relationships between doctors, patients, and appointments.",
+          "Optimizing response times for large medical history records."
+        ],
+        "solutions": [
+          "Implemented strict RBAC middleware and audit logging.",
+          "Designed a highly normalized database schema (3NF) with proper indexing.",
+          "Used Redis for caching frequently accessed non-sensitive data."
+        ]
+      },
+      "inventory-system": {
+        "title": "Inventory & Audits System",
+        "description": "Web system for state entities managing inventories and compliance.",
+        "highlights": [
+          { "label": "Compliance", "text": "Automated PDF reports for judicial audits." },
+          { "label": "Role Management", "text": "Custom role-based access for different state entities." },
+          { "label": "Stack", "text": "Laravel + React with Material UI." }
+        ]
+      },
+      "smartnotes-platform": {
+        "title": "SmartNotes Microservices",
+        "description": "Scalable note-taking platform with microservices.",
+        "highlights": [
+          { "label": "Architecture", "text": "Event-driven communication with RabbitMQ." },
+          { "label": "Gateway", "text": "NGINX API Gateway for routing and auth." },
+          { "label": "Database", "text": "Hybrid data storage with MongoDB and PostgreSQL." }
+        ]
+      },
+      "uta-elections": {
+        "title": "UTA Elections Platform",
+        "description": "Digital campaign platform for University Rector elections.",
+        "highlights": [
+          { "label": "Engagement", "text": "Real-time stats and news for university stakeholders." },
+          { "label": "Design", "text": "Responsive UI with Bootstrap and Laravel." }
+        ]
+      },
+      "creative-portfolio": {
+        "title": "My Creative Portfolio",
+        "description": "Interactive platform for creating personal portfolios.",
+        "highlights": [
+          { "label": "Features", "text": "Project management and community engagement." },
+          { "label": "Tech", "text": "PHP, MySQL, and Axios for dynamic interactions." }
+        ]
+      },
+      "clean-architecture-game": {
+        "title": "Unity Game",
+        "description": "Unity 2D game showcasing enterprise architecture patterns.",
+        "highlights": [
+          { "label": "Concept", "text": "Applying <strong>SOLID principles</strong> to Game Development." },
+          { "label": "Patterns", "text": "Factory, Strategy, Observer, and Event Bus implementation." },
+          { "label": "Tech", "text": "Managed state persistence with SQLite." }
+        ],
+        "detailedDescription": "A unique project bridging the gap between game development and enterprise software architecture. It demonstrates that the same principled approach used in large-scale backend systems can be applied to game logic to create maintainable and testable code.",
+        "challenges": [
+          "Decoupling the game logic from the Unity Engine API.",
+          "Implementing Dependency Injection in a Unity environment.",
+          "Managing complex game state in a persistent way."
+        ],
+        "solutions": [
+          "Created an abstraction layer between the game logic and Unity's Monobehaviours.",
+          "Implemented a custom Service Locator and Factory pattern for dependency management.",
+          "Used SQLite for structured local data persistence, allowing complex save states."
+        ]
+      }
+    }
+  },
+  "contact": {
+    "title": "Let's Work",
+    "titleHighlight": "Together",
+    "subtitle": "I'm always interested in hearing about new projects and opportunities. Whether you need a full-stack solution, backend architecture, or frontend excellence, let's create something amazing together.",
+    "linkedin": "Connect on LinkedIn",
+    "github": "View GitHub",
+    "email": "Email Me",
+    "stats": {
+      "experience": "Years Experience",
+      "projects": "Projects Delivered",
+      "services": "Backend Services Built",
+      "coverage": "Max Test Coverage (E-Commerce)"
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with passion and code.",
+    "backToTop": "Back to top"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About me",
+    "skills": "Skills",
+    "education": "Education",
+    "projects": "Projects"
+  }
+}

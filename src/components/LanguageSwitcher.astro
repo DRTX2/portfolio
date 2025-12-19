@@ -1,0 +1,100 @@
+---
+import { languages } from '../i18n/utils';
+---
+
+<div class="language-switcher">
+  <button id="lang-toggle" aria-label="Switch language" title="Switch language">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="2" y1="12" x2="22" y2="12"></line>
+      <path
+        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+      ></path>
+    </svg>
+    <span class="lang-label">EN</span>
+  </button>
+</div>
+
+<style>
+  .language-switcher {
+    display: flex;
+    align-items: center;
+  }
+
+  #lang-toggle {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--color-text);
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  #lang-toggle:hover {
+    color: var(--color-primary);
+  }
+
+  .lang-label {
+    text-transform: uppercase;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+</style>
+
+<script is:inline>
+  const currentLang = (() => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('lang')) {
+      return localStorage.getItem('lang');
+    }
+    return 'en';
+  })();
+
+  // Set initial language
+  window.currentLang = currentLang;
+
+  // Update label to show OPPOSITE language (the one you can switch TO)
+  const langLabel = document.querySelector('.lang-label');
+  if (langLabel) {
+    const oppositeLang = currentLang === 'en' ? 'es' : 'en';
+    langLabel.textContent = oppositeLang.toUpperCase();
+  }
+
+  const handleLanguageToggle = () => {
+    const newLang = window.currentLang === 'en' ? 'es' : 'en';
+    window.currentLang = newLang;
+    localStorage.setItem('lang', newLang);
+
+    // Update label to show NEW opposite language
+    const langLabel = document.querySelector('.lang-label');
+    if (langLabel) {
+      const oppositeLang = newLang === 'en' ? 'es' : 'en';
+      langLabel.textContent = oppositeLang.toUpperCase();
+    }
+
+    // Dispatch custom event for other components to listen to
+    window.dispatchEvent(new CustomEvent('languagechange', { detail: { lang: newLang } }));
+
+    // Reload page to apply new language
+    window.location.reload();
+  };
+
+  document.getElementById('lang-toggle')?.addEventListener('click', handleLanguageToggle);
+</script>

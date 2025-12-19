@@ -1,0 +1,228 @@
+{
+  "hero": {
+    "greeting": "Hola, soy",
+    "name": "David Manjarres",
+    "rolePrefix": "Me dedico al",
+    "typing": [
+      "Desarrollo Web",
+      "Desarrollo Frontend",
+      "Desarrollo Backend"
+    ],
+    "cta": "Sobre Mí"
+  },
+  "about": {
+    "title": "Sobre",
+    "titleHighlight": "Mí",
+    "subtitle": "DESARROLLADOR FULL-STACK • INGENIERO EN LA NUBE • ECUADOR 🇪🇨",
+    "highlights": [
+      "Construyendo <strong>aplicaciones escalables y nativas en la nube</strong> con Spring Boot, NestJS, React y TypeScript.",
+      "Diseñando <strong>APIs RESTful</strong> con <strong>Arquitectura Limpia y Hexagonal</strong>, implementando pipelines CI/CD y microservicios.",
+      "Experiencia con <strong>PostgreSQL, MySQL, MongoDB, Redis</strong> para soluciones relacionales y NoSQL.",
+      "Proficiente en message brokers (<strong>RabbitMQ</strong>), containerización (<strong>Docker</strong>), cloud deployment (<strong>Azure</strong>), y construcción de APIs con <strong>Spring Boot & NestJS</strong>.",
+      "Ingeniería de Software (2021-2026) en la Universidad Técnica de Ambato, Ecuador.",
+      "Apasionado por escribir código mantenible y de alta calidad, y resolver problemas complejos."
+    ],
+    "expertise": "Áreas de Experiencia",
+    "expertiseTags": [
+      "Arquitectura Backend",
+      "Infraestructura en la Nube",
+      "Microservicios",
+      "Diseño de APIs",
+      "Optimización de Bases de Datos",
+      "Pipelines CI/CD",
+      "Integración de Sistemas"
+    ],
+    "downloadResume": "Descargar CV",
+    "emailLabel": "Correo:",
+    "placeLabel": "Ubicación:"
+  },
+  "skills": {
+    "title": "Habilidades & Capacidades",
+    "backend": "Desarrollo Backend",
+    "databases": "Bases de Datos & Caché",
+    "frontend": "Desarrollo Frontend",
+    "cloud": "Cloud & DevOps",
+    "messaging": "Message Brokers & Streaming de Eventos"
+  },
+  "education": {
+    "title": "Mi Educación & Certificados",
+    "quote": "La educación no es el aprendizaje de hechos, sino el entrenamiento de la mente para pensar.",
+    "university": {
+      "name": "Universidad Técnica de Ambato",
+      "degree": "Ingeniería de Software",
+      "period": "2021 - Actualidad",
+      "description": "Durante mi tiempo en la Universidad Técnica de Ambato, he adquirido una base sólida en desarrollo de software, incluyendo programación, algoritmos y diseño de sistemas. También he participado en varios proyectos que han perfeccionado mis habilidades de resolución de problemas y trabajo en equipo."
+    },
+    "certificates": {
+      "graphql": {
+        "title": "GraphQL y Node.js: Aplicaciones modernas y eficientes",
+        "issuer": "Udemy - 2024",
+        "description": "Este curso me proporcionó habilidades avanzadas para construir aplicaciones modernas y eficientes usando GraphQL y Node.js. Aprendí a diseñar APIs escalables e integrarlas con frameworks de front-end."
+      },
+      "fullstack": {
+        "title": "Programación FullStack y de Escritorio de CERO a PROFESIONAL",
+        "issuer": "Udemy - 2022",
+        "description": "En este curso, dominé el desarrollo full-stack, desde tecnologías front-end como HTML, CSS y JavaScript hasta frameworks back-end como Node.js y bases de datos. También adquirí experiencia en desarrollo de aplicaciones de escritorio."
+      },
+      "efset": {
+        "title": "B2 Intermedio Alto",
+        "issuer": "EF SET - 2025",
+        "description": "Esta certificación demuestra mi competencia en inglés a nivel B2, permitiéndome comunicarme efectivamente en entornos profesionales y académicos."
+      }
+    }
+  },
+  "projects": {
+    "title": "Mis Proyectos",
+    "viewSource": "Código Fuente",
+    "viewDetails": "Descripción",
+    "close": "Cerrar",
+    "modal": {
+      "overview": "Descripción General",
+      "contextGoal": "Contexto y Objetivo",
+      "keyChallenges": "Desafíos Clave",
+      "technicalSolutions": "Soluciones Técnicas"
+    },
+    "items": {
+      "gasoline-system": {
+        "title": "Plataforma de Gestión de Flotas y Conductores",
+        "description": "Plataforma de microservicios distribuidos para gestionar conductores, vehículos y operaciones.",
+        "highlights": [
+          { "label": "Arquitectura", "text": "Microservicios distribuidos con NestJS, RabbitMQ y gRPC." },
+          { "label": "Rendimiento", "text": "Seguimiento GPS en tiempo real y reportes para operaciones de flotas." },
+          { "label": "Infraestructura", "text": "Entorno dockerizado con Eureka Service Discovery." }
+        ],
+        "detailedDescription": "Este proyecto nació de la necesidad de modernizar un sistema heredado de gestión de flotas. El objetivo era crear un sistema escalable y tolerante a fallos capaz de manejar miles de peticiones concurrentes de rastreadores GPS de vehículos y usuarios administrativos. Elegimos una arquitectura de microservicios para permitir el escalado independiente de los servicios de ingesta (recibiendo datos GPS) y los servicios de reportes.",
+        "challenges": [
+          "Manejar la ingesta de datos en tiempo real desde cientos de conexiones simultáneas sin bloquear el event loop principal.",
+          "Asegurar la consistencia de datos entre servicios distribuidos usando patrones de consistencia eventual.",
+          "Gestionar niveles de permisos complejos para diferentes tipos de roles administrativos."
+        ],
+        "solutions": [
+          "Implementamos un sistema de cola de mensajes (RabbitMQ) para almacenar temporalmente los datos GPS entrantes.",
+          "Usamos Eureka para descubrimiento dinámico de servicios y balanceo de carga.",
+          "Desarrollamos un guard RBAC personalizado en NestJS para gestionar permisos eficientemente."
+        ]
+      },
+      "marketplace-platform": {
+        "title": "Plataforma de Marketplace E-Commerce",
+        "description": "Marketplace completo sirviendo a más de 5,000 usuarios con backend de alto rendimiento.",
+        "highlights": [
+          { "label": "Rendimiento", "text": "<strong>85% más rápido</strong> (300ms → 45ms) mediante caché Redis." },
+          { "label": "Calidad", "text": "<strong>90% de cobertura de pruebas</strong> con pipeline CI/CD Jenkins." },
+          { "label": "Escalabilidad", "text": "Desplegado en Azure Container Apps." }
+        ],
+        "detailedDescription": "Una solución de e-commerce de alto rendimiento diseñada para manejar altas cargas de tráfico durante ventas flash. El sistema enfatiza la seguridad, velocidad y confiabilidad.",
+        "challenges": [
+          "Reducir la carga de la base de datos durante picos de tráfico.",
+          "Garantizar transacciones seguras y protección de datos de usuarios.",
+          "Mantener la calidad del código y despliegues automatizados."
+        ],
+        "solutions": [
+          "Implementamos una estrategia de caché Redis multicapa para listados de productos y sesiones de usuarios.",
+          "Configuramos un pipeline CI/CD robusto con Jenkins y SonarQube.",
+          "Usamos diseño de base de datos 3NF e indexación para optimizar el rendimiento de consultas."
+        ]
+      },
+      "medical-clinic": {
+        "title": "Sistema de Gestión de Clínica Médica",
+        "description": "Sistema de salud full-stack compatible con HIPAA.",
+        "highlights": [
+          { "label": "Impacto", "text": "<strong>60% más rápido</strong> acceso a registros médicos mediante normalización 3NF." },
+          { "label": "Arquitectura", "text": "Backend Spring Boot siguiendo <strong>Arquitectura Limpia</strong>." },
+          { "label": "Seguridad", "text": "Autenticación RBAC & JWT para cumplimiento HIPAA." }
+        ],
+        "detailedDescription": "Sistema de salud full-stack compatible con HIPAA que maneja citas, historia médica y registros de auditoría. Incluye dashboards de administración y una aplicación móvil para pacientes. El enfoque fue en integridad de datos, seguridad y rendimiento.",
+        "challenges": [
+          "Garantizar el estricto cumplimiento de privacidad de datos (HIPAA).",
+          "Manejar relaciones complejas entre doctores, pacientes y citas.",
+          "Optimizar tiempos de respuesta para registros médicos extensos."
+        ],
+        "solutions": [
+          "Implementamos middleware RBAC estricto y registro de auditoría.",
+          "Diseñamos un esquema de base de datos altamente normalizado (3NF) con indexación adecuada.",
+          "Usamos Redis para cachear datos no sensibles de acceso frecuente."
+        ]
+      },
+      "inventory-system": {
+        "title": "Sistema de Inventarios & Auditorías",
+        "description": "Sistema web para entidades estatales que gestionan inventarios y cumplimiento.",
+        "highlights": [
+          { "label": "Cumplimiento", "text": "Reportes PDF automatizados para auditorías judiciales." },
+          { "label": "Gestión de Roles", "text": "Acceso basado en roles personalizado para diferentes entidades estatales." },
+          { "label": "Stack", "text": "Laravel + React con Material UI." }
+        ]
+      },
+      "smartnotes-platform": {
+        "title": "SmartNotes Microservicios",
+        "description": "Plataforma de toma de notas escalable con microservicios.",
+        "highlights": [
+          { "label": "Arquitectura", "text": "Comunicación orientada a eventos con RabbitMQ." },
+          { "label": "Gateway", "text": "NGINX API Gateway para enrutamiento y autenticación." },
+          { "label": "Base de Datos", "text": "Almacenamiento híbrido de datos con MongoDB y PostgreSQL." }
+        ]
+      },
+      "uta-elections": {
+        "title": "Plataforma Elecciones UTA",
+        "description": "Plataforma de campaña digital para elecciones de Rector Universitario.",
+        "highlights": [
+          { "label": "Participación", "text": "Estadísticas y noticias en tiempo real para la comunidad universitaria." },
+          { "label": "Diseño", "text": "Interfaz responsiva con Bootstrap y Laravel." }
+        ]
+      },
+      "creative-portfolio": {
+        "title": "Mi Portafolio Creativo",
+        "description": "Plataforma interactiva para crear portafolios personales.",
+        "highlights": [
+          { "label": "Características", "text": "Gestión de proyectos y participación comunitaria." },
+          { "label": "Tecnología", "text": "PHP, MySQL y Axios para interacciones dinámicas." }
+        ]
+      },
+      "clean-architecture-game": {
+        "title": "Juego en Unity",
+        "description": "Juego 2D en Unity demostrando patrones de arquitectura empresarial.",
+        "highlights": [
+          { "label": "Concepto", "text": "Aplicando <strong>principios SOLID</strong> al Desarrollo de Videojuegos." },
+          { "label": "Patrones", "text": "Implementación de Factory, Strategy, Observer y Event Bus." },
+          { "label": "Tecnología", "text": "Persistencia de estado gestionada con SQLite." }
+        ],
+        "detailedDescription": "Un proyecto único que une el desarrollo de videojuegos y la arquitectura de software empresarial. Demuestra que el mismo enfoque basado en principios utilizado en grandes sistemas backend puede aplicarse a la lógica de juegos para crear código mantenible y testeable.",
+        "challenges": [
+          "Desacoplar la lógica del juego de la API del motor Unity.",
+          "Implementar Inyección de Dependencias en un entorno Unity.",
+          "Gestionar estados de juego complejos de forma persistente."
+        ],
+        "solutions": [
+          "Creamos una capa de abstracción entre la lógica y los Monobehaviours de Unity.",
+          "Implementamos un patrón Service Locator y Factory personalizado para la gestión de dependencias.",
+          "Usamos SQLite para persistencia local estructurada, permitiendo estados de guardado complejos."
+        ]
+      }
+    }
+  },
+  "contact": {
+    "title": "Trabajemos",
+    "titleHighlight": "Juntos",
+    "subtitle": "Siempre estoy interesado en conocer nuevos proyectos y oportunidades. Ya sea que necesites una solución full-stack, arquitectura backend o excelencia frontend, creemos algo increíble juntos.",
+    "linkedin": "Conectar en LinkedIn",
+    "github": "Ver GitHub",
+    "email": "Enviar Email",
+    "stats": {
+      "experience": "Años de Experiencia",
+      "projects": "Proyectos Entregados",
+      "services": "Servicios Backend Construidos",
+      "coverage": "Máxima Cobertura de Pruebas (E-Commerce)"
+    }
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "builtWith": "Construido con pasión y código.",
+    "backToTop": "Volver arriba"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "skills": "Habilidades",
+    "education": "Educación",
+    "projects": "Proyectos"
+  }
+}
