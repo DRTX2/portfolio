@@ -174,6 +174,70 @@
                 height: 100%;
                 border-radius: 8px;
             }
+
+            // Thumbnail with play button
+            .video-thumbnail {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 8px;
+                }
+
+                &:hover {
+                    transform: scale(1.02);
+
+                    .video-play-btn {
+                        transform: translate(-50%, -50%) scale(1.1);
+                        background-color: $color-primary;
+                    }
+                }
+
+                .video-play-btn {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    background-color: rgba(255, 255, 255, 0.95);
+                    border: none;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+                    svg {
+                        width: 32px;
+                        height: 32px;
+                        color: #000;
+                        margin-left: 4px; // Optical alignment for play icon
+                    }
+
+                    &:hover {
+                        background-color: $color-primary;
+
+                        svg {
+                            color: #fff;
+                        }
+                    }
+
+                    &:active {
+                        transform: translate(-50%, -50%) scale(0.95);
+                    }
+                }
+            }
         }
     }
 
@@ -228,6 +292,19 @@
                     transform: translateY(-2px);
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
                 }
+            }
+        }
+    }
+
+    // Responsive adjustments for video play button
+    @media (max-width: 768px) {
+        .video-section .video-container .video-thumbnail .video-play-btn {
+            width: 60px;
+            height: 60px;
+
+            svg {
+                width: 24px;
+                height: 24px;
             }
         }
     }

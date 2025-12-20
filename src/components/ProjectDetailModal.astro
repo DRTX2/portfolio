@@ -109,7 +109,7 @@
         }
       }
 
-      // Video Section
+      // Video Section with Lazy Loading
       const videoSection = document.getElementById('modalVideoSection');
       const videoContainer = document.getElementById('modalVideoContainer');
 
@@ -119,18 +119,43 @@
           const videoId = extractYouTubeId(project.videoUrl);
 
           if (videoId) {
-            // Create responsive iframe with lazy loading and YouTube API parameters
-            // Using enablejsapi=1 for better control, and other params for optimal UX
+            // Create thumbnail with play button (lazy load approach)
+            // Video iframe only loads when user clicks play
             videoContainer.innerHTML = `
-              <iframe
-                src="https://www.youtube.com/embed/${videoId}?enablejsapi=1&rel=0&modestbranding=1"
-                title="Project Video"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
+              <div class="video-thumbnail" data-video-id="${videoId}">
+                <img 
+                  src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" 
+                  alt="Video thumbnail"
+                  loading="lazy"
+                  onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'"
+                />
+                <button class="video-play-btn" aria-label="Play video">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+              </div>
             `;
+
+            // Add click handler to load video
+            const thumbnail = videoContainer.querySelector('.video-thumbnail');
+
+            const loadVideo = (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              videoContainer.innerHTML = `
+                <iframe
+                  src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1"
+                  title="Project Video"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              `;
+            };
+
+            if (thumbnail) thumbnail.addEventListener('click', loadVideo);
+
             videoSection.style.display = 'block';
           } else {
             videoSection.style.display = 'none';
