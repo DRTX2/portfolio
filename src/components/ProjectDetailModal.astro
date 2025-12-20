@@ -14,6 +14,12 @@
           <div id="modalContext" class="context-box"></div>
         </section>
 
+        <!-- Video Section -->
+        <section class="modal-section video-section" id="modalVideoSection" style="display: none;">
+          <h3 data-i18n="projects.modal.projectVideo">Project Video</h3>
+          <div class="video-container" id="modalVideoContainer"></div>
+        </section>
+
         <div class="two-column-grid">
           <section class="modal-section" id="modalChallengesSection">
             <h3 data-i18n="projects.modal.keyChallenges">
@@ -51,6 +57,26 @@
 
     const openButtons = document.querySelectorAll('.view-details-btn');
 
+    // Helper function to extract YouTube video ID from URL
+    const extractYouTubeId = (url) => {
+      if (!url) return null;
+
+      // Handle different YouTube URL formats
+      const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+        /^([a-zA-Z0-9_-]{11})$/, // Direct video ID
+      ];
+
+      for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) {
+          return match[1];
+        }
+      }
+
+      return null;
+    };
+
     const populateModal = (slug) => {
       const project = projects.find((p) => p.slug === slug);
       if (!project) return;
@@ -80,6 +106,37 @@
           contextContainer.style.display = 'block';
         } else {
           contextContainer.style.display = 'none';
+        }
+      }
+
+      // Video Section
+      const videoSection = document.getElementById('modalVideoSection');
+      const videoContainer = document.getElementById('modalVideoContainer');
+
+      if (videoSection && videoContainer) {
+        if (project.videoUrl) {
+          // Extract video ID from YouTube URL
+          const videoId = extractYouTubeId(project.videoUrl);
+
+          if (videoId) {
+            // Create responsive iframe with lazy loading and YouTube API parameters
+            // Using enablejsapi=1 for better control, and other params for optimal UX
+            videoContainer.innerHTML = `
+              <iframe
+                src="https://www.youtube.com/embed/${videoId}?enablejsapi=1&rel=0&modestbranding=1"
+                title="Project Video"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            `;
+            videoSection.style.display = 'block';
+          } else {
+            videoSection.style.display = 'none';
+          }
+        } else {
+          videoSection.style.display = 'none';
         }
       }
 
@@ -147,6 +204,13 @@
     const closeModal = () => {
       modal.classList.remove('active');
       document.body.style.overflow = '';
+
+      // Stop video playback by clearing the iframe
+      // This prevents audio from continuing after modal closes
+      const videoContainer = document.getElementById('modalVideoContainer');
+      if (videoContainer) {
+        videoContainer.innerHTML = '';
+      }
     };
 
     closeBtn.addEventListener('click', closeModal);

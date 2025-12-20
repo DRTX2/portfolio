@@ -84,7 +84,8 @@
       "overview": "Descripción General",
       "contextGoal": "Contexto y Objetivo",
       "keyChallenges": "Desafíos Clave",
-      "technicalSolutions": "Soluciones Técnicas"
+      "technicalSolutions": "Soluciones Técnicas",
+      "projectVideo": "Video del Proyecto"
     },
     "items": {
       "gasoline-system": {
@@ -182,7 +183,7 @@
         ]
       },
       "clean-architecture-game": {
-        "title": "Juego en Unity",
+        "title": "Pixel1 Quest",
         "description": "Juego 2D en Unity demostrando patrones de arquitectura empresarial.",
         "highlights": [
           { "label": "Concepto", "text": "Aplicando <strong>principios SOLID</strong> al Desarrollo de Videojuegos." },

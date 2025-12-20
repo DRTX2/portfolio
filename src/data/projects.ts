@@ -13,6 +13,7 @@ export interface ProjectData {
   features?: string[];
   challenges?: string[];
   solutions?: string[];
+  videoUrl?: string; // Optional YouTube video URL
 }
 
 export const projects: ProjectData[] = [
@@ -232,7 +233,7 @@ export const projects: ProjectData[] = [
   },
   {
     slug: 'clean-architecture-game',
-    title: 'Unity Game',
+    title: 'Pixel1 Quest',
     image: `${import.meta.env.BASE_URL}assets/img/capibara.jpeg`,
     description: `Unity 2D game showcasing enterprise architecture patterns.`,
     highlights: [
@@ -262,6 +263,7 @@ export const projects: ProjectData[] = [
       "Created an abstraction layer between the game logic and Unity's Monobehaviours.",
       "Implemented a custom Service Locator and Factory pattern for dependency management.",
       "Used SQLite for structured local data persistence, allowing complex save states."
-    ]
+    ],
+    videoUrl: 'https://www.youtube.com/watch?v=wLPdfB5ABbU'
   },
 ];
