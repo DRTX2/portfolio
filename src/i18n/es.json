@@ -37,8 +37,17 @@
       "Integración de Sistemas"
     ],
     "downloadResume": "Descargar CV",
+    "viewResume": "Ver CV",
     "emailLabel": "Correo:",
     "placeLabel": "Ubicación:"
+  },
+  "cvModal": {
+    "title": "Resume",
+    "download": "Descargar",
+    "downloadAria": "Descargar CV",
+    "closeAria": "Cerrar visor de CV",
+    "fallbackMessage": "Tu navegador no soporta la vista previa de PDF.",
+    "downloadFallback": "Descargar CV"
   },
   "skills": {
     "title": "Habilidades & Capacidades",
@@ -110,22 +119,25 @@
       },
       "marketplace-platform": {
         "title": "Plataforma de Marketplace E-Commerce",
-        "description": "Marketplace completo sirviendo a más de 5,000 usuarios con backend de alto rendimiento.",
+        "description": "Marketplace completo con backend Spring Boot y frontend React/TypeScript.",
         "highlights": [
-          { "label": "Rendimiento", "text": "<strong>85% más rápido</strong> (300ms → 45ms) mediante caché Redis." },
+          { "label": "Rendimiento", "text": "<strong>85% más rápido</strong> (300ms → 45ms) mediante caché Redis y <strong>~70% reducción de queries</strong>." },
           { "label": "Calidad", "text": "<strong>90% de cobertura de pruebas</strong> con pipeline CI/CD Jenkins." },
-          { "label": "Escalabilidad", "text": "Desplegado en Azure Container Apps." }
+          { "label": "Cloud", "text": "Desplegado en Azure Container Apps con Azure Blob Storage para multimedia." }
         ],
-        "detailedDescription": "Una solución de e-commerce de alto rendimiento diseñada para manejar altas cargas de tráfico durante ventas flash. El sistema enfatiza la seguridad, velocidad y confiabilidad.",
+        "detailedDescription": "Una plataforma de marketplace de alto rendimiento construida con backend Spring Boot y frontend React/TypeScript. El sistema cuenta con seguridad JWT/RBAC, paginación, moderación de contenido, y está desplegado en Azure Container Apps con Azure Blob Storage para gestión de activos multimedia. Se logró un 90% de cobertura de pruebas mediante testing integral y automatización CI/CD.",
         "challenges": [
-          "Reducir la carga de la base de datos durante picos de tráfico.",
-          "Garantizar transacciones seguras y protección de datos de usuarios.",
-          "Mantener la calidad del código y despliegues automatizados."
+          "Optimizar consultas de base de datos para reducir latencia y prevenir problemas N+1.",
+          "Implementar autenticación segura y control de acceso basado en roles para diferentes tipos de usuarios.",
+          "Gestionar activos multimedia eficientemente en un entorno cloud.",
+          "Mantener la calidad del código y despliegues automatizados con alta cobertura de pruebas."
         ],
         "solutions": [
-          "Implementamos una estrategia de caché Redis multicapa para listados de productos y sesiones de usuarios.",
-          "Configuramos un pipeline CI/CD robusto con Jenkins y SonarQube.",
-          "Usamos diseño de base de datos 3NF e indexación para optimizar el rendimiento de consultas."
+          "Aplicamos normalización 3NF y prevención de queries N+1, reduciendo el conteo de consultas en ~70%.",
+          "Implementamos caché Redis multicapa y optimización de consultas, mejorando los tiempos de respuesta de la API de ~300ms a ~45ms.",
+          "Construimos APIs RESTful con seguridad JWT/RBAC, paginación y funciones de moderación de contenido.",
+          "Configuramos un pipeline CI/CD robusto con Jenkins logrando 90% de cobertura de pruebas.",
+          "Desplegado en Azure Container Apps e integrado Azure Blob Storage para gestión escalable de multimedia."
         ]
       },
       "medical-clinic": {

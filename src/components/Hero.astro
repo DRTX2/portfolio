@@ -13,6 +13,7 @@ interface SocialLink {
   href: string;
   icon: string;
   label: string;
+  openCvModal?: boolean;
 }
 
 interface Props {
@@ -34,9 +35,10 @@ const {
       label: 'Visit my GitHub profile',
     },
     {
-      href: `${import.meta.env.BASE_URL}assets/docs/David_Oswaldo_Manjarres_Quintero_FULL.pdf`,
+      href: '#',
       icon: 'fas fa-file-pdf',
-      label: 'Download my resume as PDF',
+      label: 'View my resume',
+      openCvModal: true,
     },
   ],
 } = Astro.props;
@@ -59,7 +61,13 @@ const {
       {
         socialLinks.map((link) => (
           <li>
-            <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+            <a
+              href={link.href}
+              target={link.openCvModal ? undefined : '_blank'}
+              rel={link.openCvModal ? undefined : 'noopener noreferrer'}
+              aria-label={link.label}
+              data-open-cv-modal={link.openCvModal ? true : undefined}
+            >
               <i class={link.icon} aria-hidden="true" />
             </a>
           </li>

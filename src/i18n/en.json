@@ -37,8 +37,17 @@
       "System Integration"
     ],
     "downloadResume": "Download Resume",
+    "viewResume": "View Resume",
     "emailLabel": "Email:",
     "placeLabel": "Place:"
+  },
+  "cvModal": {
+    "title": "Resume",
+    "download": "Download",
+    "downloadAria": "Download CV",
+    "closeAria": "Close CV modal",
+    "fallbackMessage": "Your browser doesn't support PDF preview.",
+    "downloadFallback": "Download CV"
   },
   "skills": {
     "title": "Skills & Abilities",
@@ -110,22 +119,25 @@
       },
       "marketplace-platform": {
         "title": "E-Commerce Marketplace Platform",
-        "description": "Complete marketplace serving 5,000+ users with high-performance backend.",
+        "description": "Complete marketplace with Spring Boot backend and React/TypeScript frontend.",
         "highlights": [
-          { "label": "Performance", "text": "<strong>85% faster response</strong> (300ms → 45ms) via Redis caching." },
+          { "label": "Performance", "text": "<strong>85% faster response</strong> (300ms → 45ms) via Redis caching and <strong>~70% query reduction</strong>." },
           { "label": "Quality", "text": "<strong>90% test coverage</strong> with Jenkins CI/CD pipeline." },
-          { "label": "Scalability", "text": "Deployed on Azure Container Apps." }
+          { "label": "Cloud", "text": "Deployed on Azure Container Apps with Azure Blob Storage for media." }
         ],
-        "detailedDescription": "A high-performance e-commerce solution designed to handle high traffic loads during flash sales. The system emphasizes security, speed, and reliability.",
+        "detailedDescription": "A high-performance marketplace platform built with Spring Boot backend and React/TypeScript frontend. The system features JWT/RBAC security, pagination, content moderation, and is deployed on Azure Container Apps with Azure Blob Storage for media asset management. Achieved 90% test coverage through comprehensive testing and CI/CD automation.",
         "challenges": [
-          "Reducing database load during peak traffic times.",
-          "Ensuring secure transactions and user data protection.",
-          "Maintaining code quality and automated deployments."
+          "Optimizing database queries to reduce latency and prevent N+1 query problems.",
+          "Implementing secure authentication and role-based access control for different user types.",
+          "Managing media assets efficiently in a cloud environment.",
+          "Maintaining code quality and automated deployments with high test coverage."
         ],
         "solutions": [
-          "Implemented a multi-layer Redis caching strategy for product listings and user sessions.",
-          "Set up a robust CI/CD pipeline with Jenkins and SonarQube.",
-          "Used 3NF database design and indexing to optimize query performance."
+          "Applied 3NF normalization and N+1 query prevention, reducing query count by ~70%.",
+          "Implemented multi-layer Redis caching and query optimization, improving API response times from ~300ms to ~45ms.",
+          "Built RESTful APIs with JWT/RBAC security, pagination, and content moderation features.",
+          "Set up a robust CI/CD pipeline with Jenkins achieving 90% test coverage.",
+          "Deployed on Azure Container Apps and integrated Azure Blob Storage for scalable media management."
         ]
       },
       "medical-clinic": {

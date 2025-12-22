@@ -160,19 +160,24 @@
         .resume-button {
             margin-top: 1.5rem;
             text-decoration: none; // Quitar subrayado del enlace envolvente
+            @extend .button; // Heredar estilos modernos de botón
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
 
-            button {
-                @extend .button; // Heredar estilos modernos de botón
-                display: flex;
+            // Icono de descarga visual (opcional si lo agregas al html)
+            &::before {
+                content: '\f019'; // FontAwesome download icon code
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+            }
+
+            // Soporta la estructura antigua con <a><button>...</button></a>
+            > button {
+                all: unset;
+                display: inline-flex;
                 align-items: center;
                 gap: 0.5rem;
-
-                // Icono de descarga visual (opcional si lo agregas al html)
-                &::before {
-                    content: '\f019'; // FontAwesome download icon code
-                    font-family: "Font Awesome 5 Free";
-                    font-weight: 900;
-                }
             }
         }
     }

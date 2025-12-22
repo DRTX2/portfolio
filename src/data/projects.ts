@@ -31,6 +31,11 @@ export const projects: ProjectData[] = [
       { name: 'NestJS', iconClass: 'devicon-nestjs-plain' },
       { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
       { name: 'RabbitMQ', iconClass: 'devicon-rabbitmq-original' },
+      { name: 'gRPC', iconClass: 'devicon-grpc-plain' },
+      { name: 'Kubernetes', iconClass: 'devicon-kubernetes-plain' },
+      { name: 'Elasticsearch', iconClass: 'devicon-elasticsearch-plain' },
+      { name: 'Kibana', iconClass: 'devicon-kibana-plain' },
+      { name: 'Swagger', iconClass: 'devicon-swagger-plain' },
       { name: 'React', iconClass: 'devicon-react-original' },
       { name: 'Docker', iconClass: 'devicon-docker-plain' },
     ],
@@ -65,18 +70,23 @@ export const projects: ProjectData[] = [
     slug: 'marketplace-platform',
     title: 'E-Commerce Marketplace Platform',
     image: `${import.meta.env.BASE_URL}assets/img/amazon.png`,
-    description: `Complete marketplace serving 5,000+ users with high-performance backend.`,
+    description: `Complete marketplace with Spring Boot backend and React/TypeScript frontend.`,
     highlights: [
-      { label: 'Performance', text: '<strong>85% faster response</strong> (300ms → 45ms) via Redis caching.' },
+      { label: 'Performance', text: '<strong>85% faster response</strong> (300ms → 45ms) via Redis caching and <strong>~70% query reduction</strong>.' },
       { label: 'Quality', text: '<strong>90% test coverage</strong> with Jenkins CI/CD pipeline.' },
-      { label: 'Scalability', text: 'Deployed on Azure Container Apps.' }
+      { label: 'Cloud', text: 'Deployed on Azure Container Apps with Azure Blob Storage for media.' }
     ],
     technologies: [
       { name: 'Spring Boot', iconClass: 'devicon-spring-original' },
-      { name: 'React', iconClass: 'devicon-react-original' },
-      { name: 'Redis', iconClass: 'devicon-redis-plain' },
       { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
+      { name: 'Redis', iconClass: 'devicon-redis-plain' },
+      { name: 'Swagger', iconClass: 'devicon-swagger-plain' },
+      { name: 'React', iconClass: 'devicon-react-original' },
+      { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
+      { name: 'TailwindCSS', iconClass: 'devicon-tailwindcss-original' },
+      { name: 'Docker', iconClass: 'devicon-docker-plain' },
       { name: 'Jenkins', iconClass: 'devicon-jenkins-plain' },
+      { name: 'Azure', iconClass: 'devicon-azure-plain' },
     ],
     links: [
       {
@@ -90,16 +100,19 @@ export const projects: ProjectData[] = [
         iconClass: 'fab fa-github',
       },
     ],
-    detailedDescription: "A high-performance e-commerce solution designed to handle high traffic loads during flash sales. The system emphasizes security, speed, and reliability.",
+    detailedDescription: "A high-performance marketplace platform built with Spring Boot backend and React/TypeScript frontend. The system features JWT/RBAC security, pagination, content moderation, and is deployed on Azure Container Apps with Azure Blob Storage for media asset management. Achieved 90% test coverage through comprehensive testing and CI/CD automation.",
     challenges: [
-      "Reducing database load during peak traffic times.",
-      "Ensuring secure transactions and user data protection.",
-      "Maintaining code quality and automated deployments."
+      "Optimizing database queries to reduce latency and prevent N+1 query problems.",
+      "Implementing secure authentication and role-based access control for different user types.",
+      "Managing media assets efficiently in a cloud environment.",
+      "Maintaining code quality and automated deployments with high test coverage."
     ],
     solutions: [
-      "Implemented a multi-layer Redis caching strategy for product listings and user sessions.",
-      "Set up a robust CI/CD pipeline with Jenkins and SonarQube.",
-      "Used 3NF database design and indexing to optimize query performance."
+      "Applied 3NF normalization and N+1 query prevention, reducing query count by ~70%.",
+      "Implemented multi-layer Redis caching and query optimization, improving API response times from ~300ms to ~45ms.",
+      "Built RESTful APIs with JWT/RBAC security, pagination, and content moderation features.",
+      "Set up a robust CI/CD pipeline with Jenkins achieving 90% test coverage.",
+      "Deployed on Azure Container Apps and integrated Azure Blob Storage for scalable media management."
     ]
   },
   {
@@ -117,6 +130,8 @@ export const projects: ProjectData[] = [
       { name: 'React Native', iconClass: 'devicon-react-original' },
       { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
       { name: 'Redis', iconClass: 'devicon-redis-plain' },
+      { name: 'Swagger', iconClass: 'devicon-swagger-plain' },
+      { name: 'Docker', iconClass: 'devicon-docker-plain' },
       { name: 'TailwindCSS', iconClass: 'devicon-tailwindcss-original' },
     ],
     links: [
@@ -153,6 +168,7 @@ export const projects: ProjectData[] = [
       { name: 'Laravel', iconClass: 'devicon-laravel-original' },
       { name: 'React', iconClass: 'devicon-react-original' },
       { name: 'MySQL', iconClass: 'devicon-mysql-original' },
+      { name: 'Swagger', iconClass: 'devicon-swagger-plain' },
       { name: 'Material UI', iconClass: 'devicon-materialui-plain' },
     ],
     links: [

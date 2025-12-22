@@ -1,0 +1,166 @@
+---
+/**
+ * CV Modal Component
+ * Immersive modal to preview and download CV/Resume
+ */
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations('en');
+
+interface Props {
+  resumeUrl?: string;
+}
+
+const {
+  resumeUrl = `${import.meta.env.BASE_URL}assets/docs/David_Oswaldo_Manjarres_Quintero_FULL.pdf`,
+} = Astro.props;
+---
+
+<div id="cv-modal" class="cv-modal" aria-hidden="true" role="dialog" aria-labelledby="cv-modal-title">
+  <div class="cv-modal-overlay"></div>
+  <div class="cv-modal-content">
+    <div class="cv-modal-header">
+      <h3 id="cv-modal-title" data-i18n="cvModal.title">Curriculum Vitae</h3>
+      <div class="cv-modal-actions">
+        <a
+          href={resumeUrl}
+          download
+          class="cv-download-btn"
+          aria-label="Download CV"
+          data-i18n-aria="cvModal.downloadAria"
+        >
+          <i class="fas fa-download"></i>
+          <span data-i18n="cvModal.download">Download</span>
+        </a>
+        <button
+          class="cv-close-btn"
+          aria-label="Close CV modal"
+          data-i18n-aria="cvModal.closeAria"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="cv-modal-body">
+      <iframe
+        src={resumeUrl}
+        title="CV Preview"
+        class="cv-preview"
+        loading="lazy"
+      ></iframe>
+      <div class="cv-fallback">
+        <i class="fas fa-file-pdf"></i>
+        <p data-i18n="cvModal.fallbackMessage">
+          Your browser doesn't support PDF preview.
+        </p>
+        <a href={resumeUrl} download class="cv-fallback-download" data-i18n="cvModal.downloadFallback">
+          Download CV
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  /**
+   * CV Modal functionality
+   */
+  const CVModal = {
+    modal: null as HTMLElement | null,
+    overlay: null as HTMLElement | null,
+    closeBtn: null as HTMLElement | null,
+    openBtns: [] as NodeListOf<Element> | null,
+
+    init() {
+      this.modal = document.getElementById('cv-modal');
+      this.overlay = this.modal?.querySelector('.cv-modal-overlay') || null;
+      this.closeBtn = this.modal?.querySelector('.cv-close-btn') || null;
+      this.openBtns = document.querySelectorAll('[data-open-cv-modal]');
+
+      if (!this.modal) return;
+
+      this.attachEventListeners();
+      this.updateContent();
+      
+      // Listen for language changes
+      window.addEventListener('languageChanged', () => this.updateContent());
+    },
+
+    attachEventListeners() {
+      // Open modal
+      this.openBtns?.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.open();
+        });
+      });
+
+      // Close modal
+      this.closeBtn?.addEventListener('click', () => this.close());
+      this.overlay?.addEventListener('click', () => this.close());
+
+      // Close with ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.modal?.classList.contains('active')) {
+          this.close();
+        }
+      });
+    },
+
+    open() {
+      if (!this.modal) return;
+      
+      this.modal.classList.add('active');
+      this.modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      
+      // Focus trap - focus close button
+      setTimeout(() => {
+        this.closeBtn?.focus();
+      }, 100);
+    },
+
+    close() {
+      if (!this.modal) return;
+      
+      this.modal.classList.remove('active');
+      this.modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    },
+
+    updateContent() {
+      const currentLang = document.documentElement.getAttribute('lang') || 'en';
+      const t = translations[currentLang] || translations.en;
+
+      if (!this.modal || !t.cvModal) return;
+
+      // Update title
+      const title = this.modal.querySelector('[data-i18n="cvModal.title"]');
+      if (title) title.textContent = t.cvModal.title;
+
+      // Update download button
+      const downloadBtn = this.modal.querySelector('[data-i18n="cvModal.download"]');
+      if (downloadBtn) downloadBtn.textContent = t.cvModal.download;
+
+      // Update fallback message
+      const fallbackMsg = this.modal.querySelector('[data-i18n="cvModal.fallbackMessage"]');
+      if (fallbackMsg) fallbackMsg.textContent = t.cvModal.fallbackMessage;
+
+      // Update fallback download
+      const fallbackDownload = this.modal.querySelector('[data-i18n="cvModal.downloadFallback"]');
+      if (fallbackDownload) fallbackDownload.textContent = t.cvModal.downloadFallback;
+    },
+  };
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => CVModal.init());
+  } else {
+    CVModal.init();
+  }
+</script>
