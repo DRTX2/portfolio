@@ -39,7 +39,7 @@ const t = useTranslations('en');
     <meta name="description" content={t.site.description} />
     <meta
       name="keywords"
-      content="Full Stack Developer, Java Spring Boot, React TypeScript, Microservices, REST APIs, PostgreSQL, Redis, CI/CD, Jenkins, Azure, Node.js, NestJS, Clean Architecture, TailwindCSS"
+      content="Full Stack Developer, Java Spring Boot, React TypeScript, Microservices, REST APIs, PostgreSQL, Redis, CI/CD, Jenkins, Azure, Node.js, NestJS, Clean Architecture, TailwindCSS, n8n, Workflow Automation, AI Integration, Gemini, OpenAI"
     />
     <meta name="author" content="David Manjarres" />
     <meta property="og:title" content={title} />
@@ -73,6 +73,7 @@ const t = useTranslations('en');
     <script is:inline src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   </head>
   <body>
+    <div id="scroll-progress" aria-hidden="true"></div>
     <slot />
 
     <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>

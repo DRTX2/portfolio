@@ -23,6 +23,7 @@
       "Designing <strong>RESTful APIs</strong> with <strong>Clean & Hexagonal Architecture</strong>, implementing CI/CD pipelines and microservices.",
       "Experienced with <strong>PostgreSQL, MySQL, MongoDB, Redis</strong> for relational and NoSQL solutions.",
       "Proficient in message brokers (<strong>RabbitMQ</strong>), containerization (<strong>Docker</strong>), cloud deployment (<strong>Azure</strong>), and building APIs with <strong>Spring Boot & NestJS</strong>.",
+      "Automating workflows with <strong>self-hosted n8n</strong> and AI APIs (<strong>Gemini, OpenAI</strong>) integrated with Discord, Trello, GitHub, and email.",
       "Software Engineering Degree (2021-2026) at Technical University of Ambato, Ecuador.",
       "Passionate about writing maintainable, high-quality code and solving complex problems."
     ],
@@ -34,7 +35,9 @@
       "API Design",
       "Database Optimization",
       "CI/CD Pipelines",
-      "System Integration"
+      "System Integration",
+      "Workflow Automation (n8n)",
+      "AI Integration"
     ],
     "downloadResume": "Download Resume",
     "viewResume": "View Resume",
@@ -55,7 +58,8 @@
     "databases": "Databases & Cache",
     "frontend": "Frontend Development",
     "cloud": "Cloud & DevOps",
-    "messaging": "Message Brokers & Event Streaming"
+    "messaging": "Message Brokers & Event Streaming",
+    "automation": "Automation & AI Integration"
   },
   "education": {
     "title": "My Education & Certificates",
@@ -97,6 +101,28 @@
       "projectVideo": "Project Video"
     },
     "items": {
+      "n8n-scrumban-bot": {
+        "title": "AI Project Manager Bot — n8n Scrumban Automation",
+        "description": "Self-hosted n8n bot acting as an AI Project Manager for a Scrumban methodology, orchestrating Discord, Trello, GitHub, and email.",
+        "highlights": [
+          { "label": "Role", "text": "Acts as an <strong>AI Project Manager</strong> for Scrumban: tasks, blockers, rework, meetings, deliverables, and retrospectives." },
+          { "label": "AI Insight", "text": "Reads commits & PRs and explains changes in <strong>non-technical language</strong>, flags technical debt and bad practices with actionable recommendations." },
+          { "label": "Integrations", "text": "Discord (chat & meetings), Trello board, GitHub (backend/frontend), email alerts, plus a web page to <strong>approve/deny PRs</strong>." }
+        ],
+        "detailedDescription": "A self-hosted n8n automation deployed on an Ubuntu Server VPS that takes the role of a Project Manager for a team working with a Scrumban methodology. The bot integrates AI APIs (Google Gemini / OpenAI) to manage the full project lifecycle: task management, custom reports, blockers, rework tracking, meeting coordination, alerts, deliverables, progress tracking, error handling, logs, and retrospectives. It connects Discord (meetings and conversational bot chat), a Trello board, GitHub repositories (backend and frontend), and email notifications. It also exposes a web page to approve or deny pull requests: the bot reads the commits and PR diffs, understands the context of what changed, and explains it in non-technical language, including recommendations. On top of that, it continuously watches over technical debt and bad practices in the project, explaining the problems and proposing solutions in a way the whole organization can understand.",
+        "challenges": [
+          "Translating raw commits and PR diffs into clear, non-technical explanations that any stakeholder can understand.",
+          "Orchestrating many external services (Discord, Trello, GitHub, email, AI APIs) reliably in a single self-hosted instance.",
+          "Detecting technical debt and bad practices automatically while keeping recommendations actionable and explainable.",
+          "Keeping the Scrumban flow (tasks, blockers, rework, retrospectives) consistent across all integrated tools."
+        ],
+        "solutions": [
+          "Built AI pipelines with Gemini/OpenAI that read commit and PR context to generate plain-language summaries and change recommendations.",
+          "Designed modular n8n workflows with centralized error handling and logging, self-hosted with Docker on an Ubuntu Server VPS.",
+          "Implemented a PR review web page where approvals/denials are informed by the AI's contextual analysis of each change.",
+          "Synchronized Trello, GitHub, and Discord through event-driven workflows, with email alerts for reports, meetings, and deliverables."
+        ]
+      },
       "gasoline-system": {
         "title": "Fleet & Driver Management Platform",
         "description": "Distributed microservices platform for managing drivers, vehicles, and operations.",

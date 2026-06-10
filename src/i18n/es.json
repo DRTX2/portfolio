@@ -23,6 +23,7 @@
       "Diseñando <strong>APIs RESTful</strong> con <strong>Arquitectura Limpia y Hexagonal</strong>, implementando pipelines CI/CD y microservicios.",
       "Experiencia con <strong>PostgreSQL, MySQL, MongoDB, Redis</strong> para soluciones relacionales y NoSQL.",
       "Proficiente en message brokers (<strong>RabbitMQ</strong>), containerización (<strong>Docker</strong>), cloud deployment (<strong>Azure</strong>), y construcción de APIs con <strong>Spring Boot & NestJS</strong>.",
+      "Automatización de flujos con <strong>n8n self-hosted</strong> y APIs de IA (<strong>Gemini, OpenAI</strong>) integradas con Discord, Trello, GitHub y correo.",
       "Ingeniería de Software (2021-2026) en la Universidad Técnica de Ambato, Ecuador.",
       "Apasionado por escribir código mantenible y de alta calidad, y resolver problemas complejos."
     ],
@@ -34,7 +35,9 @@
       "Diseño de APIs",
       "Optimización de Bases de Datos",
       "Pipelines CI/CD",
-      "Integración de Sistemas"
+      "Integración de Sistemas",
+      "Automatización de Flujos (n8n)",
+      "Integración de IA"
     ],
     "downloadResume": "Descargar CV",
     "viewResume": "Ver CV",
@@ -55,7 +58,8 @@
     "databases": "Bases de Datos & Caché",
     "frontend": "Desarrollo Frontend",
     "cloud": "Cloud & DevOps",
-    "messaging": "Message Brokers & Streaming de Eventos"
+    "messaging": "Message Brokers & Streaming de Eventos",
+    "automation": "Automatización & Integración de IA"
   },
   "education": {
     "title": "Mi Educación & Certificados",
@@ -97,6 +101,28 @@
       "projectVideo": "Video del Proyecto"
     },
     "items": {
+      "n8n-scrumban-bot": {
+        "title": "Bot Project Manager con IA — Automatización Scrumban con n8n",
+        "description": "Bot n8n self-hosted que actúa como Project Manager con IA para una metodología Scrumban, orquestando Discord, Trello, GitHub y correo.",
+        "highlights": [
+          { "label": "Rol", "text": "Actúa como <strong>Project Manager con IA</strong> para Scrumban: tareas, bloqueos, retrabajo, reuniones, entregables y retrospectivas." },
+          { "label": "Análisis IA", "text": "Lee commits y PRs y explica los cambios en <strong>lenguaje no técnico</strong>, detecta deuda técnica y malas prácticas con recomendaciones accionables." },
+          { "label": "Integraciones", "text": "Discord (chat y reuniones), tablero Trello, GitHub (backend/frontend), alertas por correo, más una página web para <strong>aprobar/denegar PRs</strong>." }
+        ],
+        "detailedDescription": "Automatización n8n self-hosted desplegada en un VPS con Ubuntu Server que asume el rol de Project Manager para un equipo que trabaja con metodología Scrumban. El bot integra APIs de IA (Google Gemini / OpenAI) para gestionar el ciclo de vida completo del proyecto: gestión de tareas, reportes personalizados, bloqueos, seguimiento de retrabajo, coordinación de reuniones, alertas, entregables, avances, manejo de errores, logs y retrospectivas. Conecta Discord (reuniones y chat conversacional con el bot), un tablero Trello, repositorios de GitHub (backend y frontend) y notificaciones por correo. Además expone una página web para aprobar o denegar pull requests: el bot lee los commits y diffs de los PRs, entiende el contexto de lo que cambió y lo explica en lenguaje no técnico, incluyendo recomendaciones. Adicionalmente, vela continuamente por la deuda técnica y las malas prácticas del proyecto, explicando los problemas y proponiendo soluciones de forma comprensible para toda la organización.",
+        "challenges": [
+          "Traducir commits y diffs de PRs a explicaciones claras y no técnicas que cualquier interesado pueda entender.",
+          "Orquestar múltiples servicios externos (Discord, Trello, GitHub, correo, APIs de IA) de forma confiable en una sola instancia self-hosted.",
+          "Detectar deuda técnica y malas prácticas automáticamente manteniendo recomendaciones accionables y explicables.",
+          "Mantener el flujo Scrumban (tareas, bloqueos, retrabajo, retrospectivas) consistente entre todas las herramientas integradas."
+        ],
+        "solutions": [
+          "Construimos pipelines de IA con Gemini/OpenAI que leen el contexto de commits y PRs para generar resúmenes en lenguaje sencillo y recomendaciones de cambios.",
+          "Diseñamos workflows modulares en n8n con manejo de errores y logging centralizados, self-hosted con Docker en un VPS Ubuntu Server.",
+          "Implementamos una página web de revisión de PRs donde las aprobaciones/denegaciones se apoyan en el análisis contextual de la IA sobre cada cambio.",
+          "Sincronizamos Trello, GitHub y Discord mediante workflows orientados a eventos, con alertas por correo para reportes, reuniones y entregables."
+        ]
+      },
       "gasoline-system": {
         "title": "Plataforma de Gestión de Flotas y Conductores",
         "description": "Plataforma de microservicios distribuidos para gestionar conductores, vehículos y operaciones.",

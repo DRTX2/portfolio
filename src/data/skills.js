@@ -68,4 +68,16 @@ export const skillCategories = [
       { name: 'Apache Kafka', icon: 'apachekafka/apachekafka-original.svg' },
     ],
   },
+  {
+    id: 'automation',
+    title: 'Automation & AI Integration',
+    skills: [
+      { name: 'n8n', icon: 'https://cdn.simpleicons.org/n8n' },
+      { name: 'OpenAI API', icon: 'https://cdn.simpleicons.org/openai/10a37f' },
+      { name: 'Google Gemini', icon: 'https://cdn.simpleicons.org/googlegemini' },
+      { name: 'Discord API', icon: 'https://cdn.simpleicons.org/discord' },
+      { name: 'Trello API', icon: 'https://cdn.simpleicons.org/trello' },
+      { name: 'Ubuntu Server', icon: 'https://cdn.simpleicons.org/ubuntu' },
+    ],
+  },
 ];

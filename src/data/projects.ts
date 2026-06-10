@@ -18,6 +18,69 @@ export interface ProjectData {
 
 export const projects: ProjectData[] = [
   {
+    slug: 'n8n-scrumban-bot',
+    title: 'AI Project Manager Bot — n8n Scrumban Automation',
+    image: `${import.meta.env.BASE_URL}assets/img/n8n-bot.svg`,
+    description: `Self-hosted n8n bot acting as an AI Project Manager for a Scrumban methodology, orchestrating Discord, Trello, GitHub, and email.`,
+    highlights: [
+      { label: 'Role', text: 'Acts as an <strong>AI Project Manager</strong> for Scrumban: tasks, blockers, rework, meetings, deliverables, and retrospectives.' },
+      { label: 'AI Insight', text: 'Reads commits & PRs and explains changes in <strong>non-technical language</strong>, flags technical debt and bad practices with actionable recommendations.' },
+      { label: 'Integrations', text: 'Discord (chat & meetings), Trello board, GitHub (backend/frontend), email alerts, plus a web page to <strong>approve/deny PRs</strong>.' }
+    ],
+    technologies: [
+      { name: 'n8n', iconImg: 'https://cdn.simpleicons.org/n8n' },
+      { name: 'Gemini', iconImg: 'https://cdn.simpleicons.org/googlegemini' },
+      { name: 'OpenAI', iconImg: 'https://cdn.simpleicons.org/openai/10a37f' },
+      { name: 'Discord', iconClass: 'fab fa-discord' },
+      { name: 'Trello', iconClass: 'fab fa-trello' },
+      { name: 'GitHub', iconClass: 'fab fa-github' },
+      { name: 'Docker', iconClass: 'devicon-docker-plain' },
+      { name: 'Ubuntu Server', iconClass: 'devicon-ubuntu-plain' },
+    ],
+    links: [
+      {
+        // TODO: replace with the real repository URL
+        url: 'https://github.com/DRTX2/n8n-scrumban-bot',
+        label: 'Source Code',
+        iconClass: 'fab fa-github',
+      },
+      {
+        // TODO: replace with the real VPS deployment URL
+        url: 'https://example.com',
+        label: 'Live',
+        iconClass: 'fas fa-circle live-dot',
+      },
+    ],
+    detailedDescription: `A self-hosted n8n automation deployed on an Ubuntu Server VPS that takes the role of a Project Manager
+    for a team working with a Scrumban methodology. The bot integrates AI APIs (Google Gemini / OpenAI) to manage the full
+    project lifecycle: task management, custom reports, blockers, rework tracking, meeting coordination, alerts, deliverables,
+    progress tracking, error handling, logs, and retrospectives. It connects Discord (meetings and conversational bot chat),
+    a Trello board, GitHub repositories (backend and frontend), and email notifications. It also exposes a web page to
+    approve or deny pull requests: the bot reads the commits and PR diffs, understands the context of what changed, and
+    explains it in non-technical language, including recommendations. On top of that, it continuously watches over technical
+    debt and bad practices in the project, explaining the problems and proposing solutions in a way the whole organization can understand.`,
+    features: [
+      'Scrumban lifecycle management: tasks, blockers, rework, deliverables, progress, and retrospectives.',
+      'Conversational bot in Discord plus automated meeting coordination and alerts.',
+      'Custom reports and email notifications for stakeholders.',
+      'PR approval/denial web page with AI-generated, non-technical summaries of every change.',
+      'Technical debt and bad-practice monitoring with explained recommendations and solutions.',
+      'Centralized error handling and logging across all workflows.'
+    ],
+    challenges: [
+      "Translating raw commits and PR diffs into clear, non-technical explanations that any stakeholder can understand.",
+      "Orchestrating many external services (Discord, Trello, GitHub, email, AI APIs) reliably in a single self-hosted instance.",
+      "Detecting technical debt and bad practices automatically while keeping recommendations actionable and explainable.",
+      "Keeping the Scrumban flow (tasks, blockers, rework, retrospectives) consistent across all integrated tools."
+    ],
+    solutions: [
+      "Built AI pipelines with Gemini/OpenAI that read commit and PR context to generate plain-language summaries and change recommendations.",
+      "Designed modular n8n workflows with centralized error handling and logging, self-hosted with Docker on an Ubuntu Server VPS.",
+      "Implemented a PR review web page where approvals/denials are informed by the AI's contextual analysis of each change.",
+      "Synchronized Trello, GitHub, and Discord through event-driven workflows, with email alerts for reports, meetings, and deliverables."
+    ]
+  },
+  {
     slug: 'gasoline-system',
     title: 'Fleet & Driver Management Platform',
     image: `${import.meta.env.BASE_URL}assets/img/gasoline-system.png`,

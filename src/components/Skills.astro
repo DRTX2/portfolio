@@ -24,7 +24,11 @@ const t = useTranslations('en');
         <div class="skill-mention">
           {category.skills.map((skill) => (
             <div>
-              <img src={`${DEVICON_BASE}${skill.icon}`} alt={skill.name} />
+              <img
+                src={skill.icon.startsWith('http') ? skill.icon : `${DEVICON_BASE}${skill.icon}`}
+                alt={skill.name}
+                loading="lazy"
+              />
               {skill.name}
             </div>
           ))}

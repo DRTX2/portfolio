@@ -1,0 +1,102 @@
+@use "../abstracts/variables" as *;
+
+// ---------------------------------------------------------------------------
+// Global visual effects: gradient text, section dividers, scrollbar,
+// selection color, scroll progress bar.
+// ---------------------------------------------------------------------------
+
+// Animated gradient text (used in Hero for the name)
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        var(--gradient-start),
+        var(--gradient-end),
+        var(--color-primary),
+        var(--gradient-start)
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradient-shift 8s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+// Section dividers: thin gradient line instead of plain hr
+main > hr {
+    border: none;
+    height: 1px;
+    max-width: 1100px;
+    margin: 2rem auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent-30),
+        var(--primary-30),
+        transparent
+    );
+}
+
+// Text selection
+::selection {
+    background: var(--accent-30);
+    color: var(--color-text);
+}
+
+// Custom scrollbar
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent) var(--color-dark);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gradient-start), var(--gradient-end));
+    border-radius: 8px;
+}
+
+// Scroll progress bar (animated from animations.js)
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end), var(--color-primary));
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 2000;
+    pointer-events: none;
+}
+
+// Pulsing "live" indicator for deployed projects
+.live-dot {
+    color: #22c55e !important;
+    font-size: 0.6rem !important;
+    animation: live-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+// Respect users who prefer reduced motion
+@media (prefers-reduced-motion: reduce) {
+    .gradient-text,
+    .live-dot {
+        animation: none;
+    }
+}

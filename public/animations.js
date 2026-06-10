@@ -132,6 +132,47 @@ const initAnimations = () => {
 
   // --- Hover Effects ---
   initHoverEffects();
+
+  // --- Barra de progreso de scroll ---
+  initScrollProgress();
+
+  // --- Spotlight en tarjetas de proyecto ---
+  initCardSpotlight();
+};
+
+/**
+ * Barra de progreso de lectura (top de la página)
+ */
+const initScrollProgress = () => {
+  const bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+
+  gsap.to(bar, {
+    scaleX: 1,
+    ease: "none",
+    scrollTrigger: {
+      trigger: document.body,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 0.3,
+    },
+  });
+};
+
+/**
+ * Spotlight que sigue el cursor dentro de cada tarjeta de proyecto.
+ * Solo actualiza variables CSS; el efecto visual vive en _projects.scss
+ */
+const initCardSpotlight = () => {
+  if (window.matchMedia("(hover: none)").matches) return; // Sin efecto en táctiles
+
+  document.querySelectorAll(".project").forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+      card.style.setProperty("--my", `${e.clientY - rect.top}px`);
+    });
+  });
 };
 
 /**

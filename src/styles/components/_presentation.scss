@@ -11,6 +11,36 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 6rem 1rem;
+  position: relative;
+
+  // Ambient gradient blobs behind the hero
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  &::before {
+    width: 420px;
+    height: 420px;
+    top: -10%;
+    left: -8%;
+    background: radial-gradient(circle, var(--primary-20) 0%, transparent 70%);
+    animation: blob-float 14s ease-in-out infinite;
+  }
+
+  &::after {
+    width: 360px;
+    height: 360px;
+    bottom: -15%;
+    right: -5%;
+    background: radial-gradient(circle, var(--accent-20) 0%, transparent 70%);
+    animation: blob-float 18s ease-in-out infinite reverse;
+  }
 
   // Texto principal
   h2 {
@@ -157,5 +187,18 @@
     width: 200px;
     height: 200px;
     margin-bottom: 1rem;
+  }
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -25px) scale(1.08); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .presentation::before,
+  .presentation::after {
+    animation: none;
   }
 }

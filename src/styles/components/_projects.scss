@@ -28,20 +28,44 @@
         justify-content: space-between;
         height: 100%;
         min-height: 550px;
+        position: relative;
 
-        // Modern card style
+        // Modern glass card style
         background-color: var(--card-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 1px solid var(--card-border);
 
         border-radius: 0.75rem;
         overflow: hidden;
         transition: all 0.3s ease;
 
+        // Spotlight that follows the cursor (vars set in animations.js)
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                450px circle at var(--mx, 50%) var(--my, 50%),
+                var(--primary-10),
+                transparent 60%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
         &:hover {
             transform: translateY(-5px);
             background-color: var(--color-dark); // Solid background on hover
             border-color: var(--accent-30); // Use utility variable instead of SASS function
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--accent-20);
+
+            &::before {
+                opacity: 1;
+            }
         }
     }
 
