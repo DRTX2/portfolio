@@ -7,9 +7,81 @@
     <button id="resetZoom" title="Reset"><i class="fas fa-compress-arrows-alt"></i></button>
   </div>
   <div class="modal-content">
-    <img id="modalImage" src="" alt="Project Full View" />
+    <button id="prevImageBtn" class="carousel-nav prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+    <div class="image-wrapper">
+      <img id="modalImage" src="" alt="Project Full View" />
+    </div>
+    <button id="nextImageBtn" class="carousel-nav next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
   </div>
+  <div class="thumbnail-strip" id="thumbnailStrip"></div>
 </div>
+
+<style>
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    z-index: 10;
+    transition: background 0.3s;
+    border-radius: 50%;
+    display: none;
+  }
+  .carousel-nav:hover {
+    background: rgba(0,0,0,0.8);
+  }
+  .carousel-nav.prev { left: 20px; }
+  .carousel-nav.next { right: 20px; }
+
+  .thumbnail-strip {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+    max-width: 90vw;
+    overflow-x: auto;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+  }
+  .thumbnail-item {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .thumbnail-item:hover {
+    transform: scale(1.1);
+  }
+  .thumbnail-item.active {
+    border-color: var(--color-primary, #22c55e);
+  }
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #modalImage {
+    transition: opacity 0.3s ease-in-out;
+  }
+  #modalImage.fading {
+    opacity: 0;
+  }
+</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -23,10 +95,18 @@
     const zoomOutBtn = document.getElementById('zoomOut');
     const resetZoomBtn = document.getElementById('resetZoom');
 
+    // Carousel controls
+    const prevBtn = document.getElementById('prevImageBtn');
+    const nextBtn = document.getElementById('nextImageBtn');
+    const thumbnailStrip = document.getElementById('thumbnailStrip');
+
     let currentZoom = 1;
     const ZOOM_STEP = 0.25;
     const MAX_ZOOM = 3;
     const MIN_ZOOM = 0.5;
+
+    let currentImages: string[] = [];
+    let currentIndex = 0;
 
     if (!modal || !modalImg || !closeBtn) return;
 
@@ -51,14 +131,96 @@
       }
     };
 
+    const updateThumbnails = () => {
+      if (!thumbnailStrip) return;
+      const thumbs = thumbnailStrip.querySelectorAll('.thumbnail-item');
+      thumbs.forEach((thumb, index) => {
+        if(index === currentIndex) {
+          thumb.classList.add('active');
+        } else {
+          thumb.classList.remove('active');
+        }
+      });
+    };
+
+    const updateImage = () => {
+      if(currentImages.length > 0) {
+        modalImg.classList.add('fading');
+        setTimeout(() => {
+          modalImg.src = currentImages[currentIndex];
+          resetZoom();
+          updateThumbnails();
+          modalImg.classList.remove('fading');
+        }, 150);
+      }
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if(currentImages.length > 1) {
+          currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+          updateImage();
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if(currentImages.length > 1) {
+          currentIndex = (currentIndex + 1) % currentImages.length;
+          updateImage();
+        }
+      });
+    }
+
     projectImageContainers.forEach((container) => {
       container.addEventListener('click', (e) => {
         const img = container.querySelector('img');
-        if (img) {
+        const imagesData = container.getAttribute('data-images');
+        
+        if (imagesData) {
+          try {
+            currentImages = JSON.parse(imagesData);
+          } catch(err) {
+            currentImages = img ? [img.src] : [];
+          }
+        } else {
+          currentImages = img ? [img.src] : [];
+        }
+
+        if (currentImages.length > 0) {
           modal.classList.add('active');
-          modalImg.src = img.src;
-          resetZoom(); // Reset zoom when opening new image
+          currentIndex = 0;
+          modalImg.src = currentImages[0];
+          resetZoom();
           document.body.style.overflow = 'hidden';
+
+          // Setup thumbnails and nav
+          if (currentImages.length > 1 && prevBtn && nextBtn && thumbnailStrip) {
+            prevBtn.style.display = 'block';
+            nextBtn.style.display = 'block';
+            thumbnailStrip.innerHTML = '';
+            currentImages.forEach((src, idx) => {
+              const thumb = document.createElement('img');
+              thumb.src = src;
+              thumb.className = 'thumbnail-item' + (idx === 0 ? ' active' : '');
+              thumb.addEventListener('click', (ev) => {
+                ev.stopPropagation();
+                if(currentIndex !== idx) {
+                  currentIndex = idx;
+                  updateImage();
+                }
+              });
+              thumbnailStrip.appendChild(thumb);
+            });
+            thumbnailStrip.style.display = 'flex';
+          } else if (prevBtn && nextBtn && thumbnailStrip) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            thumbnailStrip.style.display = 'none';
+          }
         }
       });
     });
@@ -81,12 +243,21 @@
       if (e.key === 'Escape' && modal.classList.contains('active')) {
         closeModal();
       }
+      if (modal.classList.contains('active') && currentImages.length > 1) {
+        if (e.key === 'ArrowLeft') {
+          currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+          updateImage();
+        } else if (e.key === 'ArrowRight') {
+          currentIndex = (currentIndex + 1) % currentImages.length;
+          updateImage();
+        }
+      }
     });
 
     // Zoom Event Listeners
     if (zoomInBtn) {
       zoomInBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent closing modal
+        e.stopPropagation();
         if (currentZoom < MAX_ZOOM) {
           currentZoom += ZOOM_STEP;
           updateZoom();

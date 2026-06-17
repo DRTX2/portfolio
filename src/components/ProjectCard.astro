@@ -19,16 +19,17 @@ interface Props {
   links: Link[];
   highlights?: { label: string; text: string }[];
   slug?: string;
+  images?: string[];
 }
 
 import { useTranslations } from '../i18n/utils';
 
-const { title, image, description, technologies, links, slug, highlights } = Astro.props;
+const { title, image, images, description, technologies, links, slug, highlights } = Astro.props;
 const t = useTranslations('en');
 ---
 
 <article class="project" data-slug={slug}>
-  <div class="project-image">
+  <div class="project-image" data-images={images && images.length > 0 ? JSON.stringify(images) : undefined}>
     <img src={image} alt={title} />
   </div>
 

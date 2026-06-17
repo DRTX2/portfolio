@@ -16,6 +16,10 @@ export const skillCategories = [
       { name: 'Laravel', icon: 'laravel/laravel-original.svg' },
       { name: '.NET', icon: 'dot-net/dot-net-original.svg' },
       { name: 'GraphQL', icon: 'graphql/graphql-plain.svg' },
+      { name: 'Python', icon: 'python/python-original.svg' },
+      { name: 'FastAPI', icon: 'fastapi/fastapi-original.svg' },
+      { name: 'Odoo', icon: 'https://cdn.simpleicons.org/odoo' },
+      { name: 'Scalar', icon: 'https://cdn.simpleicons.org/scalar' },
     ],
   },
   {
@@ -44,12 +48,14 @@ export const skillCategories = [
       { name: 'Bootstrap', icon: 'bootstrap/bootstrap-original.svg' },
       { name: 'Sass', icon: 'sass/sass-original.svg' },
       { name: 'Figma', icon: 'figma/figma-original.svg' },
+      { name: 'Material UI', icon: 'materialui/materialui-original.svg' },
     ],
   },
   {
     id: 'cloud',
     title: 'Cloud & DevOps',
     skills: [
+      { name: 'AWS', icon: 'amazonwebservices/amazonwebservices-original-wordmark.svg' },
       { name: 'Azure', icon: 'azure/azure-original.svg' },
       { name: 'Docker', icon: 'docker/docker-original.svg' },
       { name: 'Kubernetes', icon: 'kubernetes/kubernetes-plain.svg' },
@@ -70,14 +76,19 @@ export const skillCategories = [
   },
   {
     id: 'automation',
-    title: 'Automation & AI Integration',
+    title: 'Automation, Testing & AI',
     skills: [
       { name: 'n8n', icon: 'https://cdn.simpleicons.org/n8n' },
-      { name: 'OpenAI API', icon: 'https://cdn.simpleicons.org/openai/10a37f' },
+      { name: 'OpenAPI', icon: 'https://cdn.simpleicons.org/openapi' },
       { name: 'Google Gemini', icon: 'https://cdn.simpleicons.org/googlegemini' },
       { name: 'Discord API', icon: 'https://cdn.simpleicons.org/discord' },
       { name: 'Trello API', icon: 'https://cdn.simpleicons.org/trello' },
       { name: 'Ubuntu Server', icon: 'https://cdn.simpleicons.org/ubuntu' },
+      { name: 'Machine Learning', icon: 'https://cdn.simpleicons.org/scikitlearn' },
+      { name: 'Deep Learning', icon: 'https://cdn.simpleicons.org/tensorflow' },
+      { name: 'Playwright', icon: 'https://cdn.simpleicons.org/playwright' },
+      { name: 'Selenium', icon: 'selenium/selenium-original.svg' },
+      { name: 'Stagehand', icon: 'https://cdn.simpleicons.org/puppeteer' },
     ],
   },
 ];

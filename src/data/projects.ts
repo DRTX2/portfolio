@@ -4,6 +4,7 @@ export interface ProjectData {
   slug: string;
   title: string;
   image: string;
+  images?: string[];
   description: string; // Used for short intro or HTML content
   highlights?: { label: string; text: string }[]; // New: For the bullet points on the card
   technologies: Technology[];
@@ -18,9 +19,111 @@ export interface ProjectData {
 
 export const projects: ProjectData[] = [
   {
+    slug: 'petsafe',
+    title: 'PetSafe — Veterinary Clinic Management',
+    image: `${import.meta.env.BASE_URL}assets/img/petsafe.webp`,
+    description: `A full-stack platform to run a veterinary clinic end to end — owners and pets, appointments, a live queue, medical encounters, vaccinations and adoptions.`,
+    highlights: [
+      { label: 'Clean architecture', text: 'Domain, application, infrastructure and presentation kept apart.' },
+      { label: 'Real time', text: 'Live waiting queue and alerts over WebSockets.' },
+      { label: 'Clinical core', text: 'Records with attachments, drafts, follow-ups and vaccinations.' }
+    ],
+    technologies: [
+      { name: 'NestJS', iconClass: 'devicon-nestjs-plain' },
+      { name: 'Angular', iconClass: 'devicon-angularjs-plain' },
+      { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
+      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
+      { name: 'Playwright', iconImg: 'https://cdn.simpleicons.org/playwright' },
+      { name: 'Docker', iconClass: 'devicon-docker-plain' },
+    ],
+    links: [
+      {
+        url: 'https://github.com/STRATIUM-UTA/PetSafe-Back',
+        label: 'Backend',
+        iconClass: 'fab fa-github',
+      },
+      {
+        url: 'https://github.com/STRATIUM-UTA/PetSafe-Front',
+        label: 'Frontend',
+        iconClass: 'fab fa-github',
+      },
+    ],
+    detailedDescription: `PetSafe is a full-stack platform to run a veterinary clinic end to end: owners and their pets, appointments and the daily queue, medical encounters, vaccinations and even adoptions. It pairs a NestJS backend with an Angular frontend.
+The platform centralizes every flow behind a single API. A NestJS backend organized in clean, separate layers, exposes a documented REST API over PostgreSQL with TypeORM, while an Angular interface turns it into the screens the clinic actually uses. Access is protected with JWT and email-based password recovery.
+The backend is NestJS with TypeScript in a hexagonal architecture, WebSockets for real-time queue and notifications, SMTP email and an OpenAPI specification. The whole stack is containerized with Docker and shipped through a CI/CD pipeline to a VPS.`,
+    features: [
+      "Clinical core: Encounters & vaccines with attachments, drafts, follow-ups and a QR code for each pet.",
+      "Appointments: Requests, scheduling, live queue and no-show handling kept in sync via WebSockets.",
+      "Clean architecture: Layered backend keeping domain, application, infrastructure and presentation apart.",
+      "Adoptions: An adoption workflow alongside the clinical side.",
+      "Secure auth: Token security with JWT and email-based password reset."
+    ],
+    challenges: [
+      "Running a clinic end to end efficiently handling both medical encounters and daily operations.",
+      "Keeping real-time synchronization between appointment requests, live waiting queue, and notifications."
+    ],
+    solutions: [
+      "Built a full-stack system with a centralized NestJS REST API and Angular frontend.",
+      "Integrated WebSockets to synchronize the live waiting queue and notifications across connected clients.",
+      "Containerized everything with Docker and deployed to a VPS with CI/CD and Playwright system tests."
+    ]
+  },
+  {
+    slug: 'iron-zone',
+    title: 'Iron Zone — Gym Management on Odoo',
+    image: `${import.meta.env.BASE_URL}assets/img/ironzone.webp`,
+    description: `A customized Odoo 18 platform that brings a gym's website, online store, memberships, classes and billing together into one modular business system.`,
+    highlights: [
+      { label: 'Custom addons', text: 'Six Iron Zone modules and five invoicing and localization addons.' },
+      { label: 'Plans', text: 'Memberships and periodic invoicing through custom subscriptions.' },
+      { label: 'Store + portal', text: 'Public shop, checkout and a client portal for orders and invoices.' }
+    ],
+    technologies: [
+      { name: 'Odoo 18', iconImg: 'https://cdn.simpleicons.org/odoo' },
+      { name: 'Python', iconClass: 'devicon-python-plain' },
+      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
+      { name: 'Docker', iconClass: 'devicon-docker-plain' },
+    ],
+    links: [
+      {
+        url: 'https://iron-zone.stratiumhub.com',
+        label: 'Live App',
+        iconClass: 'fas fa-external-link-alt live-pulse-icon',
+      },
+      {
+        url: 'https://github.com/JoelBonillaG/iron_zone_odoo_das',
+        label: 'Source Code',
+        iconClass: 'fab fa-github',
+      },
+    ],
+    detailedDescription: `Iron Zone is an end-to-end management platform for a gym and sports center, built as a customized Odoo 18 solution. It pulls the public website, the online store, memberships, classes and billing into a single system instead of a pile of disconnected tools.
+Native apps for website, online store, sales, inventory, events and accounting are extended with custom addons, so visitors browse plans and products, subscribe from the shop, and each order turns into recurring billing and a valid electronic invoice.
+Behind the storefront, custom modules model memberships and subscriptions, an exercise guide catalog with machines and categories, an inventory layer, a task dashboard and a refreshed backend theme, while customers, trainers, events, sales orders and invoices are managed from clean administrative views with role based permissions.`,
+    features: [
+      "11 Custom addons: Six Iron Zone modules and five invoicing and localization addons.",
+      "Modular Architecture: Website, store, subscriptions, inventory, tasks and guides.",
+      "Recurring billing: Memberships and periodic invoicing through custom subscriptions.",
+      "Online sales: Public shop, checkout and a client portal for orders and invoices.",
+      "Access control: Visitor, portal client, trainer and administrator permissions.",
+      "Electronic invoicing: Electronic vouchers, signing, withholdings and tax reports."
+    ],
+    challenges: [
+      "Juggling recurring memberships and payments, a product catalog, class bookings, training content, invoicing and local tax duties with disconnected tools."
+    ],
+    solutions: [
+      "Built a single Odoo 18 platform whose modular structure is adapted to a specific gym workflow.",
+      "Packaged with Docker Compose, backed by PostgreSQL 15, with automated checks on every change through CI pipelines.",
+      "Implemented Stripe for payments, Playwright for end to end flows."
+    ]
+  },
+  {
     slug: 'n8n-scrumban-bot',
     title: 'AI Project Manager Bot — n8n Scrumban Automation',
-    image: `${import.meta.env.BASE_URL}assets/img/n8n-bot.svg`,
+    image: `${import.meta.env.BASE_URL}assets/img/chat-discord-petsafe-workflow.png`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/chat-discord-petsafe-workflow.png`,
+      `${import.meta.env.BASE_URL}assets/img/n8n-bot.svg`
+    ],
     description: `Self-hosted n8n bot acting as an AI Project Manager for a Scrumban methodology, orchestrating Discord, Trello, GitHub, and email.`,
     highlights: [
       { label: 'Role', text: 'Acts as an <strong>AI Project Manager</strong> for Scrumban: tasks, blockers, rework, meetings, deliverables, and retrospectives.' },
@@ -30,7 +133,6 @@ export const projects: ProjectData[] = [
     technologies: [
       { name: 'n8n', iconImg: 'https://cdn.simpleicons.org/n8n' },
       { name: 'Gemini', iconImg: 'https://cdn.simpleicons.org/googlegemini' },
-      { name: 'OpenAI', iconImg: 'https://cdn.simpleicons.org/openai/10a37f' },
       { name: 'Discord', iconClass: 'fab fa-discord' },
       { name: 'Trello', iconClass: 'fab fa-trello' },
       { name: 'GitHub', iconClass: 'fab fa-github' },
@@ -47,8 +149,8 @@ export const projects: ProjectData[] = [
       {
         // TODO: replace with the real VPS deployment URL
         url: 'https://example.com',
-        label: 'Live',
-        iconClass: 'fas fa-circle live-dot',
+        label: 'Live App',
+        iconClass: 'fas fa-external-link-alt live-pulse-icon',
       },
     ],
     detailedDescription: `A self-hosted n8n automation deployed on an Ubuntu Server VPS that takes the role of a Project Manager
