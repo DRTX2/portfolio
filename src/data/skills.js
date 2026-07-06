@@ -14,12 +14,15 @@ export const skillCategories = [
       { name: 'Express.js', icon: 'express/express-original.svg' },
       { name: 'NestJS', icon: 'nestjs/nestjs-original.svg' },
       { name: 'Laravel', icon: 'laravel/laravel-original.svg' },
-      { name: '.NET', icon: 'dot-net/dot-net-original.svg' },
+      { name: '.NET / ASP.NET Core', icon: 'dot-net/dot-net-original.svg' },
       { name: 'GraphQL', icon: 'graphql/graphql-plain.svg' },
       { name: 'Python', icon: 'python/python-original.svg' },
       { name: 'FastAPI', icon: 'fastapi/fastapi-original.svg' },
       { name: 'Odoo', icon: 'https://cdn.simpleicons.org/odoo' },
       { name: 'Scalar', icon: 'https://cdn.simpleicons.org/scalar' },
+      { name: 'OpenIddict (OIDC)', icon: 'https://cdn.simpleicons.org/openid' },
+      { name: 'MassTransit', icon: 'https://cdn.simpleicons.org/dotenv' },
+      { name: 'Hangfire', icon: 'https://cdn.simpleicons.org/clockify' },
     ],
   },
   {
@@ -57,6 +60,7 @@ export const skillCategories = [
     skills: [
       { name: 'AWS', icon: 'amazonwebservices/amazonwebservices-original-wordmark.svg' },
       { name: 'Azure', icon: 'azure/azure-original.svg' },
+      { name: 'Azure Container Apps', icon: 'azure/azure-original.svg' },
       { name: 'Docker', icon: 'docker/docker-original.svg' },
       { name: 'Kubernetes', icon: 'kubernetes/kubernetes-plain.svg' },
       { name: 'Jenkins', icon: 'jenkins/jenkins-original.svg' },
@@ -64,6 +68,7 @@ export const skillCategories = [
       { name: 'Git', icon: 'git/git-original.svg' },
       { name: 'Linux', icon: 'linux/linux-original.svg' },
       { name: 'Postman', icon: 'postman/postman-plain.svg' },
+      { name: 'Azure Bicep (IaC)', icon: 'azure/azure-original.svg' },
     ],
   },
   {

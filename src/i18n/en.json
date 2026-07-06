@@ -19,20 +19,21 @@
     "titleHighlight": "Me",
     "subtitle": "FULL-STACK DEVELOPER • CLOUD ENGINEER • ECUADOR 🇪🇨",
     "highlights": [
-      "Building <strong>scalable, cloud-native applications</strong> with Spring Boot, NestJS, React, and TypeScript.",
-      "Designing <strong>RESTful APIs</strong> with <strong>Clean & Hexagonal Architecture</strong>, implementing CI/CD pipelines and microservices.",
-      "Experienced with <strong>PostgreSQL, MySQL, MongoDB, Redis</strong> for relational and NoSQL solutions.",
-      "Proficient in message brokers (<strong>RabbitMQ</strong>), containerization (<strong>Docker</strong>), cloud deployment (<strong>Azure</strong>), and building APIs with <strong>Spring Boot & NestJS</strong>.",
+      "Building <strong>scalable, cloud-native applications</strong> with ASP.NET Core, NestJS, Spring Boot, and TypeScript — deployed on Azure Container Apps.",
+      "Designing <strong>RESTful APIs</strong> with <strong>Clean, Hexagonal & DDD Architecture</strong>, implementing CI/CD pipelines, OIDC authentication and multi-tenant SaaS patterns.",
+      "Experienced with <strong>PostgreSQL, MySQL, MongoDB, Redis</strong> — including serverless (Neon) and ORM patterns with Entity Framework Core.",
+      "Proficient in containerization (<strong>Docker</strong>), cloud deployment (<strong>Azure Container Apps, ACR, Bicep IaC</strong>), message brokers (<strong>MassTransit, RabbitMQ</strong>) and background jobs (<strong>Hangfire</strong>).",
       "Automating workflows with <strong>self-hosted n8n</strong> and AI APIs (<strong>Gemini, OpenAI</strong>) integrated with Discord, Trello, GitHub, and email.",
       "Software Engineering Degree (2021-2026) at Technical University of Ambato, Ecuador.",
-      "Passionate about writing maintainable, high-quality code and solving complex problems."
+      "Passionate about writing maintainable, high-quality code and solving complex problems at scale."
     ],
     "expertise": "Areas of Expertise",
     "expertiseTags": [
       "Backend Architecture",
+      "Multi-tenant SaaS",
       "Cloud Infrastructure",
       "Microservices",
-      "API Design",
+      "API Design & OIDC Auth",
       "Database Optimization",
       "CI/CD Pipelines",
       "System Integration",
@@ -101,6 +102,28 @@
       "projectVideo": "Project Video"
     },
     "items": {
+      "stayflow-cloud": {
+        "title": "StayFlow Cloud — Multi-Tenant Hotel SaaS",
+        "description": "A production-grade, multi-tenant cloud SaaS platform for hotel management — reservations, front desk, billing, housekeeping, analytics, and guest portal — deployed on Azure Container Apps.",
+        "highlights": [
+          { "label": "Multi-tenant", "text": "Full row-level tenant isolation with <strong>EF Core global query filters</strong> and claims-based tenancy." },
+          { "label": "OIDC Auth", "text": "<strong>OpenIddict Authorization Code + PKCE</strong> flow with a Next.js BFF, httpOnly session cookies and token refresh." },
+          { "label": "Azure Cloud", "text": "Deployed on <strong>Azure Container Apps</strong> with ACR, Bicep IaC, and Neon serverless PostgreSQL." }
+        ],
+        "detailedDescription": "StayFlow Cloud is a production-grade multi-tenant SaaS platform for hotel management. Built with ASP.NET Core 9 (OpenIddict OIDC, MediatR CQRS, EF Core, MassTransit, Hangfire) and a Next.js 16 BFF. Handles the full hotel lifecycle: reservations, rooms, guests, invoices, housekeeping, maintenance, services, staff, analytics, and documents. Multi-tenancy enforced via EF Core global query filters. Auth uses OpenIddict Authorization Code + PKCE with httpOnly cookie sessions. Deployed on Azure Container Apps via Bicep IaC.",
+        "challenges": [
+          "Implementing secure multi-tenant architecture guaranteeing data isolation without leaking tenant data across requests.",
+          "Building a full embedded OIDC server (OpenIddict) integrated with ASP.NET Identity and a Next.js BFF doing PKCE with httpOnly cookies.",
+          "Solving URL configuration issues between API (OpenIddict redirects) and BFF (auth callbacks) in Azure Container Apps.",
+          "Designing a clean domain model with CQRS and domain events while keeping handlers readable and testable."
+        ],
+        "solutions": [
+          "Used EF Core global query filters and a scoped ITenantProvider to automatically scope every query to the current tenant.",
+          "Configured OpenIddict with Authorization Code + PKCE, built PKCE handling in the Next.js BFF, and stored tokens in httpOnly cookies with transparent Edge Middleware refresh.",
+          "Introduced Authentication:FrontendLoginUrl config in the API and used logical-OR (||) fallbacks in Next.js to handle empty Docker build args correctly.",
+          "Modeled the domain with aggregates, domain events via MassTransit loopback, and Hangfire for background jobs."
+        ]
+      },
       "n8n-scrumban-bot": {
         "title": "AI Project Manager Bot — n8n Scrumban Automation",
         "description": "Self-hosted n8n bot acting as an AI Project Manager for a Scrumban methodology, orchestrating Discord, Trello, GitHub, and email.",

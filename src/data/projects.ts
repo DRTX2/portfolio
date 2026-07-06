@@ -19,6 +19,80 @@ export interface ProjectData {
 
 export const projects: ProjectData[] = [
   {
+    slug: 'stayflow-cloud',
+    title: 'StayFlow Cloud — Multi-Tenant Hotel SaaS',
+    image: `${import.meta.env.BASE_URL}assets/img/stay-flow/dashboard.png`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/stay-flow/dashboard.png`,
+      `${import.meta.env.BASE_URL}assets/img/stay-flow/rooms.png`,
+      `${import.meta.env.BASE_URL}assets/img/stay-flow/integrations.png`,
+    ],
+    description: `A production-grade, multi-tenant cloud SaaS platform for hotel management — reservations, front desk, billing, housekeeping, analytics, and guest portal — deployed on Azure Container Apps.`,
+    highlights: [
+      { label: 'Multi-tenant', text: 'Full row-level tenant isolation with <strong>EF Core global query filters</strong> and claims-based tenancy.' },
+      { label: 'OIDC Auth', text: '<strong>OpenIddict Authorization Code + PKCE</strong> flow with a Next.js BFF, httpOnly session cookies and token refresh.' },
+      { label: 'Azure Cloud', text: 'Deployed on <strong>Azure Container Apps</strong> with ACR, Bicep IaC, and Neon serverless PostgreSQL.' }
+    ],
+    technologies: [
+      { name: 'ASP.NET Core 9', iconClass: 'devicon-dot-net-original' },
+      { name: 'Next.js 16', iconClass: 'devicon-nextjs-original' },
+      { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
+      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
+      { name: 'OpenIddict', iconImg: 'https://cdn.simpleicons.org/openid' },
+      { name: 'EF Core 9', iconClass: 'devicon-dot-net-original' },
+      { name: 'Azure', iconClass: 'devicon-azure-plain' },
+      { name: 'Docker', iconClass: 'devicon-docker-plain' },
+      { name: 'MediatR (CQRS)', iconClass: 'devicon-dot-net-original' },
+      { name: 'Hangfire', iconImg: 'https://cdn.simpleicons.org/clockify' },
+      { name: 'MassTransit', iconImg: 'https://cdn.simpleicons.org/rabbitmq' },
+      { name: 'Tailwind CSS', iconClass: 'devicon-tailwindcss-original' },
+    ],
+    links: [
+      {
+        url: 'https://stayflow-prod-web.purplebay-4e22b9c6.westus3.azurecontainerapps.io',
+        label: 'Live App',
+        iconClass: 'fas fa-external-link-alt live-pulse-icon',
+      },
+      {
+        url: 'https://github.com/DRTX2/stay-flow-cloud',
+        label: 'Source Code',
+        iconClass: 'fab fa-github',
+      },
+    ],
+    detailedDescription: `StayFlow Cloud is a production-grade multi-tenant SaaS platform for hotel and accommodation management. Built with a clean separation between a Next.js 16 BFF frontend and an ASP.NET Core 9 REST API with OpenIddict as the embedded OIDC server.
+
+The platform handles the full hotel operations lifecycle: reservations with check-in/check-out flows, room and room-type management, guest 360 profiles, invoice generation with line items and taxes, housekeeping task assignment, maintenance requests, in-stay service orders, staff management with fine-grained permissions, analytics dashboards, document storage, and multi-language support.
+
+Multi-tenancy is enforced at the database row level using EF Core global query filters and an ITenantProvider that reads the tenant from authenticated JWT claims — no manual WHERE clauses needed. Authentication uses OpenIddict's Authorization Code + PKCE flow: the Next.js BFF handles the PKCE handshake, stores tokens in httpOnly cookies, and refreshes them transparently via Edge Middleware.
+
+The application is deployed on Azure Container Apps with images stored in Azure Container Registry, infrastructure defined as code in Azure Bicep, and the database hosted on Neon serverless PostgreSQL.`,
+    features: [
+      'Multi-tenant hotel management with complete row-level data isolation per tenant.',
+      'Reservations: full lifecycle (Pending → Confirmed → CheckedIn → CheckedOut), room assignment, confirmation codes.',
+      'Billing: invoice generation, line items, taxes, payment recording, and PDF export.',
+      'Housekeeping: automatic task creation on checkout, staff assignment, status tracking.',
+      'Guest Portal: self-service profile, stay history, and document uploads.',
+      'Analytics: occupancy rates, revenue dashboards, and CSV/Excel report export.',
+      'OpenIddict OIDC server with Authorization Code + PKCE — no third-party auth service dependency.',
+      'Next.js BFF with httpOnly cookie session, Edge Middleware token refresh, and SSR data fetching.',
+      'CQRS with MediatR, domain events with MassTransit, and Hangfire background jobs.',
+      'Deployed on Azure Container Apps via Azure Bicep IaC and GitHub Actions CI/CD.',
+    ],
+    challenges: [
+      'Implementing a secure multi-tenant architecture that guarantees data isolation without leaking tenant data across requests.',
+      'Building a full embedded OIDC server (OpenIddict) integrated with ASP.NET Identity and a Next.js BFF doing PKCE flow with httpOnly cookies.',
+      'Solving URL configuration issues between the API (OpenIddict redirects) and the BFF (auth callbacks) in Azure Container Apps — where env vars injected at runtime vs. build time behave differently.',
+      'Designing a clean domain model with CQRS and domain events while keeping MediatR handlers readable and testable.',
+    ],
+    solutions: [
+      'Used EF Core global query filters and a scoped ITenantProvider to automatically scope every query to the current tenant without any per-query code.',
+      'Configured OpenIddict with Authorization Code + PKCE, built PKCE verifier/challenge generation in the Next.js BFF, and stored all tokens in httpOnly cookies with transparent Edge Middleware refresh.',
+      'Fixed production URL mismatches by introducing Authentication:FrontendLoginUrl config in the API, using logical-OR (||) fallbacks in Next.js to handle empty Docker build args, and updating the AccountController to redirect using the configured URL rather than hardcoded localhost.',
+      'Modeled the domain with aggregates, domain events published via MassTransit loopback, and Hangfire for background jobs like email notifications and invoice PDF generation.',
+    ],
+  },
+  {
+
     slug: 'petsafe',
     title: 'PetSafe — Veterinary Clinic Management',
     image: `${import.meta.env.BASE_URL}assets/img/petsafe.webp`,
