@@ -25,7 +25,7 @@ export function initStickyHeader() {
  * Enables smooth scrolling for anchor links
  */
 export function initSmoothScroll() {
-  const links = document.querySelectorAll('.main-menu a, .btn-about-me');
+  const links = document.querySelectorAll('.main-menu a, .btn-about-me, .back-to-top');
 
   links.forEach((link) => {
     link.addEventListener('click', (e) => {
@@ -47,5 +47,22 @@ export function initSmoothScroll() {
         }
       }
     });
+  });
+}
+
+/**
+ * Shows/hides the back-to-top button based on scroll position
+ */
+export function initBackToTop() {
+  const backToTopBtn = document.querySelector('.back-to-top');
+  if (!backToTopBtn) return;
+
+  document.addEventListener('scroll', () => {
+    // Show after scrolling down 100vh
+    if (window.scrollY > window.innerHeight) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
   });
 }

@@ -26,13 +26,19 @@ const t = useTranslations('en');
       })();
     </script>
     <style>
-      html.translating body {
+      /* Anti-FOUC: hide body while translations apply, but never hide the fixed header */
+      html.translating body > *:not(.main-menu) {
         opacity: 0;
         pointer-events: none;
       }
       body {
         opacity: 1;
         transition: opacity 0.2s ease-in-out;
+      }
+      /* Ensure header is ALWAYS visible regardless of page state */
+      .main-menu {
+        opacity: 1 !important;
+        visibility: visible !important;
       }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -116,6 +122,11 @@ const t = useTranslations('en');
           document.documentElement.classList.remove('translating');
         });
       }
+
+      // Safety fallback: always reveal within 500ms regardless of what happens
+      const safetyReveal = setTimeout(() => {
+        document.documentElement.classList.remove('translating');
+      }, 500);
 
       // Run immediately to minimize flash (though strictly script[type=module] defers)
       updateSiteMeta();

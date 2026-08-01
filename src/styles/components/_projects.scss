@@ -1,46 +1,59 @@
 @use "../abstracts/variables" as *;
 
+/* ════════════════════════════════════════════════════════════
+   PROJECTS SECTION
+   ════════════════════════════════════════════════════════════ */
 .projects {
     text-align: center;
-    width: 90vw;
+    width: 92vw;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem 0;
+    padding: 5rem 0 3rem;
 
     h2 {
         color: $color-primary;
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem;
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+    }
+
+    /* Subtle sub-line under section heading */
+    > p.section-sub {
+        color: var(--color-text-muted);
+        font-size: 1.05rem;
+        margin-bottom: 3rem;
     }
 
     .projects-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Diseño responsive
-        gap: 2rem; // Espacio entre proyectos
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 1.75rem;
+        text-align: left;
 
         @media (max-width: 768px) {
-            gap: 1.5rem; // Menos espacio en móviles
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
         }
     }
 
+    /* ── Project Card ────────────────────────────────────────── */
     .project {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         height: 100%;
-        min-height: 550px;
+        min-height: 560px;
         position: relative;
-
-        // Modern glass card style
         background-color: var(--card-bg);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--card-border);
-
-        border-radius: 0.75rem;
+        border-radius: 1rem;
         overflow: hidden;
-        transition: all 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    box-shadow 0.3s ease,
+                    border-color 0.3s ease;
 
-        // Spotlight that follows the cursor (vars set in animations.js)
+        /* Cursor spotlight (JS sets --mx, --my) */
         &::before {
             content: '';
             position: absolute;
@@ -57,111 +70,175 @@
             z-index: 1;
         }
 
-        &:hover {
-            transform: translateY(-5px);
-            background-color: var(--color-dark); // Solid background on hover
-            border-color: var(--accent-30); // Use utility variable instead of SASS function
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--accent-20);
+        /* Top accent line */
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-            &::before {
-                opacity: 1;
-            }
+        &:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-30);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 1px var(--accent-20),
+                0 0 60px -10px var(--primary-10);
+
+            &::before { opacity: 1; }
+            &::after  { opacity: 1; }
         }
     }
 
+    /* ── Project Image ───────────────────────────────────────── */
     .project-image {
-        height: 180px;
+        height: 200px;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        position: relative; // Needed for overlay
-        cursor: pointer; // Indicate clickable
+        position: relative;
+        cursor: zoom-in;
+        flex-shrink: 0;
 
         img {
             object-fit: cover;
             width: 100%;
             height: 100%;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block;
         }
 
-        // Overlay with zoom icon
+        /* Dark overlay + zoom icon on hover */
         &::after {
-            content: '\f00e'; // FontAwesome zoom-in icon
-            font-family: 'Font Awesome 5 Free';
+            content: '\f00e';
+            font-family: 'Font Awesome 5 Free', 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); // Keep black overlay for contrast
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.6) 0%,
+                rgba(0, 0, 0, 0.3) 100%
+            );
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: white;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
         &:hover {
-            img {
-                transform: scale(1.1);
-            }
+            img { transform: scale(1.08); }
+            &::after { opacity: 1; }
+        }
 
-            &::after {
-                opacity: 1;
-            }
+        /* "Multiple images" badge */
+        &[data-images]::before {
+            content: attr(data-count, '');
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 2;
+            pointer-events: none;
+            letter-spacing: 0.04em;
         }
     }
 
+    /* ── Project Content ─────────────────────────────────────── */
     .project-content {
         padding: 1.5rem;
-        text-align: left;
-
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: 0;
 
         h3 {
             color: $color-primary;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+        }
+
+        p, ul.project-highlights {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
             margin-bottom: 1rem;
+            line-height: 1.6;
         }
 
-        p {
-            color: var(--color-text-muted); // Used specific var for better theme support
-            font-size: 1rem;
-            margin-bottom: 1.5rem; // Más espacio debajo del párrafo
-            line-height: 1.5; // Mejor legibilidad
+        ul.project-highlights {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+
+            li {
+                font-size: 0.875rem;
+                color: var(--color-text-muted);
+                line-height: 1.5;
+                padding-left: 0.75rem;
+                border-left: 2px solid var(--accent-30);
+
+                strong {
+                    color: var(--color-text);
+                    font-weight: 600;
+                }
+            }
         }
 
+        /* Spacer to push links to bottom */
         .technologies {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            margin-top: auto;
+            padding-top: 0.5rem;
 
             span {
-                display: flex;
+                display: inline-flex;
                 align-items: center;
-                gap: 0.5rem;
-
-                // Modern tech tag
-                background-color: var(--tag-bg);
-                color: $color-text;
+                gap: 0.35rem;
+                background: var(--tag-bg);
+                color: var(--color-text);
                 border: 1px solid var(--tag-border);
-
-                padding: 0.4rem 0.8rem;
-                border-radius: 20px; // Pill shape
-                font-size: 0.85rem;
+                padding: 0.3rem 0.65rem;
+                border-radius: 20px;
+                font-size: 0.78rem;
                 font-weight: 500;
-                transition: all 0.3s ease;
+                transition: all 0.25s ease;
+                max-height: unset;
+
+                img {
+                    height: 1em;
+                    width: auto;
+                }
+
+                i { font-size: 1em; }
 
                 &:hover {
-                    background-color: var(--tag-border); // Slightly darken
+                    background: var(--tag-border);
                     border-color: $color-accent;
                     transform: translateY(-1px);
                 }
@@ -170,62 +247,58 @@
 
         .project-links {
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap; // Allow wrapping on small screens or long text
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-top: auto;
 
             a {
-                display: flex;
+                display: inline-flex;
                 align-items: center;
-                gap: 0.5rem;
+                gap: 0.45rem;
                 text-decoration: none;
-                transition: all 0.3s ease;
+                font-family: inherit;
+                font-size: 0.85rem;
+                font-weight: 500;
+                padding: 0.4rem 0.9rem;
+                border-radius: 8px;
+                cursor: pointer;
                 white-space: nowrap;
-
-                // Button Reset & New Styles for Source Code
+                transition: all 0.25s ease;
                 background: var(--btn-ghost-bg);
                 border: 1px solid var(--btn-ghost-border);
                 color: $color-secondary;
 
-                font-family: inherit;
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-                border-radius: 6px;
-                cursor: pointer;
-
                 &:hover {
-                    background-color: var(--btn-ghost-border);
+                    background: var(--btn-ghost-border);
                     border-color: var(--color-text);
                     color: var(--color-text);
                     transform: translateY(-2px);
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                 }
             }
 
             .view-details-btn {
-                display: flex;
+                display: inline-flex;
                 align-items: center;
-                gap: 0.5rem;
+                gap: 0.45rem;
                 text-decoration: none;
-                transition: all 0.3s ease;
-                white-space: nowrap;
-                background: none;
-                border: none;
                 font-family: inherit;
+                font-size: 0.85rem;
+                font-weight: 600;
+                padding: 0.4rem 0.9rem;
+                border-radius: 8px;
                 cursor: pointer;
-
-                // Specific styles for Overview button - purple theme
-                color: $color-text;
-                background-color: var(--btn-primary-bg);
+                white-space: nowrap;
+                transition: all 0.25s ease;
+                color: var(--color-text);
+                background: var(--btn-primary-bg);
                 border: 1px solid var(--btn-primary-border);
-                padding: 0.4rem 0.8rem;
-                border-radius: 6px;
-                font-size: 0.9rem;
 
                 &:hover {
-                    background-color: $color-primary; // Solid primary on hover
+                    background: $color-primary;
                     border-color: $color-primary;
-                    color: white; // Always white text on solid primary
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Generic shadow
+                    color: #0f172a;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
                     transform: translateY(-2px);
                 }
             }
@@ -233,55 +306,25 @@
     }
 }
 
-
-// Image Lightbox Modal Styles
-.image-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    z-index: 3000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-
-    &.active {
-        display: flex;
-        opacity: 1;
-        animation: fadeIn 0.3s ease forwards;
-    }
-
-    }
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
+/* ════════════════════════════════════════════════════════════
+   SECTION TITLE STYLE (shared)
+   ════════════════════════════════════════════════════════════ */
 .enfasis-title {
     color: $color-secondary;
-    font-weight: bold;
+    font-weight: 700;
 }
 
-.projects {
-    .technologies {
-        span {
-            max-height: 2rem;
-            font-size: 2rem;
+/* ════════════════════════════════════════════════════════════
+   LIGHTBOX – legacy class kept for smooth transition
+   ════════════════════════════════════════════════════════════ */
+.image-modal {
+    display: none;
+}
+.image-modal.active {
+    display: none; /* fully managed by lb-overlay now */
+}
 
-            img {
-                height: 2rem;
-            }
-
-        }
-    }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }

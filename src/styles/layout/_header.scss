@@ -20,7 +20,7 @@
   right: 0;
   // width: 100%; // Removed to prevent overflow with padding
   box-sizing: border-box; // Ensure padding is included in width calculation if width was set
-  z-index: 1000; // High z-index to stay on top
+  z-index: 2000; // Extremely high z-index to stay on top of everything except modals
   transition: all 0.3s ease;
   caret-color: transparent;
 
