@@ -1,5 +1,4 @@
 ---
-import ImageLightbox from './ImageLightbox.astro';
 import ProjectCard from './ProjectCard.astro';
 import ProjectDetailModal from './ProjectDetailModal.astro';
 import { projects } from '../data/projects';
@@ -176,5 +175,4 @@ const translatedProjects = getTranslatedProjects(projects, t);
   window.addEventListener('languagechange', updateProjects);
 </script>
 
-<ImageLightbox />
 <ProjectDetailModal />

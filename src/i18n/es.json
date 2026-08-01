@@ -124,6 +124,27 @@
           "Modelado del dominio con agregados, eventos de dominio vía MassTransit loopback y Hangfire para trabajos en segundo plano."
         ]
       },
+      "impactex-ims": {
+        "title": "Impactex IMS - Operaciones de Activos e Inventario",
+        "description": "Plataforma desplegada en la nube para rastrear activos organizacionales, operaciones de inventario, mantenimiento, préstamos, compras y reportes listos para auditoría.",
+        "highlights": [
+          { "label": "Trazabilidad operativa", "text": "Registra cada activo a través de su custodia, ubicación, condición e historial inmutable de actividad." },
+          { "label": "Operaciones integrales", "text": "Reúne <strong>inventario, solicitudes, mantenimiento, préstamos, compras y reportes</strong> en un solo espacio según el rol." },
+          { "label": "Entrega en Azure", "text": "Construido y desplegado con <strong>GitHub Actions</strong> en Azure Container Apps mediante infraestructura como código en Bicep." }
+        ],
+        "detailedDescription": "Impactex IMS es una plataforma full-stack de operaciones para administrar activos serializados e inventario sin perder el contexto de dónde se encuentra cada artículo, quién es responsable de él o qué sucedió previamente. Su interfaz Angular soporta inventario, solicitudes, órdenes de mantenimiento, préstamos y devoluciones, compras, notificaciones, administración por roles y reportes PDF u hojas de cálculo desde un espacio unificado. La API en .NET 10 utiliza EF Core con SQL Server y un modelo de dominio diseñado para transiciones controladas y trazables. La autenticación JWT y los roles granulares limitan el acceso según la responsabilidad operativa. Los archivos adjuntos se validan y almacenan fuera de la base de datos con metadatos SHA-256, y solo se sirven mediante endpoints autorizados. GitHub Actions construye y despliega los contenedores web y API en Azure Container Apps usando Bicep. La infraestructura aprovisiona límites seguros entre servicios, un montaje Azure Files para adjuntos, health probes y un trabajo dedicado de migraciones.",
+        "challenges": [
+          "Representar flujos de custodia, ubicación, mantenimiento, compras y préstamos preservando un historial auditable para cada activo.",
+          "Proteger archivos y datos operativos con permisos consistentes entre la API y la interfaz Angular.",
+          "Desplegar contenedores, almacenamiento, migraciones y secretos de forma reproducible sin incluir configuración productiva en el código fuente."
+        ],
+        "solutions": [
+          "Separamos los activos serializados del stock de consumibles y modelamos transiciones controladas para transferencias, solicitudes, mantenimiento, préstamos, compras y bajas.",
+          "Aplicamos autorización JWT, roles con alcance por departamento, endpoints protegidos de adjuntos y metadatos SHA-256 para los archivos almacenados.",
+          "Automatizamos CI/CD con GitHub Actions e infraestructura de Azure Container Apps basada en Bicep, incluyendo health checks, trabajos de migración y almacenamiento persistente en Azure Files.",
+          "Cubrimos flujos críticos con suites backend de regresión e integración, pruebas Angular y escenarios end-to-end en Playwright."
+        ]
+      },
       "n8n-scrumban-bot": {
         "title": "Bot Project Manager con IA — Automatización Scrumban con n8n",
         "description": "Bot n8n self-hosted que actúa como Project Manager con IA para una metodología Scrumban, orquestando Discord, Trello, GitHub y correo.",
@@ -146,6 +167,27 @@
           "Sincronizamos Trello, GitHub y Discord mediante workflows orientados a eventos, con alertas por correo para reportes, reuniones y entregables."
         ]
       },
+      "hospital-management-system": {
+        "title": "Sistema de Gestión Hospitalaria",
+        "description": "Plataforma hospitalaria modular que centraliza la administración clínica, las consultas y los reportes detrás de un gateway seguro de microservicios.",
+        "highlights": [
+          { "label": "Microservicios", "text": "<strong>Seis servicios Spring Boot</strong> separan descubrimiento, acceso, administración, consultas y reportes." },
+          { "label": "Acceso seguro", "text": "Un servicio compartido de <strong>autenticación JWT</strong> y un API gateway protegen cada endpoint backend." },
+          { "label": "Datos escalables", "text": "PostgreSQL puede escalar horizontalmente con <strong>sharding de Citus</strong> por centro médico." }
+        ],
+        "detailedDescription": "Este sistema de gestión hospitalaria distribuye las responsabilidades operativas entre servicios Spring Boot desplegables de forma independiente. Un API gateway es el punto de entrada controlado para la interfaz administrativa en React, mientras que Eureka permite que los servicios se ubiquen sin direcciones codificadas. La plataforma administra personal, doctores, especialidades y centros médicos, registra consultas y convierte esos datos en paneles de reportes. La autenticación se emite de forma centralizada y se valida en toda la plataforma mediante JWT. Cada servicio publica su propio contrato REST documentado, reunido en una experiencia OpenAPI única a través del gateway. PostgreSQL es el almacenamiento principal, con una configuración opcional de Citus que particiona la información por centro médico conforme crece la organización. Los perfiles de Docker Compose soportan tanto una base local como una instalación distribuida.",
+        "challenges": [
+          "Separar la administración hospitalaria, el flujo de consultas, los reportes y el control de acceso sin crear un backend fuertemente acoplado.",
+          "Mantener manejables el descubrimiento, enrutamiento y autorización entre servicios al agregar o escalar componentes.",
+          "Proporcionar una arquitectura de datos que crezca desde una instalación hasta varios centros médicos."
+        ],
+        "solutions": [
+          "Organizamos el backend en servicios Spring Boot enfocados, registrados mediante Eureka y expuestos únicamente por Spring Cloud Gateway.",
+          "Centralizamos la emisión de JWT en el servicio de autenticación para que el gateway y los servicios internos compartan un solo modelo de acceso.",
+          "Usamos PostgreSQL con una estrategia opcional de distribución en Citus y containerizamos el stack mediante perfiles de Docker Compose.",
+          "Entregamos una interfaz administrativa en React para los datos operativos y analítica de consultas, con documentación OpenAPI agregada."
+        ]
+      },
       "gasoline-system": {
         "title": "Plataforma de Gestión de Flotas y Conductores",
         "description": "Plataforma de microservicios distribuidos para gestionar conductores, vehículos y operaciones.",
@@ -166,27 +208,25 @@
           "Desarrollamos un guard RBAC personalizado en NestJS para gestionar permisos eficientemente."
         ]
       },
-      "marketplace-platform": {
-        "title": "Plataforma de Marketplace E-Commerce",
-        "description": "Marketplace completo con backend Spring Boot y frontend React/TypeScript.",
+      "publication-management-and-moderation-system": {
+        "title": "Plataforma de Gestión y Moderación de Publicaciones",
+        "description": "Marketplace con geolocalización, multimedia alojada en Azure, flujo completo de moderación y controles de calidad automatizados desde la compilación hasta el despliegue.",
         "highlights": [
-          { "label": "Rendimiento", "text": "<strong>85% más rápido</strong> (300ms → 45ms) mediante caché Redis y <strong>~70% reducción de queries</strong>." },
-          { "label": "Calidad", "text": "<strong>90% de cobertura de pruebas</strong> con pipeline CI/CD Jenkins." },
-          { "label": "Cloud", "text": "Desplegado en Azure Container Apps con Azure Blob Storage para multimedia." }
+          { "label": "Geolocalización", "text": "Las <strong>consultas espaciales de PostGIS</strong> filtran y ordenan publicaciones por distancia." },
+          { "label": "Servicios Azure", "text": "La multimedia se almacena en <strong>Azure Blob Storage</strong> y los secretos de despliegue se gestionan mediante Azure Key Vault." },
+          { "label": "QA automatizado", "text": "Jenkins ejecuta <strong>compilación, análisis estático, integración, API, rendimiento y seguridad</strong> antes de cada release." }
         ],
-        "detailedDescription": "Una plataforma de marketplace de alto rendimiento construida con backend Spring Boot y frontend React/TypeScript. El sistema cuenta con seguridad JWT/RBAC, paginación, moderación de contenido, y está desplegado en Azure Container Apps con Azure Blob Storage para gestión de activos multimedia. Se logró un 90% de cobertura de pruebas mediante testing integral y automatización CI/CD.",
+        "detailedDescription": "Este marketplace full-stack conecta publicaciones de productos con las personas cercanas que probablemente las necesitan. La API de Spring Boot persiste la ubicación de las publicaciones con PostgreSQL y capacidades geoespaciales, mientras que el frontend en React y TypeScript ofrece el catálogo y la experiencia de cuenta. Los vendedores pueden adjuntar imágenes a sus publicaciones, y los usuarios verifican su correo, recuperan el acceso y navegan con sesiones protegidas por JWT. La seguridad del catálogo es un flujo principal, no un agregado posterior. Los usuarios pueden reportar una publicación, los moderadores investigan y resuelven el caso desde su dashboard, y los vendedores apelan las decisiones conservando el historial de estados. El backend sigue capas explícitas de entidades, DTOs, mapeo, repositorios, servicios y controladores. Las imágenes de producto se almacenan en Azure Blob Storage y Azure Key Vault suministra los secretos de despliegue. La calidad se aplica durante toda la entrega. Los pipelines de Jenkins compilan las aplicaciones, ejecutan análisis estático y verificaciones de cobertura, aprovisionan entornos de integración automáticos con Testcontainers, ejecutan colecciones Postman mediante Newman y realizan pruebas de rendimiento, end-to-end y seguridad dinámica. El mismo pipeline containerizado permite validaciones locales y despliegues remotos en Azure.",
         "challenges": [
-          "Optimizar consultas de base de datos para reducir latencia y prevenir problemas N+1.",
-          "Implementar autenticación segura y control de acceso basado en roles para diferentes tipos de usuarios.",
-          "Gestionar activos multimedia eficientemente en un entorno cloud.",
-          "Mantener la calidad del código y despliegues automatizados con alta cobertura de pruebas."
+          "Hacer que el descubrimiento de productos cercanos sea preciso y eficiente sin reducir el catálogo a una lista genérica de resultados.",
+          "Soportar reportes, revisiones, estados de resolución y apelaciones del vendedor dentro de un proceso de moderación auditable.",
+          "Mantener releases locales y remotos confiables verificando calidad, seguridad y gestión de secretos en todo el stack."
         ],
         "solutions": [
-          "Aplicamos normalización 3NF y prevención de queries N+1, reduciendo el conteo de consultas en ~70%.",
-          "Implementamos caché Redis multicapa y optimización de consultas, mejorando los tiempos de respuesta de la API de ~300ms a ~45ms.",
-          "Construimos APIs RESTful con seguridad JWT/RBAC, paginación y funciones de moderación de contenido.",
-          "Configuramos un pipeline CI/CD robusto con Jenkins logrando 90% de cobertura de pruebas.",
-          "Desplegado en Azure Container Apps e integrado Azure Blob Storage para gestión escalable de multimedia."
+          "Implementamos filtros geoespaciales y ordenamiento por distancia con PostgreSQL/PostGIS, además de Azure Blob Storage para la multimedia de publicaciones.",
+          "Construimos un flujo completo de moderación para publicaciones reportadas, decisiones del moderador y apelaciones de vendedores.",
+          "Protegimos el acceso a cuentas con JWT, verificación de correo, recuperación de contraseña, contratos OpenAPI y secretos de despliegue en Azure Key Vault.",
+          "Automatizamos controles de Jenkins para compilación, análisis estático, cobertura JaCoCo, pruebas de integración con Testcontainers, verificaciones API con Postman/Newman, JMeter, OWASP ZAP, Selenium y Playwright antes de releases locales y Azure basados en Docker."
         ]
       },
       "medical-clinic": {

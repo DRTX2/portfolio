@@ -1,297 +1,410 @@
 <!-- Image Lightbox Modal -->
-<div id="imageModal" class="image-modal">
-  <span class="close-modal">&times;</span>
-  <div class="zoom-controls">
-    <button id="zoomIn" title="Zoom In"><i class="fas fa-search-plus"></i></button>
-    <button id="zoomOut" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
-    <button id="resetZoom" title="Reset"><i class="fas fa-compress-arrows-alt"></i></button>
-  </div>
-  <div class="modal-content">
-    <button id="prevImageBtn" class="carousel-nav prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
-    <div class="image-wrapper">
-      <img id="modalImage" src="" alt="Project Full View" />
+<div id="imageModal" class="lb-overlay" aria-modal="true" role="dialog" aria-label="Image viewer">
+  <!-- Clickable backdrop to close -->
+  <div class="lb-backdrop" id="lbBackdrop"></div>
+
+  <!-- Top bar: zoom controls (left) + close (right) -->
+  <div class="lb-topbar">
+    <div class="lb-zoom-controls">
+      <button class="lb-btn" id="lbZoomIn" title="Zoom In" aria-label="Zoom In">
+        <i class="fas fa-search-plus"></i>
+      </button>
+      <button class="lb-btn" id="lbZoomOut" title="Zoom Out" aria-label="Zoom Out">
+        <i class="fas fa-search-minus"></i>
+      </button>
+      <button class="lb-btn" id="lbResetZoom" title="Reset Zoom" aria-label="Reset Zoom">
+        <i class="fas fa-compress-arrows-alt"></i>
+      </button>
     </div>
-    <button id="nextImageBtn" class="carousel-nav next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+    <button class="lb-btn lb-close" id="lbClose" title="Close" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
   </div>
-  <div class="thumbnail-strip" id="thumbnailStrip"></div>
+
+  <!-- Prev / Next arrows (only shown when multiple images) -->
+  <button class="lb-arrow lb-arrow-prev" id="lbPrev" aria-label="Previous image">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  <button class="lb-arrow lb-arrow-next" id="lbNext" aria-label="Next image">
+    <i class="fas fa-chevron-right"></i>
+  </button>
+
+  <!-- Main image area -->
+  <div class="lb-image-area" id="lbImageArea">
+    <img class="lb-image" id="lbImage" src="" alt="Project image" draggable="false" />
+  </div>
+
+  <!-- Thumbnail strip (only shown when multiple images) -->
+  <div class="lb-thumbs" id="lbThumbs"></div>
 </div>
 
-<style>
-  .carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    color: white;
-    border: none;
-    padding: 1rem;
-    cursor: pointer;
-    font-size: 1.5rem;
-    z-index: 10;
-    transition: background 0.3s;
-    border-radius: 50%;
+<style is:global>
+  /* ─── Full-screen overlay ─────────────────────────────────── */
+  .lb-overlay {
     display: none;
-  }
-  .carousel-nav:hover {
-    background: rgba(0,0,0,0.8);
-  }
-  .carousel-nav.prev { left: 20px; }
-  .carousel-nav.next { right: 20px; }
-
-  .thumbnail-strip {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 10;
-    max-width: 90vw;
-    overflow-x: auto;
-    padding: 10px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 8px;
-  }
-  .thumbnail-item {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: 4px;
-    transition: border-color 0.3s, transform 0.3s;
-  }
-  .thumbnail-item:hover {
-    transform: scale(1.1);
-  }
-  .thumbnail-item.active {
-    border-color: var(--color-primary, #22c55e);
-  }
-  .image-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(0, 0, 0, 0.92);
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  #modalImage {
-    transition: opacity 0.3s ease-in-out;
+  .lb-overlay.active {
+    display: flex;
   }
-  #modalImage.fading {
-    opacity: 0;
+
+  /* ─── Backdrop (click to close) ───────────────────────────── */
+  .lb-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    cursor: zoom-out;
+  }
+
+  /* ─── All interactive layers above backdrop ───────────────── */
+  .lb-topbar,
+  .lb-arrow,
+  .lb-image-area,
+  .lb-thumbs {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── Top bar ─────────────────────────────────────────────── */
+  .lb-topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .lb-zoom-controls {
+    display: flex;
+    gap: 8px;
+    pointer-events: auto;
+  }
+
+  /* ─── Shared button style ─────────────────────────────────── */
+  .lb-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(15, 23, 42, 0.75);
+    color: #fff;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+  }
+  .lb-btn:hover {
+    background: var(--color-primary, #22c55e);
+    color: #111;
+    transform: scale(1.1);
+  }
+
+  .lb-close {
+    pointer-events: auto;
+  }
+
+  /* ─── Prev / Next arrows ──────────────────────────────────── */
+  .lb-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(15, 23, 42, 0.75);
+    color: #fff;
+    font-size: 1.4rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    pointer-events: auto;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  }
+  .lb-arrow:hover {
+    background: var(--color-primary, #22c55e);
+    color: #111;
+    transform: translateY(-50%) scale(1.1);
+  }
+  .lb-arrow-prev { left: 20px; }
+  .lb-arrow-next { right: 20px; }
+
+  /* ─── Image area ──────────────────────────────────────────── */
+  .lb-image-area {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 90px 16px 90px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* ─── The actual image ────────────────────────────────────── */
+  .lb-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    user-select: none;
+    -webkit-user-drag: none;
+    transform-origin: center;
+    transition: opacity 0.22s ease;
+    display: block;
+  }
+  .lb-image.fading { opacity: 0; }
+  .lb-image.zooming { transition: opacity 0.22s ease, transform 0.2s ease-out; }
+
+  /* ─── Thumbnail strip ─────────────────────────────────────── */
+  .lb-thumbs {
+    display: none;
+    width: 100%;
+    max-width: min(90vw, 900px);
+    gap: 10px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    background: rgba(15, 23, 42, 0.65);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    pointer-events: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .lb-thumbs::-webkit-scrollbar { display: none; }
+  .lb-thumbs.visible { display: flex; }
+
+  .lb-thumb {
+    width: 68px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    opacity: 0.5;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .lb-thumb:hover { opacity: 0.8; transform: translateY(-3px); }
+  .lb-thumb.active {
+    opacity: 1;
+    border-color: var(--color-primary, #22c55e);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.45);
+  }
+
+  /* ─── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .lb-image-area { padding: 72px 60px 12px 60px; }
+    .lb-arrow { width: 42px; height: 42px; font-size: 1.1rem; }
+    .lb-arrow-prev { left: 10px; }
+    .lb-arrow-next { right: 10px; }
+    .lb-thumb { width: 52px; height: 52px; }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage') as HTMLImageElement;
-    const closeBtn = document.querySelector('.close-modal');
-    const projectImageContainers = document.querySelectorAll('.project-image');
+    const lbOverlay   = document.getElementById('imageModal') as HTMLElement | null;
+    const imgEl       = document.getElementById('lbImage')    as HTMLImageElement | null;
+    const backdrop    = document.getElementById('lbBackdrop');
+    const closeBtn    = document.getElementById('lbClose');
+    const prevBtn     = document.getElementById('lbPrev')     as HTMLButtonElement | null;
+    const nextBtn     = document.getElementById('lbNext')     as HTMLButtonElement | null;
+    const thumbsEl    = document.getElementById('lbThumbs');
+    const zoomInBtn   = document.getElementById('lbZoomIn');
+    const zoomOutBtn  = document.getElementById('lbZoomOut');
+    const resetZoomBtn= document.getElementById('lbResetZoom');
 
-    // Zoom controls
-    const zoomInBtn = document.getElementById('zoomIn');
-    const zoomOutBtn = document.getElementById('zoomOut');
-    const resetZoomBtn = document.getElementById('resetZoom');
+    if (!lbOverlay || !imgEl || !closeBtn) return;
 
-    // Carousel controls
-    const prevBtn = document.getElementById('prevImageBtn');
-    const nextBtn = document.getElementById('nextImageBtn');
-    const thumbnailStrip = document.getElementById('thumbnailStrip');
+    // ── PORTAL: move overlay to <body> so position:fixed works relative to viewport ──
+    // This avoids issues with backdrop-filter/transform on ancestor elements
+    if (lbOverlay.parentElement !== document.body) {
+      document.body.appendChild(lbOverlay);
+    }
 
-    let currentZoom = 1;
-    const ZOOM_STEP = 0.25;
-    const MAX_ZOOM = 3;
+    // ── State ─────────────────────────────────────────────────
+    let images: string[] = [];
+    let idx = 0;
+    let zoom = 1;
+    let tx = 0, ty = 0;
+    let dragging = false;
+    let dragStartX = 0, dragStartY = 0;
+    const STEP = 0.4;
+    const MAX_ZOOM = 4;
     const MIN_ZOOM = 0.5;
 
-    let currentImages: string[] = [];
-    let currentIndex = 0;
-
-    if (!modal || !modalImg || !closeBtn) return;
-
-    // Reset zoom function
-    const resetZoom = () => {
-      currentZoom = 1;
-      modalImg.style.transform = `scale(${currentZoom})`;
-      modalImg.style.cursor = 'default';
+    // ── Transform helpers ──────────────────────────────────────
+    const applyTransform = (smooth = false) => {
+      if (smooth) imgEl.classList.add('zooming');
+      else imgEl.classList.remove('zooming');
+      imgEl.style.transform = `translate(${tx}px, ${ty}px) scale(${zoom})`;
+      imgEl.style.cursor = zoom > 1 ? 'grab' : 'default';
     };
 
-    // Update image transform
-    const updateZoom = () => {
-      modalImg.style.transform = `scale(${currentZoom})`;
+    const resetTransform = () => { zoom = 1; tx = 0; ty = 0; applyTransform(true); };
 
-      // Allow dragging if zoomed in
-      if (currentZoom > 1) {
-        modalImg.style.cursor = 'grab';
-      } else {
-        modalImg.style.cursor = 'default';
-        modalImg.style.left = '0';
-        modalImg.style.top = '0';
-      }
+    const doZoom = (delta: number) => {
+      zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom + delta));
+      if (zoom === 1) { tx = 0; ty = 0; }
+      applyTransform(true);
     };
 
-    const updateThumbnails = () => {
-      if (!thumbnailStrip) return;
-      const thumbs = thumbnailStrip.querySelectorAll('.thumbnail-item');
-      thumbs.forEach((thumb, index) => {
-        if(index === currentIndex) {
-          thumb.classList.add('active');
-        } else {
-          thumb.classList.remove('active');
-        }
-      });
-    };
-
-    const updateImage = () => {
-      if(currentImages.length > 0) {
-        modalImg.classList.add('fading');
-        setTimeout(() => {
-          modalImg.src = currentImages[currentIndex];
-          resetZoom();
-          updateThumbnails();
-          modalImg.classList.remove('fading');
-        }, 150);
-      }
-    };
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if(currentImages.length > 1) {
-          currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-          updateImage();
-        }
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if(currentImages.length > 1) {
-          currentIndex = (currentIndex + 1) % currentImages.length;
-          updateImage();
-        }
-      });
-    }
-
-    projectImageContainers.forEach((container) => {
-      container.addEventListener('click', (e) => {
-        const img = container.querySelector('img');
-        const imagesData = container.getAttribute('data-images');
-        
-        if (imagesData) {
-          try {
-            currentImages = JSON.parse(imagesData);
-          } catch(err) {
-            currentImages = img ? [img.src] : [];
-          }
-        } else {
-          currentImages = img ? [img.src] : [];
-        }
-
-        if (currentImages.length > 0) {
-          modal.classList.add('active');
-          currentIndex = 0;
-          modalImg.src = currentImages[0];
-          resetZoom();
-          document.body.style.overflow = 'hidden';
-
-          // Setup thumbnails and nav
-          if (currentImages.length > 1 && prevBtn && nextBtn && thumbnailStrip) {
-            prevBtn.style.display = 'block';
-            nextBtn.style.display = 'block';
-            thumbnailStrip.innerHTML = '';
-            currentImages.forEach((src, idx) => {
-              const thumb = document.createElement('img');
-              thumb.src = src;
-              thumb.className = 'thumbnail-item' + (idx === 0 ? ' active' : '');
-              thumb.addEventListener('click', (ev) => {
-                ev.stopPropagation();
-                if(currentIndex !== idx) {
-                  currentIndex = idx;
-                  updateImage();
-                }
-              });
-              thumbnailStrip.appendChild(thumb);
-            });
-            thumbnailStrip.style.display = 'flex';
-          } else if (prevBtn && nextBtn && thumbnailStrip) {
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
-            thumbnailStrip.style.display = 'none';
-          }
-        }
-      });
-    });
-
-    const closeModal = () => {
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-      resetZoom();
-    };
-
-    closeBtn.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal();
+    // ── Drag ──────────────────────────────────────────────────
+    imgEl.addEventListener('mousedown', e => {
+      if (zoom > 1) {
+        dragging = true;
+        dragStartX = e.clientX - tx;
+        dragStartY = e.clientY - ty;
+        imgEl.style.cursor = 'grabbing';
       }
     });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeModal();
-      }
-      if (modal.classList.contains('active') && currentImages.length > 1) {
-        if (e.key === 'ArrowLeft') {
-          currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-          updateImage();
-        } else if (e.key === 'ArrowRight') {
-          currentIndex = (currentIndex + 1) % currentImages.length;
-          updateImage();
-        }
-      }
+    window.addEventListener('mousemove', e => {
+      if (dragging) { tx = e.clientX - dragStartX; ty = e.clientY - dragStartY; applyTransform(); }
+    });
+    window.addEventListener('mouseup', () => {
+      dragging = false;
+      if (zoom > 1) imgEl.style.cursor = 'grab';
     });
 
-    // Zoom Event Listeners
-    if (zoomInBtn) {
-      zoomInBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (currentZoom < MAX_ZOOM) {
-          currentZoom += ZOOM_STEP;
-          updateZoom();
-        }
-      });
-    }
-
-    if (zoomOutBtn) {
-      zoomOutBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (currentZoom > MIN_ZOOM) {
-          currentZoom -= ZOOM_STEP;
-          updateZoom();
-        }
-      });
-    }
-
-    if (resetZoomBtn) {
-      resetZoomBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        resetZoom();
-      });
-    }
-
-    // Optional: Add wheel zoom support
-    modal.addEventListener('wheel', (e: WheelEvent) => {
-      if (modal.classList.contains('active')) {
+    imgEl.addEventListener('touchstart', e => {
+      if (zoom > 1 && e.touches.length === 1) {
+        dragging = true;
+        dragStartX = e.touches[0].clientX - tx;
+        dragStartY = e.touches[0].clientY - ty;
+      }
+    }, { passive: false });
+    window.addEventListener('touchmove', e => {
+      if (dragging && e.touches.length === 1) {
         e.preventDefault();
-        if (e.deltaY < 0 && currentZoom < MAX_ZOOM) {
-          currentZoom += ZOOM_STEP;
-        } else if (e.deltaY > 0 && currentZoom > MIN_ZOOM) {
-          currentZoom -= ZOOM_STEP;
+        tx = e.touches[0].clientX - dragStartX;
+        ty = e.touches[0].clientY - dragStartY;
+        applyTransform();
+      }
+    }, { passive: false });
+    window.addEventListener('touchend', () => { dragging = false; });
+
+    // Wheel zoom
+    lbOverlay.addEventListener('wheel', (e: WheelEvent) => {
+      if (!lbOverlay.classList.contains('active')) return;
+      e.preventDefault();
+      doZoom(e.deltaY < 0 ? STEP * 0.6 : -STEP * 0.6);
+    }, { passive: false });
+
+    // Zoom buttons
+    zoomInBtn?.addEventListener('click',   e => { e.stopPropagation(); doZoom(STEP); });
+    zoomOutBtn?.addEventListener('click',  e => { e.stopPropagation(); doZoom(-STEP); });
+    resetZoomBtn?.addEventListener('click',e => { e.stopPropagation(); resetTransform(); });
+
+    // ── Carousel ──────────────────────────────────────────────
+    const refreshThumbs = () => {
+      if (!thumbsEl) return;
+      thumbsEl.querySelectorAll('.lb-thumb').forEach((t, i) => {
+        t.classList.toggle('active', i === idx);
+        if (i === idx) (t as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      });
+    };
+
+    const goTo = (newIdx: number) => {
+      if (!images.length) return;
+      idx = (newIdx + images.length) % images.length;
+      imgEl.classList.add('fading');
+      setTimeout(() => {
+        imgEl.src = images[idx];
+        resetTransform();
+        refreshThumbs();
+        imgEl.classList.remove('fading');
+      }, 220);
+    };
+
+    prevBtn?.addEventListener('click', e => { e.stopPropagation(); goTo(idx - 1); });
+    nextBtn?.addEventListener('click', e => { e.stopPropagation(); goTo(idx + 1); });
+
+    // ── Open ──────────────────────────────────────────────────
+    document.querySelectorAll('.project-image').forEach(container => {
+      container.addEventListener('click', () => {
+        const img = container.querySelector('img');
+        const raw = container.getAttribute('data-images');
+        try { images = raw ? JSON.parse(raw) : (img ? [img.src] : []); }
+        catch { images = img ? [img.src] : []; }
+        if (!images.length) return;
+
+        idx = 0;
+        imgEl.src = images[0];
+        resetTransform();
+        lbOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        const multi = images.length > 1;
+
+        if (prevBtn && nextBtn) {
+          prevBtn.style.display = multi ? 'flex' : 'none';
+          nextBtn.style.display = multi ? 'flex' : 'none';
         }
-        updateZoom();
+
+        if (thumbsEl) {
+          thumbsEl.innerHTML = '';
+          if (multi) {
+            images.forEach((src, i) => {
+              const t = document.createElement('img');
+              t.src = src;
+              t.className = 'lb-thumb' + (i === 0 ? ' active' : '');
+              t.addEventListener('click', e => { e.stopPropagation(); if (i !== idx) goTo(i); });
+              thumbsEl.appendChild(t);
+            });
+            thumbsEl.classList.add('visible');
+          } else {
+            thumbsEl.classList.remove('visible');
+          }
+        }
+      });
+    });
+
+    // ── Close ─────────────────────────────────────────────────
+    const close = () => {
+      lbOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      resetTransform();
+    };
+    closeBtn.addEventListener('click', close);
+    backdrop?.addEventListener('click', close);
+
+    document.addEventListener('keydown', e => {
+      if (!lbOverlay.classList.contains('active')) return;
+      if (e.key === 'Escape') close();
+      if (images.length > 1) {
+        if (e.key === 'ArrowLeft')  goTo(idx - 1);
+        if (e.key === 'ArrowRight') goTo(idx + 1);
       }
     });
   });

@@ -92,7 +92,63 @@ The application is deployed on Azure Container Apps with images stored in Azure 
     ],
   },
   {
+    slug: 'impactex-ims',
+    title: 'Impactex IMS - Asset & Inventory Operations',
+    image: `${import.meta.env.BASE_URL}assets/img/mao-operational-dashboard.png`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/mao-operational-dashboard.png`,
+      `${import.meta.env.BASE_URL}assets/img/mao-dashboard.png`,
+      `${import.meta.env.BASE_URL}assets/img/mao-inventory-item.png`,
+      `${import.meta.env.BASE_URL}assets/img/mao-maintenance.png`,
+      `${import.meta.env.BASE_URL}assets/img/mao-purchases.png`,
+      `${import.meta.env.BASE_URL}assets/img/mao-reports.png`,
+    ],
+    description: `A cloud-deployed platform for tracking organizational assets, inventory operations, maintenance, loans, purchasing, and audit-ready reports.`,
+    highlights: [
+      { label: 'Operational traceability', text: 'Tracks each asset across custody, location, condition, and its immutable activity history.' },
+      { label: 'End-to-end operations', text: 'Brings <strong>inventory, requests, maintenance, loans, purchases, and reports</strong> into one role-aware workspace.' },
+      { label: 'Azure delivery', text: 'Built and deployed through <strong>GitHub Actions</strong> to Azure Container Apps using Bicep infrastructure as code.' },
+    ],
+    technologies: [
+      { name: '.NET 10', iconClass: 'devicon-dot-net-original' },
+      { name: 'Angular 20', iconClass: 'devicon-angularjs-plain' },
+      { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
+      { name: 'EF Core', iconClass: 'devicon-dot-net-original' },
+      { name: 'SQL Server', iconClass: 'devicon-azuresqldatabase-plain' },
+      { name: 'Docker', iconClass: 'devicon-docker-plain' },
+      { name: 'Azure Container Apps', iconClass: 'devicon-azure-plain' },
+      { name: 'Bicep IaC', iconClass: 'devicon-azure-plain' },
+      { name: 'GitHub Actions', iconClass: 'fab fa-github' },
+      { name: 'Playwright', iconImg: 'https://cdn.simpleicons.org/playwright' },
+    ],
+    links: [
+      {
+        url: 'https://mao-prod-web.purplebay-4e22b9c6.westus3.azurecontainerapps.io/',
+        label: 'Live App',
+        iconClass: 'fas fa-external-link-alt live-pulse-icon',
+      },
+      {
+        url: 'https://github.com/DRTX2/mao-inventory-maintaining-system',
+        label: 'Source Code',
+        iconClass: 'fab fa-github',
+      },
+    ],
+    detailedDescription: `Impactex IMS is a full-stack operations platform for managing serialized assets and inventory without losing the context of where each item is, who is responsible for it, or what happened to it previously. Its Angular interface supports inventory, requests, maintenance work orders, loans and returns, purchasing, notifications, role-based administration, and PDF or spreadsheet reporting from a unified workspace.
 
+The .NET 10 API uses EF Core with SQL Server and a domain model designed for traceable, controlled transitions. JWT authentication and granular roles limit access by operational responsibility. Attachments are validated and stored outside the database with SHA-256 metadata, then served only through authorized endpoints. GitHub Actions builds and deploys the web and API containers to Azure Container Apps using Bicep. The infrastructure provisions secure service boundaries, an Azure Files mount for attachments, health probes, and a dedicated migration job.`,
+    challenges: [
+      'Representing custody, location, maintenance, purchasing, and loan workflows while preserving an auditable history for each asset.',
+      'Protecting files and operational data with permissions that remain consistent across the API and Angular interface.',
+      'Deploying application containers, storage, migrations, and secrets reproducibly without production configuration in source control.'
+    ],
+    solutions: [
+      'Separated serialized assets from consumable stock and modeled controlled transitions for transfers, requests, maintenance, loans, purchases, and disposal.',
+      'Applied JWT authorization, department-aware roles, protected attachment endpoints, and SHA-256 metadata for stored files.',
+      'Automated CI/CD with GitHub Actions and Bicep-based Azure Container Apps infrastructure, including health checks, migration jobs, and persistent Azure Files storage.',
+      'Covered critical workflows with backend regression and integration suites, Angular tests, and Playwright end-to-end scenarios.'
+    ]
+  },
+  {
     slug: 'petsafe',
     title: 'PetSafe — Veterinary Clinic Management',
     image: `${import.meta.env.BASE_URL}assets/img/petsafe.webp`,
@@ -140,6 +196,56 @@ The backend is NestJS with TypeScript in a hexagonal architecture, WebSockets fo
       "Built a full-stack system with a centralized NestJS REST API and Angular frontend.",
       "Integrated WebSockets to synchronize the live waiting queue and notifications across connected clients.",
       "Containerized everything with Docker and deployed to a VPS with CI/CD and Playwright system tests."
+    ]
+  },
+  {
+    slug: 'hospital-management-system',
+    title: 'Hospital Management System',
+    image: `${import.meta.env.BASE_URL}assets/img/hospital-management-system.png`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/hospital-management-system.png`,
+      `${import.meta.env.BASE_URL}assets/img/hospital-reports-dashboard.png`,
+    ],
+    description: `A modular hospital platform that centralizes clinical administration, consultations, and reporting behind a secure microservices gateway.`,
+    highlights: [
+      { label: 'Microservices', text: '<strong>Six Spring Boot services</strong> separate discovery, access, administration, consultations, and reporting.' },
+      { label: 'Secure access', text: 'A shared <strong>JWT authentication service</strong> and API gateway protect every backend endpoint.' },
+      { label: 'Scalable data', text: 'PostgreSQL can scale horizontally with <strong>Citus sharding</strong> by medical center.' },
+    ],
+    technologies: [
+      { name: 'Java 17', iconClass: 'devicon-java-plain' },
+      { name: 'Spring Boot', iconClass: 'devicon-spring-original' },
+      { name: 'Spring Cloud', iconClass: 'devicon-spring-original' },
+      { name: 'React', iconClass: 'devicon-react-original' },
+      { name: 'PostgreSQL / Citus', iconClass: 'devicon-postgresql-plain' },
+      { name: 'Docker Compose', iconClass: 'devicon-docker-plain' },
+      { name: 'OpenAPI', iconClass: 'devicon-swagger-plain' },
+    ],
+    links: [
+      {
+        url: 'https://github.com/JosueGarciaAbata/hospital-management-system',
+        label: 'Backend Source Code',
+        iconClass: 'fab fa-github',
+      },
+      {
+        url: 'https://github.com/DavidJosueP2/Hospital-Front',
+        label: 'Frontend Source Code',
+        iconClass: 'fab fa-github',
+      },
+    ],
+    detailedDescription: `This hospital management system distributes operational responsibilities across independently deployable Spring Boot services. An API gateway is the controlled entry point for the React administration interface, while Eureka enables the services to locate one another without hard-coded addresses. The platform covers staff, doctors, specialties and medical centers, records consultations, and turns that data into reporting dashboards.
+
+Authentication is issued centrally and validated throughout the platform with JWTs. Each service exposes its own documented REST contract, which is collected into a single OpenAPI experience through the gateway. PostgreSQL is the primary data store, with an optional Citus layout that partitions information by medical center as the organization grows. Docker Compose profiles support both a local baseline and a distributed setup.`,
+    challenges: [
+      'Separating hospital administration, consultation workflows, reporting, and access control without creating a tightly coupled backend.',
+      'Keeping inter-service discovery, routing, and authorization manageable as services are added or scaled.',
+      'Providing a data architecture that can grow from one installation to multiple medical centers.'
+    ],
+    solutions: [
+      'Organized the backend into focused Spring Boot services registered through Eureka and exposed only through Spring Cloud Gateway.',
+      'Centralized JWT issuance in the authentication service so the gateway and internal services share one access model.',
+      'Used PostgreSQL with an optional Citus distribution strategy and containerized the stack with Docker Compose profiles.',
+      'Delivered a React administration interface for operational data and consultation analytics, with aggregated OpenAPI documentation.'
     ]
   },
   {
@@ -306,26 +412,35 @@ Behind the storefront, custom modules model memberships and subscriptions, an ex
     ]
   },
   {
-    slug: 'marketplace-platform',
-    title: 'E-Commerce Marketplace Platform',
-    image: `${import.meta.env.BASE_URL}assets/img/amazon.png`,
-    description: `Complete marketplace with Spring Boot backend and React/TypeScript frontend.`,
+    slug: 'publication-management-and-moderation-system',
+    title: 'Publication Management & Moderation Platform',
+    image: `${import.meta.env.BASE_URL}assets/img/publication-management-system.png`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/publication-management-system.png`,
+      `${import.meta.env.BASE_URL}assets/img/marketplace-catalog.png`,
+      `${import.meta.env.BASE_URL}assets/img/marketplace-moderation-dashboard.png`,
+      `${import.meta.env.BASE_URL}assets/img/marketplace-profile-location.png`,
+      `${import.meta.env.BASE_URL}assets/img/marketplace-login.png`,
+    ],
+    description: `A location-aware marketplace with Azure-hosted media, a complete moderation workflow, and automated quality gates from build to deployment.`,
     highlights: [
-      { label: 'Performance', text: '<strong>85% faster response</strong> (300ms → 45ms) via Redis caching and <strong>~70% query reduction</strong>.' },
-      { label: 'Quality', text: '<strong>90% test coverage</strong> with Jenkins CI/CD pipeline.' },
-      { label: 'Cloud', text: 'Deployed on Azure Container Apps with Azure Blob Storage for media.' }
+      { label: 'Location-aware', text: '<strong>PostGIS spatial queries</strong> filter and rank listings by distance.' },
+      { label: 'Azure services', text: 'Product media is stored in <strong>Azure Blob Storage</strong>, while deployment secrets are handled through Azure Key Vault.' },
+      { label: 'Automated QA', text: 'Jenkins runs <strong>build, static analysis, integration, API, performance, and security checks</strong> before releases.' }
     ],
     technologies: [
+      { name: 'Java', iconClass: 'devicon-java-plain' },
       { name: 'Spring Boot', iconClass: 'devicon-spring-original' },
-      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'Redis', iconClass: 'devicon-redis-plain' },
-      { name: 'Swagger', iconClass: 'devicon-swagger-plain' },
       { name: 'React', iconClass: 'devicon-react-original' },
       { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
-      { name: 'TailwindCSS', iconClass: 'devicon-tailwindcss-original' },
+      { name: 'PostgreSQL / PostGIS', iconClass: 'devicon-postgresql-plain' },
+      { name: 'Tailwind CSS', iconClass: 'devicon-tailwindcss-original' },
       { name: 'Docker', iconClass: 'devicon-docker-plain' },
       { name: 'Jenkins', iconClass: 'devicon-jenkins-plain' },
-      { name: 'Azure', iconClass: 'devicon-azure-plain' },
+      { name: 'Azure Blob Storage', iconClass: 'devicon-azure-plain' },
+      { name: 'Azure Key Vault', iconClass: 'devicon-azure-plain' },
+      { name: 'Postman / Newman', iconClass: 'devicon-postman-plain' },
+      { name: 'OpenAPI', iconClass: 'devicon-swagger-plain' },
     ],
     links: [
       {
@@ -339,19 +454,21 @@ Behind the storefront, custom modules model memberships and subscriptions, an ex
         iconClass: 'fab fa-github',
       },
     ],
-    detailedDescription: "A high-performance marketplace platform built with Spring Boot backend and React/TypeScript frontend. The system features JWT/RBAC security, pagination, content moderation, and is deployed on Azure Container Apps with Azure Blob Storage for media asset management. Achieved 90% test coverage through comprehensive testing and CI/CD automation.",
+    detailedDescription: `This full-stack marketplace connects product listings with the people most likely to need them nearby. The Spring Boot API persists listing locations with PostgreSQL and geospatial capabilities, while the React and TypeScript frontend provides the catalog and account experience. Sellers can attach images to their publications, and users can verify their email, recover access, and browse securely with JWT-protected sessions.
+
+Catalog safety is a first-class workflow rather than an afterthought. Users can report a publication, moderators can investigate and resolve the case from their dashboard, and sellers can appeal decisions with the status history retained. The backend follows explicit entity, DTO, mapping, repository, service, and controller layers. Product images are stored in Azure Blob Storage, while Azure Key Vault supplies deployment secrets.
+
+Quality is enforced throughout the delivery path. Jenkins pipelines compile the applications, run static analysis and coverage checks, provision automatic integration environments with Testcontainers, execute Postman collections through Newman, and run performance, end-to-end, and dynamic security tests. The same containerized pipeline supports local validation and remote Azure deployments.`,
     challenges: [
-      "Optimizing database queries to reduce latency and prevent N+1 query problems.",
-      "Implementing secure authentication and role-based access control for different user types.",
-      "Managing media assets efficiently in a cloud environment.",
-      "Maintaining code quality and automated deployments with high test coverage."
+      'Making local product discovery accurate and efficient without reducing the catalog to a generic list of results.',
+      'Supporting reports, reviews, resolution states, and seller appeals in an auditable moderation process.',
+      'Maintaining reliable local and remote releases while verifying quality, security, and secrets management across the full stack.'
     ],
     solutions: [
-      "Applied 3NF normalization and N+1 query prevention, reducing query count by ~70%.",
-      "Implemented multi-layer Redis caching and query optimization, improving API response times from ~300ms to ~45ms.",
-      "Built RESTful APIs with JWT/RBAC security, pagination, and content moderation features.",
-      "Set up a robust CI/CD pipeline with Jenkins achieving 90% test coverage.",
-      "Deployed on Azure Container Apps and integrated Azure Blob Storage for scalable media management."
+      'Implemented geospatial filters and distance ordering with PostgreSQL/PostGIS, plus Azure Blob Storage for publication media.',
+      'Built a complete moderation flow for reported listings, moderator decisions, and seller appeals.',
+      'Secured account access with JWT, email verification, password recovery, OpenAPI contracts, and deployment secrets in Azure Key Vault.',
+      'Automated Jenkins quality gates for compilation, static analysis, JaCoCo coverage, Testcontainers integration tests, Postman/Newman API checks, JMeter, OWASP ZAP, Selenium, and Playwright before Docker-based local and Azure releases.'
     ]
   },
   {
