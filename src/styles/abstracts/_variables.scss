@@ -1,74 +1,84 @@
-$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-primary: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-// CSS Custom Properties for Dynamic Theming
+// ---------------------------------------------------------------------------
+// Palette: "navy ink + sodium signal".
+// Deep navy surfaces (the operations console) with one warm amber signal,
+// the colour of a status light in production. Everything else stays quiet.
+//
+// New tokens: --bg, --surface, --surface-2, --line, --signal, --signal-ink,
+// --signal-text. Legacy tokens below are remapped so modals and older
+// components pick up the new palette without changes.
+// ---------------------------------------------------------------------------
 :root {
-    // Dark Theme (Default)
-    --color-primary: #c4b5fd;
-    --color-secondary: #a5b4fc;
-    --color-accent: #818cf8;
-    --color-text: #f1f5f9;
-    --color-text-muted: #cbd5e1;
-    --color-dark: #0f172a;
-    --back-color: #1e293b;
-    --card-bg: rgba(30, 41, 59, 0.7);
-    --card-border: rgba(255, 255, 255, 0.05);
-    --gradient-start: #667eea;
-    --gradient-end: #764ba2;
-    // Semantic
-    --tag-bg: rgba(129, 140, 248, 0.1); // Accent alpha 0.1
-    --tag-border: rgba(129, 140, 248, 0.2); // Accent alpha 0.2
-    --btn-ghost-bg: rgba(255, 255, 255, 0.05);
-    --btn-ghost-border: rgba(255, 255, 255, 0.2);
-    --btn-primary-bg: rgba(196, 181, 253, 0.2); // Primary alpha 0.2
-    --btn-primary-border: rgba(196, 181, 253, 0.5); // Primary alpha 0.5
-    --footer-bg: #151e2e; // Slightly darker than back-color #1e293b
+    // Dark theme (default)
+    --bg: #0d1726;
+    --surface: #132136;
+    --surface-2: #1a2b44;
+    --line: #243852;
+    --line-strong: #34506f;
+    --text: #e8edf4;
+    --text-muted: #9aa9bd;
+    --signal: #f3b43f;
+    --signal-ink: #1a1204;   // text on signal fills
+    --signal-text: #f5c064;  // signal used as text on --bg
+    --signal-soft: rgba(243, 180, 63, 0.12);
+    --live: #4ade80;
+    --radius-s: 4px;
+    --radius-m: 8px;
+    --radius-l: 14px;
 
-    // Opacity Variants (Dark)
-    --primary-10: rgba(196, 181, 253, 0.1);
-    --primary-20: rgba(196, 181, 253, 0.2);
-    --primary-30: rgba(196, 181, 253, 0.3);
+    // Legacy mapping
+    --color-primary: var(--signal-text);
+    --color-secondary: var(--text);
+    --color-accent: var(--signal);
+    --color-text: var(--text);
+    --color-text-muted: var(--text-muted);
+    --color-dark: var(--bg);
+    --back-color: var(--bg);
+    --card-bg: var(--surface);
+    --card-border: var(--line);
+    --gradient-start: var(--signal);
+    --gradient-end: var(--signal);
+    --tag-bg: transparent;
+    --tag-border: var(--line);
+    --btn-ghost-bg: transparent;
+    --btn-ghost-border: var(--line-strong);
+    --btn-primary-bg: var(--signal);
+    --btn-primary-border: var(--signal);
+    --footer-bg: var(--bg);
 
-    --accent-10: rgba(129, 140, 248, 0.1);
-    --accent-20: rgba(129, 140, 248, 0.2);
-    --accent-30: rgba(129, 140, 248, 0.3);
-
-    --secondary-20: rgba(165, 180, 252, 0.2);
-    --secondary-50: rgba(165, 180, 252, 0.5);
+    --primary-10: rgba(243, 180, 63, 0.1);
+    --primary-20: rgba(243, 180, 63, 0.2);
+    --primary-30: rgba(243, 180, 63, 0.3);
+    --accent-10: rgba(243, 180, 63, 0.1);
+    --accent-20: rgba(243, 180, 63, 0.2);
+    --accent-30: rgba(243, 180, 63, 0.3);
+    --secondary-20: rgba(232, 237, 244, 0.12);
+    --secondary-50: rgba(232, 237, 244, 0.4);
 }
 
 [data-theme="light"] {
-    // Light Theme Overrides
-    --color-primary: #6366f1; // Indigo-500 (Better contrast on light)
-    --color-secondary: #4f46e5; // Indigo-600
-    --color-accent: #4338ca; // Indigo-700
-    --color-text: #1e293b; // Slate-800
-    --color-text-muted: #475569; // Slate-600
-    --color-dark: #f8fafc; // Slate-50 (This was "dark" bg in dark mode, now main light bg)
-    --back-color: #f1f5f9; // Slate-100 (Secondary light bg)
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --card-border: rgba(0, 0, 0, 0.05);
-    --gradient-start: #818cf8;
-    --gradient-end: #6366f1;
-    // Semantic
-    --tag-bg: rgba(67, 56, 202, 0.1);
-    --tag-border: rgba(67, 56, 202, 0.2);
-    --btn-ghost-bg: rgba(0, 0, 0, 0.05);
-    --btn-ghost-border: rgba(0, 0, 0, 0.1);
-    --btn-primary-bg: rgba(99, 102, 241, 0.2);
-    --btn-primary-border: rgba(99, 102, 241, 0.5);
-    --footer-bg: #e2e8f0; // Darken Slate-100
+    --bg: #f1f4f8;
+    --surface: #ffffff;
+    --surface-2: #e7ecf3;
+    --line: #d3dbe6;
+    --line-strong: #aebbcc;
+    --text: #0d1726;
+    --text-muted: #4a5a70;
+    --signal: #f3b43f;
+    --signal-ink: #1a1204;
+    --signal-text: #8a5300;  // amber dark enough for text on paper
+    --signal-soft: rgba(243, 180, 63, 0.18);
+    --live: #15803d;
 
-    // Opacity Variants (Light)
-    --primary-10: rgba(129, 140, 248, 0.1); // Indigo-500 @ 0.1
-    --primary-20: rgba(129, 140, 248, 0.2);
-    --primary-30: rgba(129, 140, 248, 0.3);
-
-    --accent-10: rgba(67, 56, 202, 0.1); // Indigo-700 @ 0.1
-    --accent-20: rgba(67, 56, 202, 0.2);
-    --accent-30: rgba(67, 56, 202, 0.3);
-
-    --secondary-20: rgba(79, 70, 229, 0.2); // Indigo-600 @ 0.2
-    --secondary-50: rgba(79, 70, 229, 0.5);
+    --primary-10: rgba(138, 83, 0, 0.08);
+    --primary-20: rgba(138, 83, 0, 0.16);
+    --primary-30: rgba(138, 83, 0, 0.26);
+    --accent-10: rgba(138, 83, 0, 0.08);
+    --accent-20: rgba(138, 83, 0, 0.16);
+    --accent-30: rgba(138, 83, 0, 0.26);
+    --secondary-20: rgba(13, 23, 38, 0.08);
+    --secondary-50: rgba(13, 23, 38, 0.3);
 }
 
 // SCSS Variables mapped to CSS Variables
@@ -82,5 +92,9 @@ $color-dark: var(--color-dark);
 $back-color: var(--back-color);
 $card-bg: var(--card-bg);
 
-$brand-gradient: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+$brand-gradient: var(--signal);
 $base-font-size: 16px;
+
+// Layout
+$container: 1180px;
+$gutter: clamp(1rem, 4vw, 2.5rem);

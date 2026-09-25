@@ -1,0 +1,112 @@
+@use "../abstracts/variables" as *;
+
+// Work history: dates in a narrow left column, the story on the right,
+// joined by a single rule so the sequence reads top to bottom.
+.experience {
+    .timeline {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .job {
+        display: grid;
+        grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+        gap: 0.5rem clamp(1.5rem, 4vw, 3rem);
+        padding: 2rem 0;
+        border-top: 1px solid var(--line);
+
+        &:last-child { border-bottom: 1px solid var(--line); }
+
+        @media (max-width: 760px) {
+            grid-template-columns: 1fr;
+            padding: 1.5rem 0;
+        }
+    }
+
+    .job-meta p { margin: 0; }
+
+    .job-period {
+        color: var(--text-muted);
+        font-size: 0.925rem;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .job-current {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem !important;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .job-body { max-width: 46rem; }
+
+    h3 {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.15rem 0.6rem;
+        margin: 0 0 0.3rem;
+        font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
+        font-stretch: 112%;
+        font-weight: 750;
+    }
+
+    .job-company {
+        color: var(--signal-text);
+        font-weight: 650;
+        font-stretch: 100%;
+        font-size: 0.8em;
+    }
+
+    .job-context {
+        margin: 0 0 1rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+    }
+
+    .job-points {
+        list-style: none;
+        margin: 0 0 1.25rem;
+        padding: 0;
+        display: grid;
+        gap: 0.55rem;
+
+        li {
+            position: relative;
+            padding-left: 1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0.72em;
+                width: 0.4rem;
+                height: 2px;
+                background: var(--signal);
+            }
+        }
+    }
+
+    .job-stack {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+
+        li {
+            padding: 0.2rem 0.5rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-s);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+    }
+}

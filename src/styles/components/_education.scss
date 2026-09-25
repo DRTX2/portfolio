@@ -1,252 +1,131 @@
 @use "../abstracts/variables" as *;
 
 .education {
-    padding: 4rem 1rem;
-    width: 90vw; // Override the global 75vw limit
-    max-width: 1800px;
-    margin: 0 auto;
+    > h2 { margin-bottom: 0.75rem; }
 
-    h2 {
-        text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-        color: var(--color-primary);
-
-        .enfasis-title {
-            color: var(--color-text);
-        }
-    }
-
-    p {
-        text-align: center;
-        margin-bottom: 3rem;
-        color: var(--color-text-muted);
+    > p {
+        margin: 0 0 clamp(2rem, 4vw, 3rem);
+        color: var(--text-muted);
+        max-width: 60ch;
     }
 
     .education-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr; // Balanced columns
-        grid-template-rows: auto auto;
-        gap: 2rem; // Increased gap
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
 
-        @media (max-width: 768px) {
-            display: flex;
-            flex-direction: column;
-        }
+        @media (max-width: 760px) { grid-template-columns: 1fr; }
     }
 
     article {
-        background-color: rgba(255, 255, 255, 0.03); // Lighter overlay for contrast (Dark Mode)
-        border: 1px solid rgba(255, 255, 255, 0.05); // Subtle border
-        border-radius: 12px;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+        padding: 1.25rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-l);
+        transition: border-color 0.18s ease;
+
+        &:hover { border-color: var(--line-strong); }
+
+        @media (max-width: 480px) { flex-direction: column; }
+    }
+
+    .institute-img {
+        flex-shrink: 0;
+        width: 112px;
+        aspect-ratio: 16 / 10;
+        border-radius: var(--radius-m);
         overflow: hidden;
-        transition: all 0.3s ease;
-        display: flex; // Default to flex
+        background: var(--surface-2);
 
-        // Light Mode Override for better contrast
-        @at-root [data-theme="light"] & {
-            background-color: rgba(255, 255, 255, 0.8); // White-ish background
-            border: 1px solid rgba(0, 0, 0, 0.1); // Visible border
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-
-            &:hover {
-                background-color: #ffffff;
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-                border-color: var(--color-primary); // Highlight on hover
-            }
-        }
-
-        &:hover {
-            transform: translateY(-5px);
-            background-color: rgba(255, 255, 255, 0.06); // Lighter on hover (Dark Mode)
-            border-color: var(--accent-30);
-            box-shadow: 0 10px 25px var(--primary-10);
-
-            .institute-img img {
-                transform: scale(1.05);
-            }
+        > img, .image-container > img:not(.badge-logo) {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
     }
 
-    // --- CARD 1: UNIVERSITY (Vertical Layout, Left Col) ---
-    article:nth-child(1) {
-        grid-column: 1;
-        grid-row: 1 / 3;
-        flex-direction: column; // VERTICAL
-        grid-row: 1 / 3;
-        flex-direction: column; // VERTICAL
-        // background-color removed to match others
-        // Actually, let's use the variable but ensure contrast via opacity adjustment above or here.
-        // Let's stick to the lighter overlay approach above, but maybe specific for this one?
-        // No, keep consistent.
+    // University spans the left column and leads with its photo
+    article.university {
+        grid-row: span 2;
+        flex-direction: column;
+        padding: 0;
+        overflow: hidden;
 
         .institute-img {
             width: 100%;
-            height: 320px; // Taller image
-            background-color: rgba(0, 0, 0, 0.2); // Darker img bg
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover; // Fill the area like the photo
-                transition: transform 0.5s ease;
-            }
+            aspect-ratio: 16 / 8;
+            border-radius: 0;
         }
 
-        .institute-description {
-            padding: 2rem; // More padding
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            flex-grow: 1;
-        }
+        .institute-description { padding: 0 1.5rem 1.5rem; }
+
+        @media (max-width: 760px) { grid-row: auto; }
     }
 
-    // --- CARD 2 & 3: CERTIFICATES (Horizontal Layout, Right Col) ---
-    article:nth-child(2),
-    article:nth-child(3) {
-        grid-column: 2;
-        flex-direction: row; // HORIZONTAL
-        align-items: center;
-        padding: 1.5rem;
-        gap: 1.5rem;
-
-        .institute-img {
-            width: 160px; // Bigger image
-            height: 120px; // Rectangular
-            flex-shrink: 0;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin-right: 0; // Handled by gap
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-
-        .institute-description {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 0.3rem;
-        }
-    }
-
-    // --- CARD 4: FULL WIDTH (Horizontal) - EF SET ---
-    article:last-child {
+    article.full-width {
         grid-column: 1 / -1;
-        flex-direction: row;
         align-items: center;
-        padding: 2rem; // Spacious padding
-        gap: 2rem;
 
         .institute-img {
-            width: 180px; // Large Square for EF SET Badge
-            height: 180px;
-            flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.05); // Subtle glow
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-
-            .image-container {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-                height: 100%;
-                position: relative; // Context for overlay
-
-                // The Badge (Diamond)
-                img:not(.badge-logo) {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
-                }
-
-                // The Logo Text (Overlay)
-                .badge-logo {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 60%; // Adjust size to fit inside diamond
-                    height: auto;
-                    z-index: 10;
-                    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)); // clarity
-                }
-            }
-
-            // Fallback if structure is direct img
-            >img {
-                max-width: 90%;
-            }
+            width: 88px;
+            aspect-ratio: 1;
+            background: transparent;
+            overflow: visible;
         }
 
-        .institute-description {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center; // Ensure vertical centering against large image
-        }
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
 
-        @media (max-width: 768px) {
-            flex-direction: column;
-            text-align: center;
+            img:not(.badge-logo) { object-fit: contain !important; }
 
-            .institute-img {
-                margin: 0 auto 1.5rem auto;
+            .badge-logo {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 58%;
+                transform: translate(-50%, -50%);
+                filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
             }
         }
     }
 
-    // --- TYPOGRAPHY & COMMON ---
     .institute-description {
+        min-width: 0;
+
         h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-            line-height: 1.3;
+            margin: 0 0 0.35rem;
+            font-size: 1.05rem;
+            line-height: 1.35;
 
             a {
-                color: var(--color-secondary);
+                color: var(--text);
                 text-decoration: none;
-                transition: color 0.3s ease;
 
                 &:hover {
-                    color: var(--color-primary);
+                    text-decoration: underline;
+                    text-decoration-color: var(--signal);
+                    text-underline-offset: 3px;
                 }
             }
         }
 
         p {
-            // Reset generic P styles inside cards
-            text-align: left;
-            margin: 0;
-            color: var(--color-text-muted);
-            font-size: 0.95rem;
-            line-height: 1.5;
+            margin: 0 0 0.35rem;
+            font-size: 0.925rem;
+            line-height: 1.55;
+            color: var(--text-muted);
         }
 
-        // Date Styling (usually the first P after H3)
-        // h3 + p { ... } - brittle but effective if structure matches
-
-        h3+p {
-            font-style: italic;
-            margin-bottom: 0.5rem;
-            color: var(--color-text); // Slightly brighter
+        h3 + p {
+            color: var(--signal-text);
+            font-weight: 600;
+            font-style: normal;
         }
     }
 }

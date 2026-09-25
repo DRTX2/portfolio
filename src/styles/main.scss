@@ -1,12 +1,15 @@
 @use 'base/normalize';
+@use 'base/typography';
 @use 'components/body';
 @use 'components/effects';
+@use 'components/button';
 
-@use 'layout/header'; // Skills Fixes
+@use 'layout/header';
 @use 'components/presentation';
 @use 'components/aboutMe';
+@use 'components/experience';
 @use 'components/skills';
-@use 'components/education'; // EF SET Overlay Fix
+@use 'components/education';
 @use 'components/projects';
 @use 'components/detail-modal';
 @use 'components/cv-modal';

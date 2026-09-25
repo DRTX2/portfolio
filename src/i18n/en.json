@@ -1,23 +1,21 @@
 {
   "site": {
-    "title": "David Manjarres | Full Stack Developer",
+    "title": "David Manjarres | Senior Full Stack & Cloud Engineer",
     "description": "Full Stack Developer specializing in Java Spring Boot, React, TypeScript, and microservices. 4+ years building scalable applications with 90%+ test coverage, CI/CD pipelines, and cloud deployments."
   },
   "hero": {
-    "greeting": "Hi There, I'm",
+    "role": "Senior full-stack & cloud engineer",
     "name": "David Manjarres",
-    "rolePrefix": "I am into",
-    "typing": [
-      "Web Development",
-      "Frontend Development",
-      "Backend Development"
-    ],
-    "cta": "About Me"
+    "lede": "I design, ship and run production systems: multi-tenant SaaS on Azure, healthcare platforms and event-driven APIs built with .NET, Spring Boot, NestJS and React.",
+    "ctaProjects": "See my work",
+    "ctaResume": "Resume",
+    "now": "Now building StayFlow Cloud, a multi-tenant hotel SaaS running on Azure Container Apps.",
+    "location": "Based in Ambato, Ecuador"
   },
   "about": {
     "title": "About",
     "titleHighlight": "Me",
-    "subtitle": "FULL-STACK DEVELOPER • CLOUD ENGINEER • ECUADOR 🇪🇨",
+    "subtitle": "Full-stack and cloud engineer based in Ambato, Ecuador",
     "highlights": [
       "Building <strong>scalable, cloud-native applications</strong> with ASP.NET Core, NestJS, Spring Boot, and TypeScript — deployed on Azure Container Apps.",
       "Designing <strong>RESTful APIs</strong> with <strong>Clean, Hexagonal & DDD Architecture</strong>, implementing CI/CD pipelines, OIDC authentication and multi-tenant SaaS patterns.",
@@ -45,6 +43,92 @@
     "emailLabel": "Email:",
     "placeLabel": "Place:"
   },
+  "experience": {
+    "title": "Experience",
+    "current": "Current",
+    "items": [
+      {
+        "role": "Senior Full-Stack & Cloud Engineer",
+        "company": "StayFlow Cloud",
+        "period": "2026 – Present",
+        "context": "Multi-tenant hospitality SaaS",
+        "bullets": [
+          "Architected event-driven services with <strong>ASP.NET Core</strong>, Clean Architecture, vertical slices and CQRS/MediatR.",
+          "Enforced tenant isolation with <strong>EF Core</strong> query filters, RBAC, OAuth2/OIDC, granular permissions and audit trails.",
+          "Built a Backend for Frontend and a <strong>Next.js/React</strong> UI for operations, the guest portal and feature flags.",
+          "Shipped DevSecOps with <strong>GitHub Actions</strong>, OWASP ZAP scans, observability and deploys to <strong>Azure Container Apps</strong>."
+        ],
+        "stack": [
+          "ASP.NET Core",
+          "Next.js",
+          "PostgreSQL",
+          "MongoDB",
+          "Redis",
+          "Hangfire",
+          "Azure"
+        ]
+      },
+      {
+        "role": "Full Stack & Cloud Developer",
+        "company": "SMARTMEDIC",
+        "period": "Jan 2026 – May 2026",
+        "context": "Healthcare systems for clinics and hospitals",
+        "bullets": [
+          "Maintained clinical modules and integrated subsystems with <strong>PHP/Laravel</strong>, MySQL and PostgreSQL.",
+          "Built internal services with <strong>NestJS</strong>, Python, Redis and JWT, with <strong>AWS S3</strong> for medical file storage.",
+          "Delivered dashboards, forms and validations in <strong>React</strong>, TypeScript, Material UI, Zustand and WebSockets.",
+          "Ran Linux/Debian infrastructure: logs, backups, Docker, queues and process tuning, documented for the support team."
+        ],
+        "stack": [
+          "Laravel",
+          "NestJS",
+          "Python",
+          "React",
+          "Redis",
+          "AWS S3",
+          "Docker"
+        ]
+      },
+      {
+        "role": "Full Stack Developer",
+        "company": "Freelance",
+        "period": "Jan 2023 – Present",
+        "context": "Web applications for small businesses and academic clients",
+        "bullets": [
+          "Designed and delivered apps with <strong>Spring Boot</strong>, ASP.NET Core, FastAPI, Odoo and React/Angular.",
+          "Cut API latency by up to <strong>60%</strong> through indexing, N+1 prevention and Redis caching on PostgreSQL/MySQL.",
+          "Deployed to <strong>AWS</strong> (EC2, S3, RDS, Lambda) and Azure with Jenkins/GitHub Actions CI/CD and DevSecOps checks.",
+          "Wrote automated suites with <strong>Playwright</strong>, Selenium, Jest and Postman, and Power BI reports over SQL Server and SSIS."
+        ],
+        "stack": [
+          "Spring Boot",
+          "FastAPI",
+          "Kafka",
+          "AWS",
+          "Jenkins",
+          "Playwright",
+          "Power BI"
+        ]
+      },
+      {
+        "role": "Frontend Developer",
+        "company": "Maintenance & Inventory System",
+        "period": "Oct 2024 – Jan 2025",
+        "context": "Operations dashboard for a Spring Boot backend",
+        "bullets": [
+          "Built a responsive dashboard with <strong>React</strong>, Vite and Material UI on top of Spring Boot REST APIs.",
+          "Designed reusable components and global state with <strong>Redux Toolkit</strong> and Zustand, in an Agile/Scrum team."
+        ],
+        "stack": [
+          "React",
+          "Vite",
+          "Material UI",
+          "Redux Toolkit",
+          "Spring Boot"
+        ]
+      }
+    ]
+  },
   "cvModal": {
     "title": "Resume",
     "download": "Download",
@@ -57,10 +141,13 @@
     "title": "Skills & Abilities",
     "backend": "Backend Development",
     "databases": "Databases & Cache",
-    "frontend": "Frontend Development",
+    "frontend": "Frontend & Mobile",
     "cloud": "Cloud & DevOps",
     "messaging": "Message Brokers & Event Streaming",
-    "automation": "Automation & AI Integration"
+    "automation": "Automation & AI Integration",
+    "data": "Data & BI",
+    "testing": "Testing & Quality",
+    "observability": "Observability & Security"
   },
   "education": {
     "title": "My Education & Certificates",
@@ -235,7 +322,8 @@
         "highlights": [
           { "label": "Impact", "text": "<strong>60% faster</strong> medical record access via 3NF normalization." },
           { "label": "Architecture", "text": "Spring Boot backend following <strong>Clean Architecture</strong>." },
-          { "label": "Security", "text": "RBAC & JWT authentication for HIPAA compliance." }
+          { "label": "Security", "text": "RBAC & JWT authentication for HIPAA compliance." },
+          { "label": "Mobile app", "text": "<strong>React Native</strong> patient app to browse doctors, book and cancel appointments, and get notifications." }
         ],
         "detailedDescription": "HIPAA-compliant full-stack healthcare system handling appointments, medical history, and audit trails. Includes admin dashboards and a mobile app for patients. The focus was on data integrity, security, and performance.",
         "challenges": [
@@ -329,6 +417,7 @@
     "about": "About me",
     "skills": "Skills",
     "education": "Education",
-    "projects": "Projects"
+    "projects": "Projects",
+    "experience": "Experience"
   }
 }

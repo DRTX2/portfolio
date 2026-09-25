@@ -119,7 +119,7 @@ The application is deployed on Azure Container Apps with images stored in Azure 
       { name: 'Azure Container Apps', iconClass: 'devicon-azure-plain' },
       { name: 'Bicep IaC', iconClass: 'devicon-azure-plain' },
       { name: 'GitHub Actions', iconClass: 'fab fa-github' },
-      { name: 'Playwright', iconImg: 'https://cdn.simpleicons.org/playwright' },
+      { name: 'Playwright', iconImg: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/playwright/playwright-original.svg' },
     ],
     links: [
       {
@@ -163,7 +163,7 @@ The .NET 10 API uses EF Core with SQL Server and a domain model designed for tra
       { name: 'Angular', iconClass: 'devicon-angularjs-plain' },
       { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
       { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'Playwright', iconImg: 'https://cdn.simpleicons.org/playwright' },
+      { name: 'Playwright', iconImg: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/playwright/playwright-original.svg' },
       { name: 'Docker', iconClass: 'devicon-docker-plain' },
     ],
     links: [
@@ -421,6 +421,10 @@ Behind the storefront, custom modules model memberships and subscriptions, an ex
       `${import.meta.env.BASE_URL}assets/img/marketplace-moderation-dashboard.png`,
       `${import.meta.env.BASE_URL}assets/img/marketplace-profile-location.png`,
       `${import.meta.env.BASE_URL}assets/img/marketplace-login.png`,
+      `${import.meta.env.BASE_URL}assets/img/marketplace-users-admin.webp`,
+      `${import.meta.env.BASE_URL}assets/img/marketplace-moderators.webp`,
+      `${import.meta.env.BASE_URL}assets/img/marketplace-my-incidents.webp`,
+      `${import.meta.env.BASE_URL}assets/img/marketplace-jenkins-pipeline.webp`,
     ],
     description: `A location-aware marketplace with Azure-hosted media, a complete moderation workflow, and automated quality gates from build to deployment.`,
     highlights: [
@@ -474,16 +478,31 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
   {
     slug: 'medical-clinic',
     title: 'Medical Clinic Management System',
-    image: `${import.meta.env.BASE_URL}assets/img/clinic-front.jpeg`,
+    image: `${import.meta.env.BASE_URL}assets/img/clinic/cover.webp`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/clinic/cover.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/admin-appointments.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/mobile-login.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/mobile-doctors.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/mobile-doctor-profile.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/mobile-request-appointment.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/mobile-appointments.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/mobile-cancel-request.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/mobile-notifications.webp`,
+      `${import.meta.env.BASE_URL}assets/img/clinic/mobile-doctors-light.webp`,
+    ],
     description: `HIPAA-compliant full-stack healthcare system.`,
     highlights: [
       { label: 'Impact', text: '<strong>60% faster</strong> medical record access via 3NF normalization.' },
       { label: 'Architecture', text: 'Spring Boot backend following <strong>Clean Architecture</strong>.' },
-      { label: 'Security', text: 'RBAC & JWT authentication for HIPAA compliance.' }
+      { label: 'Security', text: 'RBAC & JWT authentication for HIPAA compliance.' },
+      { label: 'Mobile app', text: '<strong>React Native</strong> patient app to browse doctors, book and cancel appointments, and get notifications.' }
     ],
     technologies: [
       { name: 'Spring Boot', iconClass: 'devicon-spring-original' },
+      { name: 'React', iconClass: 'devicon-react-original' },
       { name: 'React Native', iconClass: 'devicon-react-original' },
+      { name: 'Resilience4j', iconClass: 'devicon-java-plain' },
       { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
       { name: 'Redis', iconClass: 'devicon-redis-plain' },
       { name: 'Swagger', iconClass: 'devicon-swagger-plain' },

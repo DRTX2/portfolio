@@ -23,12 +23,14 @@ const t = useTranslations('en');
         <h3 data-i18n={`skills.${category.id}`}>{t.skills[category.id]}</h3>
         <div class="skill-mention">
           {category.skills.map((skill) => (
-            <div>
-              <img
-                src={skill.icon.startsWith('http') ? skill.icon : `${DEVICON_BASE}${skill.icon}`}
-                alt={skill.name}
-                loading="lazy"
-              />
+            <div data-skill={skill.name}>
+              {skill.icon && (
+                <img
+                  src={skill.icon.startsWith('http') ? skill.icon : `${DEVICON_BASE}${skill.icon}`}
+                  alt=""
+                  loading="lazy"
+                />
+              )}
               {skill.name}
             </div>
           ))}

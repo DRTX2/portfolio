@@ -1,0 +1,84 @@
+---
+/**
+ * Experience Component with i18n support
+ * Work history as a timeline, newest first.
+ * Uses data-exp attributes (not data-i18n) so other sections' global
+ * translators don't overwrite the HTML inside the bullets.
+ */
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations('en');
+const { title, current, items } = t.experience;
+---
+
+<section class="experience" id="experience">
+  <h2 data-exp="title">{title}</h2>
+
+  <ol class="timeline">
+    {
+      items.map((item: any, i: number) => (
+        <li class="job" data-exp-index={i}>
+          <div class="job-meta">
+            <p class="job-period" data-exp="period">{item.period}</p>
+            {i === 0 && (
+              <p class="job-current">
+                <span class="now-dot" aria-hidden="true" />
+                <span data-exp="current">{current}</span>
+              </p>
+            )}
+          </div>
+
+          <div class="job-body">
+            <h3>
+              <span class="job-role" data-exp="role">{item.role}</span>
+              <span class="job-company" data-exp="company">{item.company}</span>
+            </h3>
+            <p class="job-context" data-exp="context">{item.context}</p>
+            <ul class="job-points" data-exp="bullets">
+              {item.bullets.map((b: string) => <li set:html={b} />)}
+            </ul>
+            <ul class="job-stack" aria-label="Stack">
+              {item.stack.map((s: string) => <li>{s}</li>)}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const translations: any = { en, es };
+
+  function updateExperience() {
+    const lang = localStorage.getItem('lang') || 'en';
+    const exp = translations[lang]?.experience;
+    const section = document.getElementById('experience');
+    if (!exp || !section) return;
+
+    const title = section.querySelector('[data-exp="title"]');
+    if (title) title.textContent = exp.title;
+
+    section.querySelectorAll<HTMLElement>('.job').forEach((job) => {
+      const item = exp.items[Number(job.dataset.expIndex)];
+      if (!item) return;
+
+      for (const key of ['period', 'role', 'company', 'context']) {
+        const el = job.querySelector(`[data-exp="${key}"]`);
+        if (el) el.textContent = item[key];
+      }
+
+      const current = job.querySelector('[data-exp="current"]');
+      if (current) current.textContent = exp.current;
+
+      const bullets = job.querySelector('[data-exp="bullets"]');
+      if (bullets) bullets.innerHTML = item.bullets.map((b: string) => `<li>${b}</li>`).join('');
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', updateExperience);
+  window.addEventListener('languagechange', updateExperience);
+</script>

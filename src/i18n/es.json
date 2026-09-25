@@ -1,23 +1,21 @@
 {
   "site": {
-    "title": "David Manjarres | Desarrollador Full Stack",
+    "title": "David Manjarres | Ingeniero Full Stack y Cloud Senior",
     "description": "Desarrollador Full Stack especializado en Java Spring Boot, React, TypeScript y microservicios. +4 años construyendo aplicaciones escalables con +90% de cobertura de pruebas, pipelines CI/CD y despliegues en la nube."
   },
   "hero": {
-    "greeting": "Hola, soy",
+    "role": "Ingeniero full-stack y cloud senior",
     "name": "David Manjarres",
-    "rolePrefix": "Me dedico al",
-    "typing": [
-      "Desarrollo Web",
-      "Desarrollo Frontend",
-      "Desarrollo Backend"
-    ],
-    "cta": "Sobre Mí"
+    "lede": "Diseño, despliego y opero sistemas en producción: SaaS multi-tenant en Azure, plataformas de salud y APIs orientadas a eventos con .NET, Spring Boot, NestJS y React.",
+    "ctaProjects": "Ver proyectos",
+    "ctaResume": "Currículum",
+    "now": "Ahora construyendo StayFlow Cloud, un SaaS hotelero multi-tenant sobre Azure Container Apps.",
+    "location": "Desde Ambato, Ecuador"
   },
   "about": {
     "title": "Sobre",
     "titleHighlight": "Mí",
-    "subtitle": "DESARROLLADOR FULL-STACK • INGENIERO EN LA NUBE • ECUADOR 🇪🇨",
+    "subtitle": "Ingeniero full-stack y cloud en Ambato, Ecuador",
     "highlights": [
       "Construyendo <strong>aplicaciones escalables y nativas en la nube</strong> con ASP.NET Core, NestJS, Spring Boot y TypeScript — desplegadas en Azure Container Apps.",
       "Diseñando <strong>APIs RESTful</strong> con <strong>Arquitectura Limpia, Hexagonal y DDD</strong>, implementando pipelines CI/CD, autenticación OIDC y patrones SaaS multi-tenant.",
@@ -45,6 +43,92 @@
     "emailLabel": "Correo:",
     "placeLabel": "Ubicación:"
   },
+  "experience": {
+    "title": "Experiencia",
+    "current": "Actual",
+    "items": [
+      {
+        "role": "Ingeniero Full-Stack y Cloud Senior",
+        "company": "StayFlow Cloud",
+        "period": "2026 – Presente",
+        "context": "SaaS multi-tenant para gestión hotelera",
+        "bullets": [
+          "Arquitecté servicios orientados a eventos con <strong>ASP.NET Core</strong>, Clean Architecture, vertical slices y CQRS/MediatR.",
+          "Implementé aislamiento multi-tenant con filtros de <strong>EF Core</strong>, RBAC, OAuth2/OIDC, permisos granulares y auditoría.",
+          "Desarrollé un Backend for Frontend y la interfaz <strong>Next.js/React</strong> para operaciones, portal de huéspedes y feature flags.",
+          "Implementé DevSecOps con <strong>GitHub Actions</strong>, escaneos OWASP ZAP, observabilidad y despliegue en <strong>Azure Container Apps</strong>."
+        ],
+        "stack": [
+          "ASP.NET Core",
+          "Next.js",
+          "PostgreSQL",
+          "MongoDB",
+          "Redis",
+          "Hangfire",
+          "Azure"
+        ]
+      },
+      {
+        "role": "Desarrollador Full Stack y Cloud",
+        "company": "SMARTMEDIC",
+        "period": "Ene 2026 – May 2026",
+        "context": "Sistemas médicos para clínicas y hospitales",
+        "bullets": [
+          "Mantuve módulos clínicos y subsistemas integrados con <strong>PHP/Laravel</strong>, MySQL y PostgreSQL.",
+          "Desarrollé servicios internos con <strong>NestJS</strong>, Python, Redis y JWT, con <strong>AWS S3</strong> para archivos médicos.",
+          "Construí dashboards, formularios y validaciones en <strong>React</strong>, TypeScript, Material UI, Zustand y WebSockets.",
+          "Gestioné infraestructura Linux/Debian: logs, respaldos, Docker, colas y optimización, documentado para soporte."
+        ],
+        "stack": [
+          "Laravel",
+          "NestJS",
+          "Python",
+          "React",
+          "Redis",
+          "AWS S3",
+          "Docker"
+        ]
+      },
+      {
+        "role": "Desarrollador Full Stack",
+        "company": "Freelance",
+        "period": "Ene 2023 – Presente",
+        "context": "Aplicaciones web para pequeñas empresas y clientes académicos",
+        "bullets": [
+          "Diseñé y entregué aplicaciones con <strong>Spring Boot</strong>, ASP.NET Core, FastAPI, Odoo y React/Angular.",
+          "Reduje la latencia de APIs hasta un <strong>60%</strong> con indexación, prevención de N+1 y caché Redis sobre PostgreSQL/MySQL.",
+          "Desplegué en <strong>AWS</strong> (EC2, S3, RDS, Lambda) y Azure con CI/CD en Jenkins/GitHub Actions y controles DevSecOps.",
+          "Escribí suites automatizadas con <strong>Playwright</strong>, Selenium, Jest y Postman, y reportes Power BI sobre SQL Server y SSIS."
+        ],
+        "stack": [
+          "Spring Boot",
+          "FastAPI",
+          "Kafka",
+          "AWS",
+          "Jenkins",
+          "Playwright",
+          "Power BI"
+        ]
+      },
+      {
+        "role": "Desarrollador Frontend",
+        "company": "Sistema de Mantenimiento e Inventario",
+        "period": "Oct 2024 – Ene 2025",
+        "context": "Dashboard operativo sobre un backend Spring Boot",
+        "bullets": [
+          "Construí un dashboard responsivo con <strong>React</strong>, Vite y Material UI sobre APIs REST de Spring Boot.",
+          "Diseñé componentes reutilizables y estado global con <strong>Redux Toolkit</strong> y Zustand, en un equipo Agile/Scrum."
+        ],
+        "stack": [
+          "React",
+          "Vite",
+          "Material UI",
+          "Redux Toolkit",
+          "Spring Boot"
+        ]
+      }
+    ]
+  },
   "cvModal": {
     "title": "Resume",
     "download": "Descargar",
@@ -57,10 +141,13 @@
     "title": "Habilidades & Capacidades",
     "backend": "Desarrollo Backend",
     "databases": "Bases de Datos & Caché",
-    "frontend": "Desarrollo Frontend",
+    "frontend": "Frontend y Móvil",
     "cloud": "Cloud & DevOps",
     "messaging": "Message Brokers & Streaming de Eventos",
-    "automation": "Automatización & Integración de IA"
+    "automation": "Automatización & Integración de IA",
+    "data": "Datos y BI",
+    "testing": "Pruebas y Calidad",
+    "observability": "Observabilidad y Seguridad"
   },
   "education": {
     "title": "Mi Educación & Certificados",
@@ -235,7 +322,8 @@
         "highlights": [
           { "label": "Impacto", "text": "<strong>60% más rápido</strong> acceso a registros médicos mediante normalización 3NF." },
           { "label": "Arquitectura", "text": "Backend Spring Boot siguiendo <strong>Arquitectura Limpia</strong>." },
-          { "label": "Seguridad", "text": "Autenticación RBAC & JWT para cumplimiento HIPAA." }
+          { "label": "Seguridad", "text": "Autenticación RBAC & JWT para cumplimiento HIPAA." },
+          { "label": "App móvil", "text": "App <strong>React Native</strong> para pacientes: explorar médicos, agendar y cancelar citas y recibir notificaciones." }
         ],
         "detailedDescription": "Sistema de salud full-stack compatible con HIPAA que maneja citas, historia médica y registros de auditoría. Incluye dashboards de administración y una aplicación móvil para pacientes. El enfoque fue en integridad de datos, seguridad y rendimiento.",
         "challenges": [
@@ -329,6 +417,7 @@
     "about": "Sobre mí",
     "skills": "Habilidades",
     "education": "Educación",
-    "projects": "Proyectos"
+    "projects": "Proyectos",
+    "experience": "Experiencia"
   }
 }

@@ -1,100 +1,61 @@
-@use "./../abstracts/variables" as *;
-@use "./../abstracts/mixins" as mix;
+@use "../abstracts/variables" as *;
 
-
+// Each category is a row: label on the left, tools flowing on the right.
 .skills-habilities {
-    h2 {
-        @include mix.centered-text($color-primary, 2rem);
+    > h2 { margin-bottom: clamp(2rem, 4vw, 3rem); }
+
+    article {
+        display: grid;
+        grid-template-columns: minmax(0, 14rem) 1fr;
+        gap: 1rem 2rem;
+        padding: 1.5rem 0;
+        border-top: 1px solid var(--line);
+
+        &:last-of-type { border-bottom: 1px solid var(--line); }
+
+        @media (max-width: 760px) { grid-template-columns: 1fr; }
     }
 
     h3 {
-        @include mix.centered-text($color-primary, 1.4rem);
-        margin-bottom: 1.5rem;
-    }
-
-    article {
-        margin-bottom: 3rem;
+        margin: 0.45rem 0 0;
+        font-size: 1rem;
+        font-weight: 650;
+        color: var(--text);
+        text-align: left;
     }
 
     .skill-mention {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto 1.5rem auto;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: 3rem 1rem;
-        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
 
-        &:nth-child(2) {
-            grid-template-rows: repeat(1, 1fr);
-        }
-
-        div {
-            display: flex !important;
-            flex-direction: column;
-            gap: 0.6rem;
+        > div {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            min-height: 120px;
-
-            // Use semantic variables
-            background: var(--card-bg); // Dynamic theme background
-            border: 1px solid var(--card-border);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-
-            transition: all 0.3s ease;
-            padding: 1.2rem 1rem;
-            border-radius: 12px;
-            color: var(--color-text); // Dynamic text color
-
-            &:hover {
-                transform: translateY(-4px);
-                background: var(--color-dark);
-                border-color: var(--color-accent);
-                box-shadow: 0 10px 25px var(--accent-30);
-
-                img {
-                    transform: scale(1.15) rotate(-3deg);
-                }
-            }
+            gap: 0.55rem;
+            padding: 0.45rem 0.8rem 0.45rem 0.6rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-s);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 0.925rem;
+            line-height: 1.2;
         }
 
         img {
-            max-width: 48px;
-            height: 48px;
+            width: 18px;
+            height: 18px;
             object-fit: contain;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            flex-shrink: 0;
         }
+    }
+}
 
-
-        @media (max-width: 1024px) {
-            // Para tablets
-            grid-template-columns: repeat(3, 1fr); // 3 columnas en tablet
-            gap: 2rem 1rem;
-        }
-
-        @media (max-width: 768px) {
-            // Para móviles grandes
-            grid-template-columns: repeat(2, 1fr); // 2 columnas en móviles grandes
-            gap: 1.5rem 1rem;
-            width: 90vw; // Un poco más ancho en móviles
-        }
-
-        @media (max-width: 480px) {
-            // Para móviles pequeños
-            grid-template-columns: repeat(2, 1fr); // 1 columna en móviles pequeños
-            width: 80vw;
-            gap: 0.75rem;
-
-            div {
-                padding: 0.5rem;
-
-                img {
-                    width: 48px;
-                    height: 48px;
-                }
-            }
-        }
+// Monochrome brand marks disappear on navy; flip them in the dark theme
+:root:not([data-theme="light"]) .skills-habilities .skill-mention {
+    [data-skill="Next.js"], [data-skill="Express.js"], [data-skill="GitHub Actions"],
+    [data-skill="Apache Kafka"], [data-skill="Scalar"], [data-skill^="AWS"],
+    [data-skill="shadcn/ui"], [data-skill="Zustand"] {
+        img { filter: invert(1); }
     }
 }

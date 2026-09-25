@@ -1,24 +1,36 @@
 @use "../abstracts/variables" as *;
 
+.btn,
 .button {
-    background: $brand-gradient;
-    color: white;
-    border: none;
-    font-size: 1.1rem;
-    padding: 0.8rem 1.5rem;
-    cursor: pointer;
-    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 2.9rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: var(--radius-m);
+    border: 1px solid transparent;
+    font: inherit;
+    font-size: 0.975rem;
     font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
 
-    &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
-        opacity: 0.95;
-    }
+.btn-primary,
+.button {
+    background: var(--signal);
+    color: var(--signal-ink);
 
-    &:active {
-        transform: translateY(0);
-    }
+    &:hover { background: color-mix(in srgb, var(--signal) 86%, white); }
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line-strong);
+
+    &:hover { border-color: var(--text); }
 }

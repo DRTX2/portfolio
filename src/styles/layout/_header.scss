@@ -1,145 +1,104 @@
 @use "../abstracts/variables" as *;
 
 .main-menu {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem; // Space between elements
-  // Glassmorphism Base
-  background-color: rgba(15, 23, 42, 0.7); // Semi-transparent dark blue (Slate-900)
-  backdrop-filter: blur(12px); // Strong blur for the "frosted" look
-  -webkit-backdrop-filter: blur(12px); // Safari support
-  padding: 1rem 2rem;
-  font-size: 1.5rem;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05); // Lighter shadow
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05); // Subtle border
-
-  position: fixed; // Always visible as requested
-  top: 0;
-  left: 0;
-  right: 0;
-  // width: 100%; // Removed to prevent overflow with padding
-  box-sizing: border-box; // Ensure padding is included in width calculation if width was set
-  z-index: 2000; // Extremely high z-index to stay on top of everything except modals
-  transition: all 0.3s ease;
+  gap: 1.5rem;
+  height: 64px;
+  padding-inline: $gutter;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
   caret-color: transparent;
-
-  * {
-    color: var(--color-text);
-  }
-
-  // Light mode specific override if needed
-  // Light mode specific override
-  @at-root [data-theme="light"] & {
-    background-color: rgba(255, 255, 255, 0.75);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-
-    * {
-      color: #1e293b;
-    }
-
-    // Ensure text is dark in light mode header
-  }
-
-  /* 
-     If we want the "sticky" class to handle the change, we can keep it, 
-     but user asked for "siempre" (always). 
-     So standard style acts as the "active" sticky state.
-  */
 }
 
-// Estilos del menú
+.left-title-menu {
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
 .right-title-menu {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  margin-left: auto;
 
   ul {
     list-style: none;
     display: flex;
-    gap: 1.5rem;
+    gap: 0.25rem;
     margin: 0;
     padding: 0;
+  }
+}
+
+.right-items-menu li a {
+  display: block;
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    color: var(--text);
+    background: var(--surface);
   }
 }
 
 .menu-controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.25rem;
+  color: var(--text);
 }
 
-.right-items-menu li a {
-  text-decoration: none;
-  color: $color-primary;
-  position: relative;
-  transition: color 0.3s ease;
+.hamburger {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text);
+  border-radius: var(--radius-s);
 
-  &:hover {
-    color: $color-secondary;
-    text-decoration: none; // lo manejaremos con un pseudo-elemento
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    width: 100%;
-    height: 2px;
-    background-color: $color-secondary;
-
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-
-  &:hover::after {
-    transform: scaleX(1);
-  }
+  &:hover { background: var(--surface); }
 }
 
-// 🎨 Estilos Responsive
 @media (max-width: 1024px) {
   .right-title-menu {
     position: absolute;
-    top: 100%; // Position directly below header
+    top: 100%;
+    left: 0;
     right: 0;
-    //   background-color: inherit;
-    background-color: var(--color-dark);
-    border-bottom: 1px solid var(--card-border);
-    width: 100%;
     display: none;
-    flex-direction: column;
-    text-align: center;
-    padding: 1rem 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 0.75rem $gutter 1rem;
 
-    // Ensure shadow when open
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    &.active { display: block; }
+
+    ul {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    a {
+      padding: 0.8rem 0.25rem !important;
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--line);
+    }
   }
 
-  .right-title-menu ul {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  // Mostrar cuando el menú esté activo
-  .right-title-menu.active {
-    display: flex;
-  }
-
-  // Botón de hamburguesa
-  .hamburger {
-    display: block; // Visible en móvil/tablet
-    font-size: 2rem;
-    cursor: pointer;
-    color: var(--color-text);
-  }
-}
-
-// 📌 Ocultar el botón de hamburguesa en pantallas grandes
-@media (min-width: 1025px) {
-  .hamburger {
-    display: none;
-  }
+  .hamburger { display: inline-flex; }
 }

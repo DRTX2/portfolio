@@ -1,7 +1,7 @@
 ---
 /**
  * Hero/Presentation Component with i18n support
- * Main hero section with typing effect and social links
+ * Name, positioning statement, primary actions and current work
  */
 
 import { useTranslations } from '../i18n/utils';
@@ -13,7 +13,6 @@ interface SocialLink {
   href: string;
   icon: string;
   label: string;
-  openCvModal?: boolean;
 }
 
 interface Props {
@@ -34,60 +33,62 @@ const {
       icon: 'devicon-github-original',
       label: 'Visit my GitHub profile',
     },
-    {
-      href: '#',
-      icon: 'fas fa-file-pdf',
-      label: 'View my resume',
-      openCvModal: true,
-    },
   ],
 } = Astro.props;
+
+const [firstName, ...lastNames] = name.split(' ');
 ---
 
 <section class="presentation" id="presentation">
-  <article class="information" id="information">
-    <h2>
-      <span data-i18n="hero.greeting">{t.hero.greeting}</span>
-      <span class="gradient-text" data-i18n="hero.name">{t.hero.name}</span>
-    </h2>
-    <p>
-      <span data-i18n="hero.rolePrefix">{t.hero.rolePrefix}</span>{' '}
-      <span class="develop-areas"></span>
+  <div class="information" id="information">
+    <p class="hero-role" data-i18n="hero.role">{t.hero.role}</p>
+    <h1 class="hero-name">
+      <span>{firstName}</span>
+      <span>{lastNames.join(' ')}</span>
+    </h1>
+    <p class="hero-lede" data-i18n="hero.lede">{t.hero.lede}</p>
+
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary btn-about-me">
+        <span data-i18n="hero.ctaProjects">{t.hero.ctaProjects}</span>
+      </a>
+      <button type="button" class="btn btn-ghost" data-open-cv-modal>
+        <i class="fas fa-file-lines" aria-hidden="true"></i>
+        <span data-i18n="hero.ctaResume">{t.hero.ctaResume}</span>
+      </button>
+      <ul class="social-networks">
+        {
+          socialLinks.map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+                <i class={link.icon} aria-hidden="true" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <p class="hero-now">
+      <span class="now-dot" aria-hidden="true"></span>
+      <span data-i18n="hero.now">{t.hero.now}</span>
     </p>
-    <a href="#about-me" class="btn-about-me">
-      <button aria-label="Learn more about me" data-i18n="hero.cta">{t.hero.cta}</button>
-    </a>
-    <ul class="social-networks">
-      {
-        socialLinks.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              target={link.openCvModal ? undefined : '_blank'}
-              rel={link.openCvModal ? undefined : 'noopener noreferrer'}
-              aria-label={link.label}
-              data-open-cv-modal={link.openCvModal ? true : undefined}
-            >
-              <i class={link.icon} aria-hidden="true" />
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </article>
-  <article class="my-icon">
+  </div>
+
+  <figure class="my-icon">
     <img
       src={`${import.meta.env.BASE_URL}assets/img/image-profile.jpeg`}
       alt={`${name} - Full Stack Developer`}
-      loading="lazy"
+      width="388"
+      height="388"
     />
-  </article>
+    <figcaption data-i18n="hero.location">{t.hero.location}</figcaption>
+  </figure>
 </section>
 
 <script>
   import en from '../i18n/en.json';
   import es from '../i18n/es.json';
-  import { initTypingEffect } from '../scripts/typing.js';
 
   const translations: any = { en, es };
 
@@ -103,23 +104,14 @@ const {
 
   function updateHeroContent() {
     const lang = localStorage.getItem('lang') || 'en';
-    const elements = document.querySelectorAll('[data-i18n]');
+    const elements = document.querySelectorAll('#presentation [data-i18n]');
 
     elements.forEach((el) => {
       const key = el.getAttribute('data-i18n');
       if (key) {
-        const translation = getTranslation(key, lang);
-        if (el.tagName === 'BUTTON' || el.tagName === 'SPAN' || el.tagName === 'P') {
-          el.textContent = translation;
-        }
+        el.textContent = getTranslation(key, lang);
       }
     });
-
-    // Update typing effect
-    const typingStrings = translations[lang].hero.typing;
-    if (typingStrings) {
-      initTypingEffect(typingStrings);
-    }
   }
 
   document.addEventListener('DOMContentLoaded', updateHeroContent);
