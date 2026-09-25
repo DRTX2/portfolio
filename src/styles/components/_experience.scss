@@ -102,11 +102,29 @@
         gap: 0.35rem;
 
         li {
-            padding: 0.2rem 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.6rem 0.3rem 0.45rem;
             border: 1px solid var(--line);
             border-radius: var(--radius-s);
-            color: var(--text-muted);
-            font-size: 0.78rem;
+            background: var(--surface);
+            color: var(--text);
+            font-size: 0.82rem;
         }
+
+        img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+    }
+}
+
+// Monochrome marks need flipping on navy
+:root:not([data-theme="light"]) .experience .job-stack {
+    [data-skill="Next.js"], [data-skill="Kafka"], [data-skill^="AWS"] {
+        img { filter: invert(1); }
     }
 }

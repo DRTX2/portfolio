@@ -9,6 +9,33 @@ import { useTranslations } from '../i18n/utils';
 
 const t = useTranslations('en');
 const { title, current, items } = t.experience;
+
+const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/';
+// Stack names in the i18n files mapped to their logos; unmapped names render as text.
+const stackIcons: Record<string, string> = {
+  'ASP.NET Core': `${DEVICON}dot-net/dot-net-original.svg`,
+  'Next.js': `${DEVICON}nextjs/nextjs-original.svg`,
+  PostgreSQL: `${DEVICON}postgresql/postgresql-plain.svg`,
+  MongoDB: `${DEVICON}mongodb/mongodb-original.svg`,
+  Redis: `${DEVICON}redis/redis-original.svg`,
+  Hangfire: 'https://cdn.simpleicons.org/clockify',
+  Azure: `${DEVICON}azure/azure-original.svg`,
+  Laravel: `${DEVICON}laravel/laravel-original.svg`,
+  NestJS: `${DEVICON}nestjs/nestjs-original.svg`,
+  Python: `${DEVICON}python/python-original.svg`,
+  React: `${DEVICON}react/react-original.svg`,
+  'AWS S3': `${DEVICON}amazonwebservices/amazonwebservices-original-wordmark.svg`,
+  AWS: `${DEVICON}amazonwebservices/amazonwebservices-original-wordmark.svg`,
+  Docker: `${DEVICON}docker/docker-original.svg`,
+  'Spring Boot': `${DEVICON}spring/spring-original.svg`,
+  FastAPI: `${DEVICON}fastapi/fastapi-original.svg`,
+  Kafka: `${DEVICON}apachekafka/apachekafka-original.svg`,
+  Jenkins: `${DEVICON}jenkins/jenkins-original.svg`,
+  Playwright: `${DEVICON}playwright/playwright-original.svg`,
+  Vite: `${DEVICON}vitejs/vitejs-original.svg`,
+  'Material UI': `${DEVICON}materialui/materialui-original.svg`,
+  'Redux Toolkit': `${DEVICON}redux/redux-original.svg`,
+};
 ---
 
 <section class="experience" id="experience">
@@ -38,7 +65,12 @@ const { title, current, items } = t.experience;
               {item.bullets.map((b: string) => <li set:html={b} />)}
             </ul>
             <ul class="job-stack" aria-label="Stack">
-              {item.stack.map((s: string) => <li>{s}</li>)}
+              {item.stack.map((s: string) => (
+                <li data-skill={s}>
+                  {stackIcons[s] && <img src={stackIcons[s]} alt="" loading="lazy" />}
+                  {s}
+                </li>
+              ))}
             </ul>
           </div>
         </li>
