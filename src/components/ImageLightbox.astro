@@ -16,6 +16,10 @@
         <i class="fas fa-compress-arrows-alt"></i>
       </button>
     </div>
+    <div class="lb-caption" aria-live="polite">
+      <span class="lb-title" id="lbTitle"></span>
+      <span class="lb-counter" id="lbCounter"></span>
+    </div>
     <button class="lb-btn lb-close" id="lbClose" title="Close" aria-label="Close">
       <i class="fas fa-times"></i>
     </button>
@@ -31,7 +35,7 @@
 
   <!-- Main image area -->
   <div class="lb-image-area" id="lbImageArea">
-    <img class="lb-image" id="lbImage" src="" alt="Project image" draggable="false" />
+    <img class="lb-image" id="lbImage" alt="Project image" draggable="false" />
   </div>
 
   <!-- Thumbnail strip (only shown when multiple images) -->
@@ -39,13 +43,33 @@
 </div>
 
 <style is:global>
+  /* caption: project title + position in the gallery */
+  .lb-caption {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0 1rem;
+    color: #e8edf4;
+    pointer-events: none;
+  }
+  .lb-title { font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lb-counter { flex-shrink: 0; font-variant-numeric: tabular-nums; font-size: 0.85rem; color: #9aa9bd; }
+  .lb-image { border-radius: 10px; box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.7); }
+  .lb-thumb.active { outline: 2px solid var(--signal, #f3b43f) !important; outline-offset: 2px; border-color: transparent !important; }
+  .lb-btn:hover, .lb-arrow:hover { background: var(--signal, #f3b43f) !important; color: #1a1204 !important; }
+
   /* ─── Full-screen overlay ─────────────────────────────────── */
   .lb-overlay {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 9000;
-    background: rgba(0, 0, 0, 0.92);
+    background: rgb(5 10 18 / 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -367,6 +391,14 @@
     resetZoomBtn?.addEventListener('click',e => { e.stopPropagation(); resetTransform(); });
 
     // ── Carousel ──────────────────────────────────────────────
+    const titleEl = document.getElementById('lbTitle');
+    const counterEl = document.getElementById('lbCounter');
+    let title = '';
+    const refreshCaption = () => {
+      if (titleEl) titleEl.textContent = title;
+      if (counterEl) counterEl.textContent = images.length > 1 ? `${idx + 1} / ${images.length}` : '';
+    };
+
     const refreshThumbs = () => {
       if (!thumbsEl) return;
       thumbsEl.querySelectorAll('.lb-thumb').forEach((t, i) => {
@@ -383,6 +415,7 @@
         imgEl.src = images[idx];
         resetTransform();
         refreshThumbs();
+        refreshCaption();
         imgEl.classList.remove('fading');
       }, 220);
     };
@@ -391,42 +424,52 @@
     nextBtn?.addEventListener('click', e => { e.stopPropagation(); goTo(idx + 1); });
 
     // ── Open ──────────────────────────────────────────────────
+    // Exposed so other components (the project modal cover) open the same gallery.
+    const openLightbox = (list: string[], caption = '', start = 0) => {
+      images = list.filter(Boolean);
+      if (!images.length) return;
+      title = caption;
+      idx = Math.min(Math.max(start, 0), images.length - 1);
+      imgEl.src = images[idx];
+      imgEl.alt = caption || 'Project image';
+      resetTransform();
+      lbOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      const multi = images.length > 1;
+      if (prevBtn && nextBtn) {
+        prevBtn.style.display = multi ? 'flex' : 'none';
+        nextBtn.style.display = multi ? 'flex' : 'none';
+      }
+      if (thumbsEl) {
+        thumbsEl.innerHTML = '';
+        if (multi) {
+          images.forEach((src, i) => {
+            const t = document.createElement('img');
+            t.src = src;
+            t.alt = '';
+            t.className = 'lb-thumb' + (i === idx ? ' active' : '');
+            t.addEventListener('click', e => { e.stopPropagation(); if (i !== idx) goTo(i); });
+            thumbsEl.appendChild(t);
+          });
+          thumbsEl.classList.add('visible');
+        } else {
+          thumbsEl.classList.remove('visible');
+        }
+      }
+      refreshCaption();
+    };
+    (window as any).openLightbox = openLightbox;
+
     document.querySelectorAll('.project-image').forEach(container => {
       container.addEventListener('click', () => {
         const img = container.querySelector('img');
         const raw = container.getAttribute('data-images');
-        try { images = raw ? JSON.parse(raw) : (img ? [img.src] : []); }
-        catch { images = img ? [img.src] : []; }
-        if (!images.length) return;
-
-        idx = 0;
-        imgEl.src = images[0];
-        resetTransform();
-        lbOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-
-        const multi = images.length > 1;
-
-        if (prevBtn && nextBtn) {
-          prevBtn.style.display = multi ? 'flex' : 'none';
-          nextBtn.style.display = multi ? 'flex' : 'none';
-        }
-
-        if (thumbsEl) {
-          thumbsEl.innerHTML = '';
-          if (multi) {
-            images.forEach((src, i) => {
-              const t = document.createElement('img');
-              t.src = src;
-              t.className = 'lb-thumb' + (i === 0 ? ' active' : '');
-              t.addEventListener('click', e => { e.stopPropagation(); if (i !== idx) goTo(i); });
-              thumbsEl.appendChild(t);
-            });
-            thumbsEl.classList.add('visible');
-          } else {
-            thumbsEl.classList.remove('visible');
-          }
-        }
+        let list: string[];
+        try { list = raw ? JSON.parse(raw) : (img ? [img.src] : []); }
+        catch { list = img ? [img.src] : []; }
+        const caption = container.closest('.project')?.querySelector('h3')?.textContent?.trim() ?? '';
+        openLightbox(list, caption);
       });
     });
 

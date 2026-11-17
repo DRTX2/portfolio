@@ -1,0 +1,56 @@
+---
+import { useTranslations } from '../i18n/utils';
+const t = useTranslations('en');
+const security = ['OWASP Top 10', 'CTF', 'Pentesting labs', 'SSRF', 'HMAC signatures', 'Least privilege'];
+const applied = [
+  ['Standard Webhooks spec', 'Hookrelay'],
+  ['ISO 20022 · double-entry ledger', 'Kuntur'],
+  ['WebRTC signalling', 'Nexus Messenger'],
+];
+const reading = ['Distributed systems', 'Software architecture', 'Domain-Driven Design', 'Observability'];
+---
+
+<section class="interests" id="interests">
+  <h2>
+    <span data-t="interests.title">{t.interests.title}</span>
+    <span class="enfasis-title" data-t="interests.titleHighlight">{t.interests.titleHighlight}</span>
+  </h2>
+  <p class="interests-subtitle" data-t="interests.subtitle">{t.interests.subtitle}</p>
+
+  <div class="interests-grid">
+    <article class="interest-card">
+      {/* A real exchange with Hookrelay: registering a cloud-metadata URL is refused. */}
+      <div class="terminal" aria-hidden="true">
+        <div class="terminal-bar"><span /><span /><span /><em>ssrf-check.sh</em></div>
+        <pre><code><span class="c-prompt">$</span> curl -X POST api/v1/endpoints \
+    -d '&#123;"url":"http://<span class="c-bad">169.254.169.254</span>/latest/meta-data"&#125;'
+<span class="c-err">400</span> Private addresses are not allowed
+
+<span class="c-prompt">$</span> curl -X POST receiver/hooks -H 'webhook-signature: v1,forged'
+<span class="c-err">401</span> bad signature</code></pre>
+      </div>
+      <div class="interest-body">
+        <h3><i class="fas fa-user-shield" aria-hidden="true"></i> <span data-t="interests.items.0.title">{t.interests.items[0].title}</span></h3>
+        <p data-t="interests.items.0.text">{t.interests.items[0].text}</p>
+        <ul class="interest-chips">{security.map((s) => <li>{s}</li>)}</ul>
+      </div>
+    </article>
+
+    <article class="interest-card">
+      <div class="learn-loop" aria-hidden="true">
+        <div><i class="fas fa-book-open"></i><strong data-t="interests.loop.read">{t.interests.loop.read}</strong><span data-t="interests.loop.readText">{t.interests.loop.readText}</span></div>
+        <i class="fas fa-arrow-right arrow"></i>
+        <div><i class="fas fa-hammer"></i><strong data-t="interests.loop.build">{t.interests.loop.build}</strong><span>Atalaya · Kuntur</span></div>
+        <i class="fas fa-arrow-right arrow"></i>
+        <div><i class="fas fa-gauge-high"></i><strong data-t="interests.loop.measure">{t.interests.loop.measure}</strong><span>k6 · Playwright</span></div>
+      </div>
+      <div class="interest-body">
+        <h3><i class="fas fa-book-open" aria-hidden="true"></i> <span data-t="interests.items.1.title">{t.interests.items[1].title}</span></h3>
+        <p data-t="interests.items.1.text">{t.interests.items[1].text}</p>
+        <ul class="interest-chips">{reading.map((s) => <li>{s}</li>)}</ul>
+        <h4 class="applied-title" data-t="interests.loop.applied">{t.interests.loop.applied}</h4>
+        <ul class="applied">{applied.map(([topic, project]) => <li><span>{topic}</span><i class="fas fa-arrow-right" aria-hidden="true"></i><strong>{project}</strong></li>)}</ul>
+      </div>
+    </article>
+  </div>
+</section>

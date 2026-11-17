@@ -129,3 +129,13 @@
         }
     }
 }
+
+.education article.full-width.cert-wide .institute-img {
+  width: 132px;
+  aspect-ratio: auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+
+  img { display: block; width: 100%; height: auto; }
+}

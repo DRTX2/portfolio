@@ -1,0 +1,272 @@
+@use "../abstracts/variables" as *;
+
+// ---------------------------------------------------------------------------
+// Motion layer. animations.js tags elements with [data-reveal="<variant>"] and
+// adds .in when they enter the viewport; everything here is transform/opacity
+// (compositor only). Nothing is hidden unless JS ran AND the user allows motion,
+// so content can never get stuck invisible.
+// Individual `translate`/`scale` properties are used for reveals so pointer
+// effects can own `transform` on the same element without fighting.
+// ---------------------------------------------------------------------------
+
+$ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+$stagger: 70ms;
+
+html.motion {
+  [data-reveal] {
+    transition:
+      opacity 0.9s $ease-out,
+      translate 0.9s $ease-out,
+      scale 0.9s $ease-out,
+      clip-path 1.1s $ease-out,
+      filter 0.9s $ease-out;
+    transition-delay: calc(var(--i, 0) * #{$stagger});
+  }
+
+  [data-reveal]:not(.in) {
+    opacity: 0;
+    translate: 0 28px;
+  }
+
+  // Section titles rise out of a mask.
+  [data-reveal="title"]:not(.in) {
+    opacity: 1;
+    translate: 0 0.35em;
+    clip-path: inset(0 0 100% 0);
+  }
+  [data-reveal="title"].in { clip-path: inset(0 0 -0.2em 0); }
+
+  // Project cards settle up with a little depth; their image un-zooms.
+  // Per-property delays: the stagger applies to the reveal only, never to the hover lift.
+  [data-reveal="card"] {
+    --d: calc(var(--i, 0) * #{$stagger});
+    transition:
+      opacity 0.9s $ease-out var(--d), translate 0.9s $ease-out var(--d), scale 0.9s $ease-out var(--d),
+      transform 0.35s $ease-out, border-color 0.25s ease, box-shadow 0.35s ease;
+  }
+  [data-reveal="card"]:not(.in) {
+    translate: 0 56px;
+    scale: 0.97;
+  }
+  [data-reveal="card"] .project-image img {
+    transition: scale 1.4s $ease-out, filter 1.4s $ease-out;
+  }
+  [data-reveal="card"]:not(.in) .project-image img {
+    scale: 1.14;
+    filter: saturate(0.4);
+  }
+
+  // Chips and icons pop.
+  [data-reveal="chip"] { transition-duration: 0.6s; transition-delay: calc(var(--i, 0) * 35ms); }
+  [data-reveal="chip"]:not(.in) {
+    translate: 0 10px;
+    scale: 0.85;
+  }
+
+  // Soft focus-in for long copy.
+  [data-reveal="soft"]:not(.in) {
+    translate: 0 16px;
+    filter: blur(6px);
+  }
+}
+
+// --- Section title accent: an amber rule that draws under every h2 -----------
+.about-me, .experience, .skills-habilities, .education, .projects, .interests, .contact-cta {
+  > h2, .cta-container > h2 {
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 3.5rem;
+      height: 3px;
+      margin-top: 0.9rem;
+      border-radius: 3px;
+      background: var(--signal);
+      transform-origin: left;
+      transition: transform 1s $ease-out 0.35s;
+    }
+  }
+}
+html.motion [data-reveal="title"]:not(.in)::after { transform: scaleX(0); }
+
+// --- Experience: a signal sweep runs along each entry's top rule -------------
+.experience .job {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--signal), transparent);
+    transform-origin: left;
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  &.in::before { animation: rule-sweep 1.6s $ease-out calc(var(--i, 0) * #{$stagger} + 0.15s) both; }
+}
+@keyframes rule-sweep {
+  0% { transform: scaleX(0); opacity: 1; }
+  60% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0.25; }
+}
+
+// --- Project cards: quiet lift on hover (pointer devices only) ---------------
+@media (hover: hover) and (pointer: fine) {
+  .projects .project {
+    transition: border-color 0.25s ease, transform 0.35s $ease-out, box-shadow 0.35s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: var(--line-strong);
+      box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.45);
+    }
+    &:focus-within { border-color: var(--signal); }
+  }
+
+  .projects .project-image img { transition: scale 0.6s $ease-out; }
+  .projects .project:hover .project-image img { scale: 1.03; }
+
+  .magnetic {
+    transition: transform 0.35s $ease-out;
+    &.pulling { transition: transform 0.1s linear; }
+  }
+}
+
+// --- Hero: ambient light that drifts, plus a glow that follows the cursor -----
+.presentation { position: relative; isolation: isolate; }
+
+.hero-ambient {
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+
+  // Faint engineering grid, faded out toward the edges
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.35;
+    mask-image: radial-gradient(ellipse 70% 60% at 60% 40%, #000 20%, transparent 75%);
+  }
+
+  .blob {
+    position: absolute;
+    width: 42vmax;
+    height: 42vmax;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    will-change: transform;
+  }
+  .blob-a { background: var(--signal); top: -18vmax; right: -10vmax; animation: drift-a 22s ease-in-out infinite alternate; }
+  .blob-b { background: #3b6fd6; bottom: -22vmax; left: -14vmax; opacity: 0.14; animation: drift-b 28s ease-in-out infinite alternate; }
+
+  .cursor-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 560px;
+    height: 560px;
+    margin: -280px 0 0 -280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--signal-soft), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    will-change: transform;
+  }
+  &.active .cursor-glow { opacity: 1; }
+}
+[data-theme="light"] .hero-ambient .blob { opacity: 0.22; }
+
+@keyframes drift-a { to { transform: translate(-8vmax, 10vmax) scale(1.15); } }
+@keyframes drift-b { to { transform: translate(10vmax, -6vmax) scale(0.9); } }
+
+// --- Header: hides on the way down, returns on the way up --------------------
+.main-menu {
+  transition: transform 0.45s $ease-out, background-color 0.25s ease, box-shadow 0.25s ease;
+  &.nav-hidden { transform: translateY(-110%); }
+}
+
+// Active section indicator in the nav
+.right-items-menu li a {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.2rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--signal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s $ease-out;
+  }
+
+  &.is-current { color: var(--text); }
+  &.is-current::after { transform: scaleX(1); }
+}
+
+// --- Tech marquee between hero and about -------------------------------------
+.tech-marquee {
+  position: relative;
+  overflow: hidden;
+  padding-block: 1.4rem;
+  border-block: 1px solid var(--line);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+
+  ul {
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+    margin: 0;
+    padding: 0 1.5rem;
+    list-style: none;
+    animation: marquee 40s linear infinite;
+  }
+  &:hover ul { animation-play-state: paused; }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+
+    &:hover { color: var(--text); }
+  }
+  img { width: 26px; height: 26px; filter: grayscale(1) opacity(0.75); transition: filter 0.25s ease; }
+  li:hover img { filter: none; }
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+// --- Page-to-page transitions (cross-document View Transitions, progressive) --
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: vt-out 0.25s ease both; }
+::view-transition-new(root) { animation: vt-in 0.45s $ease-out both; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(12px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ambient .blob, .tech-marquee ul { animation: none; }
+  .tech-marquee ul { flex-wrap: wrap; width: auto; }
+  .tech-marquee li[aria-hidden="true"] { display: none; }
+  .main-menu.nav-hidden { transform: none; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}

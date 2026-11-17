@@ -7,6 +7,25 @@ import { getTranslatedProjects } from '../utils/projectsI18n';
 
 const t = useTranslations('en');
 const translatedProjects = getTranslatedProjects(projects, t);
+// Stack filter: groups are derived from each project's technologies, so new projects classify themselves.
+const GROUPS: { key: string; label: string; match: RegExp }[] = [
+  { key: 'node', label: 'Node.js / NestJS', match: /node|nest|express/i },
+  { key: 'dotnet', label: '.NET', match: /\.net|asp\.net|ef core|c#/i },
+  { key: 'java', label: 'Java / Spring', match: /spring|java(?!script)/i },
+  { key: 'react', label: 'React / Next.js', match: /react|next\.js/i },
+  { key: 'angular', label: 'Angular', match: /angular/i },
+  { key: 'php', label: 'PHP / Laravel', match: /php|laravel/i },
+  { key: 'python', label: 'Python', match: /python|fastapi|odoo/i },
+  { key: 'ai', label: 'ai', match: /ollama|llm|claude|gemini|openai|whisper|n8n/i },
+  { key: 'realtime', label: 'realtime', match: /websocket|webrtc|web push|signalr/i },
+  { key: 'events', label: 'events', match: /rabbitmq|kafka|bullmq|masstransit|grpc/i },
+  { key: 'cloud', label: 'cloud', match: /aws|azure|terraform|kubernetes|github actions|jenkins|bicep/i },
+  { key: 'testing', label: 'testing', match: /playwright|testcontainers|k6|newman|vitest/i },
+];
+const tagsOf = (p: (typeof projects)[number]) =>
+  GROUPS.filter((g) => p.technologies.some((t) => g.match.test(t.name))).map((g) => g.key);
+const counts = Object.fromEntries(GROUPS.map((g) => [g.key, projects.filter((p) => tagsOf(p).includes(g.key)).length]));
+const filters = GROUPS.filter((g) => counts[g.key] >= 2);
 ---
 
 <section class="projects" id="projects">
@@ -14,6 +33,20 @@ const translatedProjects = getTranslatedProjects(projects, t);
     {t.projects.title.split(' ')[0]}
     <span class="enfasis-title">{t.projects.title.split(' ').slice(1).join(' ')}</span>
   </h2>
+  <div class="project-filters" role="group" aria-label="Filter projects by stack">
+    <button type="button" class="project-filter" data-filter="all" aria-pressed="true">
+      <span data-t="projects.filters.all">{t.projects.filters.all}</span>
+      <span class="count">{projects.length}</span>
+    </button>
+    {
+      filters.map((g) => (
+        <button type="button" class="project-filter" data-filter={g.key} aria-pressed="false">
+          {g.label in t.projects.filters ? <span data-t={`projects.filters.${g.label}`}>{t.projects.filters[g.label]}</span> : <span>{g.label}</span>}
+          <span class="count">{counts[g.key]}</span>
+        </button>
+      ))
+    }
+  </div>
   <div class="projects-grid">
     {
       translatedProjects.map((project) => (
@@ -26,6 +59,8 @@ const translatedProjects = getTranslatedProjects(projects, t);
           technologies={project.technologies}
           links={project.links}
           slug={project.slug}
+          tags={tagsOf(project)}
+          status={project.status}
         />
       ))
     }
@@ -176,3 +211,17 @@ const translatedProjects = getTranslatedProjects(projects, t);
 </script>
 
 <ProjectDetailModal />
+
+<script>
+  // Stack filter: show only cards whose technologies belong to the selected group.
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.project-filter');
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      document.querySelectorAll<HTMLElement>('.projects-grid .project').forEach((card) => {
+        card.hidden = f !== 'all' && !(card.dataset.tags ?? '').split(' ').includes(f!);
+      });
+    }),
+  );
+</script>

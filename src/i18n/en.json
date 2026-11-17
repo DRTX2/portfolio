@@ -1,7 +1,23 @@
 {
+  "interests": {
+    "loop": {"read": "Read", "readText": "Books · courses · blogs", "applied": "From reading to code", "build": "Build", "measure": "Measure"},
+    "title": "Beyond",
+    "titleHighlight": "Code",
+    "subtitle": "What I do and learn outside of work, and how it shows up in my projects.",
+    "items": [
+      {
+        "title": "Cybersecurity & CTFs",
+        "text": "I enjoy CTF-style challenges, pentesting in lab environments and the OWASP Top 10. It shapes how I build APIs: Hookrelay blocks SSRF at connection time and every project ships with auth, validation and least privilege by default."
+      },
+      {
+        "title": "Reading & continuous learning",
+        "text": "I read about software architecture and distributed systems and turn it into working code. Atalaya (three infrastructure products working together) came out of that habit."
+      }
+    ]
+  },
   "site": {
     "title": "David Manjarres | Senior Full Stack & Cloud Engineer",
-    "description": "Full Stack Developer specializing in Java Spring Boot, React, TypeScript, and microservices. 4+ years building scalable applications with 90%+ test coverage, CI/CD pipelines, and cloud deployments."
+    "description": "Full-stack & cloud engineer (Node.js, NestJS, React, .NET, Spring Boot). 4+ years designing, shipping and operating production web systems: APIs, data, CI/CD and cloud."
   },
   "hero": {
     "role": "Senior full-stack & cloud engineer",
@@ -13,6 +29,9 @@
     "location": "Based in Ambato, Ecuador"
   },
   "about": {
+    "objectiveTitle": "Professional objective",
+    "objective": "Join a product team as a full-stack / backend engineer (Node.js, NestJS, React, cloud) where I own features end to end, from API and data design to CI/CD and production operation, and keep growing toward technical leadership in distributed, event-driven systems.",
+    "cvCta": "View résumé (2 pages)",
     "title": "About",
     "titleHighlight": "Me",
     "subtitle": "Full-stack and cloud engineer based in Ambato, Ecuador",
@@ -159,6 +178,11 @@
       "description": "During my time at the Universidad Técnica de Ambato, I have gained a solid foundation in software development, including programming, algorithms, and system design. I have also participated in various projects that have honed my problem-solving and teamwork skills."
     },
     "certificates": {
+      "datascience": {
+        "title": "Data Science Essentials with Python",
+        "issuer": "Cisco Networking Academy - 2026",
+        "description": "Fundamentals of data science with Python: preparing, analyzing and visualizing data to answer questions with evidence."
+      },
       "graphql": {
         "title": "GraphQL and Node.js: Modern and efficient applications",
         "issuer": "Udemy - 2024",
@@ -177,11 +201,19 @@
     }
   },
   "projects": {
+    "inProgress": "In progress",
+    "filters": {"ai": "AI & automation", "realtime": "Real-time", "testing": "Testing & QA", 
+      "all": "All",
+      "events": "Messaging & events",
+      "cloud": "Cloud & DevOps"
+    },
     "title": "My Projects",
     "viewSource": "Source Code",
     "viewDetails": "Overview",
     "close": "Close",
     "modal": {
+      "eyebrow": "Project overview",
+      "keyFeatures": "Key features",
       "overview": "Overview",
       "contextGoal": "Context & Goal",
       "keyChallenges": "Key Challenges",
@@ -189,6 +221,199 @@
       "projectVideo": "Project Video"
     },
     "items": {
+      "atalaya": {
+        "title": "Atalaya — Developer Infrastructure Platform",
+        "description": "Three independent products that close the loop detect → mitigate → notify → recover: Nimbus watches AWS async pipelines, Flagship controls features with kill switches, and Hookrelay delivers events reliably. Integrated only through signed, idempotent HTTP APIs.",
+        "highlights": [
+          {
+            "label": "End-to-end, asserted",
+            "text": "A stalled pipeline in <strong>Nimbus</strong> turns a flag off in <strong>Flagship</strong> (SDKs see it in <strong>615 ms</strong>) and <strong>Hookrelay</strong> notifies the customer webhook; recovery restores everything."
+          },
+          {
+            "label": "Built to fail safely",
+            "text": "HMAC-signed calls with a replay window, idempotent on every hop, and <strong>humans win over automation</strong>: a flag edited during the incident is never overwritten."
+          },
+          {
+            "label": "Production-shaped",
+            "text": "Hexagonal cores, <strong>OpenTelemetry + Prometheus/Grafana</strong>, k6-measured, Playwright E2E, <strong>Terraform on AWS ECS</strong>, GitHub Actions with OIDC, CodeQL/Trivy clean."
+          }
+        ],
+        "detailedDescription": "Atalaya (Spanish for watchtower) is a developer infrastructure platform made of three products, each with its own repository, database and pipeline, each useful alone.\n\nHookrelay is webhook delivery as a service: idempotent ingestion, fan-out, Standard Webhooks signatures, retries with jitter, circuit breaker, a dead-letter queue with bulk replay, and SSRF protection enforced at connection time. Flagship is feature management with local evaluation: a TypeScript SDK downloads the ruleset once, evaluates in about 1 µs, and receives changes over a stream fanned out across replicas with PostgreSQL LISTEN/NOTIFY. Nimbus is a guardian for AWS asynchronous pipelines (SQS, Lambda, DLQ) written in Go: explainable detectors, deduplicated incidents and a durable workflow engine on PostgreSQL leases.\n\nTogether they automate an incident: Nimbus detects a stalled consumer and runs a response workflow whose steps call Flagship (kill the risky feature flag) and Hookrelay (notify customer systems). When the pipeline recovers, the flag is restored to its pre-incident configuration, unless a person changed it in the meantime. The whole scenario runs locally with one Docker Compose file and a script that asserts every step.",
+        "challenges": [
+          "Joining three products without coupling them: no shared database, queue or code, and no product allowed to depend on another being up.",
+          "All three deliver at-least-once, so a retried step could kill a flag twice or notify twice.",
+          "Letting automation change production behaviour without it ever fighting a person who is handling the incident."
+        ],
+        "solutions": [
+          "Integration through public HTTP endpoints authenticated by HMAC signatures over the raw body, each one behind an environment variable that turns it off.",
+          "Made every hop idempotent: Flagship answers \"already off\", Hookrelay returns the original message for the same incident key.",
+          "Flagship restores a flag only when the latest audit entry is still that incident's kill; otherwise it leaves the flag alone and says why. Covered by integration tests."
+        ]
+      },
+      "kuntur-core-banking": {
+        "title": "Kuntur — Multi-Tenant Core Banking",
+        "description": "A core banking platform for credit unions and fintechs: one deployment serves many isolated institutions, books money on a double-entry ledger, speaks ISO 20022 and scores every payment in real time with an explainable risk engine.",
+        "highlights": [
+          {
+            "label": "Money is correct",
+            "text": "<strong>Double-entry ledger</strong> where the database refuses overdrafts; 20 concurrent transfers against a balance that affords 10 → exactly 10 succeed."
+          },
+          {
+            "label": "Regulated-grade security",
+            "text": "<strong>Row-level security</strong> per tenant, 28 granular permissions, TOTP MFA and <strong>four-eyes approval</strong> with step-up, tamper-evident audit hash chain."
+          },
+          {
+            "label": "Measured and tested",
+            "text": "150 transfers/s at <strong>p95 14 ms</strong> (k6); 128 backend tests with Testcontainers, 15 Playwright E2E, OWASP ZAP in CI."
+          }
+        ],
+        "detailedDescription": "Kuntur (Kichwa for the Andean condor) is a multi-tenant core banking platform built the way a regulated system has to be. Payments go through idempotent intake, real-time risk scoring over gRPC and double-entry booking, with a transactional outbox publishing domain events to Kafka. Customers and staff get live updates over WebSocket.\n\nIt implements ISO 20022 messages (pain.001/002, pacs.008, camt.053), loans with amortization schedules and automatic installment collection at the end-of-day close, and four-eyes approval with a fresh MFA code for high-value operations. Tenancy is enforced twice: in the application and underneath by PostgreSQL row-level security, with the app running as a role that owns nothing.",
+        "challenges": [
+          "Guaranteeing money is never created or lost under concurrency and crashes.",
+          "Isolating institutions so that even a raw SQL mistake cannot cross tenants.",
+          "Keeping latency low while every transfer is authenticated, risk-scored and audited."
+        ],
+        "solutions": [
+          "Database-enforced invariants (no overdraft), ordered locking, idempotent booking and a recovery sweep, all covered by concurrency tests on real PostgreSQL and Kafka.",
+          "Row-level security with a per-transaction tenant, on top of application-level checks.",
+          "Measured with k6 end to end (p95 14 ms at 150 transfers/s) and documented the trade-offs, such as keeping virtual threads off because of pinning."
+        ]
+      },
+      "nexus-messenger": {
+        "title": "Nexus Messenger — Real-Time Team Messaging",
+        "description": "A real-time messaging platform with direct and group conversations, presence, typing indicators, file sharing and 1:1 voice and video calls over WebRTC, built on Angular signals and Laravel Reverb WebSockets.",
+        "highlights": [
+          {
+            "label": "Real-time core",
+            "text": "Messages, presence and typing events are broadcast over <strong>Laravel Reverb</strong> WebSockets and consumed with Laravel Echo."
+          },
+          {
+            "label": "Modern frontend",
+            "text": "<strong>Angular 21</strong> with signals and RxJS, Tailwind CSS 4, HTTP interceptors with automatic JWT refresh."
+          },
+          {
+            "label": "Tested",
+            "text": "Feature tests for messaging, API coverage and <strong>security regressions</strong> with Pest; Vitest on the client; SonarQube configured."
+          }
+        ],
+        "detailedDescription": "Nexus Messenger is a full-stack messaging application. An Angular single-page app talks to a Laravel REST API for conversations, messages and attachments, and listens to WebSocket channels served by Laravel Reverb for everything that must feel live: new messages, who is online and who is typing.\n\nData lives in PostgreSQL (users, conversations with many-to-many membership for groups, messages, attachments). Authentication is stateless with JWT and refresh handled by HTTP interceptors. The stack runs with Docker Compose behind Nginx.",
+        "challenges": [
+          "Keeping every participant of a conversation in sync without polling.",
+          "Authorizing private real-time channels per conversation."
+        ],
+        "solutions": [
+          "Broadcast domain events from Laravel through Reverb and applied them to Angular signal state on the client.",
+          "Channel authorization on the API using the same JWT identity as the REST endpoints, covered by security regression tests."
+        ]
+      },
+      "jarvis-assistant": {
+        "title": "Jarvis — Private AI Study & Planning Assistant",
+        "description": "A personal assistant in Spanish that runs on your own machine: reminders that actually ring, spaced-repetition study and voice-driven task management, with local AI by default and the cloud as an explicit opt-in.",
+        "highlights": [
+          {
+            "label": "Local-first AI",
+            "text": "Runs on <strong>Ollama</strong> locally; dictation is transcribed on-device with <strong>Whisper</strong>. Claude is optional and only for messages you choose."
+          },
+          {
+            "label": "Actions with guardrails",
+            "text": "The model proposes tool calls validated with <strong>zod</strong>; creating tasks is instant and undoable, destructive actions ask for confirmation."
+          },
+          {
+            "label": "Learning science",
+            "text": "Adaptive review with the <strong>FSRS</strong> spaced-repetition algorithm and web-push reminders, tested with Playwright on desktop and mobile."
+          }
+        ],
+        "detailedDescription": "Jarvis is a work in progress: a private assistant for studying and organizing the day. You write or dictate things like \"remind me to review derivatives every day at 8\" and it creates the reminder, which arrives as a system notification on the PC and, optionally, on the phone.\n\nThe AI runs locally through Ollama, and voice is transcribed on the machine with Whisper, so audio never leaves it. A cloud model can be enabled for hard questions, per message, with a daily request cap. Study sessions use the FSRS algorithm: each question gets its own schedule depending on what you forget.\n\nStill in progress: packaging for non-technical users and the knowledge-base features described in the roadmap.",
+        "challenges": [
+          "Letting a language model act on personal data without it doing something the user did not intend.",
+          "Keeping the experience fast and private on consumer hardware."
+        ],
+        "solutions": [
+          "Model output is treated as a proposal: validated against zod schemas, applied through explicit tools, reversible or confirmed.",
+          "Local models by default, streaming responses, and an explicit per-message switch to the cloud."
+        ]
+      },
+      "smartnotes-platform": {
+        "title": "SmartNotes — NestJS Microservices behind an NGINX Gateway",
+        "description": "A notes backend split into three NestJS services (auth, users, notes) behind an NGINX gateway, with RabbitMQ for service-to-service calls and PostgreSQL per service.",
+        "highlights": [
+          {
+            "label": "Service boundaries",
+            "text": "<strong>Auth, Users and Notes</strong> are separate NestJS services, each with its own Dockerfile and data access."
+          },
+          {
+            "label": "Messaging",
+            "text": "The auth service talks to the users service over <strong>RabbitMQ</strong> (NestJS microservices transport) instead of direct HTTP calls."
+          },
+          {
+            "label": "Edge",
+            "text": "An <strong>NGINX gateway</strong> routes /auth, /users and /notes to their upstreams; JWT with Passport; OpenAPI docs on the notes service."
+          }
+        ],
+        "detailedDescription": "A small microservices system used to practise service boundaries. NGINX is the single entry point and forwards each path prefix to its service. Authentication issues JWTs and asks the users service for credentials through RabbitMQ, so the two services stay decoupled. Users and notes persist with TypeORM on PostgreSQL. Everything starts with one Docker Compose file.",
+        "challenges": [
+          "Avoiding a shared database and direct HTTP coupling between services.",
+          "Giving clients one stable entry point while services move independently."
+        ],
+        "solutions": [
+          "Request/response over RabbitMQ between auth and users, each service owning its tables.",
+          "Path-based routing in NGINX with one upstream per service."
+        ]
+      },
+      "uta-elections": {
+        "title": "Election Campaign Platform — University Rector Race",
+        "description": "A campaign site and voter-engagement backend for a university rector election: candidates, proposals, news and events with search, voter registration and participation statistics.",
+        "highlights": [
+          {
+            "label": "Domain model",
+            "text": "12 Eloquent models (candidates, parties, proposals, events, news, voters, suggestions) over <strong>17 migrations</strong>."
+          },
+          {
+            "label": "Search",
+            "text": "Proposals, events and news are searchable by text, tag and date."
+          },
+          {
+            "label": "Engagement",
+            "text": "Voter registration flow, suggestion box and a <strong>statistics</strong> view for the campaign team."
+          }
+        ],
+        "detailedDescription": "Built by a team of four for a university rector election campaign. The Laravel application models candidates with their academic and professional background, political parties, proposals, news and events, and exposes filtered listings for each. Voters complete a registration form, can send suggestions, and the campaign team sees aggregated statistics.",
+        "challenges": [
+          "Modelling many related entities (candidates, backgrounds, parties, proposals) without duplicating data.",
+          "Making content easy to find for non-technical visitors."
+        ],
+        "solutions": [
+          "A normalized schema managed entirely with migrations and Eloquent relationships.",
+          "Dedicated search routes by tag and date for each content type."
+        ]
+      },
+      "creative-portfolio": {
+        "title": "Portfolio Builder — Community Platform in PHP",
+        "description": "A multi-user platform where people publish portfolios, projects and posts, discover others by category and skill, and comment. Written in plain PHP and MySQL, without a framework.",
+        "highlights": [
+          {
+            "label": "Relational design",
+            "text": "A <strong>15-table schema</strong>: users and roles, portfolios with skills, projects, posts, tags, categories and comments."
+          },
+          {
+            "label": "Discovery",
+            "text": "Filters for portfolios, projects and posts by category, tag and skill, loaded asynchronously with Axios."
+          },
+          {
+            "label": "Accounts",
+            "text": "Registration, login with hashed passwords and prepared statements, and password reset by email."
+          }
+        ],
+        "detailedDescription": "An early team project that shows the fundamentals without a framework hiding them: request handling, SQL, sessions, input filtering and server-rendered templates in PHP, with JavaScript for filtering and interactions. Each user builds a portfolio from their projects and skills, publishes posts, and other users can discover and comment on them.",
+        "challenges": [
+          "Designing many-to-many relationships (portfolios–skills, projects–tags) by hand.",
+          "Keeping queries safe without an ORM."
+        ],
+        "solutions": [
+          "Junction tables and a clear schema shipped as a SQL file.",
+          "Prepared statements and a shared input-filtering layer."
+        ]
+      },
       "stayflow-cloud": {
         "title": "StayFlow Cloud — Multi-Tenant Hotel SaaS",
         "description": "A production-grade, multi-tenant cloud SaaS platform for hotel management — reservations, front desk, billing, housekeeping, analytics, and guest portal — deployed on Azure Container Apps.",
@@ -345,55 +570,19 @@
           { "label": "Role Management", "text": "Custom role-based access for different state entities." },
           { "label": "Stack", "text": "Laravel + React with Material UI." }
         ]
-      },
-      "smartnotes-platform": {
-        "title": "SmartNotes Microservices",
-        "description": "Scalable note-taking platform with microservices.",
-        "highlights": [
-          { "label": "Architecture", "text": "Event-driven communication with RabbitMQ." },
-          { "label": "Gateway", "text": "NGINX API Gateway for routing and auth." },
-          { "label": "Database", "text": "Hybrid data storage with MongoDB and PostgreSQL." }
-        ]
-      },
-      "uta-elections": {
-        "title": "UTA Elections Platform",
-        "description": "Digital campaign platform for University Rector elections.",
-        "highlights": [
-          { "label": "Engagement", "text": "Real-time stats and news for university stakeholders." },
-          { "label": "Design", "text": "Responsive UI with Bootstrap and Laravel." }
-        ]
-      },
-      "creative-portfolio": {
-        "title": "My Creative Portfolio",
-        "description": "Interactive platform for creating personal portfolios.",
-        "highlights": [
-          { "label": "Features", "text": "Project management and community engagement." },
-          { "label": "Tech", "text": "PHP, MySQL, and Axios for dynamic interactions." }
-        ]
-      },
-      "clean-architecture-game": {
-        "title": "Pixel1 Quest",
-        "description": "Unity 2D game showcasing enterprise architecture patterns.",
-        "highlights": [
-          { "label": "Concept", "text": "Applying <strong>SOLID principles</strong> to Game Development." },
-          { "label": "Patterns", "text": "Factory, Strategy, Observer, and Event Bus implementation." },
-          { "label": "Tech", "text": "Managed state persistence with SQLite." }
-        ],
-        "detailedDescription": "A unique project bridging the gap between game development and enterprise software architecture. It demonstrates that the same principled approach used in large-scale backend systems can be applied to game logic to create maintainable and testable code.",
-        "challenges": [
-          "Decoupling the game logic from the Unity Engine API.",
-          "Implementing Dependency Injection in a Unity environment.",
-          "Managing complex game state in a persistent way."
-        ],
-        "solutions": [
-          "Created an abstraction layer between the game logic and Unity's Monobehaviours.",
-          "Implemented a custom Service Locator and Factory pattern for dependency management.",
-          "Used SQLite for structured local data persistence, allowing complex save states."
-        ]
       }
     }
   },
   "contact": {
+    "formTitle": "Send me a message",
+    "formName": "Name",
+    "formEmail": "Email",
+    "formMessage": "Message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "sent": "Thanks! Your message was sent. I usually reply within 48 hours.",
+    "error": "The message could not be sent. Please email me directly at",
+    "orReach": "Or reach me on",
     "title": "Let's Work",
     "titleHighlight": "Together",
     "subtitle": "I'm always interested in hearing about new projects and opportunities. Whether you need a full-stack solution, backend architecture, or frontend excellence, let's create something amazing together.",
@@ -413,6 +602,7 @@
     "backToTop": "Back to top"
   },
   "nav": {
+    "contact": "Contact",
     "home": "Home",
     "about": "About me",
     "skills": "Skills",

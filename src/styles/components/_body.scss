@@ -37,6 +37,7 @@ img { max-width: 100%; }
 .skills-habilities,
 .education,
 .projects,
+.interests,
 .contact-cta .cta-container {
     width: 100%;
     max-width: calc(#{$container} + 2 * #{$gutter});
@@ -48,8 +49,10 @@ img { max-width: 100%; }
 .experience,
 .skills-habilities,
 .education,
-.projects {
-    padding-block: clamp(4.5rem, 9vw, 7.5rem);
+.projects,
+.interests {
+    // Space only above each section: stacked top+bottom padding left ~240px of empty band between them.
+    padding-block: clamp(4rem, 8vw, 6.5rem) 0;
 
     > h2 {
         text-align: left;
@@ -66,14 +69,6 @@ img { max-width: 100%; }
     font-weight: inherit;
 }
 
-main > hr {
-    border: none;
-    height: 1px;
-    background: var(--line);
-    max-width: $container;
-    margin: 0 auto;
-    width: calc(100% - 2 * #{$gutter});
-}
 
 // Keyboard focus is always visible
 :focus-visible {
@@ -81,3 +76,6 @@ main > hr {
     outline-offset: 3px;
     border-radius: 2px;
 }
+
+.interests { padding-bottom: clamp(4.5rem, 9vw, 7rem); }
+

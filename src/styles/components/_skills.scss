@@ -11,7 +11,6 @@
         padding: 1.5rem 0;
         border-top: 1px solid var(--line);
 
-        &:last-of-type { border-bottom: 1px solid var(--line); }
 
         @media (max-width: 760px) { grid-template-columns: 1fr; }
     }

@@ -2,10 +2,16 @@
 import { useTranslations } from '../i18n/utils';
 
 const t = useTranslations('en');
+const EMAIL = 'davidmanjarres2004@gmail.com';
+// Static site (GitHub Pages): FormSubmit relays the form to email, so no backend of our own is needed.
+// The first real submission sends a one-time activation email to EMAIL; confirm it once.
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`;
 ---
 
 <section class="contact-cta" id="contact">
   <div class="cta-container">
+    <div class="cta-grid">
+      <div class="cta-intro">
     <h2>
       <span data-i18n="contact.title">{t.contact.title}</span>
       <span class="enfasis-title" data-i18n="contact.titleHighlight"
@@ -15,6 +21,8 @@ const t = useTranslations('en');
     <p class="cta-subtitle" data-i18n="contact.subtitle">
       {t.contact.subtitle}
     </p>
+
+    <p class="cta-or" data-t="contact.orReach">{t.contact.orReach}</p>
     <div class="cta-buttons">
       <a
         href="https://www.linkedin.com/in/david-manjarres-quintero-056823211/"
@@ -47,6 +55,34 @@ const t = useTranslations('en');
         <i class="fas fa-envelope" aria-hidden="true"></i>
         {t.contact.email}
       </a>
+    </div>
+      </div>
+    <form class="contact-form" data-endpoint={FORM_ENDPOINT} novalidate>
+      <h3 data-t="contact.formTitle">{t.contact.formTitle}</h3>
+      <div class="form-row">
+        <label>
+          <span data-t="contact.formName">{t.contact.formName}</span>
+          <input name="name" required maxlength="100" autocomplete="name" />
+        </label>
+        <label>
+          <span data-t="contact.formEmail">{t.contact.formEmail}</span>
+          <input name="email" type="email" required maxlength="200" autocomplete="email" />
+        </label>
+      </div>
+      <label>
+        <span data-t="contact.formMessage">{t.contact.formMessage}</span>
+        <textarea name="message" required minlength="10" maxlength="4000" rows="5"></textarea>
+      </label>
+      {/* Honeypot: real people never see or fill this field. */}
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
+      <div class="form-foot">
+        <button type="submit" class="cta-button primary">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i>
+          <span class="label" data-t="contact.send">{t.contact.send}</span>
+        </button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </div>
+    </form>
     </div>
     <div class="cta-stats">
       <div class="stat-item">
@@ -121,4 +157,56 @@ const t = useTranslations('en');
 
   document.addEventListener('DOMContentLoaded', updateContactContent);
   window.addEventListener('languagechange', updateContactContent);
+</script>
+
+<script>
+  import en from '../i18n/en.json';
+  import es from '../i18n/es.json';
+
+  const dict: any = { en, es };
+  const tr = (key: string) => {
+    let lang = 'en';
+    try { lang = localStorage.getItem('lang') || 'en'; } catch {}
+    return dict[lang]?.contact?.[key] ?? dict.en.contact[key];
+  };
+
+  const form = document.querySelector<HTMLFormElement>('.contact-form');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = form.querySelector<HTMLElement>('.form-status')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const label = button.querySelector<HTMLElement>('.label')!;
+    status.className = 'form-status';
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const data = Object.fromEntries(new FormData(form));
+    if (data._honey) return; // bot
+
+    button.disabled = true;
+    label.textContent = tr('sending');
+    try {
+      const res = await fetch(form.dataset.endpoint!, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify({ ...data, _subject: `Portfolio contact: ${data.name}`, _template: 'table', _captcha: 'false' }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok || String(body.success) === 'false') throw new Error(body.message || res.statusText);
+      form.reset();
+      status.textContent = tr('sent');
+      status.classList.add('ok');
+    } catch {
+      status.textContent = tr('error') + ' ';
+      const a = document.createElement('a');
+      a.href = 'mailto:davidmanjarres2004@gmail.com';
+      a.textContent = 'davidmanjarres2004@gmail.com';
+      status.append(a);
+      status.classList.add('err');
+    } finally {
+      button.disabled = false;
+      label.textContent = tr('send');
+    }
+  });
 </script>

@@ -76,13 +76,17 @@ const [firstName, ...lastNames] = name.split(' ');
   </div>
 
   <figure class="my-icon">
-    <img
-      src={`${import.meta.env.BASE_URL}assets/img/image-profile.jpeg`}
-      alt={`${name} - Full Stack Developer`}
-      width="388"
-      height="388"
-    />
-    <figcaption data-i18n="hero.location">{t.hero.location}</figcaption>
+    <div class="portrait">
+      <img
+        src={`${import.meta.env.BASE_URL}assets/img/profile.png`}
+        alt={`${name} - Full Stack Developer`}
+        width="640"
+        height="725"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+    <figcaption><i class="fas fa-location-dot" aria-hidden="true"></i> <span data-i18n="hero.location">{t.hero.location}</span></figcaption>
   </figure>
 </section>
 

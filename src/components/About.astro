@@ -27,11 +27,26 @@ const {
 } = Astro.props;
 
 // Icons remain the same across languages
+// Logos of the technologies each highlight talks about
+const highlightTech: string[][] = [
+  ['dot-net-plain', 'nestjs-original', 'spring-original', 'typescript-plain', 'azure-plain'],
+  ['swagger-plain', 'githubactions-plain', 'kubernetes-plain'],
+  ['postgresql-plain', 'mysql-original', 'mongodb-plain', 'redis-plain'],
+  ['docker-plain', 'azure-plain', 'rabbitmq-original'],
+  ['discordjs-plain', 'trello-plain', 'google-plain'],
+  [],
+  [],
+];
+const expertiseIcons = [
+  'fa-sitemap', 'fa-building', 'fa-cloud', 'fa-cubes', 'fa-key',
+  'fa-database', 'fa-infinity', 'fa-plug', 'fa-diagram-project', 'fa-robot',
+];
 const highlightIcons = [
   'fas fa-rocket',
   'fas fa-code',
   'fas fa-database',
   'fas fa-server',
+  'fas fa-robot',
   'fas fa-graduation-cap',
   'fas fa-lightbulb',
 ];
@@ -46,12 +61,27 @@ const highlightIcons = [
     {t.about.subtitle}
   </h3>
 
+  <div class="about-objective">
+    <h4 data-t="about.objectiveTitle">{t.about.objectiveTitle}</h4>
+    <p data-t="about.objective">{t.about.objective}</p>
+    <button type="button" class="btn btn-ghost" data-open-cv-modal>
+      <i class="fas fa-file-lines" aria-hidden="true"></i>
+      <span data-t="about.cvCta">{t.about.cvCta}</span>
+    </button>
+  </div>
   <div class="about-content">
     {
       highlightIcons.map((icon, index) => (
         <div class="about-highlight">
-          <i class={icon} />
-          <p data-i18n={`about.highlights.${index}`} set:html={t.about.highlights[index]} />
+          <span class="highlight-icon"><i class={icon} aria-hidden="true" /></span>
+          <div>
+            <p data-i18n={`about.highlights.${index}`} set:html={t.about.highlights[index]} />
+            {highlightTech[index]?.length > 0 && (
+              <div class="highlight-tech" aria-hidden="true">
+                {highlightTech[index].map((c) => <i class={`devicon-${c} colored`} />)}
+              </div>
+            )}
+          </div>
         </div>
       ))
     }
@@ -62,8 +92,9 @@ const highlightIcons = [
     <div class="expertise-tags">
       {
         t.about.expertiseTags.map((area: string, index: number) => (
-          <span class="tag" data-i18n={`about.expertiseTags.${index}`}>
-            {area}
+          <span class="tag">
+            <i class={`fas ${expertiseIcons[index] ?? 'fa-circle'}`} aria-hidden="true" />
+            <span data-i18n={`about.expertiseTags.${index}`}>{area}</span>
           </span>
         ))
       }
@@ -109,8 +140,8 @@ const highlightIcons = [
   function updateAboutContent() {
     const lang = localStorage.getItem('lang') || 'en';
 
-    // Update all elements with data-i18n attribute
-    const elements = document.querySelectorAll('[data-i18n]');
+    // Update data-i18n elements; #contact has its own handler that keeps the button icons
+    const elements = document.querySelectorAll('[data-i18n]:not(#contact [data-i18n])');
 
     elements.forEach((el) => {
       const key = el.getAttribute('data-i18n');

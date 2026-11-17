@@ -15,9 +15,76 @@ export interface ProjectData {
   challenges?: string[];
   solutions?: string[];
   videoUrl?: string; // Optional YouTube video URL
+  status?: 'in-progress';
 }
 
 export const projects: ProjectData[] = [
+  {
+    slug: 'atalaya',
+    title: "Atalaya — Developer Infrastructure Platform",
+    image: `${import.meta.env.BASE_URL}assets/img/atalaya/cover.webp`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/atalaya/cover.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/nimbus-incidents.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/flagship-history.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/hookrelay-message.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/nimbus-pipelines.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/flagship-detail.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/hookrelay-overview.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/nimbus-workflows.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/hookrelay-endpoints.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/hookrelay-grafana.webp`,
+    ],
+    description: "Three independent products that close the loop detect → mitigate → notify → recover: Nimbus watches AWS async pipelines, Flagship controls features with kill switches, and Hookrelay delivers events reliably. Integrated only through signed, idempotent HTTP APIs.",
+    highlights: [
+      { label: "End-to-end, asserted", text: "A stalled pipeline in <strong>Nimbus</strong> turns a flag off in <strong>Flagship</strong> (SDKs see it in <strong>615 ms</strong>) and <strong>Hookrelay</strong> notifies the customer webhook; recovery restores everything." },
+      { label: "Built to fail safely", text: "HMAC-signed calls with a replay window, idempotent on every hop, and <strong>humans win over automation</strong>: a flag edited during the incident is never overwritten." },
+      { label: "Production-shaped", text: "Hexagonal cores, <strong>OpenTelemetry + Prometheus/Grafana</strong>, k6-measured, Playwright E2E, <strong>Terraform on AWS ECS</strong>, GitHub Actions with OIDC, CodeQL/Trivy clean." },
+    ],
+    technologies: [
+      { name: "NestJS", iconClass: "devicon-nestjs-original" },
+      { name: "Go", iconClass: "devicon-go-original-wordmark" },
+      { name: "TypeScript", iconClass: "devicon-typescript-plain" },
+      { name: "Next.js 16", iconClass: "devicon-nextjs-plain" },
+      { name: "Angular 22", iconClass: "devicon-angularjs-plain" },
+      { name: "React", iconClass: "devicon-react-original" },
+      { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
+      { name: "Redis / BullMQ", iconClass: "devicon-redis-plain" },
+      { name: "AWS ECS · RDS", iconClass: "devicon-amazonwebservices-plain-wordmark" },
+      { name: "Terraform", iconClass: "devicon-terraform-plain" },
+      { name: "GitHub Actions", iconClass: "devicon-githubactions-plain" },
+      { name: "OpenTelemetry", iconImg: "https://cdn.simpleicons.org/opentelemetry" },
+      { name: "Prometheus · Grafana", iconClass: "devicon-prometheus-original" },
+      { name: "Playwright", iconImg: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/playwright/playwright-original.svg" },
+      { name: "Vitest · k6", iconClass: "devicon-vitest-plain" },
+      { name: "Docker", iconClass: "devicon-docker-plain" },
+    ],
+    links: [
+      { url: "https://github.com/DRTX2/atalaya", label: "Platform", iconClass: "fab fa-github" },
+      { url: "https://github.com/DRTX2/hookrelay", label: "Hookrelay", iconClass: "fab fa-github" },
+      { url: "https://github.com/DRTX2/flagship", label: "Flagship", iconClass: "fab fa-github" },
+      { url: "https://github.com/DRTX2/nimbus", label: "Nimbus", iconClass: "fab fa-github" },
+    ],
+    detailedDescription: "Atalaya (Spanish for watchtower) is a developer infrastructure platform made of three products, each with its own repository, database and pipeline, each useful alone.\n\nHookrelay is webhook delivery as a service: idempotent ingestion, fan-out, Standard Webhooks signatures, retries with jitter, circuit breaker, a dead-letter queue with bulk replay, and SSRF protection enforced at connection time. Flagship is feature management with local evaluation: a TypeScript SDK downloads the ruleset once, evaluates in about 1 µs, and receives changes over a stream fanned out across replicas with PostgreSQL LISTEN/NOTIFY. Nimbus is a guardian for AWS asynchronous pipelines (SQS, Lambda, DLQ) written in Go: explainable detectors, deduplicated incidents and a durable workflow engine on PostgreSQL leases.\n\nTogether they automate an incident: Nimbus detects a stalled consumer and runs a response workflow whose steps call Flagship (kill the risky feature flag) and Hookrelay (notify customer systems). When the pipeline recovers, the flag is restored to its pre-incident configuration, unless a person changed it in the meantime. The whole scenario runs locally with one Docker Compose file and a script that asserts every step.",
+    features: [
+      "Hookrelay: no lost events (message and deliveries in one transaction, sweeper for orphans), DLQ with replay that is safe under concurrent replays, measured p95 3.9 ms at 200 req/s.",
+      "Flagship: sticky percentage rollouts with MurmurHash3, optimistic concurrency, audit log with one-click rollback, 2,000 SDK streams per replica updated in under 62 ms.",
+      "Nimbus: four explainable detectors, row-level security per tenant, approvals, transactional outbox, 71 Gherkin acceptance scenarios.",
+      "Integration by contract only: HMAC-signed requests, 5-minute replay window, idempotency keys derived from incident and version.",
+      "Every integration is optional: each product keeps working if another is down.",
+      "Each repo ships architecture docs, ADRs, test plan, runbook, security model, CI and Terraform for AWS.",
+    ],
+    challenges: [
+      "Joining three products without coupling them: no shared database, queue or code, and no product allowed to depend on another being up.",
+      "All three deliver at-least-once, so a retried step could kill a flag twice or notify twice.",
+      "Letting automation change production behaviour without it ever fighting a person who is handling the incident.",
+    ],
+    solutions: [
+      "Integration through public HTTP endpoints authenticated by HMAC signatures over the raw body, each one behind an environment variable that turns it off.",
+      "Made every hop idempotent: Flagship answers \"already off\", Hookrelay returns the original message for the same incident key.",
+      "Flagship restores a flag only when the latest audit entry is still that incident's kill; otherwise it leaves the flag alone and says why. Covered by integration tests.",
+    ],
+  },
   {
     slug: 'stayflow-cloud',
     title: 'StayFlow Cloud — Multi-Tenant Hotel SaaS',
@@ -34,25 +101,26 @@ export const projects: ProjectData[] = [
       { label: 'Azure Cloud', text: 'Deployed on <strong>Azure Container Apps</strong> with ACR, Bicep IaC, and Neon serverless PostgreSQL.' }
     ],
     technologies: [
-      { name: 'ASP.NET Core 9', iconClass: 'devicon-dot-net-original' },
-      { name: 'Next.js 16', iconClass: 'devicon-nextjs-original' },
+      { name: 'ASP.NET Core 9', iconClass: 'devicon-dot-net-plain' },
+      { name: 'Next.js 16', iconClass: 'devicon-nextjs-plain' },
       { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
       { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
       { name: 'OpenIddict', iconImg: 'https://cdn.simpleicons.org/openid' },
-      { name: 'EF Core 9', iconClass: 'devicon-dot-net-original' },
+      { name: 'EF Core 9', iconClass: 'devicon-dot-net-plain' },
       { name: 'Azure', iconClass: 'devicon-azure-plain' },
       { name: 'Docker', iconClass: 'devicon-docker-plain' },
-      { name: 'MediatR (CQRS)', iconClass: 'devicon-dot-net-original' },
+      { name: 'MediatR (CQRS)', iconClass: 'devicon-dot-net-plain' },
       { name: 'Hangfire', iconImg: 'https://cdn.simpleicons.org/clockify' },
       { name: 'MassTransit', iconImg: 'https://cdn.simpleicons.org/rabbitmq' },
       { name: 'Tailwind CSS', iconClass: 'devicon-tailwindcss-original' },
     ],
     links: [
-      {
-        url: 'https://stayflow-prod-web.purplebay-4e22b9c6.westus3.azurecontainerapps.io',
-        label: 'Live App',
-        iconClass: 'fas fa-external-link-alt live-pulse-icon',
-      },
+      // Live demo offline (not redeployed yet) — uncomment when it is back up:
+      // {
+      //   url: 'https://stayflow-prod-web.purplebay-4e22b9c6.westus3.azurecontainerapps.io',
+      //   label: 'Live App',
+      //   iconClass: 'fas fa-external-link-alt live-pulse-icon',
+      // },
       {
         url: 'https://github.com/DRTX2/stay-flow-cloud',
         label: 'Source Code',
@@ -92,6 +160,63 @@ The application is deployed on Azure Container Apps with images stored in Azure 
     ],
   },
   {
+    slug: 'kuntur-core-banking',
+    title: "Kuntur — Multi-Tenant Core Banking",
+    image: `${import.meta.env.BASE_URL}assets/img/kuntur/customer-overview.webp`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/kuntur/customer-overview.webp`,
+      `${import.meta.env.BASE_URL}assets/img/kuntur/operations-live.webp`,
+      `${import.meta.env.BASE_URL}assets/img/kuntur/risk-review.webp`,
+      `${import.meta.env.BASE_URL}assets/img/kuntur/approvals-step-up.webp`,
+      `${import.meta.env.BASE_URL}assets/img/kuntur/roles-matrix.webp`,
+      `${import.meta.env.BASE_URL}assets/img/kuntur/loans-portfolio.webp`,
+    ],
+    description: "A core banking platform for credit unions and fintechs: one deployment serves many isolated institutions, books money on a double-entry ledger, speaks ISO 20022 and scores every payment in real time with an explainable risk engine.",
+    highlights: [
+      { label: "Money is correct", text: "<strong>Double-entry ledger</strong> where the database refuses overdrafts; 20 concurrent transfers against a balance that affords 10 → exactly 10 succeed." },
+      { label: "Regulated-grade security", text: "<strong>Row-level security</strong> per tenant, 28 granular permissions, TOTP MFA and <strong>four-eyes approval</strong> with step-up, tamper-evident audit hash chain." },
+      { label: "Measured and tested", text: "150 transfers/s at <strong>p95 14 ms</strong> (k6); 128 backend tests with Testcontainers, 15 Playwright E2E, OWASP ZAP in CI." },
+    ],
+    technologies: [
+      { name: "Java 21", iconClass: "devicon-java-plain" },
+      { name: "Spring Boot 4", iconClass: "devicon-spring-original" },
+      { name: "React 19", iconClass: "devicon-react-original" },
+      { name: "TypeScript", iconClass: "devicon-typescript-plain" },
+      { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
+      { name: "Apache Kafka", iconClass: "devicon-apachekafka-original" },
+      { name: "gRPC", iconClass: "devicon-grpc-plain" },
+      { name: "WebSocket / STOMP", iconClass: "fas fa-tower-broadcast" },
+      { name: "Testcontainers", iconClass: "fas fa-vial" },
+      { name: "Playwright", iconImg: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/playwright/playwright-original.svg" },
+      { name: "AWS", iconClass: "devicon-amazonwebservices-plain-wordmark" },
+      { name: "GitHub Actions", iconClass: "devicon-githubactions-plain" },
+      { name: "Docker", iconClass: "devicon-docker-plain" },
+    ],
+    links: [
+      { url: "https://github.com/DRTX2/bank", label: "Source Code", iconClass: "fab fa-github" },
+    ],
+    detailedDescription: "Kuntur (Kichwa for the Andean condor) is a multi-tenant core banking platform built the way a regulated system has to be. Payments go through idempotent intake, real-time risk scoring over gRPC and double-entry booking, with a transactional outbox publishing domain events to Kafka. Customers and staff get live updates over WebSocket.\n\nIt implements ISO 20022 messages (pain.001/002, pacs.008, camt.053), loans with amortization schedules and automatic installment collection at the end-of-day close, and four-eyes approval with a fresh MFA code for high-value operations. Tenancy is enforced twice: in the application and underneath by PostgreSQL row-level security, with the app running as a role that owns nothing.",
+    features: [
+      "Double-entry ledger with accounts locked in primary-key order, so opposite concurrent transfers cannot deadlock.",
+      "ISO 20022: pain.001/002, pacs.008, camt.053, with XML parsing hardened against XXE.",
+      "Explainable risk engine: every point of the score is shown to the reviewer.",
+      "8 system roles and 28 permissions plus custom roles; TOTP (RFC 6238) with AES-GCM sealed seeds.",
+      "Loans: schedule, automatic installments, large loans wait for a second manager.",
+      "Transactional outbox to Kafka with a dead-letter topic; crash-recovery sweep re-drives accepted transfers.",
+      "CI: CodeQL, gitleaks, Trivy, dependency review, OWASP ZAP baseline, containers and infrastructure workflows.",
+    ],
+    challenges: [
+      "Guaranteeing money is never created or lost under concurrency and crashes.",
+      "Isolating institutions so that even a raw SQL mistake cannot cross tenants.",
+      "Keeping latency low while every transfer is authenticated, risk-scored and audited.",
+    ],
+    solutions: [
+      "Database-enforced invariants (no overdraft), ordered locking, idempotent booking and a recovery sweep, all covered by concurrency tests on real PostgreSQL and Kafka.",
+      "Row-level security with a per-transaction tenant, on top of application-level checks.",
+      "Measured with k6 end to end (p95 14 ms at 150 transfers/s) and documented the trade-offs, such as keeping virtual threads off because of pinning.",
+    ],
+  },
+  {
     slug: 'impactex-ims',
     title: 'Impactex IMS - Asset & Inventory Operations',
     image: `${import.meta.env.BASE_URL}assets/img/mao-operational-dashboard.png`,
@@ -110,23 +235,24 @@ The application is deployed on Azure Container Apps with images stored in Azure 
       { label: 'Azure delivery', text: 'Built and deployed through <strong>GitHub Actions</strong> to Azure Container Apps using Bicep infrastructure as code.' },
     ],
     technologies: [
-      { name: '.NET 10', iconClass: 'devicon-dot-net-original' },
+      { name: '.NET 10', iconClass: 'devicon-dot-net-plain' },
       { name: 'Angular 20', iconClass: 'devicon-angularjs-plain' },
       { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
-      { name: 'EF Core', iconClass: 'devicon-dot-net-original' },
+      { name: 'EF Core', iconClass: 'devicon-dot-net-plain' },
       { name: 'SQL Server', iconClass: 'devicon-azuresqldatabase-plain' },
       { name: 'Docker', iconClass: 'devicon-docker-plain' },
       { name: 'Azure Container Apps', iconClass: 'devicon-azure-plain' },
       { name: 'Bicep IaC', iconClass: 'devicon-azure-plain' },
       { name: 'GitHub Actions', iconClass: 'fab fa-github' },
-      { name: 'Playwright', iconImg: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/playwright/playwright-original.svg' },
+      { name: 'Playwright', iconImg: 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/playwright/playwright-original.svg' },
     ],
     links: [
-      {
-        url: 'https://mao-prod-web.purplebay-4e22b9c6.westus3.azurecontainerapps.io/',
-        label: 'Live App',
-        iconClass: 'fas fa-external-link-alt live-pulse-icon',
-      },
+      // Live demo offline (not redeployed yet) — uncomment when it is back up:
+      // {
+      //   url: 'https://mao-prod-web.purplebay-4e22b9c6.westus3.azurecontainerapps.io/',
+      //   label: 'Live App',
+      //   iconClass: 'fas fa-external-link-alt live-pulse-icon',
+      // },
       {
         url: 'https://github.com/DRTX2/mao-inventory-maintaining-system',
         label: 'Source Code',
@@ -163,7 +289,7 @@ The .NET 10 API uses EF Core with SQL Server and a domain model designed for tra
       { name: 'Angular', iconClass: 'devicon-angularjs-plain' },
       { name: 'TypeScript', iconClass: 'devicon-typescript-plain' },
       { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'Playwright', iconImg: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/playwright/playwright-original.svg' },
+      { name: 'Playwright', iconImg: 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/playwright/playwright-original.svg' },
       { name: 'Docker', iconClass: 'devicon-docker-plain' },
     ],
     links: [
@@ -265,11 +391,12 @@ Authentication is issued centrally and validated throughout the platform with JW
       { name: 'Docker', iconClass: 'devicon-docker-plain' },
     ],
     links: [
-      {
-        url: 'https://iron-zone.stratiumhub.com',
-        label: 'Live App',
-        iconClass: 'fas fa-external-link-alt live-pulse-icon',
-      },
+      // Live demo offline (not redeployed yet) — uncomment when it is back up:
+      // {
+      //   url: 'https://iron-zone.stratiumhub.com',
+      //   label: 'Live App',
+      //   iconClass: 'fas fa-external-link-alt live-pulse-icon',
+      // },
       {
         url: 'https://github.com/JoelBonillaG/iron_zone_odoo_das',
         label: 'Source Code',
@@ -297,6 +424,103 @@ Behind the storefront, custom modules model memberships and subscriptions, an ex
     ]
   },
   {
+    slug: 'nexus-messenger',
+    title: "Nexus Messenger — Real-Time Team Messaging",
+    image: `${import.meta.env.BASE_URL}assets/img/nexus/nexus-5.webp`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/nexus/nexus-5.webp`,
+      `${import.meta.env.BASE_URL}assets/img/nexus/nexus-1.webp`,
+      `${import.meta.env.BASE_URL}assets/img/nexus/nexus-2.webp`,
+      `${import.meta.env.BASE_URL}assets/img/nexus/nexus-3.webp`,
+      `${import.meta.env.BASE_URL}assets/img/nexus/nexus-4.webp`,
+      `${import.meta.env.BASE_URL}assets/img/nexus/nexus-call.webp`,
+    ],
+    description: "A real-time messaging platform with direct and group conversations, presence, typing indicators, file sharing and 1:1 voice and video calls over WebRTC, built on Angular signals and Laravel Reverb WebSockets.",
+    highlights: [
+      { label: "Real-time core", text: "Messages, presence and typing events are broadcast over <strong>Laravel Reverb</strong> WebSockets and consumed with Laravel Echo." },
+      { label: "Modern frontend", text: "<strong>Angular 21</strong> with signals and RxJS, Tailwind CSS 4, HTTP interceptors with automatic JWT refresh." },
+      { label: "Tested", text: "Feature tests for messaging, API coverage and <strong>security regressions</strong> with Pest; Vitest on the client; SonarQube configured." },
+    ],
+    technologies: [
+      { name: "Angular 21", iconClass: "devicon-angularjs-plain" },
+      { name: "Laravel 12", iconClass: "devicon-laravel-original" },
+      { name: "WebRTC", iconClass: "fa-solid fa-video" },
+      { name: "PHP", iconClass: "devicon-php-plain" },
+      { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
+      { name: "WebSockets (Reverb)", iconClass: "fas fa-tower-broadcast" },
+      { name: "Tailwind CSS 4", iconClass: "devicon-tailwindcss-original" },
+      { name: "Nginx", iconClass: "devicon-nginx-original" },
+      { name: "Docker", iconClass: "devicon-docker-plain" },
+    ],
+    links: [
+      { url: "https://github.com/DRTX2/Messaging-app", label: "Source Code", iconClass: "fab fa-github" },
+    ],
+    detailedDescription: "Nexus Messenger is a full-stack messaging application. An Angular single-page app talks to a Laravel REST API for conversations, messages and attachments, and listens to WebSocket channels served by Laravel Reverb for everything that must feel live: new messages, who is online and who is typing.\n\nData lives in PostgreSQL (users, conversations with many-to-many membership for groups, messages, attachments). Authentication is stateless with JWT and refresh handled by HTTP interceptors. The stack runs with Docker Compose behind Nginx.",
+    features: [
+      "Direct and group conversations with many-to-many membership.",
+      "Presence and typing indicators over private WebSocket channels.",
+      "Drag-and-drop file and image sharing with previews.",
+      "JWT authentication with intercepted requests and automatic refresh.",
+      "Dark theme and responsive layout.",
+    ],
+    challenges: [
+      "Keeping every participant of a conversation in sync without polling.",
+      "Authorizing private real-time channels per conversation.",
+    ],
+    solutions: [
+      "Broadcast domain events from Laravel through Reverb and applied them to Angular signal state on the client.",
+      "Channel authorization on the API using the same JWT identity as the REST endpoints, covered by security regression tests.",
+    ],
+  },
+  {
+    slug: 'jarvis-assistant',
+    title: "Jarvis — Private AI Study & Planning Assistant",
+    status: 'in-progress',
+    image: `${import.meta.env.BASE_URL}assets/img/jarvis/jarvis-1.webp`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/jarvis/jarvis-1.webp`,
+      `${import.meta.env.BASE_URL}assets/img/jarvis/jarvis-2.webp`,
+      `${import.meta.env.BASE_URL}assets/img/jarvis/jarvis-3.webp`,
+      `${import.meta.env.BASE_URL}assets/img/jarvis/jarvis-4.webp`,
+    ],
+    description: "A personal assistant in Spanish that runs on your own machine: reminders that actually ring, spaced-repetition study and voice-driven task management, with local AI by default and the cloud as an explicit opt-in.",
+    highlights: [
+      { label: "Local-first AI", text: "Runs on <strong>Ollama</strong> locally; dictation is transcribed on-device with <strong>Whisper</strong>. Claude is optional and only for messages you choose." },
+      { label: "Actions with guardrails", text: "The model proposes tool calls validated with <strong>zod</strong>; creating tasks is instant and undoable, destructive actions ask for confirmation." },
+      { label: "Learning science", text: "Adaptive review with the <strong>FSRS</strong> spaced-repetition algorithm and web-push reminders, tested with Playwright on desktop and mobile." },
+    ],
+    technologies: [
+      { name: "Node.js", iconClass: "devicon-nodejs-plain" },
+      { name: "Express", iconClass: "devicon-express-original" },
+      { name: "React", iconClass: "devicon-react-original" },
+      { name: "TypeScript", iconClass: "devicon-typescript-plain" },
+      { name: "Ollama (local LLM)", iconClass: "fas fa-microchip" },
+      { name: "Whisper", iconClass: "fas fa-microphone" },
+      { name: "Claude API", iconClass: "fas fa-cloud" },
+      { name: "Web Push / PWA", iconClass: "fas fa-bell" },
+      { name: "Playwright", iconImg: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/playwright/playwright-original.svg" },
+    ],
+    links: [
+    ],
+    detailedDescription: "Jarvis is a work in progress: a private assistant for studying and organizing the day. You write or dictate things like \"remind me to review derivatives every day at 8\" and it creates the reminder, which arrives as a system notification on the PC and, optionally, on the phone.\n\nThe AI runs locally through Ollama, and voice is transcribed on the machine with Whisper, so audio never leaves it. A cloud model can be enabled for hard questions, per message, with a daily request cap. Study sessions use the FSRS algorithm: each question gets its own schedule depending on what you forget.\n\nStill in progress: packaging for non-technical users and the knowledge-base features described in the roadmap.",
+    features: [
+      "Reminders and recurring reminders from natural language, delivered with web push.",
+      "Task management by chat with instant undo and confirmation for destructive actions.",
+      "Spaced repetition (FSRS) with a daily review notice.",
+      "On-device speech-to-text (whisper-large-v3-turbo).",
+      "Daily summary computed without AI.",
+      "Installable as a PWA; reachable from the phone through a private Tailscale network.",
+    ],
+    challenges: [
+      "Letting a language model act on personal data without it doing something the user did not intend.",
+      "Keeping the experience fast and private on consumer hardware.",
+    ],
+    solutions: [
+      "Model output is treated as a proposal: validated against zod schemas, applied through explicit tools, reversible or confirmed.",
+      "Local models by default, streaming responses, and an explicit per-message switch to the cloud.",
+    ],
+  },
+  {
     slug: 'n8n-scrumban-bot',
     title: 'AI Project Manager Bot — n8n Scrumban Automation',
     image: `${import.meta.env.BASE_URL}assets/img/chat-discord-petsafe-workflow.png`,
@@ -321,16 +545,9 @@ Behind the storefront, custom modules model memberships and subscriptions, an ex
     ],
     links: [
       {
-        // TODO: replace with the real repository URL
-        url: 'https://github.com/DRTX2/n8n-scrumban-bot',
+        url: 'https://github.com/DRTX2/PM-bot',
         label: 'Source Code',
         iconClass: 'fab fa-github',
-      },
-      {
-        // TODO: replace with the real VPS deployment URL
-        url: 'https://example.com',
-        label: 'Live App',
-        iconClass: 'fas fa-external-link-alt live-pulse-icon',
       },
     ],
     detailedDescription: `A self-hosted n8n automation deployed on an Ubuntu Server VPS that takes the role of a Project Manager
@@ -556,105 +773,102 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
   },
   {
     slug: 'smartnotes-platform',
-    title: 'SmartNotes Microservices',
+    title: "SmartNotes — NestJS Microservices behind an NGINX Gateway",
     image: `${import.meta.env.BASE_URL}assets/img/smartnotes.png`,
-    description: `Scalable note-taking platform with microservices.`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/smartnotes.png`,
+    ],
+    description: "A notes backend split into three NestJS services (auth, users, notes) behind an NGINX gateway, with RabbitMQ for service-to-service calls and PostgreSQL per service.",
     highlights: [
-      { label: 'Architecture', text: 'Event-driven communication with RabbitMQ.' },
-      { label: 'Gateway', text: 'NGINX API Gateway for routing and auth.' },
-      { label: 'Database', text: 'Hybrid data storage with MongoDB and PostgreSQL.' }
+      { label: "Service boundaries", text: "<strong>Auth, Users and Notes</strong> are separate NestJS services, each with its own Dockerfile and data access." },
+      { label: "Messaging", text: "The auth service talks to the users service over <strong>RabbitMQ</strong> (NestJS microservices transport) instead of direct HTTP calls." },
+      { label: "Edge", text: "An <strong>NGINX gateway</strong> routes /auth, /users and /notes to their upstreams; JWT with Passport; OpenAPI docs on the notes service." },
     ],
     technologies: [
-      { name: 'NestJS', iconClass: 'devicon-nestjs-original' },
-      { name: 'RabbitMQ', iconClass: 'devicon-rabbitmq-original' },
-      { name: 'MongoDB', iconClass: 'devicon-mongodb-original' },
-      { name: 'Docker', iconClass: 'devicon-docker-plain' },
+      { name: "NestJS", iconClass: "devicon-nestjs-original" },
+      { name: "TypeScript", iconClass: "devicon-typescript-plain" },
+      { name: "RabbitMQ", iconClass: "devicon-rabbitmq-original" },
+      { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
+      { name: "TypeORM", iconClass: "fas fa-database" },
+      { name: "NGINX", iconClass: "devicon-nginx-original" },
+      { name: "Docker", iconClass: "devicon-docker-plain" },
     ],
     links: [
-      {
-        url: 'https://github.com/DRTX2/note-app',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
+      { url: "https://github.com/DRTX2/note-app", label: "Source Code", iconClass: "fab fa-github" },
+    ],
+    detailedDescription: "A small microservices system used to practise service boundaries. NGINX is the single entry point and forwards each path prefix to its service. Authentication issues JWTs and asks the users service for credentials through RabbitMQ, so the two services stay decoupled. Users and notes persist with TypeORM on PostgreSQL. Everything starts with one Docker Compose file.",
+    challenges: [
+      "Avoiding a shared database and direct HTTP coupling between services.",
+      "Giving clients one stable entry point while services move independently.",
+    ],
+    solutions: [
+      "Request/response over RabbitMQ between auth and users, each service owning its tables.",
+      "Path-based routing in NGINX with one upstream per service.",
     ],
   },
   {
     slug: 'uta-elections',
-    title: 'UTA Elections Platform',
+    title: "Election Campaign Platform — University Rector Race",
     image: `${import.meta.env.BASE_URL}assets/img/uta_page.jpeg`,
-    description: `Digital campaign platform for University Rector elections.`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/uta_page.jpeg`,
+    ],
+    description: "A campaign site and voter-engagement backend for a university rector election: candidates, proposals, news and events with search, voter registration and participation statistics.",
     highlights: [
-      { label: 'Engagement', text: 'Real-time stats and news for university stakeholders.' },
-      { label: 'Design', text: 'Responsive UI with Bootstrap and Laravel.' }
+      { label: "Domain model", text: "12 Eloquent models (candidates, parties, proposals, events, news, voters, suggestions) over <strong>17 migrations</strong>." },
+      { label: "Search", text: "Proposals, events and news are searchable by text, tag and date." },
+      { label: "Engagement", text: "Voter registration flow, suggestion box and a <strong>statistics</strong> view for the campaign team." },
     ],
     technologies: [
-      { name: 'Laravel', iconClass: 'devicon-laravel-original' },
-      { name: 'Bootstrap', iconClass: 'devicon-bootstrap-plain' },
-      { name: 'MySQL', iconClass: 'devicon-mysql-original' },
+      { name: "Laravel", iconClass: "devicon-laravel-original" },
+      { name: "PHP", iconClass: "devicon-php-plain" },
+      { name: "MySQL", iconClass: "devicon-mysql-original" },
+      { name: "Tailwind CSS", iconClass: "devicon-tailwindcss-original" },
+      { name: "Vite", iconClass: "devicon-vitejs-plain" },
     ],
     links: [
-      {
-        url: 'https://gitlab.com/personalprojects5531442/manejo-proyecto/',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
+      { url: "https://gitlab.com/personalprojects5531442/manejo-proyecto/", label: "Source Code", iconClass: "fab fa-gitlab" },
+    ],
+    detailedDescription: "Built by a team of four for a university rector election campaign. The Laravel application models candidates with their academic and professional background, political parties, proposals, news and events, and exposes filtered listings for each. Voters complete a registration form, can send suggestions, and the campaign team sees aggregated statistics.",
+    challenges: [
+      "Modelling many related entities (candidates, backgrounds, parties, proposals) without duplicating data.",
+      "Making content easy to find for non-technical visitors.",
+    ],
+    solutions: [
+      "A normalized schema managed entirely with migrations and Eloquent relationships.",
+      "Dedicated search routes by tag and date for each content type.",
     ],
   },
   {
     slug: 'creative-portfolio',
-    title: 'My Creative Portfolio',
+    title: "Portfolio Builder — Community Platform in PHP",
     image: `${import.meta.env.BASE_URL}assets/img/blog.jpeg`,
-    description: `Interactive platform for creating personal portfolios.`,
+    images: [
+      `${import.meta.env.BASE_URL}assets/img/blog.jpeg`,
+    ],
+    description: "A multi-user platform where people publish portfolios, projects and posts, discover others by category and skill, and comment. Written in plain PHP and MySQL, without a framework.",
     highlights: [
-      { label: 'Features', text: 'Project management and community engagement.' },
-      { label: 'Tech', text: 'PHP, MySQL, and Axios for dynamic interactions.' }
+      { label: "Relational design", text: "A <strong>15-table schema</strong>: users and roles, portfolios with skills, projects, posts, tags, categories and comments." },
+      { label: "Discovery", text: "Filters for portfolios, projects and posts by category, tag and skill, loaded asynchronously with Axios." },
+      { label: "Accounts", text: "Registration, login with hashed passwords and prepared statements, and password reset by email." },
     ],
     technologies: [
-      { name: 'PHP', iconClass: 'devicon-php-plain' },
-      { name: 'MySQL', iconClass: 'devicon-mysql-original' },
-      { name: 'JavaScript', iconClass: 'devicon-javascript-plain' },
+      { name: "PHP", iconClass: "devicon-php-plain" },
+      { name: "MySQL", iconClass: "devicon-mysql-original" },
+      { name: "JavaScript", iconClass: "devicon-javascript-plain" },
+      { name: "Axios", iconClass: "fas fa-arrows-rotate" },
     ],
     links: [
-      {
-        url: 'https://github.com/DRTX2/proyecto-mds.git',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
+      { url: "https://github.com/DRTX2/proyecto-mds.git", label: "Source Code", iconClass: "fab fa-github" },
     ],
-  },
-  {
-    slug: 'clean-architecture-game',
-    title: 'Pixel1 Quest',
-    image: `${import.meta.env.BASE_URL}assets/img/capibara.jpeg`,
-    description: `Unity 2D game showcasing enterprise architecture patterns.`,
-    highlights: [
-      { label: 'Concept', text: 'Applying <strong>SOLID principles</strong> to Game Development.' },
-      { label: 'Patterns', text: 'Factory, Strategy, Observer, and Event Bus implementation.' },
-      { label: 'Tech', text: 'Managed state persistence with SQLite.' }
-    ],
-    technologies: [
-      { name: 'C#', iconClass: 'devicon-csharp-plain' },
-      { name: 'Unity', iconClass: 'devicon-unity-plain' },
-      { name: 'SQLite', iconClass: 'devicon-sqlite-plain' },
-    ],
-    links: [
-      {
-        url: 'https://github.com/DRTX2/PatternsProject/tree/develop',
-        label: 'Source Code',
-        iconClass: 'fab fa-github',
-      },
-    ],
-    detailedDescription: "A unique project bridging the gap between game development and enterprise software architecture. It demonstrates that the same principled approach used in large-scale backend systems can be applied to game logic to create maintainable and testable code.",
+    detailedDescription: "An early team project that shows the fundamentals without a framework hiding them: request handling, SQL, sessions, input filtering and server-rendered templates in PHP, with JavaScript for filtering and interactions. Each user builds a portfolio from their projects and skills, publishes posts, and other users can discover and comment on them.",
     challenges: [
-      "Decoupling the game logic from the Unity Engine API.",
-      "Implementing Dependency Injection in a Unity environment.",
-      "Managing complex game state in a persistent way."
+      "Designing many-to-many relationships (portfolios–skills, projects–tags) by hand.",
+      "Keeping queries safe without an ORM.",
     ],
     solutions: [
-      "Created an abstraction layer between the game logic and Unity's Monobehaviours.",
-      "Implemented a custom Service Locator and Factory pattern for dependency management.",
-      "Used SQLite for structured local data persistence, allowing complex save states."
+      "Junction tables and a clear schema shipped as a SQL file.",
+      "Prepared statements and a shared input-filtering layer.",
     ],
-    videoUrl: 'https://www.youtube.com/watch?v=wLPdfB5ABbU'
   },
 ];

@@ -1,13 +1,19 @@
 <div id="projectDetailModal" class="detail-modal">
   <div class="detail-modal-content">
-    <span class="close-detail-modal">&times;</span>
     <div class="modal-body">
       <header class="modal-header">
-        <h2 id="modalTitle">Project Title</h2>
-        <div class="modal-tech-stack" id="modalTechStack"></div>
+        <div class="modal-heading">
+          <p class="modal-eyebrow" data-t="projects.modal.eyebrow">Project overview</p>
+          <h2 id="modalTitle">Project Title</h2>
+        </div>
+        <button type="button" class="close-detail-modal" aria-label="Close"><i class="fas fa-xmark" aria-hidden="true"></i></button>
       </header>
-
       <div class="modal-scroll-content">
+        <figure class="modal-cover" id="modalCover">
+          <img id="modalCoverImg" alt="" />
+          <figcaption><i class="fas fa-images" aria-hidden="true"></i> <span id="modalCoverCount"></span></figcaption>
+        </figure>
+        <div class="modal-tech-stack" id="modalTechStack"></div>
         <section class="modal-section overview">
           <h3 data-i18n="projects.modal.overview">Overview</h3>
           <p id="modalDescription"></p>
@@ -20,6 +26,10 @@
           <div class="video-container" id="modalVideoContainer"></div>
         </section>
 
+        <section class="modal-section" id="modalFeaturesSection">
+          <h3 data-t="projects.modal.keyFeatures">Key features</h3>
+          <ul id="modalFeatures" class="feature-list"></ul>
+        </section>
         <div class="two-column-grid">
           <section class="modal-section" id="modalChallengesSection">
             <h3 data-i18n="projects.modal.keyChallenges">
@@ -87,13 +97,38 @@
       const modalDesc = document.getElementById('modalDescription');
       if (modalDesc) modalDesc.innerHTML = project.description;
 
+      // Cover image: opens the same gallery as the card
+      const cover = document.getElementById('modalCover');
+      const coverImg = document.getElementById('modalCoverImg');
+      const coverCount = document.getElementById('modalCoverCount');
+      const gallery = project.images?.length ? project.images : [project.image];
+      if (cover && coverImg && coverCount) {
+        coverImg.src = project.image;
+        coverImg.alt = project.title;
+        coverCount.textContent = String(gallery.length);
+        cover.onclick = () => window.openLightbox?.(gallery, project.title);
+      }
+
+      // Key features
+      const featuresList = document.getElementById('modalFeatures');
+      const featuresSection = document.getElementById('modalFeaturesSection');
+      if (featuresList && featuresSection) {
+        featuresList.innerHTML = '';
+        (project.features ?? []).forEach((f) => {
+          const li = document.createElement('li');
+          li.textContent = f;
+          featuresList.appendChild(li);
+        });
+        featuresSection.style.display = project.features?.length ? 'block' : 'none';
+      }
+
       // Tech Stack
       const techContainer = document.getElementById('modalTechStack');
       if (techContainer) {
         techContainer.innerHTML = '';
         project.technologies.forEach((tech) => {
           const span = document.createElement('span');
-          span.innerHTML = `${tech.iconClass ? `<i class="${tech.iconClass}"></i> ` : ''}${tech.name}`;
+          span.innerHTML = `${tech.iconClass ? `<i class="${tech.iconClass} colored"></i>` : tech.iconImg ? `<img src="${tech.iconImg}" alt="" />` : ''}${tech.name}`;
           techContainer.appendChild(span);
         });
       }

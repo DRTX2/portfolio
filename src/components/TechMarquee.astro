@@ -1,0 +1,20 @@
+---
+import { skillCategories } from '../data/skills.js';
+
+const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/';
+// One logo per technology family: skills.js repeats icons (e.g. several .NET entries).
+const seen = new Set<string>();
+const items = skillCategories
+  .flatMap((c) => c.skills)
+  .filter((s) => s.icon && !seen.has(s.icon) && seen.add(s.icon))
+  .slice(0, 22)
+  .map((s) => ({ name: s.name, src: s.icon!.startsWith('http') ? s.icon! : DEVICON + s.icon }));
+---
+
+<div class="tech-marquee" role="region" aria-label="Technologies I work with">
+  <ul>
+    {items.map((i) => <li><img src={i.src} alt="" loading="lazy" width="26" height="26" />{i.name}</li>)}
+    {/* Second copy makes the loop seamless; hidden from screen readers. */}
+    {items.map((i) => <li aria-hidden="true"><img src={i.src} alt="" loading="lazy" width="26" height="26" />{i.name}</li>)}
+  </ul>
+</div>

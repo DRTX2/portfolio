@@ -5,6 +5,7 @@
 
 import { initMobileMenu } from './menu.js';
 import { initStickyHeader, initSmoothScroll, initBackToTop } from './scroll.js';
+import { initTextTranslations } from './i18n-text.js';
 
 /**
  * Initialize all application modules
@@ -14,6 +15,7 @@ function init() {
   initStickyHeader();
   initSmoothScroll();
   initBackToTop();
+  initTextTranslations();
 }
 
 // Run when DOM is ready

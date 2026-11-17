@@ -20,15 +20,18 @@ interface Props {
   highlights?: { label: string; text: string }[];
   slug?: string;
   images?: string[];
+  /** Stack groups used by the project filter (e.g. "node cloud"). */
+  tags?: string[];
+  status?: 'in-progress';
 }
 
 import { useTranslations } from '../i18n/utils';
 
-const { title, image, images, description, technologies, links, slug, highlights } = Astro.props;
+const { title, image, images, description, technologies, links, slug, highlights, tags = [], status } = Astro.props;
 const t = useTranslations('en');
 ---
 
-<article class="project" data-slug={slug}>
+<article class="project" data-slug={slug} data-tags={tags.join(' ')}>
   <div class="project-image" data-images={images && images.length > 0 ? JSON.stringify(images) : undefined}>
     <img src={image} alt={title} loading="lazy" decoding="async" />
     {
@@ -41,6 +44,11 @@ const t = useTranslations('en');
   </div>
 
   <div class="project-content">
+    {
+      status === 'in-progress' && (
+        <p class="project-status"><span class="now-dot" aria-hidden="true" /> <span data-t="projects.inProgress">{t.projects.inProgress}</span></p>
+      )
+    }
     <h3>{title}</h3>
 
     {

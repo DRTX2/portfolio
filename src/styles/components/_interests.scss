@@ -1,0 +1,89 @@
+@use "../abstracts/variables" as *;
+
+.interests {
+  .interests-subtitle { max-width: 56ch; margin: -1.5rem 0 2rem; color: var(--text-muted); }
+
+  .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 1.25rem;
+  }
+
+  .interest-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    transition: border-color 0.2s ease;
+
+    &:hover { border-color: var(--line-strong); }
+  }
+
+  .interest-body {
+    padding: 1.4rem 1.5rem 1.5rem;
+
+    h3 { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 0.5rem; font-size: 1.15rem; i { color: var(--signal-text); font-size: 1rem; } }
+    p { margin: 0 0 1rem; color: var(--text-muted); line-height: 1.65; }
+  }
+
+  .interest-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li { padding: 0.2rem 0.6rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.8rem; color: var(--text); }
+  }
+
+  // Terminal stays dark in both themes, like a real one.
+  .terminal {
+    background: #0a111c;
+    border-bottom: 1px solid var(--line);
+    font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 0.9rem;
+      border-bottom: 1px solid #1c2a3f;
+
+      span { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: #2b3b54; }
+      em { margin-left: 0.5rem; font-style: normal; font-size: 0.75rem; color: #7f8ea5; }
+    }
+    min-height: 11.6rem;
+    pre { margin: 0; padding: 1rem 1.1rem 1.15rem; overflow-x: auto; font-size: 0.8rem; line-height: 1.7; color: #c9d4e3; }
+    .c-prompt { color: #f3b43f; }
+    .c-bad { color: #f5c064; text-decoration: underline wavy #f07171; }
+    .c-err { color: #f07171; font-weight: 700; }
+  }
+
+  .learn-loop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-height: 11.6rem;
+    padding: 1.6rem 1.25rem;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+
+    > div { display: grid; justify-items: center; gap: 0.35rem; flex: 1; text-align: center; }
+    > div > i { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); color: var(--signal-text); }
+    strong { font-size: 0.9rem; }
+    span { font-size: 0.78rem; color: var(--text-muted); }
+    .arrow { color: var(--line-strong); }
+  }
+
+  .applied-title { margin: 1.25rem 0 0.5rem; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .applied {
+    display: grid; margin: 0; padding: 0; list-style: none;
+    li { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0; border-top: 1px solid var(--line); font-size: 0.9rem; }
+    span { flex: 1; color: var(--text-muted); }
+    i { font-size: 0.7rem; color: var(--signal-text); }
+  }
+}

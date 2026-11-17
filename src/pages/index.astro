@@ -2,12 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import TechMarquee from '../components/TechMarquee.astro';
 import About from '../components/About.astro';
 import Experience from '../components/Experience.astro';
 import Skills from '../components/Skills.astro';
 import Education from '../components/Education.astro';
 import Projects from '../components/Projects.astro';
 import ContactCta from '../components/ContactCta.astro';
+import Interests from '../components/Interests.astro';
 import Footer from '../components/Footer.astro';
 import CVModal from '../components/CVModal.astro';
 import ImageLightbox from '../components/ImageLightbox.astro';
@@ -17,16 +19,13 @@ import ImageLightbox from '../components/ImageLightbox.astro';
   <Header />
   <main>
     <Hero />
-    <hr />
+    <TechMarquee />
     <About />
-    <hr />
     <Experience />
-    <hr />
-    <Skills />
-    <hr />
-    <Education />
-    <hr />
     <Projects />
+    <Skills />
+    <Education />
+    <Interests />
     <ContactCta />
   </main>
   <Footer />
