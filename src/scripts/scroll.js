@@ -40,10 +40,8 @@ export function initSmoothScroll() {
           const elementPosition = section.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - HEADER_OFFSET;
 
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
+          if (window.lenis) window.lenis.scrollTo(section, { offset: -HEADER_OFFSET });
+          else window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
         }
       }
     });

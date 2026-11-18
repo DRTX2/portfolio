@@ -15,7 +15,7 @@ const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matc
 
 const REVEALS = [
   // [selector, variant, stagger siblings?]
-  [".about-me > h2, .experience > h2, .skills-habilities > h2, .education > h2, .projects > h2, .interests > h2, .cta-container > h2", "title"],
+  [".about-me > h2, .experience > h2, .skills-habilities > h2, .education > h2, .projects > h2, .atalaya-live > h2, .interests > h2, .cta-container > h2", "title"],
   [".about-content > *, .contact-info > *", "soft", true],
   [".expertise-tags .tag", "chip", true],
   [".experience .job", "up", true],
@@ -23,7 +23,8 @@ const REVEALS = [
   [".skill-mention > *", "chip", true],
   [".education-grid > *, .certificates > *", "up", true],
   [".projects .project", "card", true],
-  [".about-objective, .project-filters, .interests-subtitle", "soft"],
+  [".about-objective, .project-filters, .interests-subtitle, .flow-subtitle", "soft"],
+  [".flow-grid > *", "up", true],
   [".interest-card", "up", true],
   [".cta-container > :not(h2)", "up", true],
 ];
@@ -98,13 +99,19 @@ const initHeroEntrance = () => {
     line.appendChild(inner);
   });
 
-  gsap
-    .timeline({ defaults: { ease: "expo.out" } })
+  const intro = gsap
+    .timeline({ defaults: { ease: "expo.out" }, onComplete: () => skip.abort() })
     .from(".hero-role", { opacity: 0, y: 14, duration: 0.7 })
     .from(".hero-name .line-inner", { yPercent: 110, rotate: 2, duration: 1.2, stagger: 0.1 }, "-=0.4")
     .from(".my-icon", { opacity: 0, y: 24, duration: 1.3 }, "-=1")
     .from([".hero-lede", ".hero-actions", ".hero-now"], { opacity: 0, y: 18, duration: 0.9, stagger: 0.08 }, "-=0.9")
     .from(".hero-ambient", { opacity: 0, duration: 1.6, ease: "power2.out" }, 0);
+
+  const skip = new AbortController();
+  const finish = () => { intro.progress(1); skip.abort(); };
+  for (const type of ["wheel", "touchmove", "keydown", "scroll"]) {
+    window.addEventListener(type, finish, { passive: true, signal: skip.signal });
+  }
 };
 
 const initHeroAmbient = () => {
@@ -241,23 +248,194 @@ const initCounters = () => {
   });
 };
 
+// ---------------------------------------------------------------- smooth scroll
+
+// Wheel input is eased by Lenis (touch stays native). Modals lock the page with body overflow,
+// so any wheel while one is open, or inside a dialog/textarea, is left to the browser.
+const initSmoothScroll = () => {
+  if (typeof Lenis === "undefined") return;
+  const lenis = new Lenis({
+    lerp: 0.12,
+    prevent: (node) => document.body.style.overflow === "hidden" || !!node.closest?.('[role="dialog"], textarea'),
+  });
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  window.lenis = lenis;
+};
+
+// ---------------------------------------------------------------- Atalaya in action
+
+// Replays the asserted Atalaya scenario on the diagram: a packet travels each signed call while
+// the log advances. Plays once when it scrolls into view; pauses off screen or in a hidden tab.
+const initAtalayaFlow = () => {
+  const section = document.querySelector("[data-flow]");
+  if (!section) return;
+  const button = section.querySelector("[data-flow-run]");
+
+  // Phones get a stacked layout of the same diagram (layout only, so it applies with reduced motion too).
+  const svg = section.querySelector("svg");
+  const stacked = window.matchMedia("(max-width: 640px)");
+  const layout = () => {
+    const s = stacked.matches;
+    svg.setAttribute("viewBox", s ? "0 0 430 680" : "0 0 920 470");
+    section.querySelectorAll(".flow-node").forEach((g) => g.setAttribute("transform", s ? g.dataset.tStacked : g.dataset.tWide));
+    section.querySelectorAll(".flow-paths path").forEach((p) => p.setAttribute("d", s ? p.dataset.md : p.dataset.d));
+    section.classList.toggle("is-stacked", s);
+  };
+  layout();
+  stacked.addEventListener("change", layout);
+  // Reduced motion or no GSAP: the static diagram and the full log stay readable.
+  if (reduceMotion || typeof gsap === "undefined") { button.hidden = true; return; }
+
+  const node = (id) => section.querySelector(`[data-node="${id}"]`);
+  const path = (id) => section.querySelector(`[data-path="${id}"]`);
+  const steps = [...section.querySelectorAll(".flow-log li")];
+  const packet = section.querySelector(".flow-packet");
+
+  const setNode = (id, state, status) => {
+    const el = node(id);
+    el.classList.remove("is-active", "is-bad", "is-ok");
+    if (state) el.classList.add(state);
+    el.querySelector(".n-status").textContent = status;
+  };
+  const reset = () => {
+    section.querySelectorAll(".flow-node").forEach((el) => {
+      el.classList.remove("is-active", "is-bad", "is-ok");
+      const status = el.querySelector(".n-status");
+      status.textContent = status.dataset.initial;
+    });
+    section.querySelectorAll(".flow-paths path").forEach((el) => el.classList.remove("is-live", "is-ok"));
+    steps.forEach((li) => li.classList.remove("is-shown", "is-current"));
+    packet.setAttribute("cx", -20);
+    packet.setAttribute("cy", -20);
+  };
+
+  const tl = gsap.timeline({ paused: true });
+  const wait = (seconds) => tl.to({}, { duration: seconds });
+  const at = (fn) => tl.call(fn);
+  const step = (i) => at(() => {
+    steps.forEach((li) => li.classList.remove("is-current"));
+    steps[i].classList.add("is-shown", "is-current");
+  });
+  const state = (...args) => at(() => setNode(...args));
+  const travel = (id, ok = false) => {
+    const line = path(id);
+    const p = { t: 0 };
+    at(() => {
+      line.classList.add("is-live");
+      line.classList.toggle("is-ok", ok);
+      packet.classList.toggle("is-ok", ok);
+    });
+    tl.fromTo(p, { t: 0 }, {
+      t: 1,
+      duration: 0.75,
+      ease: "power1.inOut",
+      onUpdate: () => {
+        const pt = line.getPointAtLength(p.t * line.getTotalLength());
+        packet.setAttribute("cx", pt.x);
+        packet.setAttribute("cy", pt.y);
+      },
+    });
+    at(() => line.classList.remove("is-live", "is-ok"));
+  };
+
+  // Incident
+  step(0); state("pipeline", "is-bad", "backlog 200"); wait(1);
+  travel("pipeline-nimbus"); step(1); state("nimbus", "is-bad", "incident open"); wait(0.6);
+  travel("nimbus-flagship"); step(2); state("flagship", "is-active", "orders-v2: OFF"); wait(0.5);
+  travel("flagship-sdks"); step(3); state("sdks", "is-ok", "v1 (safe) · 680 ms"); wait(0.7);
+  travel("nimbus-hookrelay"); step(4); state("hookrelay", "is-active", "1 accepted"); wait(0.4);
+  travel("hookrelay-oncall"); step(5); state("hookrelay", "is-ok", "1 delivered"); state("oncall", "is-ok", "200 · opened");
+  travel("hookrelay-bitacora"); state("bitacora", "is-active", "incident open"); wait(1.4);
+  // Recovery
+  step(6); state("pipeline", "is-ok", "backlog 3"); travel("pipeline-nimbus", true); state("nimbus", "is-ok", "recovered"); wait(0.4);
+  travel("nimbus-flagship", true); step(7); state("flagship", "is-ok", "orders-v2: ON");
+  travel("flagship-sdks", true); state("sdks", "is-ok", "serving v2"); wait(0.3);
+  travel("nimbus-hookrelay", true); travel("hookrelay-oncall", true);
+  step(8); state("hookrelay", "is-ok", "2 delivered"); state("oncall", "is-ok", "200 · recovered");
+  travel("hookrelay-bitacora", true); step(9); state("bitacora", "is-ok", "postmortem ready");
+
+  let started = false;
+  let inView = false;
+  const sync = () => { if (started) tl.paused(!inView || document.hidden); };
+  const play = () => { reset(); started = true; tl.restart(); sync(); };
+
+  new IntersectionObserver(([e]) => {
+    inView = e.isIntersecting;
+    if (!started && e.intersectionRatio >= 0.35) play();
+    else sync();
+  }, { threshold: [0, 0.35] }).observe(section);
+  document.addEventListener("visibilitychange", sync);
+  button.addEventListener("click", play);
+  section.classList.add("is-ready");
+};
+
+// ---------------------------------------------------------------- contact handoff
+
+// The contact sheet slides over Interests, which recedes (lower, smaller, dimmer). Scrubbed, so
+// it follows the scroll in both directions. Only --recede moves: the section box itself stays put,
+// so links to #interests still land where they should (see _motion.scss).
+const initContactHandoff = () => {
+  const from = document.querySelector(".interests");
+  const to = document.querySelector("#contact");
+  if (!from || !to) return;
+  gsap.to(from, {
+    "--recede": 1,
+    ease: "none",
+    scrollTrigger: { trigger: to, start: "top bottom", end: "top 25%", scrub: true },
+  });
+};
+
+// ---------------------------------------------------------------- pause what isn't visible
+
+// Infinite CSS loops (hero blobs, marquee, "in progress" pulse) stop while their area is off screen.
+const initOffscreenPause = () => {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle("is-offscreen", !e.isIntersecting);
+  });
+  document.querySelectorAll(".presentation, .tech-marquee, .projects").forEach((el) => io.observe(el));
+};
+
+// ---------------------------------------------------------------- keep scroll triggers accurate
+
+// The page grows after load (lazy images, fonts, translated text). ScrollTrigger only re-measures
+// on load and window resize, so re-measure whenever the content height actually changes.
+const initTriggerRefresh = () => {
+  let height = document.body.offsetHeight;
+  let frame = 0;
+  new ResizeObserver(() => {
+    if (frame || document.body.offsetHeight === height) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      height = document.body.offsetHeight;
+      ScrollTrigger.refresh();
+    });
+  }).observe(document.body);
+};
+
 // ---------------------------------------------------------------- boot
 
 // Navigation helpers are useful even with reduced motion (no animation involved).
 initActiveSection();
+initAtalayaFlow();
 
 if (!reduceMotion) {
   document.documentElement.classList.add("motion");
   initReveals();
   initSmartHeader();
   initMagnetic();
+  initOffscreenPause();
 
   if (typeof gsap !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
+    initSmoothScroll();
     initHeroAmbient();
     initHeroEntrance();
     initHeroParallax();
     initScrollProgress();
     initCounters();
+    initContactHandoff();
+    initTriggerRefresh();
   }
 }

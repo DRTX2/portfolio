@@ -4,8 +4,9 @@ import { useTranslations } from '../i18n/utils';
 const t = useTranslations('en');
 const EMAIL = 'davidmanjarres2004@gmail.com';
 // Static site (GitHub Pages): FormSubmit relays the form to email, so no backend of our own is needed.
-// The first real submission sends a one-time activation email to EMAIL; confirm it once.
-const FORM_ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`;
+// The endpoint uses the alias FormSubmit issued for EMAIL (activation email), so the address isn't in the form's source.
+// It only delivers once the form has been activated from that email ("Activate Form").
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/817c5bb2aee2f8f8ab3ce270c6a65458';
 ---
 
 <section class="contact-cta" id="contact">

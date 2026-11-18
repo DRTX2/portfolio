@@ -1,0 +1,127 @@
+// Atalaya in action: animated incident flow (driven by initAtalayaFlow in public/animations.js)
+.atalaya-live {
+  --flow-bad: #f26d6d;
+  --flow-ok: #3ecf8e;
+
+  .flow-subtitle { max-width: 62ch; margin: -1.5rem 0 2rem; color: var(--text-muted); }
+
+  .flow-grid {
+    display: grid;
+    gap: 1.25rem; // diagram full width so its labels stay legible, log underneath
+  }
+
+  .flow-canvas,
+  .flow-panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+  }
+
+  .flow-canvas {
+    padding: 1rem;
+    overflow-x: auto; // the diagram keeps a readable size on phones and scrolls inside its card
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size: 22px 22px;
+
+    svg { display: block; width: 100%; min-width: 620px; height: auto; }
+  }
+  &.is-stacked .flow-canvas svg { min-width: 0; max-width: 420px; margin-inline: auto;
+  }
+
+  .flow-paths path {
+    fill: none;
+    stroke: var(--line-strong);
+    stroke-width: 2;
+    stroke-dasharray: 5 6;
+    transition: stroke 0.3s;
+
+    &.is-live { stroke: var(--signal); stroke-dasharray: none; }
+    &.is-live.is-ok { stroke: var(--flow-ok); }
+  }
+
+  .flow-node {
+    rect { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 1.5; transition: stroke 0.3s, fill 0.3s; }
+    .n-title { font-size: 17px; font-weight: 700; fill: var(--text); }
+    .n-role { font-size: 12px; fill: var(--text-muted); }
+    .n-status { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; fill: var(--text-muted); transition: fill 0.3s; }
+
+    &.is-active rect { stroke: var(--signal); }
+    &.is-active .n-status { fill: var(--signal-text); }
+    &.is-bad rect { stroke: var(--flow-bad); fill: color-mix(in srgb, var(--flow-bad) 12%, var(--surface-2)); }
+    &.is-bad .n-status { fill: var(--flow-bad); }
+    &.is-ok rect { stroke: var(--flow-ok); }
+    &.is-ok .n-status { fill: var(--flow-ok); }
+  }
+
+  .flow-packet {
+    fill: var(--signal);
+    filter: drop-shadow(0 0 6px var(--signal));
+    &.is-ok { fill: var(--flow-ok); filter: drop-shadow(0 0 6px var(--flow-ok)); }
+  }
+
+  .flow-panel { display: flex; flex-direction: column; gap: 1.25rem; padding: 1.25rem; }
+
+  .flow-log {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem 1.5rem;
+    @media (max-width: 1000px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (max-width: 640px) { grid-template-columns: 1fr; }
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+    font-size: 0.9rem;
+    line-height: 1.45;
+
+    li {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 1.5rem 1fr;
+      gap: 0.6rem;
+      transition: opacity 0.35s, color 0.35s;
+
+      &::before {
+        content: counter(step);
+        display: grid;
+        place-items: center;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        border: 1px solid var(--line-strong);
+        font-size: 0.72rem;
+        font-weight: 700;
+        transition: background 0.3s, color 0.3s, border-color 0.3s;
+      }
+    }
+  }
+
+  // Without JS every step stays readable; the player dims what hasn't happened yet.
+  &.is-ready .flow-log li { opacity: 0.3; color: var(--text-muted); }
+  &.is-ready .flow-log li.is-shown { opacity: 1; color: var(--text); }
+  .flow-log li.is-current::before { background: var(--signal); border-color: var(--signal); color: var(--signal-ink); }
+
+  .flow-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; }
+
+  .flow-run {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--signal);
+    color: var(--signal-ink);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    &[hidden] { display: none; }
+  }
+
+  .flow-source { color: var(--text-muted); font-size: 0.9rem; text-decoration: none; &:hover { color: var(--text); } }
+}
+
+[data-theme="light"] .atalaya-live {
+  --flow-bad: #c53030;
+  --flow-ok: #1f7a52;
+}

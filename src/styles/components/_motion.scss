@@ -270,3 +270,28 @@ html.motion [data-reveal="title"]:not(.in)::after { transform: scaleX(0); }
   .main-menu.nav-hidden { transform: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
+
+// Lenis (smooth wheel scrolling): native smooth scrolling would fight its easing
+html.lenis, html.lenis body { height: auto; }
+// CSS smooth scrolling animates ScrollTrigger's measuring jumps, so every refresh made while scrolled
+// measured from the wrong place. With motion on, smoothing comes from Lenis or the menu's scrollTo.
+html.motion { scroll-behavior: auto; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+// Handoff into Contact: the contact sheet slides over Interests while it recedes (scrubbed in animations.js)
+html.motion .contact-cta {
+  position: relative;
+  z-index: 1;
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -24px 60px -30px rgba(0, 0, 0, 0.45);
+}
+// transform and filter compose with the reveal's translate/opacity instead of overriding them.
+html.motion .interests {
+  --recede: 0;
+  > * {
+    transform-origin: 50% 100%;
+    transform: translateY(calc(var(--recede) * 22vh)) scale(calc(1 - 0.06 * var(--recede)));
+    filter: opacity(calc(1 - 0.65 * var(--recede)));
+  }
+}
+.is-offscreen, .is-offscreen * { animation-play-state: paused !important; }

@@ -63,5 +63,5 @@ Estado al 16-nov-2026. ✅ cumplido · 🟡 depende de una acción tuya · ⬜ p
 2. `DRTX2/nimbus` y `DRTX2/jarvis` son privados: hazlos públicos o quita esos enlaces.
 3. Push del README de perfil (ya dice 4+) y cambiar "3+" a "4+" en CV y LinkedIn.
 4. Revisar y hacer commit de Nexus (llamadas) y Kuntur (paleta + pago anticipado), que quedaron sin commit.
-5. READMEs de `note-app` y del repo de elecciones (GitLab): pendientes.
+5. README del repo de elecciones (GitLab): pendiente. SmartNotes y Creative Portfolio se quitaron del portafolio (17-nov-2026).
 6. Commit y deploy del portafolio.

@@ -1,4 +1,5 @@
 {
+  "flow": {"title": "Atalaya", "titleHighlight": "en acción", "subtitle": "Un incidente, cuatro productos. Reproduce la prueba de punta a punta: se detecta un pipeline atascado, se apaga la funcionalidad riesgosa, se avisa al equipo de guardia, todo se restaura al recuperarse y Bitácora redacta el postmortem.", "run": "Repetir", "source": "Escenario y salida real", "steps": ["El pipeline de pedidos se atasca: 200 mensajes en cola, el más antiguo de 10 min, el consumidor con 0 invocaciones.", "Nimbus ve dos ventanas degradadas y abre un incidente (consumer_stalled).", "Nimbus llama a Flagship con una petición firmada (HMAC): orders-v2 se apaga y queda auditado como nimbus (automation).", "Flagship transmite el cambio por SSE: tus servicios toman el camino seguro 680 ms después de la observación.", "Nimbus avisa a Hookrelay. La clave de idempotencia hace que un reintento no tenga efecto doble.", "Hookrelay entrega un webhook firmado incident.opened al endpoint de guardia, con reintentos y DLQ detrás.", "El pipeline está sano durante dos ventanas: Nimbus marca el incidente como recuperado.", "Flagship restaura orders-v2, porque nadie lo tocó durante el incidente.", "Hookrelay entrega incident.recovered. Ciclo cerrado: detectar, mitigar, notificar, recuperar.", "Bitácora, suscrita a través de Hookrelay, reconstruye la línea de tiempo (mitigado en 677 ms) y redacta el postmortem."]},
   "interests": {
     "loop": {"read": "Leer", "readText": "Libros · cursos · blogs", "applied": "De la lectura al código", "build": "Construir", "measure": "Medir"},
     "title": "Más allá del",
@@ -223,11 +224,11 @@
     "items": {
       "atalaya": {
         "title": "Atalaya — Plataforma de Infraestructura para Desarrolladores",
-        "description": "Tres productos independientes que cierran el ciclo detectar → mitigar → notificar → recuperar: Nimbus vigila pipelines asíncronos en AWS, Flagship controla funcionalidades con kill switches y Hookrelay entrega eventos de forma confiable. Se integran solo mediante APIs HTTP firmadas e idempotentes.",
+        "description": "Cuatro productos independientes que cierran el ciclo detectar → mitigar → notificar → recuperar → aprender: Nimbus vigila pipelines asíncronos en AWS, Flagship controla funcionalidades con kill switches, Hookrelay entrega eventos de forma confiable y Bitácora convierte cada incidente en una línea de tiempo y un postmortem. Se integran solo mediante APIs HTTP firmadas e idempotentes.",
         "highlights": [
           {
             "label": "De punta a punta, verificado",
-            "text": "Un pipeline atascado en <strong>Nimbus</strong> apaga un flag en <strong>Flagship</strong> (los SDK lo ven en <strong>615 ms</strong>) y <strong>Hookrelay</strong> notifica al webhook del cliente; al recuperarse, todo se restaura."
+            "text": "Un pipeline atascado en <strong>Nimbus</strong> apaga un flag en <strong>Flagship</strong> (los SDK lo ven en <strong>680 ms</strong>), <strong>Hookrelay</strong> avisa al webhook del cliente y <strong>Bitácora</strong> redacta el postmortem; al recuperarse, todo se restaura."
           },
           {
             "label": "Hecho para fallar bien",
@@ -235,19 +236,21 @@
           },
           {
             "label": "Listo para producción",
-            "text": "Núcleos hexagonales, <strong>OpenTelemetry + Prometheus/Grafana</strong>, medido con k6, E2E con Playwright, <strong>Terraform en AWS ECS</strong>, GitHub Actions con OIDC, CodeQL/Trivy limpios."
+            "text": "Núcleos hexagonales, <strong>OpenTelemetry + Prometheus/Grafana</strong>, medido con k6, E2E con Playwright, <strong>Terraform en AWS</strong> (ECS para los servicios, <strong>Lambda + DynamoDB</strong> para Bitácora), GitHub Actions con OIDC, CodeQL/Trivy sin hallazgos."
           }
         ],
-        "detailedDescription": "Atalaya es una plataforma de infraestructura para desarrolladores formada por tres productos, cada uno con su propio repositorio, base de datos y pipeline, y cada uno útil por separado.\n\nHookrelay es entrega de webhooks como servicio: ingesta idempotente, fan-out, firmas Standard Webhooks, reintentos con jitter, circuit breaker, cola de mensajes fallidos con reenvío masivo y protección SSRF aplicada al conectar. Flagship es gestión de funcionalidades con evaluación local: un SDK en TypeScript descarga las reglas una vez, evalúa en alrededor de 1 µs y recibe los cambios por streaming, distribuidos entre réplicas con LISTEN/NOTIFY de PostgreSQL. Nimbus es un guardián de pipelines asíncronos en AWS (SQS, Lambda, DLQ) escrito en Go: detectores explicables, incidentes deduplicados y un motor de workflows durable sobre leases de PostgreSQL.\n\nJuntos automatizan un incidente: Nimbus detecta un consumidor atascado y ejecuta un workflow de respuesta cuyos pasos llaman a Flagship (apagar el flag riesgoso) y a Hookrelay (notificar a los sistemas del cliente). Cuando el pipeline se recupera, el flag vuelve a su configuración previa, salvo que una persona lo haya cambiado mientras tanto. Todo el escenario corre en local con un solo Docker Compose y un script que verifica cada paso.",
+        "detailedDescription": "Atalaya es una plataforma de infraestructura para desarrolladores formada por cuatro productos, cada uno con su propio repositorio, base de datos y pipeline, y cada uno útil por separado.\n\nHookrelay es entrega de webhooks como servicio: ingesta idempotente, fan-out, firmas Standard Webhooks, reintentos con jitter, circuit breaker, cola de mensajes fallidos con reenvío masivo y protección SSRF aplicada al conectar. Flagship es gestión de funcionalidades con evaluación local: un SDK en TypeScript descarga las reglas una vez, evalúa en alrededor de 1 µs y recibe los cambios por streaming, distribuidos entre réplicas con LISTEN/NOTIFY de PostgreSQL. Nimbus es un guardián de pipelines asíncronos en AWS (SQS, Lambda, DLQ) escrito en Go: detectores explicables, incidentes deduplicados y un motor de workflows durable sobre leases de PostgreSQL. Bitácora es el registro de incidentes, serverless en AWS (API Gateway, Lambda, DynamoDB): se suscribe a Hookrelay, reconstruye la línea de tiempo de cada incidente con eventos de distintos productos, mide el tiempo hasta mitigar y recuperar, y redacta el postmortem.\n\nJuntos automatizan un incidente: Nimbus detecta un consumidor atascado y ejecuta un workflow de respuesta cuyos pasos llaman a Flagship (apagar el flag riesgoso) y a Hookrelay (notificar a los sistemas del cliente). Cuando el pipeline se recupera, el flag vuelve a su configuración previa, salvo que una persona lo haya cambiado mientras tanto. Todo el escenario corre en local con un solo Docker Compose y un script que verifica cada paso.",
         "challenges": [
           "Unir tres productos sin acoplarlos: sin base de datos, cola ni código compartidos, y sin que ninguno dependa de que otro esté arriba.",
           "Los tres entregan al menos una vez, así que un paso reintentado podría apagar un flag o notificar dos veces.",
-          "Permitir que la automatización cambie el comportamiento en producción sin pelear con la persona que atiende el incidente."
+          "Permitir que la automatización cambie el comportamiento en producción sin pelear con la persona que atiende el incidente.",
+          "Reconstruir una sola línea de tiempo a partir de dos publicadores cuyos eventos llegan desordenados, repetidos y más tarde de cuando ocurrieron."
         ],
         "solutions": [
           "Integración por endpoints HTTP públicos autenticados con firmas HMAC sobre el cuerpo exacto, cada uno detrás de una variable de entorno que lo apaga.",
           "Idempotencia en cada salto: Flagship responde \"ya estaba apagado\" y Hookrelay devuelve el mensaje original para la misma clave de incidente.",
-          "Flagship restaura un flag solo si la última entrada de auditoría sigue siendo el apagado de ese incidente; si no, lo deja como está y explica por qué. Cubierto con pruebas de integración."
+          "Flagship restaura un flag solo si la última entrada de auditoría sigue siendo el apagado de ese incidente; si no, lo deja como está y explica por qué. Cubierto con pruebas de integración.",
+          "Bitácora escribe de forma idempotente (claves con el id del webhook, horas con if_not_exists) y ordena por la hora de origen que ahora marca Nimbus (occurredAt). Fue el demo de punta a punta el que detectó que la hora de entrega ponía \"abierto\" después de \"mitigado\"."
         ]
       },
       "kuntur-core-banking": {
@@ -333,33 +336,6 @@
           "Modelos locales por defecto, respuestas en streaming y un interruptor explícito por mensaje para usar la nube."
         ]
       },
-      "smartnotes-platform": {
-        "title": "SmartNotes — Microservicios NestJS detrás de un Gateway NGINX",
-        "description": "Backend de notas dividido en tres servicios NestJS (auth, usuarios y notas) detrás de un gateway NGINX, con RabbitMQ para la comunicación entre servicios y PostgreSQL por servicio.",
-        "highlights": [
-          {
-            "label": "Límites de servicio",
-            "text": "<strong>Auth, Usuarios y Notas</strong> son servicios NestJS separados, cada uno con su Dockerfile y su acceso a datos."
-          },
-          {
-            "label": "Mensajería",
-            "text": "El servicio de auth habla con el de usuarios por <strong>RabbitMQ</strong> (transporte de microservicios de NestJS) en lugar de llamadas HTTP directas."
-          },
-          {
-            "label": "Borde",
-            "text": "Un <strong>gateway NGINX</strong> enruta /auth, /users y /notes a sus upstreams; JWT con Passport; documentación OpenAPI en el servicio de notas."
-          }
-        ],
-        "detailedDescription": "Un sistema pequeño de microservicios para practicar límites entre servicios. NGINX es el único punto de entrada y reenvía cada prefijo de ruta a su servicio. Autenticación emite JWT y consulta las credenciales al servicio de usuarios por RabbitMQ, así ambos quedan desacoplados. Usuarios y notas persisten con TypeORM sobre PostgreSQL. Todo arranca con un solo Docker Compose.",
-        "challenges": [
-          "Evitar una base de datos compartida y el acoplamiento HTTP directo entre servicios.",
-          "Dar a los clientes un único punto de entrada estable mientras los servicios evolucionan por separado."
-        ],
-        "solutions": [
-          "Petición/respuesta por RabbitMQ entre auth y usuarios, con cada servicio dueño de sus tablas.",
-          "Enrutamiento por ruta en NGINX con un upstream por servicio."
-        ]
-      },
       "uta-elections": {
         "title": "Plataforma de Campaña Electoral — Elección de Rector Universitario",
         "description": "Sitio de campaña y backend de participación para una elección de rector: candidatos, propuestas, noticias y eventos con búsqueda, registro de votantes y estadísticas de participación.",
@@ -385,33 +361,6 @@
         "solutions": [
           "Un esquema normalizado gestionado por completo con migraciones y relaciones de Eloquent.",
           "Rutas de búsqueda dedicadas por etiqueta y por fecha para cada tipo de contenido."
-        ]
-      },
-      "creative-portfolio": {
-        "title": "Constructor de Portafolios — Plataforma Comunitaria en PHP",
-        "description": "Plataforma multiusuario donde las personas publican portafolios, proyectos y posts, descubren a otros por categoría y habilidad, y comentan. Escrita en PHP y MySQL puros, sin framework.",
-        "highlights": [
-          {
-            "label": "Diseño relacional",
-            "text": "Un <strong>esquema de 15 tablas</strong>: usuarios y roles, portafolios con habilidades, proyectos, posts, etiquetas, categorías y comentarios."
-          },
-          {
-            "label": "Descubrimiento",
-            "text": "Filtros de portafolios, proyectos y posts por categoría, etiqueta y habilidad, cargados de forma asíncrona con Axios."
-          },
-          {
-            "label": "Cuentas",
-            "text": "Registro, inicio de sesión con contraseñas hasheadas y sentencias preparadas, y recuperación de contraseña por correo."
-          }
-        ],
-        "detailedDescription": "Un proyecto de equipo de los primeros, que muestra los fundamentos sin un framework que los esconda: manejo de peticiones, SQL, sesiones, filtrado de entradas y plantillas renderizadas en el servidor con PHP, más JavaScript para filtros e interacciones. Cada usuario arma un portafolio con sus proyectos y habilidades, publica posts, y otros usuarios pueden descubrirlos y comentar.",
-        "challenges": [
-          "Diseñar a mano relaciones muchos a muchos (portafolios–habilidades, proyectos–etiquetas).",
-          "Mantener las consultas seguras sin un ORM."
-        ],
-        "solutions": [
-          "Tablas intermedias y un esquema claro entregado como archivo SQL.",
-          "Sentencias preparadas y una capa compartida de filtrado de entradas."
         ]
       },
       "stayflow-cloud": {

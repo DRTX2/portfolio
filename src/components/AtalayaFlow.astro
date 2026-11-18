@@ -1,0 +1,67 @@
+---
+import { useTranslations } from '../i18n/utils';
+const t = useTranslations('en');
+
+// Node boxes in the 920x470 viewBox (mx/my: the stacked 430x680 layout used on phones).
+// Statuses are the state before the scenario runs.
+const nodes = [
+  { id: 'pipeline', x: 20, y: 155, mx: 115, my: 10, title: 'Orders pipeline', role: 'SQS · Lambda', status: 'backlog 3' },
+  { id: 'nimbus', x: 265, y: 155, mx: 115, my: 140, title: 'Nimbus', role: 'detect · Go', status: 'watching' },
+  { id: 'flagship', x: 520, y: 40, mx: 10, my: 290, title: 'Flagship', role: 'mitigate · NestJS', status: 'orders-v2: ON' },
+  { id: 'sdks', x: 740, y: 40, mx: 10, my: 440, title: 'Your services', role: 'Flagship SDK', status: 'serving v2' },
+  { id: 'hookrelay', x: 520, y: 270, mx: 220, my: 290, title: 'Hookrelay', role: 'notify · NestJS', status: '0 delivered' },
+  { id: 'oncall', x: 740, y: 270, mx: 220, my: 440, title: 'On-call', role: 'customer endpoint', status: 'idle' },
+  { id: 'bitacora', x: 740, y: 380, mx: 220, my: 590, title: 'Bitácora', role: 'learn · Lambda', status: 'no incidents' },
+];
+const paths = [
+  { id: 'pipeline-nimbus', d: 'M190 190 H265', md: 'M200 80 V140' },
+  { id: 'nimbus-flagship', d: 'M435 190 C480 190 470 75 520 75', md: 'M200 210 C200 250 95 250 95 290' },
+  { id: 'flagship-sdks', d: 'M690 75 H740', md: 'M95 360 V440' },
+  { id: 'nimbus-hookrelay', d: 'M435 190 C480 190 470 305 520 305', md: 'M200 210 C200 250 305 250 305 290' },
+  { id: 'hookrelay-oncall', d: 'M690 305 H740', md: 'M305 360 V440' },
+  { id: 'hookrelay-bitacora', d: 'M690 305 C715 305 715 415 740 415', md: 'M390 325 C425 325 425 625 390 625' },
+];
+const steps = t.flow.steps as string[];
+---
+
+<section class="atalaya-live" id="atalaya-live" data-flow>
+  <h2>
+    <span data-t="flow.title">{t.flow.title}</span>
+    <span class="enfasis-title" data-t="flow.titleHighlight">{t.flow.titleHighlight}</span>
+  </h2>
+  <p class="flow-subtitle" data-t="flow.subtitle">{t.flow.subtitle}</p>
+
+  <div class="flow-grid">
+    <div class="flow-canvas">
+      <svg viewBox="0 0 920 470" role="img" aria-labelledby="flow-svg-title">
+        <title id="flow-svg-title">Nimbus detects a stalled pipeline, Flagship turns the risky flag off, Hookrelay notifies the on-call endpoint, Bitácora records the timeline</title>
+        <g class="flow-paths">
+          {paths.map((p) => <path id={`flow-${p.id}`} d={p.d} data-d={p.d} data-md={p.md} data-path={p.id} />)}
+        </g>
+        {nodes.map((n) => (
+          <g class="flow-node" data-node={n.id} transform={`translate(${n.x} ${n.y})`} data-t-wide={`translate(${n.x} ${n.y})`} data-t-stacked={`translate(${n.mx} ${n.my})`}>
+            <rect width="170" height="70" rx="12" />
+            <text class="n-title" x="14" y="26">{n.title}</text>
+            <text class="n-role" x="14" y="44">{n.role}</text>
+            <text class="n-status" x="14" y="61" data-initial={n.status}>{n.status}</text>
+          </g>
+        ))}
+        <circle class="flow-packet" r="7" cx="-20" cy="-20" />
+      </svg>
+    </div>
+
+    <div class="flow-panel">
+      <ol class="flow-log" aria-live="polite">
+        {steps.map((s, i) => <li data-step={i} data-t={`flow.steps.${i}`}>{s}</li>)}
+      </ol>
+      <div class="flow-actions">
+        <button type="button" class="flow-run" data-flow-run>
+          <i class="fas fa-play" aria-hidden="true"></i> <span data-t="flow.run">{t.flow.run}</span>
+        </button>
+        <a href="https://github.com/DRTX2/atalaya" target="_blank" rel="noopener" class="flow-source">
+          <i class="fab fa-github" aria-hidden="true"></i> <span data-t="flow.source">{t.flow.source}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

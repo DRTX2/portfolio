@@ -35,11 +35,11 @@ export const projects: ProjectData[] = [
       `${import.meta.env.BASE_URL}assets/img/atalaya/hookrelay-endpoints.webp`,
       `${import.meta.env.BASE_URL}assets/img/atalaya/hookrelay-grafana.webp`,
     ],
-    description: "Three independent products that close the loop detect → mitigate → notify → recover: Nimbus watches AWS async pipelines, Flagship controls features with kill switches, and Hookrelay delivers events reliably. Integrated only through signed, idempotent HTTP APIs.",
+    description: "Four independent products that close the loop detect → mitigate → notify → recover → learn: Nimbus watches AWS async pipelines, Flagship controls features with kill switches, Hookrelay delivers events reliably, and Bitácora turns each incident into a timeline and a postmortem. Integrated only through signed, idempotent HTTP APIs.",
     highlights: [
-      { label: "End-to-end, asserted", text: "A stalled pipeline in <strong>Nimbus</strong> turns a flag off in <strong>Flagship</strong> (SDKs see it in <strong>615 ms</strong>) and <strong>Hookrelay</strong> notifies the customer webhook; recovery restores everything." },
+      { label: "End-to-end, asserted", text: "A stalled pipeline in <strong>Nimbus</strong> turns a flag off in <strong>Flagship</strong> (SDKs see it in <strong>680 ms</strong>), <strong>Hookrelay</strong> notifies the customer webhook and <strong>Bitácora</strong> drafts the postmortem; recovery restores everything." },
       { label: "Built to fail safely", text: "HMAC-signed calls with a replay window, idempotent on every hop, and <strong>humans win over automation</strong>: a flag edited during the incident is never overwritten." },
-      { label: "Production-shaped", text: "Hexagonal cores, <strong>OpenTelemetry + Prometheus/Grafana</strong>, k6-measured, Playwright E2E, <strong>Terraform on AWS ECS</strong>, GitHub Actions with OIDC, CodeQL/Trivy clean." },
+      { label: "Production-shaped", text: "Hexagonal cores, <strong>OpenTelemetry + Prometheus/Grafana</strong>, k6-measured, Playwright E2E, <strong>Terraform on AWS</strong> (ECS for the services, <strong>Lambda + DynamoDB</strong> for Bitácora), GitHub Actions with OIDC, CodeQL/Trivy clean." },
     ],
     technologies: [
       { name: "NestJS", iconClass: "devicon-nestjs-original" },
@@ -50,7 +50,8 @@ export const projects: ProjectData[] = [
       { name: "React", iconClass: "devicon-react-original" },
       { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
       { name: "Redis / BullMQ", iconClass: "devicon-redis-plain" },
-      { name: "AWS ECS · RDS", iconClass: "devicon-amazonwebservices-plain-wordmark" },
+      { name: "AWS ECS · Lambda", iconClass: "devicon-amazonwebservices-plain-wordmark" },
+      { name: "DynamoDB", iconImg: "https://cdn.simpleicons.org/amazondynamodb" },
       { name: "Terraform", iconClass: "devicon-terraform-plain" },
       { name: "GitHub Actions", iconClass: "devicon-githubactions-plain" },
       { name: "OpenTelemetry", iconImg: "https://cdn.simpleicons.org/opentelemetry" },
@@ -64,12 +65,14 @@ export const projects: ProjectData[] = [
       { url: "https://github.com/DRTX2/hookrelay", label: "Hookrelay", iconClass: "fab fa-github" },
       { url: "https://github.com/DRTX2/flagship", label: "Flagship", iconClass: "fab fa-github" },
       { url: "https://github.com/DRTX2/nimbus", label: "Nimbus", iconClass: "fab fa-github" },
+      { url: "https://github.com/DRTX2/bitacora", label: "Bitácora", iconClass: "fab fa-github" },
     ],
-    detailedDescription: "Atalaya (Spanish for watchtower) is a developer infrastructure platform made of three products, each with its own repository, database and pipeline, each useful alone.\n\nHookrelay is webhook delivery as a service: idempotent ingestion, fan-out, Standard Webhooks signatures, retries with jitter, circuit breaker, a dead-letter queue with bulk replay, and SSRF protection enforced at connection time. Flagship is feature management with local evaluation: a TypeScript SDK downloads the ruleset once, evaluates in about 1 µs, and receives changes over a stream fanned out across replicas with PostgreSQL LISTEN/NOTIFY. Nimbus is a guardian for AWS asynchronous pipelines (SQS, Lambda, DLQ) written in Go: explainable detectors, deduplicated incidents and a durable workflow engine on PostgreSQL leases.\n\nTogether they automate an incident: Nimbus detects a stalled consumer and runs a response workflow whose steps call Flagship (kill the risky feature flag) and Hookrelay (notify customer systems). When the pipeline recovers, the flag is restored to its pre-incident configuration, unless a person changed it in the meantime. The whole scenario runs locally with one Docker Compose file and a script that asserts every step.",
+    detailedDescription: "Atalaya (Spanish for watchtower) is a developer infrastructure platform made of four products, each with its own repository, database and pipeline, each useful alone.\n\nHookrelay is webhook delivery as a service: idempotent ingestion, fan-out, Standard Webhooks signatures, retries with jitter, circuit breaker, a dead-letter queue with bulk replay, and SSRF protection enforced at connection time. Flagship is feature management with local evaluation: a TypeScript SDK downloads the ruleset once, evaluates in about 1 µs, and receives changes over a stream fanned out across replicas with PostgreSQL LISTEN/NOTIFY. Nimbus is a guardian for AWS asynchronous pipelines (SQS, Lambda, DLQ) written in Go: explainable detectors, deduplicated incidents and a durable workflow engine on PostgreSQL leases. Bitácora is the incident ledger, serverless on AWS (API Gateway, Lambda, DynamoDB): it subscribes to Hookrelay, rebuilds each incident's timeline from events published by different products, measures time to mitigate and recover, and drafts the postmortem.\n\nTogether they automate an incident: Nimbus detects a stalled consumer and runs a response workflow whose steps call Flagship (kill the risky feature flag) and Hookrelay (notify customer systems). When the pipeline recovers, the flag is restored to its pre-incident configuration, unless a person changed it in the meantime, and Bitácora records the whole response. The whole scenario runs locally with one Docker Compose file and a script that asserts every step.",
     features: [
       "Hookrelay: no lost events (message and deliveries in one transaction, sweeper for orphans), DLQ with replay that is safe under concurrent replays, measured p95 3.9 ms at 200 req/s.",
       "Flagship: sticky percentage rollouts with MurmurHash3, optimistic concurrency, audit log with one-click rollback, 2,000 SDK streams per replica updated in under 62 ms.",
       "Nimbus: four explainable detectors, row-level security per tenant, approvals, transactional outbox, 71 Gherkin acceptance scenarios.",
+      "Bitácora: serverless incident ledger (API Gateway, three least-privilege Lambdas, single-table DynamoDB, KMS), idempotent and order-independent, tested against DynamoDB Local.",
       "Integration by contract only: HMAC-signed requests, 5-minute replay window, idempotency keys derived from incident and version.",
       "Every integration is optional: each product keeps working if another is down.",
       "Each repo ships architecture docs, ADRs, test plan, runbook, security model, CI and Terraform for AWS.",
@@ -78,11 +81,13 @@ export const projects: ProjectData[] = [
       "Joining three products without coupling them: no shared database, queue or code, and no product allowed to depend on another being up.",
       "All three deliver at-least-once, so a retried step could kill a flag twice or notify twice.",
       "Letting automation change production behaviour without it ever fighting a person who is handling the incident.",
+      "Rebuilding one timeline from two publishers whose events arrive out of order, more than once, and later than they happened.",
     ],
     solutions: [
       "Integration through public HTTP endpoints authenticated by HMAC signatures over the raw body, each one behind an environment variable that turns it off.",
       "Made every hop idempotent: Flagship answers \"already off\", Hookrelay returns the original message for the same incident key.",
       "Flagship restores a flag only when the latest audit entry is still that incident's kill; otherwise it leaves the flag alone and says why. Covered by integration tests.",
+      "Bitácora writes idempotently (keys include the webhook id, timestamps use if_not_exists) and orders events by the source time Nimbus now stamps (occurredAt). The end-to-end demo is what caught that delivery time put \"opened\" after \"mitigated\".",
     ],
   },
   {
@@ -772,41 +777,6 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
     ],
   },
   {
-    slug: 'smartnotes-platform',
-    title: "SmartNotes — NestJS Microservices behind an NGINX Gateway",
-    image: `${import.meta.env.BASE_URL}assets/img/smartnotes.png`,
-    images: [
-      `${import.meta.env.BASE_URL}assets/img/smartnotes.png`,
-    ],
-    description: "A notes backend split into three NestJS services (auth, users, notes) behind an NGINX gateway, with RabbitMQ for service-to-service calls and PostgreSQL per service.",
-    highlights: [
-      { label: "Service boundaries", text: "<strong>Auth, Users and Notes</strong> are separate NestJS services, each with its own Dockerfile and data access." },
-      { label: "Messaging", text: "The auth service talks to the users service over <strong>RabbitMQ</strong> (NestJS microservices transport) instead of direct HTTP calls." },
-      { label: "Edge", text: "An <strong>NGINX gateway</strong> routes /auth, /users and /notes to their upstreams; JWT with Passport; OpenAPI docs on the notes service." },
-    ],
-    technologies: [
-      { name: "NestJS", iconClass: "devicon-nestjs-original" },
-      { name: "TypeScript", iconClass: "devicon-typescript-plain" },
-      { name: "RabbitMQ", iconClass: "devicon-rabbitmq-original" },
-      { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
-      { name: "TypeORM", iconClass: "fas fa-database" },
-      { name: "NGINX", iconClass: "devicon-nginx-original" },
-      { name: "Docker", iconClass: "devicon-docker-plain" },
-    ],
-    links: [
-      { url: "https://github.com/DRTX2/note-app", label: "Source Code", iconClass: "fab fa-github" },
-    ],
-    detailedDescription: "A small microservices system used to practise service boundaries. NGINX is the single entry point and forwards each path prefix to its service. Authentication issues JWTs and asks the users service for credentials through RabbitMQ, so the two services stay decoupled. Users and notes persist with TypeORM on PostgreSQL. Everything starts with one Docker Compose file.",
-    challenges: [
-      "Avoiding a shared database and direct HTTP coupling between services.",
-      "Giving clients one stable entry point while services move independently.",
-    ],
-    solutions: [
-      "Request/response over RabbitMQ between auth and users, each service owning its tables.",
-      "Path-based routing in NGINX with one upstream per service.",
-    ],
-  },
-  {
     slug: 'uta-elections',
     title: "Election Campaign Platform — University Rector Race",
     image: `${import.meta.env.BASE_URL}assets/img/uta_page.jpeg`,
@@ -838,37 +808,5 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
       "A normalized schema managed entirely with migrations and Eloquent relationships.",
       "Dedicated search routes by tag and date for each content type.",
     ],
-  },
-  {
-    slug: 'creative-portfolio',
-    title: "Portfolio Builder — Community Platform in PHP",
-    image: `${import.meta.env.BASE_URL}assets/img/blog.jpeg`,
-    images: [
-      `${import.meta.env.BASE_URL}assets/img/blog.jpeg`,
-    ],
-    description: "A multi-user platform where people publish portfolios, projects and posts, discover others by category and skill, and comment. Written in plain PHP and MySQL, without a framework.",
-    highlights: [
-      { label: "Relational design", text: "A <strong>15-table schema</strong>: users and roles, portfolios with skills, projects, posts, tags, categories and comments." },
-      { label: "Discovery", text: "Filters for portfolios, projects and posts by category, tag and skill, loaded asynchronously with Axios." },
-      { label: "Accounts", text: "Registration, login with hashed passwords and prepared statements, and password reset by email." },
-    ],
-    technologies: [
-      { name: "PHP", iconClass: "devicon-php-plain" },
-      { name: "MySQL", iconClass: "devicon-mysql-original" },
-      { name: "JavaScript", iconClass: "devicon-javascript-plain" },
-      { name: "Axios", iconClass: "fas fa-arrows-rotate" },
-    ],
-    links: [
-      { url: "https://github.com/DRTX2/proyecto-mds.git", label: "Source Code", iconClass: "fab fa-github" },
-    ],
-    detailedDescription: "An early team project that shows the fundamentals without a framework hiding them: request handling, SQL, sessions, input filtering and server-rendered templates in PHP, with JavaScript for filtering and interactions. Each user builds a portfolio from their projects and skills, publishes posts, and other users can discover and comment on them.",
-    challenges: [
-      "Designing many-to-many relationships (portfolios–skills, projects–tags) by hand.",
-      "Keeping queries safe without an ORM.",
-    ],
-    solutions: [
-      "Junction tables and a clear schema shipped as a SQL file.",
-      "Prepared statements and a shared input-filtering layer.",
-    ],
-  },
+  }
 ];
