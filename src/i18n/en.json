@@ -523,15 +523,6 @@
     }
   },
   "contact": {
-    "formTitle": "Send me a message",
-    "formName": "Name",
-    "formEmail": "Email",
-    "formMessage": "Message",
-    "send": "Send message",
-    "sending": "Sending…",
-    "sent": "Thanks! Your message was sent. I usually reply within 48 hours.",
-    "error": "The message could not be sent. Please email me directly at",
-    "orReach": "Or reach me on",
     "title": "Let's Work",
     "titleHighlight": "Together",
     "subtitle": "I'm always interested in hearing about new projects and opportunities. Whether you need a full-stack solution, backend architecture, or frontend excellence, let's create something amazing together.",

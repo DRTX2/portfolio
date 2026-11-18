@@ -523,15 +523,6 @@
     }
   },
   "contact": {
-    "formTitle": "Envíame un mensaje",
-    "formName": "Nombre",
-    "formEmail": "Correo",
-    "formMessage": "Mensaje",
-    "send": "Enviar mensaje",
-    "sending": "Enviando…",
-    "sent": "¡Gracias! Tu mensaje fue enviado. Suelo responder en menos de 48 horas.",
-    "error": "No se pudo enviar el mensaje. Escríbeme directamente a",
-    "orReach": "O encuéntrame en",
     "title": "Trabajemos",
     "titleHighlight": "Juntos",
     "subtitle": "Siempre estoy interesado en conocer nuevos proyectos y oportunidades. Ya sea que necesites una solución full-stack, arquitectura backend o excelencia frontend, creemos algo increíble juntos.",

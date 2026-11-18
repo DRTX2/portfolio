@@ -29,7 +29,7 @@ Estado al 16-nov-2026. ✅ cumplido · 🟡 depende de una acción tuya · ⬜ p
 ## Contacto
 | Requisito | Estado | Nota |
 |---|---|---|
-| Formulario de contacto | ⬜ por decisión tuya | Quitado. Ojo: en GitHub Pages sí puede funcionar con un servicio externo (FormSubmit/Formspree) sin backend propio; está en el historial si lo quieres recuperar |
+| Formulario de contacto | ⬜ por decisión tuya | Quitado el 17-nov-2026: FormSubmit dejó de resolver (DNS caído) y el formulario fallaba. Contacto por LinkedIn, GitHub y email. Si se quiere uno, usar un servicio con backend propio o Formspree |
 | Redes profesionales | ✅ | LinkedIn, GitHub, email (los íconos estaban rotos por un bug en About.astro; corregido) |
 
 ## Otros
