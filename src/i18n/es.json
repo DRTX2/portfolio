@@ -12,7 +12,7 @@
       },
       {
         "title": "Lectura y aprendizaje continuo",
-        "text": "Leo sobre arquitectura de software y sistemas distribuidos y lo convierto en código que funciona. Atalaya (tres productos de infraestructura que trabajan juntos) nació de ese hábito."
+        "text": "Leo sobre arquitectura de software y sistemas distribuidos y lo convierto en código que funciona. Atalaya (cuatro productos de infraestructura que trabajan juntos) nació de ese hábito."
       }
     ]
   },
@@ -212,6 +212,7 @@
     "viewSource": "Código Fuente",
     "viewDetails": "Descripción",
     "close": "Cerrar",
+    "page": {"back": "Todos los proyectos", "highlights": "Lo más importante", "gallery": "Galería", "previous": "Proyecto anterior", "next": "Proyecto siguiente", "fullPage": "Ver caso completo", "stack": "Tecnologías", "links": "Código"},
     "modal": {
       "eyebrow": "Detalle del proyecto",
       "keyFeatures": "Funcionalidades clave",
@@ -230,6 +231,7 @@
             "label": "De punta a punta, verificado",
             "text": "Un pipeline atascado en <strong>Nimbus</strong> apaga un flag en <strong>Flagship</strong> (los SDK lo ven en <strong>680 ms</strong>), <strong>Hookrelay</strong> avisa al webhook del cliente y <strong>Bitácora</strong> redacta el postmortem; al recuperarse, todo se restaura."
           },
+          {"label": "Aprende de cada incidente", "text": "<strong>Bitácora</strong>, serverless en AWS (API Gateway, Lambda, DynamoDB), reconstruye la línea de tiempo de cada incidente a partir de los webhooks, mide el tiempo hasta mitigar y recuperar, y redacta el <strong>postmortem</strong>."},
           {
             "label": "Hecho para fallar bien",
             "text": "Llamadas firmadas con HMAC y ventana anti-replay, idempotentes en cada salto, y <strong>las personas ganan a la automatización</strong>: un flag editado durante el incidente nunca se sobrescribe."
@@ -241,7 +243,7 @@
         ],
         "detailedDescription": "Atalaya es una plataforma de infraestructura para desarrolladores formada por cuatro productos, cada uno con su propio repositorio, base de datos y pipeline, y cada uno útil por separado.\n\nHookrelay es entrega de webhooks como servicio: ingesta idempotente, fan-out, firmas Standard Webhooks, reintentos con jitter, circuit breaker, cola de mensajes fallidos con reenvío masivo y protección SSRF aplicada al conectar. Flagship es gestión de funcionalidades con evaluación local: un SDK en TypeScript descarga las reglas una vez, evalúa en alrededor de 1 µs y recibe los cambios por streaming, distribuidos entre réplicas con LISTEN/NOTIFY de PostgreSQL. Nimbus es un guardián de pipelines asíncronos en AWS (SQS, Lambda, DLQ) escrito en Go: detectores explicables, incidentes deduplicados y un motor de workflows durable sobre leases de PostgreSQL. Bitácora es el registro de incidentes, serverless en AWS (API Gateway, Lambda, DynamoDB): se suscribe a Hookrelay, reconstruye la línea de tiempo de cada incidente con eventos de distintos productos, mide el tiempo hasta mitigar y recuperar, y redacta el postmortem.\n\nJuntos automatizan un incidente: Nimbus detecta un consumidor atascado y ejecuta un workflow de respuesta cuyos pasos llaman a Flagship (apagar el flag riesgoso) y a Hookrelay (notificar a los sistemas del cliente). Cuando el pipeline se recupera, el flag vuelve a su configuración previa, salvo que una persona lo haya cambiado mientras tanto. Todo el escenario corre en local con un solo Docker Compose y un script que verifica cada paso.",
         "challenges": [
-          "Unir tres productos sin acoplarlos: sin base de datos, cola ni código compartidos, y sin que ninguno dependa de que otro esté arriba.",
+          "Unir cuatro productos sin acoplarlos: sin base de datos, cola ni código compartidos, y sin que ninguno dependa de que otro esté arriba.",
           "Los tres entregan al menos una vez, así que un paso reintentado podría apagar un flag o notificar dos veces.",
           "Permitir que la automatización cambie el comportamiento en producción sin pelear con la persona que atiende el incidente.",
           "Reconstruir una sola línea de tiempo a partir de dos publicadores cuyos eventos llegan desordenados, repetidos y más tarde de cuando ocurrieron."

@@ -383,7 +383,7 @@ const initContactHandoff = () => {
   gsap.to(from, {
     "--recede": 1,
     ease: "none",
-    scrollTrigger: { trigger: to, start: "top bottom", end: "top 25%", scrub: true },
+    scrollTrigger: { trigger: to, start: "top 75%", end: "top 15%", scrub: true },
   });
 };
 

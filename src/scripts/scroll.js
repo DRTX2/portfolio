@@ -35,6 +35,11 @@ export function initSmoothScroll() {
       if (href && href.startsWith('#')) {
         e.preventDefault();
         const section = document.querySelector(href);
+        // Project pages have no #presentation: back-to-top still goes to the top.
+        if (!section && link.classList.contains('back-to-top')) {
+          if (window.lenis) window.lenis.scrollTo(0);
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         if (section) {
           const elementPosition = section.getBoundingClientRect().top;

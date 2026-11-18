@@ -28,6 +28,7 @@ export const projects: ProjectData[] = [
       `${import.meta.env.BASE_URL}assets/img/atalaya/nimbus-incidents.webp`,
       `${import.meta.env.BASE_URL}assets/img/atalaya/flagship-history.webp`,
       `${import.meta.env.BASE_URL}assets/img/atalaya/hookrelay-message.webp`,
+      `${import.meta.env.BASE_URL}assets/img/atalaya/bitacora-postmortem.webp`,
       `${import.meta.env.BASE_URL}assets/img/atalaya/nimbus-pipelines.webp`,
       `${import.meta.env.BASE_URL}assets/img/atalaya/flagship-detail.webp`,
       `${import.meta.env.BASE_URL}assets/img/atalaya/hookrelay-overview.webp`,
@@ -38,6 +39,7 @@ export const projects: ProjectData[] = [
     description: "Four independent products that close the loop detect → mitigate → notify → recover → learn: Nimbus watches AWS async pipelines, Flagship controls features with kill switches, Hookrelay delivers events reliably, and Bitácora turns each incident into a timeline and a postmortem. Integrated only through signed, idempotent HTTP APIs.",
     highlights: [
       { label: "End-to-end, asserted", text: "A stalled pipeline in <strong>Nimbus</strong> turns a flag off in <strong>Flagship</strong> (SDKs see it in <strong>680 ms</strong>), <strong>Hookrelay</strong> notifies the customer webhook and <strong>Bitácora</strong> drafts the postmortem; recovery restores everything." },
+      { label: "Learns from every incident", text: "<strong>Bitácora</strong>, serverless on AWS (API Gateway, Lambda, DynamoDB), rebuilds each incident's timeline from the webhooks, measures time to mitigate and recover, and drafts the <strong>postmortem</strong>." },
       { label: "Built to fail safely", text: "HMAC-signed calls with a replay window, idempotent on every hop, and <strong>humans win over automation</strong>: a flag edited during the incident is never overwritten." },
       { label: "Production-shaped", text: "Hexagonal cores, <strong>OpenTelemetry + Prometheus/Grafana</strong>, k6-measured, Playwright E2E, <strong>Terraform on AWS</strong> (ECS for the services, <strong>Lambda + DynamoDB</strong> for Bitácora), GitHub Actions with OIDC, CodeQL/Trivy clean." },
     ],
@@ -51,7 +53,7 @@ export const projects: ProjectData[] = [
       { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
       { name: "Redis / BullMQ", iconClass: "devicon-redis-plain" },
       { name: "AWS ECS · Lambda", iconClass: "devicon-amazonwebservices-plain-wordmark" },
-      { name: "DynamoDB", iconImg: "https://cdn.simpleicons.org/amazondynamodb" },
+      { name: "DynamoDB", iconImg: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/dynamodb/dynamodb-original.svg" },
       { name: "Terraform", iconClass: "devicon-terraform-plain" },
       { name: "GitHub Actions", iconClass: "devicon-githubactions-plain" },
       { name: "OpenTelemetry", iconImg: "https://cdn.simpleicons.org/opentelemetry" },
@@ -78,7 +80,7 @@ export const projects: ProjectData[] = [
       "Each repo ships architecture docs, ADRs, test plan, runbook, security model, CI and Terraform for AWS.",
     ],
     challenges: [
-      "Joining three products without coupling them: no shared database, queue or code, and no product allowed to depend on another being up.",
+      "Joining four products without coupling them: no shared database, queue or code, and no product allowed to depend on another being up.",
       "All three deliver at-least-once, so a retried step could kill a flag twice or notify twice.",
       "Letting automation change production behaviour without it ever fighting a person who is handling the incident.",
       "Rebuilding one timeline from two publishers whose events arrive out of order, more than once, and later than they happened.",

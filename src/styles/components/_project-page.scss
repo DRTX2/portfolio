@@ -1,0 +1,232 @@
+@use "../abstracts/variables" as *;
+
+// Project pages (/projects/<slug>/): the long form of a card. Same width and rhythm as the home sections.
+.project-page {
+  padding-top: 5.5rem; // below the fixed header
+
+  .pp-section {
+    width: 100%;
+    max-width: calc(#{$container} + 2 * #{$gutter});
+    margin-inline: auto;
+    padding-inline: $gutter;
+    padding-block: clamp(2.5rem, 5vw, 3.75rem) 0;
+
+    > h2 { margin: 0 0 1.25rem; font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem); }
+  }
+
+  .pp-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-decoration: none;
+    &:hover { color: var(--text); }
+  }
+
+  .project-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.75rem;
+    padding: 0.2rem 0.65rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  h1 {
+    max-width: 22ch;
+    margin: 0 0 1rem;
+    font-size: clamp(2.2rem, 1.4rem + 3.2vw, 3.8rem);
+    line-height: 1.02;
+  }
+
+  .pp-lede { max-width: 68ch; margin: 0 0 1.5rem; color: var(--text-muted); font-size: 1.1rem; }
+
+  .pp-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem; }
+  .pp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-m);
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    &:hover { border-color: var(--signal); }
+    &.primary { background: var(--signal); border-color: var(--signal); color: var(--signal-ink); }
+  }
+
+  .pp-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-s);
+      background: var(--surface);
+      font-size: 0.85rem;
+    }
+    img { width: 16px; height: 16px; }
+  }
+
+  .pp-cover {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--surface-2);
+    cursor: zoom-in;
+
+    img { display: block; width: 100%; max-height: 72vh; object-fit: contain; }
+    .image-count {
+      position: absolute;
+      right: 0.75rem;
+      bottom: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.55rem;
+      border-radius: var(--radius-s);
+      background: rgba(13, 23, 38, 0.82);
+      color: #e8edf4;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  }
+
+  .pp-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: grid;
+      align-content: start;
+      gap: 0.5rem;
+      padding: 1.25rem;
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--signal);
+      border-radius: var(--radius-l);
+      background: var(--surface);
+    }
+    strong { font-size: 1.05rem; }
+    span { color: var(--text-muted); }
+  }
+
+  .pp-prose {
+    max-width: 72ch;
+    p { margin: 0 0 1.1rem; color: var(--text-muted); font-size: 1.05rem; }
+  }
+
+  .pp-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 0.75rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding-left: 1.4rem;
+      color: var(--text-muted);
+      &::before { content: ""; position: absolute; left: 0; top: 0.65em; width: 0.6rem; height: 2px; background: var(--signal); }
+    }
+  }
+
+  .pp-tradeoffs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 2rem;
+
+    h2 { margin: 0 0 1rem; font-size: clamp(1.25rem, 1rem + 0.8vw, 1.6rem); }
+    ol {
+      display: grid;
+      gap: 0.9rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: item;
+    }
+    li {
+      counter-increment: item;
+      display: grid;
+      grid-template-columns: 1.8rem 1fr;
+      gap: 0.6rem;
+      color: var(--text-muted);
+      &::before {
+        content: counter(item, decimal-leading-zero);
+        color: var(--signal-text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.85rem;
+        padding-top: 0.15em;
+      }
+    }
+  }
+
+  .pp-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 0.75rem;
+
+    button {
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-m);
+      background: var(--surface-2);
+      cursor: zoom-in;
+      aspect-ratio: 16 / 10;
+      transition: border-color 0.2s ease;
+      &:hover { border-color: var(--signal); }
+    }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+  }
+
+  .pp-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-bottom: clamp(3.5rem, 7vw, 5rem);
+
+    a {
+      display: grid;
+      gap: 0.3rem;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-l);
+      background: var(--surface);
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s ease;
+      &:hover { border-color: var(--signal); }
+      &.next { text-align: right; }
+    }
+    span { color: var(--text-muted); font-size: 0.85rem; }
+    @media (max-width: 640px) { grid-template-columns: 1fr; a.next { text-align: left; } }
+  }
+
+  // The Atalaya diagram keeps its own section shell; just tighten the spacing here.
+  .atalaya-live { padding-top: clamp(2.5rem, 5vw, 3.75rem); }
+}

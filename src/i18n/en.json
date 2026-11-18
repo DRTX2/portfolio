@@ -12,7 +12,7 @@
       },
       {
         "title": "Reading & continuous learning",
-        "text": "I read about software architecture and distributed systems and turn it into working code. Atalaya (three infrastructure products working together) came out of that habit."
+        "text": "I read about software architecture and distributed systems and turn it into working code. Atalaya (four infrastructure products working together) came out of that habit."
       }
     ]
   },
@@ -212,6 +212,7 @@
     "viewSource": "Source Code",
     "viewDetails": "Overview",
     "close": "Close",
+    "page": {"back": "All projects", "highlights": "Highlights", "gallery": "Gallery", "previous": "Previous project", "next": "Next project", "fullPage": "Full case study", "stack": "Stack", "links": "Code"},
     "modal": {
       "eyebrow": "Project overview",
       "keyFeatures": "Key features",
@@ -230,6 +231,7 @@
             "label": "End-to-end, asserted",
             "text": "A stalled pipeline in <strong>Nimbus</strong> turns a flag off in <strong>Flagship</strong> (SDKs see it in <strong>680 ms</strong>), <strong>Hookrelay</strong> notifies the customer webhook and <strong>Bitácora</strong> drafts the postmortem; recovery restores everything."
           },
+          {"label": "Learns from every incident", "text": "<strong>Bitácora</strong>, serverless on AWS (API Gateway, Lambda, DynamoDB), rebuilds each incident's timeline from the webhooks, measures time to mitigate and recover, and drafts the <strong>postmortem</strong>."},
           {
             "label": "Built to fail safely",
             "text": "HMAC-signed calls with a replay window, idempotent on every hop, and <strong>humans win over automation</strong>: a flag edited during the incident is never overwritten."
@@ -241,7 +243,7 @@
         ],
         "detailedDescription": "Atalaya (Spanish for watchtower) is a developer infrastructure platform made of four products, each with its own repository, database and pipeline, each useful alone.\n\nHookrelay is webhook delivery as a service: idempotent ingestion, fan-out, Standard Webhooks signatures, retries with jitter, circuit breaker, a dead-letter queue with bulk replay, and SSRF protection enforced at connection time. Flagship is feature management with local evaluation: a TypeScript SDK downloads the ruleset once, evaluates in about 1 µs, and receives changes over a stream fanned out across replicas with PostgreSQL LISTEN/NOTIFY. Nimbus is a guardian for AWS asynchronous pipelines (SQS, Lambda, DLQ) written in Go: explainable detectors, deduplicated incidents and a durable workflow engine on PostgreSQL leases. Bitácora is the incident ledger, serverless on AWS (API Gateway, Lambda, DynamoDB): it subscribes to Hookrelay, rebuilds each incident's timeline from events published by different products, measures time to mitigate and recover, and drafts the postmortem.\n\nTogether they automate an incident: Nimbus detects a stalled consumer and runs a response workflow whose steps call Flagship (kill the risky feature flag) and Hookrelay (notify customer systems). When the pipeline recovers, the flag is restored to its pre-incident configuration, unless a person changed it in the meantime, and Bitácora records the whole response. The whole scenario runs locally with one Docker Compose file and a script that asserts every step.",
         "challenges": [
-          "Joining three products without coupling them: no shared database, queue or code, and no product allowed to depend on another being up.",
+          "Joining four products without coupling them: no shared database, queue or code, and no product allowed to depend on another being up.",
           "All three deliver at-least-once, so a retried step could kill a flag twice or notify twice.",
           "Letting automation change production behaviour without it ever fighting a person who is handling the incident.",
           "Rebuilding one timeline from two publishers whose events arrive out of order, more than once, and later than they happened."

@@ -290,7 +290,7 @@ html.motion .interests {
   --recede: 0;
   > * {
     transform-origin: 50% 100%;
-    transform: translateY(calc(var(--recede) * 22vh)) scale(calc(1 - 0.06 * var(--recede)));
+    transform: translateY(calc(var(--recede) * 12vh)) scale(calc(1 - 0.05 * var(--recede)));
     filter: opacity(calc(1 - 0.65 * var(--recede)));
   }
 }

@@ -1,286 +1,195 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ImageLightbox from '../../components/ImageLightbox.astro';
+import AtalayaFlow from '../../components/AtalayaFlow.astro';
 import { projects } from '../../data/projects';
+import { useTranslations } from '../../i18n/utils';
 
+// One page per project, built from the same data and translations as the card and the modal.
 export function getStaticPaths() {
-  return projects.map((project) => ({
+  return projects.map((project, i) => ({
     params: { slug: project.slug },
-    props: { project },
+    props: {
+      project,
+      prev: projects[(i - 1 + projects.length) % projects.length],
+      next: projects[(i + 1) % projects.length],
+    },
   }));
 }
 
-const { project } = Astro.props;
+const { project, prev, next } = Astro.props;
+const t = useTranslations('en');
+const base = import.meta.env.BASE_URL;
+const home = (hash = '') => `${base}${hash}`;
+const pageUrl = (slug: string) => `${base}projects/${slug}/`;
+const images = project.images?.length ? project.images : [project.image];
+const paragraphs = (project.detailedDescription ?? '').split(/\n\n+/).filter(Boolean);
+const navItems = [
+  { href: home(), key: 'nav.home' },
+  { href: home('#projects'), key: 'nav.projects' },
+  { href: home('#contact'), key: 'nav.contact' },
+];
 ---
 
-<Layout title={`${project.title} | Project Details`}>
-  <main class="project-details">
-    <div class="container">
-      <a href="/#projects" class="back-link">
-        <i class="fas fa-arrow-left"></i> Back to Projects
-      </a>
-
-      <header class="project-header">
-        <h1>{project.title}</h1>
-        <div class="project-meta">
-          <div class="technologies">
-            {
-              project.technologies.map((tech) => (
-                <span>
-                  {tech.iconClass && <i class={`${tech.iconClass} colored`} />}
-                  {tech.name}
-                </span>
-              ))
-            }
-          </div>
-          <div class="project-links">
-            {
-              project.links.map((link) => (
-                <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.iconClass && <i class={link.iconClass} />}
-                  {link.label}
-                </a>
-              ))
-            }
-          </div>
+<Layout title={`${project.title} | David Manjarres`}>
+  <Header navItems={navItems} />
+  <main class="project-page" data-slug={project.slug} data-images={JSON.stringify(images)}>
+    <section class="pp-section pp-hero">
+      <a class="pp-back" href={home('#projects')}><i class="fas fa-arrow-left" aria-hidden="true"></i> <span data-t="projects.page.back">{t.projects.page.back}</span></a>
+      {project.status === 'in-progress' && (
+        <p class="project-status"><span class="now-dot" aria-hidden="true" /> <span data-t="projects.inProgress">{t.projects.inProgress}</span></p>
+      )}
+      <h1 data-p="title">{project.title}</h1>
+      <p class="pp-lede" data-p="description" set:html={project.description} />
+      {project.links.length > 0 && (
+        <div class="pp-links">
+          {project.links.map((link, i) => (
+            <a href={link.url} target="_blank" rel="noopener noreferrer" class:list={['pp-link', { primary: i === 0 }]}>
+              {link.iconClass && <i class={link.iconClass} aria-hidden="true" />} {link.label}
+            </a>
+          ))}
         </div>
-      </header>
-
-      <div class="project-image-container">
+      )}
+      <ul class="pp-tech" aria-label="Stack">
+        {project.technologies.map((tech) => (
+          <li>
+            {tech.iconClass && <i class={`${tech.iconClass} colored`} aria-hidden="true" />}
+            {tech.iconImg && <img src={tech.iconImg} alt="" width="16" height="16" loading="lazy" />}
+            {tech.name}
+          </li>
+        ))}
+      </ul>
+      <button type="button" class="pp-cover" data-open-gallery="0" aria-label={`Open the ${project.title} gallery`}>
         <img src={project.image} alt={project.title} />
-      </div>
+        {images.length > 1 && <span class="image-count" aria-hidden="true"><i class="fas fa-images" /> {images.length}</span>}
+      </button>
+    </section>
 
-      <div class="project-content-grid">
-        <section class="overview">
-          <h2>Overview</h2>
-          <p set:html={project.description} />
-          {
-            project.detailedDescription && (
-              <div class="detailed-description">
-                <h3>Context & Goal</h3>
-                <p>{project.detailedDescription}</p>
-              </div>
-            )
-          }
-        </section>
+    {project.slug === 'atalaya' && <AtalayaFlow />}
 
-        {
-          project.challenges && project.challenges.length > 0 && (
-            <section class="challenges">
-              <h2>Key Challenges</h2>
-              <ul>
-                {project.challenges.map((challenge) => (
-                  <li>
-                    <i class="fas fa-exclamation-circle text-accent" /> {challenge}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+    {project.highlights?.length && (
+      <section class="pp-section">
+        <h2 data-t="projects.page.highlights">{t.projects.page.highlights}</h2>
+        <ul class="pp-highlights" data-p="highlights">
+          {project.highlights.map((h) => (
+            <li><strong>{h.label}</strong><span set:html={h.text} /></li>
+          ))}
+        </ul>
+      </section>
+    )}
 
-        {
-          project.solutions && project.solutions.length > 0 && (
-            <section class="solutions">
-              <h2>Technical Solutions</h2>
-              <ul>
-                {project.solutions.map((solution) => (
-                  <li>
-                    <i class="fas fa-check-circle text-primary" /> {solution}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
-      </div>
-    </div>
+    {paragraphs.length > 0 && (
+      <section class="pp-section pp-overview">
+        <h2 data-t="projects.modal.overview">{t.projects.modal.overview}</h2>
+        <div class="pp-prose" data-p="detailedDescription">
+          {paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </section>
+    )}
+
+    {project.features?.length && (
+      <section class="pp-section">
+        <h2 data-t="projects.modal.keyFeatures">{t.projects.modal.keyFeatures}</h2>
+        <ul class="pp-features">
+          {project.features.map((f) => <li>{f}</li>)}
+        </ul>
+      </section>
+    )}
+
+    {(project.challenges?.length || project.solutions?.length) && (
+      <section class="pp-section pp-tradeoffs">
+        <div>
+          <h2 data-t="projects.modal.keyChallenges">{t.projects.modal.keyChallenges}</h2>
+          <ol data-p="challenges">{(project.challenges ?? []).map((c) => <li>{c}</li>)}</ol>
+        </div>
+        <div>
+          <h2 data-t="projects.modal.technicalSolutions">{t.projects.modal.technicalSolutions}</h2>
+          <ol data-p="solutions">{(project.solutions ?? []).map((s) => <li>{s}</li>)}</ol>
+        </div>
+      </section>
+    )}
+
+    {images.length > 1 && (
+      <section class="pp-section">
+        <h2 data-t="projects.page.gallery">{t.projects.page.gallery}</h2>
+        <div class="pp-gallery">
+          {images.map((src, i) => (
+            <button type="button" data-open-gallery={i} aria-label={`Image ${i + 1} of ${images.length}`}>
+              <img src={src} alt="" loading="lazy" />
+            </button>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <nav class="pp-section pp-pager" aria-label="More projects">
+      <a href={pageUrl(prev.slug)}><span data-t="projects.page.previous">{t.projects.page.previous}</span><strong data-p-title={prev.slug}>{prev.title}</strong></a>
+      <a href={pageUrl(next.slug)} class="next"><span data-t="projects.page.next">{t.projects.page.next}</span><strong data-p-title={next.slug}>{next.title}</strong></a>
+    </nav>
   </main>
+  <Footer />
+  <ImageLightbox />
 </Layout>
 
-<style lang="scss">
-  @use '../../styles/abstracts/variables' as *;
+<script>
+  import en from '../../i18n/en.json';
+  import es from '../../i18n/es.json';
 
-  .project-details {
-    padding: 100px 0 50px; // account for fixed header
-    min-height: 100vh;
-    color: $color-text;
-  }
+  const dict: Record<string, any> = { en, es };
+  const page = document.querySelector<HTMLElement>('.project-page')!;
+  const slug = page.dataset.slug!;
+  const images: string[] = JSON.parse(page.dataset.images || '[]');
 
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
+  page.querySelectorAll<HTMLElement>('[data-open-gallery]').forEach((el) =>
+    el.addEventListener('click', () => {
+      const title = page.querySelector('h1')?.textContent ?? '';
+      (window as any).openLightbox?.(images, title, Number(el.dataset.openGallery));
+    }),
+  );
 
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: $color-secondary;
-    text-decoration: none;
-    font-weight: 500;
-    margin-bottom: 2rem;
-    transition: color 0.3s ease;
+  const list = (sel: string, items: string[] | undefined) => {
+    const el = page.querySelector(sel);
+    if (!el || !items) return;
+    el.replaceChildren(...items.map((text) => Object.assign(document.createElement('li'), { textContent: text })));
+  };
 
-    &:hover {
-      color: $color-primary;
-    }
-  }
-
-  .project-header {
-    margin-bottom: 3rem;
-    text-align: center;
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(45deg, $color-secondary, $color-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
-
-  .project-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-
-    .technologies {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-
-      span {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        background-color: rgba($color-accent, 0.1);
-        border: 1px solid rgba($color-accent, 0.2);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.9rem;
+  // Project texts follow the language switcher, like the cards and the modal (EN is the source).
+  function translate() {
+    let lang = 'en';
+    try { lang = localStorage.getItem('lang') || 'en'; } catch {}
+    const items = dict[lang]?.projects?.items ?? {};
+    const item = items[slug] ?? en.projects.items[slug as keyof typeof en.projects.items];
+    if (item) {
+      const title = page.querySelector('[data-p="title"]');
+      if (title && item.title) { title.textContent = item.title; document.title = `${item.title} | David Manjarres`; }
+      const lede = page.querySelector('[data-p="description"]');
+      if (lede && item.description) lede.innerHTML = item.description;
+      const highlights = page.querySelector('[data-p="highlights"]');
+      if (highlights && item.highlights) {
+        highlights.replaceChildren(...item.highlights.map((h: { label: string; text: string }) => {
+          const li = document.createElement('li');
+          const strong = Object.assign(document.createElement('strong'), { textContent: h.label });
+          const span = document.createElement('span');
+          span.innerHTML = h.text; // trusted: our own translation files
+          li.append(strong, span);
+          return li;
+        }));
       }
-    }
-
-    .project-links {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-
-      a {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: white;
-        text-decoration: none;
-        background-color: rgba(255, 255, 255, 0.1);
-        padding: 0.7rem 1.5rem;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        border: 1px solid transparent;
-
-        &:hover {
-          background-color: rgba($color-primary, 0.2);
-          border-color: $color-primary;
-          transform: translateY(-2px);
-        }
+      const prose = page.querySelector('[data-p="detailedDescription"]');
+      if (prose && item.detailedDescription) {
+        prose.replaceChildren(...item.detailedDescription.split(/\n\n+/).map((p: string) => Object.assign(document.createElement('p'), { textContent: p })));
       }
+      list('[data-p="challenges"]', item.challenges);
+      list('[data-p="solutions"]', item.solutions);
     }
+    page.querySelectorAll<HTMLElement>('[data-p-title]').forEach((el) => {
+      const other = items[el.dataset.pTitle!];
+      if (other?.title) el.textContent = other.title;
+    });
   }
 
-  .project-image-container {
-    margin-bottom: 4rem;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-
-    img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-  }
-
-  .project-content-grid {
-    display: grid;
-    gap: 3rem;
-
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      color: $color-primary;
-      border-bottom: 2px solid rgba($color-primary, 0.3);
-      padding-bottom: 0.5rem;
-      display: inline-block;
-    }
-
-    h3 {
-      color: $color-secondary;
-      margin: 1.5rem 0 1rem;
-      font-size: 1.5rem;
-    }
-
-    p {
-      line-height: 1.8;
-      font-size: 1.1rem;
-      color: #e0e0e0;
-      margin-bottom: 1.5rem;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      gap: 1rem;
-
-      li {
-        background-color: rgba(30, 41, 59, 0.4);
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
-        display: flex;
-        align-items: flex-start;
-        gap: 1rem;
-        line-height: 1.6;
-        border-left: 3px solid transparent;
-        transition: all 0.3s ease;
-
-        &:hover {
-          background-color: rgba(30, 41, 59, 0.6);
-          transform: translateX(5px);
-        }
-
-        i {
-          margin-top: 4px;
-        }
-      }
-    }
-
-    .challenges li {
-      border-left-color: $color-accent;
-      i {
-        color: $color-accent;
-      }
-    }
-
-    .solutions li {
-      border-left-color: $color-primary;
-      i {
-        color: $color-primary;
-      }
-    }
-  }
-
-  @media (min-width: 768px) {
-    .project-content-grid {
-      grid-template-columns: 1fr 1fr;
-
-      .overview {
-        grid-column: 1 / -1;
-      }
-    }
-  }
-</style>
+  translate();
+  window.addEventListener('languagechange', translate);
+</script>

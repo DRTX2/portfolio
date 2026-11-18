@@ -49,6 +49,7 @@
 
       <footer class="modal-footer">
         <div id="modalLinks" class="modal-links"></div>
+        <a id="modalPageLink" class="modal-page-link" href="#"><span data-t="projects.page.fullPage">Full case study</span> <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
       </footer>
     </div>
   </div>
@@ -247,6 +248,8 @@
           a.innerHTML = `${link.iconClass ? `<i class="${link.iconClass}"></i> ` : ''}${link.label}`;
           linksContainer.appendChild(a);
         });
+        const page = document.getElementById('modalPageLink');
+        if (page) page.setAttribute('href', `${import.meta.env.BASE_URL}projects/${project.slug}/`);
       }
     };
 

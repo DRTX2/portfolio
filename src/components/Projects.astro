@@ -138,7 +138,7 @@ const filters = GROUPS.filter((g) => counts[g.key] >= 2);
       if (!project) return;
 
       // Update title
-      const titleEl = card.querySelector('h3');
+      const titleEl = card.querySelector('h3 a') ?? card.querySelector('h3');
       if (titleEl) titleEl.textContent = project.title;
 
       // Update highlights if they exist
