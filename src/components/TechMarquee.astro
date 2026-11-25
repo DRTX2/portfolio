@@ -1,20 +1,165 @@
 ---
+/**
+ * Technology carousel: drifts on its own, and the visitor can step back/forward, drag it, or open every technology.
+ */
 import { skillCategories } from '../data/skills.js';
+import { useTranslations } from '../i18n/utils';
 
+const t = useTranslations('en');
 const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/';
-// One logo per technology family: skills.js repeats icons (e.g. several .NET entries).
+const FEATURED = 32;
+
+// Outside their own row, cloud services need the provider in front ("AWS Lambda", "Azure Key Vault").
+const isCloud = (c: { id: string }) => ['aws', 'azure'].includes(c.id);
+const label = (c: { id: string; title: string }, name: string) =>
+  isCloud(c) && !name.startsWith('Microsoft') ? `${c.title} ${name.replace(/ \(.*/, '')}` : name;
+// One entry per logo (skills.js repeats some, e.g. .NET), but every cloud service.
 const seen = new Set<string>();
-const items = skillCategories
-  .flatMap((c) => c.skills)
-  .filter((s) => s.icon && !seen.has(s.icon) && seen.add(s.icon))
-  .slice(0, 22)
-  .map((s) => ({ name: s.name, src: s.icon!.startsWith('http') ? s.icon! : DEVICON + s.icon }));
+const perCategory = skillCategories.map((c, at) =>
+  c.skills
+    .filter((s) => s.icon && (isCloud(c) || (!seen.has(s.icon) && seen.add(s.icon))))
+    .map((s) => ({ name: label(c, s.name), src: s.icon!.startsWith('http') ? s.icon! : DEVICON + s.icon, at })),
+);
+// Round-robin, so the first items show every area (backend, frontend, data, cloud…) and not only backend.
+const longest = Math.max(...perCategory.map((c) => c.length));
+const items = Array.from({ length: longest }, (_, i) => perCategory.map((c) => c[i]).filter(Boolean)).flat();
+const featured = items.slice(0, FEATURED);
 ---
 
-<div class="tech-marquee" role="region" aria-label="Technologies I work with">
-  <ul>
-    {items.map((i) => <li><img src={i.src} alt="" loading="lazy" width="26" height="26" />{i.name}</li>)}
-    {/* Second copy makes the loop seamless; hidden from screen readers. */}
-    {items.map((i) => <li aria-hidden="true"><img src={i.src} alt="" loading="lazy" width="26" height="26" />{i.name}</li>)}
-  </ul>
-</div>
+<section class="tech-marquee" aria-label={t.marquee.label}>
+  <div class="marquee-row">
+    <button type="button" class="marquee-nav" data-dir="-1">
+      <i class="fas fa-chevron-left" aria-hidden="true"></i><span class="sr-only" data-t="marquee.prev">{t.marquee.prev}</span>
+    </button>
+    <div class="marquee-viewport">
+      <ul id="marquee-list">
+        {items.map((i, n) => <li class:list={{ extra: n >= FEATURED }} data-tech={i.name} style={`--at: ${i.at}`}><img src={i.src} alt="" loading="lazy" width="26" height="26" draggable="false" />{i.name}</li>)}
+        {/* Second copy makes the loop seamless; hidden from screen readers. */}
+        {featured.map((i) => <li aria-hidden="true" data-tech={i.name}><img src={i.src} alt="" loading="lazy" width="26" height="26" draggable="false" />{i.name}</li>)}
+      </ul>
+    </div>
+    <button type="button" class="marquee-nav" data-dir="1">
+      <i class="fas fa-chevron-right" aria-hidden="true"></i><span class="sr-only" data-t="marquee.next">{t.marquee.next}</span>
+    </button>
+  </div>
+  <button type="button" class="marquee-toggle" aria-expanded="false" aria-controls="marquee-list">
+    <span data-label="more" data-t="marquee.showAll">{t.marquee.showAll}</span>
+    <span data-label="less" data-t="marquee.showLess">{t.marquee.showLess}</span>
+    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+  </button>
+</section>
+
+<script>
+  // The drift stays a CSS animation; the arrows, dragging and flicking only move its clock, so the loop never jumps.
+  const SPEED = 120; // px/s of the drift, whatever the length of the list
+  const FAST = 900; // px/s while an arrow is held down
+  const root = document.querySelector<HTMLElement>('.tech-marquee')!;
+  const viewport = root.querySelector<HTMLElement>('.marquee-viewport')!;
+  const list = root.querySelector<HTMLElement>('ul')!;
+  const toggle = root.querySelector<HTMLButtonElement>('.marquee-toggle')!;
+
+  const drift = () => list.getAnimations()[0];
+  const loopPx = () => list.scrollWidth / 2;
+  const loopMs = () => Number(drift().effect!.getComputedTiming().duration);
+  const move = (px: number) => {
+    const anim = drift();
+    if (!anim) return;
+    const time = Number(anim.currentTime ?? 0) + (px / loopPx()) * loopMs();
+    anim.currentTime = ((time % loopMs()) + loopMs()) % loopMs();
+  };
+  // The list changes width when fonts load: keep the speed, and the position, when it does.
+  const setSpeed = () => {
+    const anim = drift();
+    if (!anim) return;
+    const progress = (Number(anim.currentTime ?? 0) % loopMs()) / loopMs();
+    const ms = (loopPx() / SPEED) * 1000;
+    list.style.animationDuration = `${ms}ms`;
+    anim.currentTime = progress * ms;
+  };
+  new ResizeObserver(setSpeed).observe(list);
+
+  // Runs fn(elapsed ms since last frame) every frame until it returns false; a new run replaces the old one.
+  let frame = 0;
+  const stop = () => cancelAnimationFrame(frame);
+  const run = (fn: (dt: number) => boolean) => {
+    stop();
+    let last = performance.now();
+    const tick = (t: number) => {
+      const go = fn(Math.max(0, t - last));
+      last = t;
+      if (go) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+  };
+  const step = (dir: number) => {
+    const distance = dir * Math.max(240, viewport.clientWidth * 0.6);
+    let elapsed = 0;
+    let done = 0;
+    run((dt) => {
+      elapsed = Math.min(450, elapsed + dt);
+      const target = distance * (1 - (1 - elapsed / 450) ** 3);
+      move(target - done);
+      done = target;
+      return elapsed < 450;
+    });
+  };
+
+  // Arrows: a click steps, holding fast-forwards.
+  root.querySelectorAll<HTMLButtonElement>('.marquee-nav').forEach((b) => {
+    const dir = Number(b.dataset.dir);
+    let timer = 0;
+    let held = false;
+    const release = () => {
+      clearTimeout(timer);
+      if (held) stop();
+    };
+    b.addEventListener('pointerdown', () => {
+      held = false;
+      timer = window.setTimeout(() => {
+        held = true;
+        run((dt) => (move((dir * FAST * dt) / 1000), true));
+      }, 280);
+    });
+    for (const type of ['pointerup', 'pointerleave', 'pointercancel']) b.addEventListener(type, release);
+    b.addEventListener('click', () => {
+      if (!held) step(dir);
+      held = false;
+    });
+  });
+
+  // Drag, and let a flick glide to a stop.
+  viewport.addEventListener('pointerdown', (e) => {
+    if (root.classList.contains('is-expanded') || e.button !== 0 || !drift()) return;
+    stop();
+    let x = e.clientX;
+    let at = e.timeStamp;
+    let velocity = 0;
+    viewport.setPointerCapture(e.pointerId);
+    root.classList.add('is-dragging');
+    const drag = (m: PointerEvent) => {
+      const dx = x - m.clientX;
+      velocity = dx / Math.max(1, m.timeStamp - at);
+      x = m.clientX;
+      at = m.timeStamp;
+      move(dx);
+    };
+    const end = (u: PointerEvent) => {
+      root.classList.remove('is-dragging');
+      viewport.removeEventListener('pointermove', drag);
+      if (u.timeStamp - at > 80) return;
+      run((dt) => {
+        move(velocity * dt);
+        velocity *= 0.95 ** (dt / 16);
+        return Math.abs(velocity) > 0.04;
+      });
+    };
+    viewport.addEventListener('pointermove', drag);
+    viewport.addEventListener('pointerup', end, { once: true });
+    viewport.addEventListener('pointercancel', end, { once: true });
+  });
+
+  toggle.addEventListener('click', () => {
+    stop();
+    toggle.setAttribute('aria-expanded', String(root.classList.toggle('is-expanded')));
+  });
+</script>

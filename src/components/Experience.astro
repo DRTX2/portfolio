@@ -24,7 +24,6 @@ const stackIcons: Record<string, string> = {
   NestJS: `${DEVICON}nestjs/nestjs-original.svg`,
   Python: `${DEVICON}python/python-original.svg`,
   React: `${DEVICON}react/react-original.svg`,
-  'AWS S3': `${DEVICON}amazonwebservices/amazonwebservices-original-wordmark.svg`,
   AWS: `${DEVICON}amazonwebservices/amazonwebservices-original-wordmark.svg`,
   Docker: `${DEVICON}docker/docker-original.svg`,
   'Spring Boot': `${DEVICON}spring/spring-original.svg`,
@@ -36,6 +35,7 @@ const stackIcons: Record<string, string> = {
   'Material UI': `${DEVICON}materialui/materialui-original.svg`,
   'Redux Toolkit': `${DEVICON}redux/redux-original.svg`,
 };
+const iconOf = (s: string) => stackIcons[s.startsWith('AWS') ? 'AWS' : s];
 ---
 
 <section class="experience" id="experience">
@@ -67,7 +67,7 @@ const stackIcons: Record<string, string> = {
             <ul class="job-stack" aria-label="Stack">
               {item.stack.map((s: string) => (
                 <li data-skill={s}>
-                  {stackIcons[s] && <img src={stackIcons[s]} alt="" loading="lazy" />}
+                  {iconOf(s) && <img src={iconOf(s)} alt="" loading="lazy" />}
                   {s}
                 </li>
               ))}

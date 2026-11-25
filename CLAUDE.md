@@ -9,6 +9,8 @@ Static site deployed to GitHub Pages by `.github/workflows` on every push to `ma
 ## Where things are
 - Project data: `src/data/projects.ts` (English source). Translations: `src/i18n/en.json` / `es.json` under `projects.items.<slug>`; text is swapped client-side on the `languagechange` event (`data-i18n` legacy handlers, `data-t` generic helper in `src/scripts/i18n-text.js`).
 - Project pages: `src/pages/projects/[slug].astro` (one per project, same data). The "Atalaya in action" diagram (`src/components/AtalayaFlow.astro`) is only on Atalaya's page.
+- CV: `public/assets/docs/David_Manjarres_CV_{EN,ES}.pdf` are copies of `~/Desktop/notes/career/cvs-{en,es}/full.pdf`; `CVModal.astro` shows the one for the page language. Recompile and copy both when the `.tex` changes.
+- Projects: the first five cards (array order in `projects.ts`) show by default; the rest open with "show more" (`Projects.astro`).
 - Motion: `public/animations.js` (reveals, hero, Lenis smooth scroll, contact handoff, Atalaya diagram player) + `src/styles/components/_motion.scss`. Everything has a reduced-motion path.
 - Reviewer checklist and canonical texts: `docs/PORTFOLIO_CHECKLIST.md`.
 

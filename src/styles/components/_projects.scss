@@ -24,23 +24,23 @@
         &:hover { border-color: var(--line-strong); }
     }
 
-    // The most recent project leads, full width, image beside the story
+    // The most recent project leads, full width, image beside the story.
+    // Its cover is a designed portrait composition: always shown whole, never cropped.
     .project:first-child {
         grid-column: 1 / -1;
 
-        // The lead cover is a designed portrait composition: show it whole on narrow screens
-        @media (max-width: 860px) { .project-image { aspect-ratio: 1100 / 1500; } }
+        .project-image { aspect-ratio: 1100 / 1500; background: #0d1726; }
 
         @media (min-width: 861px) {
             display: grid;
-            grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+            grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
 
             .project-image {
-                aspect-ratio: auto;
-                height: 100%;
-                min-height: 420px;
+                aspect-ratio: auto; // the column stretches with the text; the cover keeps its own ratio
                 border-bottom: 0;
                 border-right: 1px solid var(--line);
+
+                img { height: auto; aspect-ratio: 1100 / 1500; mask-image: linear-gradient(#000 97%, transparent); }
             }
 
             .project-content { padding: clamp(1.5rem, 3vw, 2.5rem); }
@@ -137,6 +137,42 @@
 
                 > strong { color: var(--text); }
             }
+        }
+
+        // Lead card: one highlight open at a time
+        ul.project-highlights.accordion {
+            gap: 0;
+            border-top: 1px solid var(--line);
+
+            li { padding: 0; border-bottom: 1px solid var(--line); &::before { content: none; } }
+
+            summary {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                padding: 0.8rem 0.25rem 0.8rem 0;
+                color: var(--text);
+                font-weight: 650;
+                cursor: pointer;
+                list-style: none;
+
+                &::-webkit-details-marker { display: none; }
+                &::after {
+                    content: '';
+                    flex-shrink: 0;
+                    width: 0.5rem;
+                    height: 0.5rem;
+                    border: solid var(--signal-text);
+                    border-width: 0 2px 2px 0;
+                    transform: translateY(-2px) rotate(45deg);
+                    transition: transform 0.25s ease;
+                }
+                &:hover { color: var(--signal-text); }
+                &:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 2px; }
+            }
+            details[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+            p { margin: 0; padding: 0 0 1rem; max-width: 60ch; }
         }
 
         .technologies {
@@ -265,8 +301,45 @@
 
   .project[hidden] { display: none; }
 
+  // Collapsed list: the next row peeks out, blurred and fading, under the "show more" button.
+  .projects-grid.is-collapsed .project.is-peek {
+    max-height: 15rem;
+    filter: blur(5px);
+    opacity: 0.7;
+    pointer-events: none;
+    user-select: none;
+    mask-image: linear-gradient(#000 10%, transparent 92%);
 
+    .project-image { flex-shrink: 0; }
+  }
 
+  .projects-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.75rem;
+
+    .btn[hidden] { display: none; }
+    .btn i { transition: transform 0.25s ease; }
+    .btn[aria-expanded='true'] i { transform: rotate(180deg); }
+    .btn[aria-expanded='true'] [data-label='more'],
+    .btn[aria-expanded='false'] [data-label='less'],
+    .count:empty { display: none; }
+    .count {
+      padding: 0 0.5rem;
+      border-radius: 999px;
+      background: var(--signal);
+      color: var(--signal-ink);
+      font-size: 0.8rem;
+    }
+  }
+  .is-collapsed + .projects-more {
+    position: relative;
+    z-index: 1;
+    margin-top: -6.5rem;
+    padding-bottom: 3rem;
+
+    .btn { background: var(--surface); border-color: var(--signal); }
+  }
 }
 
 .projects .project-status {

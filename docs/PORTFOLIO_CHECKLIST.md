@@ -8,7 +8,7 @@ Estado al 16-nov-2026. ✅ cumplido · 🟡 depende de una acción tuya · ⬜ p
 | Nombre | ✅ | Hero |
 | Objetivo profesional | ✅ | About → bloque "Objetivo profesional" (EN/ES) |
 | Educación superior | ✅ | Sección Education (UTA + certificaciones) |
-| Hoja de vida clara y resumida (1–2 hojas) | ✅ | PDF de 2 páginas. Botón "Resume" en el hero y "Ver hoja de vida (2 páginas)" en About (modal con vista previa + descarga) |
+| Hoja de vida clara y resumida (1–2 hojas) | ✅ | PDF de 2 páginas por idioma (`David_Manjarres_CV_EN/ES.pdf`, copiados de `career/cvs-*/full.pdf`). Botón "Resume" en el hero y "Ver hoja de vida (2 páginas)" en About (modal con vista previa + descarga) |
 
 ## Experiencia
 | Requisito | Estado | Dónde |
@@ -44,24 +44,24 @@ Estado al 16-nov-2026. ✅ cumplido · 🟡 depende de una acción tuya · ⬜ p
 
 ## Textos canónicos (copiar igual en LinkedIn, GitHub y CV)
 
-> El portafolio ahora dice **4+ años** (estadística y meta-descripción), como pediste. **Tu CV (`cv.md`) y tu README de GitHub dicen "3+"**: actualízalos a 4+ para que coincidan.
+> **5+ años** en todas partes (freelance desde jul. 2021, decidido el 25-nov-2026): portafolio, CVs y README de GitHub ya lo dicen. LinkedIn: textos listos en `~/Desktop/notes/career/linkedin/linkedin-cambios.md`.
 
 **Titular** (elige uno y úsalo en todas partes; tu `cv.md` recomienda no usar "Senior" como cargo histórico):
 - `Full-Stack & Cloud Engineer · Node.js · NestJS · React · .NET` (consistente con tu README de GitHub)
 - o `Senior Full-Stack & Cloud Engineer` (lo que dice hoy el hero del portafolio); si lo usas, que diga lo mismo en LinkedIn
 
 **Resumen (EN):**
-> Full-stack & cloud engineer (Node.js, NestJS, React, .NET, Spring Boot). 4+ years designing, shipping and operating production web systems: APIs, data, CI/CD and cloud. I own features end to end, from API and data design to deployment and production support. Portfolio: https://drtx2.github.io/portfolio/
+> Full-stack & cloud engineer (Node.js, NestJS, React, .NET, Spring Boot). 5+ years designing, shipping and operating production web systems: APIs, data, CI/CD and cloud. I own features end to end, from API and data design to deployment and production support. Portfolio: https://drtx2.github.io/portfolio/
 
 **Resumen (ES):**
-> Ingeniero full-stack y cloud (Node.js, NestJS, React, .NET, Spring Boot). Más de 4 años diseñando, entregando y operando sistemas web en producción: APIs, datos, CI/CD y nube. Me hago cargo de funcionalidades de punta a punta, desde el diseño de APIs y datos hasta el despliegue y el soporte en producción. Portafolio: https://drtx2.github.io/portfolio/
+> Ingeniero full-stack y cloud (Node.js, NestJS, React, .NET, Spring Boot). Más de 5 años diseñando, entregando y operando sistemas web en producción: APIs, datos, CI/CD y nube. Me hago cargo de funcionalidades de punta a punta, desde el diseño de APIs y datos hasta el despliegue y el soporte en producción. Portafolio: https://drtx2.github.io/portfolio/
 
 **En LinkedIn:** mismo titular, el resumen anterior en "Acerca de", las mismas fechas y cargos que la sección Experience, el portafolio en "Destacados" y Hookrelay y Flagship en "Proyectos".
 
 ## Antes de publicar (actualizado 17-nov-2026)
 1. Crear y subir `DRTX2/hookrelay`, `DRTX2/flagship` y `DRTX2/atalaya` (aún no existen en GitHub; gitleaks limpio en los tres): `gh repo create DRTX2/<repo> --public --source . --push` dentro de cada carpeta.
 2. `DRTX2/nimbus` y `DRTX2/jarvis` son privados: hazlos públicos o quita esos enlaces.
-3. Push del README de perfil (ya dice 4+) y cambiar "3+" a "4+" en CV y LinkedIn.
+3. Push del README de perfil (ya dice 5+) y aplicar los cambios de LinkedIn.
 4. Revisar y hacer commit de Nexus (llamadas) y Kuntur (paleta + pago anticipado), que quedaron sin commit.
 5. README del repo de elecciones (GitLab): pendiente. SmartNotes y Creative Portfolio se quitaron del portafolio (17-nov-2026).
 6. Commit y deploy del portafolio.

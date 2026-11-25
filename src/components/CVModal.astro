@@ -7,23 +7,19 @@ import { useTranslations } from '../i18n/utils';
 
 const t = useTranslations('en');
 
-interface Props {
-  resumeUrl?: string;
-}
-
-const {
-  resumeUrl = `${import.meta.env.BASE_URL}assets/docs/David_Oswaldo_Manjarres_Quintero_FULL.pdf`,
-} = Astro.props;
+// Compiled from career/cvs-en/full.tex and cvs-es/full.tex; updateContent() picks the one for the page's language.
+const docs = `${import.meta.env.BASE_URL}assets/docs/`;
+const cv = { en: `${docs}David_Manjarres_CV_EN.pdf`, es: `${docs}David_Manjarres_CV_ES.pdf` };
 ---
 
-<div id="cv-modal" class="cv-modal" aria-hidden="true" role="dialog" aria-labelledby="cv-modal-title">
+<div id="cv-modal" class="cv-modal" data-cv-en={cv.en} data-cv-es={cv.es} aria-hidden="true" role="dialog" aria-labelledby="cv-modal-title">
   <div class="cv-modal-overlay"></div>
   <div class="cv-modal-content">
     <div class="cv-modal-header">
       <h3 id="cv-modal-title" data-i18n="cvModal.title">Curriculum Vitae</h3>
       <div class="cv-modal-actions">
         <a
-          href={resumeUrl}
+          href={cv.en}
           download
           class="cv-download-btn"
           aria-label="Download CV"
@@ -43,7 +39,7 @@ const {
     </div>
     <div class="cv-modal-body">
       <iframe
-        src={resumeUrl}
+        src={cv.en}
         title="CV Preview"
         class="cv-preview"
         loading="lazy"
@@ -53,7 +49,7 @@ const {
         <p data-i18n="cvModal.fallbackMessage">
           Your browser doesn't support PDF preview.
         </p>
-        <a href={resumeUrl} download class="cv-fallback-download" data-i18n="cvModal.downloadFallback">
+        <a href={cv.en} download class="cv-fallback-download" data-i18n="cvModal.downloadFallback">
           Download CV
         </a>
       </div>
@@ -88,7 +84,7 @@ const {
       this.updateContent();
       
       // Listen for language changes
-      window.addEventListener('languageChanged', () => this.updateContent());
+      window.addEventListener('languagechange', () => this.updateContent());
     },
 
     attachEventListeners() {
@@ -134,10 +130,16 @@ const {
     },
 
     updateContent() {
-      const currentLang = document.documentElement.getAttribute('lang') || 'en';
+      const currentLang = localStorage.getItem('lang') === 'es' ? 'es' : 'en';
       const t = translations[currentLang] || translations.en;
 
       if (!this.modal || !t.cvModal) return;
+
+      // Resume in the page's language
+      const pdf = currentLang === 'es' ? this.modal.dataset.cvEs! : this.modal.dataset.cvEn!;
+      this.modal.querySelectorAll<HTMLAnchorElement>('a[download]').forEach((a) => (a.href = pdf));
+      const frame = this.modal.querySelector<HTMLIFrameElement>('.cv-preview');
+      if (frame && frame.getAttribute('src') !== pdf) frame.src = pdf;
 
       // Update title
       const title = this.modal.querySelector('[data-i18n="cvModal.title"]');

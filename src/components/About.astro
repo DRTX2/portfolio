@@ -1,7 +1,7 @@
 ---
 /**
  * About Component with i18n support
- * About section with highlights, expertise, and contact info
+ * Objective, areas of expertise and highlights (email, location and resume live in the hero and contact)
  */
 
 import { useTranslations } from '../i18n/utils';
@@ -14,25 +14,13 @@ interface Highlight {
   textKey: string;
 }
 
-interface Props {
-  email?: string;
-  location?: string;
-  resumeUrl?: string;
-}
-
-const {
-  email = 'davidmanjarres2004@gmail.com',
-  location = 'Ambato, Ecuador',
-  resumeUrl = `${import.meta.env.BASE_URL}assets/docs/David_Oswaldo_Manjarres_Quintero_FULL.pdf`,
-} = Astro.props;
-
 // Icons remain the same across languages
 // Logos of the technologies each highlight talks about
 const highlightTech: string[][] = [
-  ['dot-net-plain', 'nestjs-original', 'spring-original', 'typescript-plain', 'azure-plain'],
+  ['dot-net-plain', 'nestjs-original', 'spring-original', 'typescript-plain', 'amazonwebservices-plain-wordmark', 'azure-plain'],
   ['swagger-plain', 'githubactions-plain', 'kubernetes-plain'],
   ['postgresql-plain', 'mysql-original', 'mongodb-plain', 'redis-plain'],
-  ['docker-plain', 'azure-plain', 'rabbitmq-original'],
+  ['docker-plain', 'amazonwebservices-plain-wordmark', 'azure-plain', 'apachekafka-original', 'rabbitmq-original'],
   ['discordjs-plain', 'trello-plain', 'google-plain'],
   [],
   [],
@@ -69,24 +57,6 @@ const highlightIcons = [
       <span data-t="about.cvCta">{t.about.cvCta}</span>
     </button>
   </div>
-  <div class="about-content">
-    {
-      highlightIcons.map((icon, index) => (
-        <div class="about-highlight">
-          <span class="highlight-icon"><i class={icon} aria-hidden="true" /></span>
-          <div>
-            <p data-i18n={`about.highlights.${index}`} set:html={t.about.highlights[index]} />
-            {highlightTech[index]?.length > 0 && (
-              <div class="highlight-tech" aria-hidden="true">
-                {highlightTech[index].map((c) => <i class={`devicon-${c} colored`} />)}
-              </div>
-            )}
-          </div>
-        </div>
-      ))
-    }
-  </div>
-
   <div class="expertise-areas">
     <h4 data-i18n="about.expertise">{t.about.expertise}</h4>
     <div class="expertise-tags">
@@ -101,23 +71,22 @@ const highlightIcons = [
     </div>
   </div>
 
-  <div class="contact-info">
-    <p>
-      <span class="my-contact-email" data-i18n="about.emailLabel">{t.about.emailLabel}</span>
-      <a href={`mailto:${email}`} class="my-email">{email}</a>
-    </p>
-    <p>
-      <span class="my-contact-place" data-i18n="about.placeLabel">{t.about.placeLabel}</span>{
-        location
-      }
-    </p>
-    <button
-      class="resume-button"
-      data-open-cv-modal
-      aria-label="View my resume"
-    >
-      <span class="resume" data-i18n="about.viewResume">View Resume</span>
-    </button>
+  <div class="about-content">
+    {
+      highlightIcons.map((icon, index) => (
+        <div class="about-highlight">
+          <span class="highlight-icon"><i class={icon} aria-hidden="true" /></span>
+          <div>
+            <p data-i18n={`about.highlights.${index}`} set:html={t.about.highlights[index]} />
+            {highlightTech[index]?.length > 0 && (
+              <div class="highlight-tech" aria-hidden="true">
+                {highlightTech[index].map((c, n) => <i class={`devicon-${c} colored`} style={`--n: ${n}`} />)}
+              </div>
+            )}
+          </div>
+        </div>
+      ))
+    }
   </div>
 </section>
 

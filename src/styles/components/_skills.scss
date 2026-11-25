@@ -53,8 +53,8 @@
 // Monochrome brand marks disappear on navy; flip them in the dark theme
 :root:not([data-theme="light"]) .skills-habilities .skill-mention {
     [data-skill="Next.js"], [data-skill="Express.js"], [data-skill="GitHub Actions"],
-    [data-skill="Apache Kafka"], [data-skill="Scalar"], [data-skill^="AWS"],
-    [data-skill="shadcn/ui"], [data-skill="Zustand"] {
+    [data-skill="Apache Kafka"], [data-skill="Scalar"],
+    [data-skill="shadcn/ui"], [data-skill="Zustand"], [data-skill="OWASP Top 10"] {
         img { filter: invert(1); }
     }
 }

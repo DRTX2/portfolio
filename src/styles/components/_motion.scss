@@ -10,6 +10,7 @@
 // ---------------------------------------------------------------------------
 
 $ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 $stagger: 70ms;
 
 html.motion {
@@ -113,6 +114,49 @@ html.motion [data-reveal="title"]:not(.in)::after { transform: scaleX(0); }
   0% { transform: scaleX(0); opacity: 1; }
   60% { transform: scaleX(1); opacity: 1; }
   100% { transform: scaleX(1); opacity: 0.25; }
+}
+
+// --- Technology icons ---------------------------------------------------------
+// About: a small wave runs through each row of logos every few seconds, like a signal going by.
+// Everywhere else the logos stay still until the reader points at their chip, card or job entry.
+@keyframes icon-wave {
+  0%, 12%, 100% { translate: 0 0; scale: 1; }
+  6% { translate: 0 -6px; scale: 1.16; }
+}
+@keyframes icon-hop {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  40% { translate: 0 -4px; rotate: -8deg; }
+}
+.highlight-tech i, .technologies i, .modal-tech-stack i, .pp-tech i, .project-links i, .pp-link i, .modal-page-link i, .pp-back i { display: inline-block; }
+
+html.motion {
+  .about-highlight.in .highlight-tech i {
+    animation: icon-wave 7s $ease-out infinite;
+    animation-delay: calc(0.9s + var(--i, 0) * 0.45s + var(--n, 0) * 0.13s);
+  }
+
+  // One logo under the pointer
+  .job-stack img, .skill-mention img, .highlight-tech i,
+  .technologies i, .modal-tech-stack :is(i, img), .pp-tech :is(i, img) { transition: transform 0.35s $ease-spring; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .highlight-tech i:hover { transform: scale(1.35) rotate(-6deg); }
+    .job-stack li:hover img, .skill-mention > div:hover img,
+    .technologies span:hover i, .modal-tech-stack span:hover :is(i, img), .pp-tech li:hover :is(i, img) { transform: translateY(-2px) scale(1.3) rotate(-8deg); }
+
+    // A whole job entry or project card: its logos hop once, left to right
+    .job:hover .job-stack img, .projects .project:hover .technologies i { animation: icon-hop 0.5s $ease-out both; }
+    @for $n from 1 through 20 {
+      .job:hover .job-stack li:nth-child(#{$n}) img, .projects .project:hover .technologies span:nth-child(#{$n}) i { animation-delay: #{$n * 35}ms; }
+    }
+
+    // Overview / Full case study / source links: the icon shows where the click goes
+    .project-links i, .modal-page-link i, .pp-link i, .pp-back i, .modal-links i { transition: transform 0.3s $ease-spring; }
+    .view-page-link:hover i, .modal-page-link:hover i { transform: translateX(5px); }
+    .pp-back:hover i { transform: translateX(-5px); }
+    .view-details-btn:hover i { transform: translateY(-3px) scale(1.15); }
+    .project-links a:not(.view-page-link):hover i, .pp-link:hover i, .modal-links a:hover i { transform: rotate(-12deg) scale(1.18); }
+  }
 }
 
 // --- Project cards: quiet lift on hover (pointer devices only) ---------------
@@ -221,12 +265,28 @@ html.motion [data-reveal="title"]:not(.in)::after { transform: scaleX(0); }
 }
 
 // --- Tech marquee between hero and about -------------------------------------
+// Drifts on its own (CSS); TechMarquee.astro moves the animation clock for the arrows and for dragging.
 .tech-marquee {
-  position: relative;
-  overflow: hidden;
-  padding-block: 1.4rem;
+  padding-block: 1.1rem 0.6rem;
   border-block: 1px solid var(--line);
-  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+
+  .marquee-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-inline: clamp(0.5rem, 2vw, 1.5rem);
+  }
+
+  .marquee-viewport {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    padding-block: 0.4rem;
+    cursor: grab;
+    touch-action: pan-y;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  &.is-dragging .marquee-viewport { cursor: grabbing; }
 
   ul {
     display: flex;
@@ -235,9 +295,11 @@ html.motion [data-reveal="title"]:not(.in)::after { transform: scaleX(0); }
     margin: 0;
     padding: 0 1.5rem;
     list-style: none;
-    animation: marquee 40s linear infinite;
+    user-select: none;
+    animation: marquee 45s linear infinite; // TechMarquee.astro sets the duration from the list's width
   }
-  &:hover ul { animation-play-state: paused; }
+  // Only while reading the list itself, or with keyboard focus: a clicked arrow keeps focus and must not stop it.
+  &:has(.marquee-viewport:hover) ul, &:has(:focus-visible) ul, &.is-dragging ul { animation-play-state: paused; }
 
   li {
     display: flex;
@@ -251,9 +313,63 @@ html.motion [data-reveal="title"]:not(.in)::after { transform: scaleX(0); }
 
     &:hover { color: var(--text); }
   }
-  img { width: 26px; height: 26px; filter: grayscale(1) opacity(0.75); transition: filter 0.25s ease; }
-  li:hover img { filter: none; }
+  .extra { display: none; }
+  img { width: 26px; height: 26px; object-fit: contain; filter: grayscale(1) opacity(0.75); transition: filter 0.25s ease, transform 0.35s $ease-spring; }
+  li:hover img { filter: none; transform: translateY(-3px) scale(1.18); }
+
+  .marquee-nav {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+
+    &:hover { border-color: var(--signal); color: var(--signal-text); }
+  }
+
+  .marquee-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.35rem auto 0;
+    padding: 0.4rem 0.75rem;
+    border: 0;
+    background: none;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    i { font-size: 0.7em; transition: transform 0.25s ease; }
+    &:hover { color: var(--signal-text); }
+    &[aria-expanded='true'] i { transform: rotate(180deg); }
+    &[aria-expanded='true'] [data-label='more'], &[aria-expanded='false'] [data-label='less'] { display: none; }
+  }
+  .marquee-nav:focus-visible, .marquee-toggle:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 999px; }
+
+  // Every technology at once, in a still grid
+  &.is-expanded {
+    ul { flex-wrap: wrap; justify-content: center; gap: 1rem 2rem; width: auto; max-width: $container; margin-inline: auto; animation: none; }
+    li { order: var(--at); } // the loop mixes areas; the full list groups them
+    .extra { display: flex; }
+    img { filter: none; }
+    li[aria-hidden='true'], .marquee-nav { display: none; }
+    .marquee-viewport { cursor: auto; mask-image: none; }
+  }
 }
+// Monochrome marks need flipping on navy (same list as the Skills section)
+:root:not([data-theme="light"]) .tech-marquee li:is([data-tech="Next.js"], [data-tech="Express.js"], [data-tech="GitHub Actions"], [data-tech="Apache Kafka"], [data-tech="Scalar"], [data-tech="shadcn/ui"], [data-tech="Zustand"], [data-tech="OWASP Top 10"]) {
+  img { filter: grayscale(1) invert(1) opacity(0.75); }
+  &:hover img { filter: invert(1); }
+}
+:root:not([data-theme="light"]) .tech-marquee.is-expanded li:is([data-tech="Next.js"], [data-tech="Express.js"], [data-tech="GitHub Actions"], [data-tech="Apache Kafka"], [data-tech="Scalar"], [data-tech="shadcn/ui"], [data-tech="Zustand"], [data-tech="OWASP Top 10"]) img { filter: invert(1); }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 // --- Page-to-page transitions (cross-document View Transitions, progressive) --
@@ -265,8 +381,9 @@ html.motion [data-reveal="title"]:not(.in)::after { transform: scaleX(0); }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-ambient .blob, .tech-marquee ul { animation: none; }
-  .tech-marquee ul { flex-wrap: wrap; width: auto; }
-  .tech-marquee li[aria-hidden="true"] { display: none; }
+  .tech-marquee ul { flex-wrap: wrap; justify-content: center; width: auto; }
+  .tech-marquee li[aria-hidden="true"], .tech-marquee .marquee-nav { display: none; }
+  .tech-marquee .marquee-viewport { cursor: auto; mask-image: none; }
   .main-menu.nav-hidden { transform: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }

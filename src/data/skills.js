@@ -4,6 +4,11 @@
  * `icon` is optional: a devicon path, a full URL, or omitted for a text-only chip.
  */
 
+// Official per-service marks (gilbarbara/logos, CC0); devicon and simpleicons only have the AWS wordmark.
+const AWS = 'https://cdn.jsdelivr.net/gh/gilbarbara/logos@875d71c5a8e4aa90a33f8b3ea15b8945de9cc183/logos/';
+const AZURE = 'https://cdn.jsdelivr.net/gh/benc-uk/icon-collection@e33ee714d05a24a81cf6ccd967ef34b22cb77e65/azure-icons/';
+const DIAGRAMS = 'https://cdn.jsdelivr.net/gh/mingrammer/diagrams@5a9e8af2d4e48ae2bbd002a4c0ca714d5b9219e1/resources/azure/';
+
 export const skillCategories = [
   {
     id: 'backend',
@@ -30,7 +35,7 @@ export const skillCategories = [
       { name: 'GraphQL', icon: 'graphql/graphql-plain.svg' },
       { name: 'Scalar', icon: 'https://cdn.simpleicons.org/scalar' },
       { name: 'OpenIddict (OIDC)', icon: 'https://cdn.simpleicons.org/openid' },
-      { name: 'MassTransit', icon: 'https://cdn.simpleicons.org/dotenv' },
+      { name: 'MassTransit' },
       { name: 'Hangfire', icon: 'https://cdn.simpleicons.org/clockify' },
     ],
   },
@@ -80,13 +85,61 @@ export const skillCategories = [
     ],
   },
   {
-    id: 'cloud',
-    title: 'Cloud & DevOps',
+    id: 'aws',
+    title: 'AWS',
     skills: [
-      { name: 'AWS (EC2, S3, RDS, Lambda)', icon: 'amazonwebservices/amazonwebservices-original-wordmark.svg' },
-      { name: 'Azure Container Apps', icon: 'azure/azure-original.svg' },
-      { name: 'Azure Blob Storage', icon: 'azure/azure-original.svg' },
-      { name: 'Azure Bicep (IaC)', icon: 'azure/azure-original.svg' },
+      { name: 'EC2', icon: `${AWS}aws-ec2.svg` },
+      { name: 'ECS', icon: `${AWS}aws-ecs.svg` },
+      { name: 'Fargate', icon: `${AWS}aws-fargate.svg` },
+      { name: 'Lambda', icon: `${AWS}aws-lambda.svg` },
+      { name: 'Step Functions', icon: `${AWS}aws-step-functions.svg` },
+      { name: 'S3', icon: `${AWS}aws-s3.svg` },
+      { name: 'RDS', icon: `${AWS}aws-rds.svg` },
+      { name: 'Aurora', icon: `${AWS}aws-aurora.svg` },
+      { name: 'DynamoDB', icon: `${AWS}aws-dynamodb.svg` },
+      { name: 'SQS', icon: `${AWS}aws-sqs.svg` },
+      { name: 'SES', icon: `${AWS}aws-ses.svg` },
+      { name: 'API Gateway', icon: `${AWS}aws-api-gateway.svg` },
+      { name: 'VPC', icon: `${AWS}aws-vpc.svg` },
+      { name: 'Elastic Load Balancing', icon: `${AWS}aws-elb.svg` },
+      { name: 'CloudFront', icon: `${AWS}aws-cloudfront.svg` },
+      { name: 'Route 53', icon: `${AWS}aws-route53.svg` },
+      { name: 'WAF', icon: `${AWS}aws-waf.svg` },
+      { name: 'IAM', icon: `${AWS}aws-iam.svg` },
+      { name: 'Secrets Manager', icon: `${AWS}aws-secrets-manager.svg` },
+      { name: 'CloudWatch', icon: `${AWS}aws-cloudwatch.svg` },
+      { name: 'Bedrock', icon: `${AWS}aws-bedrock.svg` },
+    ],
+  },
+  {
+    id: 'azure',
+    title: 'Azure',
+    skills: [
+      { name: 'Container Apps', icon: `${DIAGRAMS}compute/container-apps.png` },
+      { name: 'App Service', icon: `${AZURE}App-Services.svg` },
+      { name: 'Functions', icon: `${AZURE}Function-Apps.svg` },
+      { name: 'Virtual Machines', icon: `${AZURE}Virtual-Machine.svg` },
+      { name: 'Container Registry', icon: `${AZURE}Container-Registries.svg` },
+      { name: 'Blob Storage', icon: `${AZURE}Blob-Block.svg` },
+      { name: 'SQL Database', icon: `${AZURE}SQL-Database.svg` },
+      { name: 'Database for PostgreSQL', icon: `${AZURE}Azure-Database-PostgreSQL-Server.svg` },
+      { name: 'Service Bus', icon: `${AZURE}Service-Bus.svg` },
+      { name: 'Communication Services (email)', icon: 'azure/azure-original.svg' },
+      { name: 'API Management', icon: `${AZURE}API-Management-Services.svg` },
+      { name: 'Virtual Network', icon: `${AZURE}Virtual-Networks.svg` },
+      { name: 'Load Balancer', icon: `${AZURE}Load-Balancers.svg` },
+      { name: 'Front Door', icon: `${AZURE}Front-Doors.svg` },
+      { name: 'DNS', icon: `${AZURE}DNS-Zones.svg` },
+      { name: 'Microsoft Entra ID', icon: `${AZURE}Azure-Active-Directory.svg` },
+      { name: 'Key Vault', icon: `${AZURE}Key-Vaults.svg` },
+      { name: 'Monitor', icon: `${AZURE}Monitor.svg` },
+      { name: 'Bicep (IaC)', icon: 'azure/azure-original.svg' },
+    ],
+  },
+  {
+    id: 'cloud',
+    title: 'DevOps & Infrastructure',
+    skills: [
       { name: 'Terraform', icon: 'terraform/terraform-original.svg' },
       { name: 'Docker', icon: 'docker/docker-original.svg' },
       { name: 'Kubernetes', icon: 'kubernetes/kubernetes-plain.svg' },
@@ -125,6 +178,7 @@ export const skillCategories = [
       { name: 'Prometheus', icon: 'prometheus/prometheus-original.svg' },
       { name: 'Grafana', icon: 'grafana/grafana-original.svg' },
       { name: 'OAuth2 / OIDC', icon: 'https://cdn.simpleicons.org/openid' },
+      { name: 'Keycloak', icon: 'https://cdn.simpleicons.org/keycloak/00b8e3' },
       { name: 'JWT / RBAC' },
       { name: 'OWASP Top 10', icon: 'https://cdn.simpleicons.org/owasp' },
       { name: 'DevSecOps' },
@@ -134,8 +188,8 @@ export const skillCategories = [
     id: 'messaging',
     title: 'Message Brokers & Event Streaming',
     skills: [
-      { name: 'RabbitMQ', icon: 'rabbitmq/rabbitmq-original.svg' },
       { name: 'Apache Kafka', icon: 'apachekafka/apachekafka-original.svg' },
+      { name: 'RabbitMQ', icon: 'rabbitmq/rabbitmq-original.svg' },
       { name: 'WebSockets' },
     ],
   },

@@ -47,9 +47,9 @@ const filters = GROUPS.filter((g) => counts[g.key] >= 2);
       ))
     }
   </div>
-  <div class="projects-grid">
+  <div class="projects-grid" id="projects-grid">
     {
-      translatedProjects.map((project) => (
+      translatedProjects.map((project, i) => (
         <ProjectCard
           title={project.title}
           image={project.image}
@@ -61,9 +61,18 @@ const filters = GROUPS.filter((g) => counts[g.key] >= 2);
           slug={project.slug}
           tags={tagsOf(project)}
           status={project.status}
+          accordion={i === 0}
         />
       ))
     }
+  </div>
+  <div class="projects-more">
+    <button type="button" class="btn btn-ghost" id="projects-toggle" aria-expanded="false" aria-controls="projects-grid" hidden>
+      <span data-label="more" data-t="projects.showMore">{t.projects.showMore}</span>
+      <span data-label="less" data-t="projects.showLess">{t.projects.showLess}</span>
+      <span class="count"></span>
+      <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    </button>
   </div>
 </section>
 
@@ -144,16 +153,11 @@ const filters = GROUPS.filter((g) => counts[g.key] >= 2);
       // Update highlights if they exist
       const highlightsContainer = card.querySelector('.project-highlights');
       if (highlightsContainer && project.highlights) {
-        highlightsContainer.innerHTML = '';
-        project.highlights.forEach((h) => {
-          const li = document.createElement('li');
-          const strong = document.createElement('strong');
-          strong.textContent = h.label + ':';
-          const span = document.createElement('span');
-          span.innerHTML = ' ' + h.text;
-          li.appendChild(strong);
-          li.appendChild(span);
-          highlightsContainer.appendChild(li);
+        const labels = highlightsContainer.querySelectorAll<HTMLElement>('[data-h-label]');
+        const texts = highlightsContainer.querySelectorAll<HTMLElement>('[data-h-text]');
+        project.highlights.forEach((h, i) => {
+          if (labels[i]) labels[i].textContent = labels[i].matches('summary') ? h.label : `${h.label}:`;
+          if (texts[i]) texts[i].innerHTML = h.text;
         });
       }
 
@@ -213,15 +217,51 @@ const filters = GROUPS.filter((g) => counts[g.key] >= 2);
 <ProjectDetailModal />
 
 <script>
-  // Stack filter: show only cards whose technologies belong to the selected group.
+  // Stack filter plus "show more": a long result shows its first rows, the next row peeks out blurred,
+  // and the button opens the rest. Without JS every card is visible.
   const buttons = document.querySelectorAll<HTMLButtonElement>('.project-filter');
+  const grid = document.getElementById('projects-grid')!;
+  const cards = [...grid.querySelectorAll<HTMLElement>('.project')];
+  const toggle = document.getElementById('projects-toggle') as HTMLButtonElement;
+  const oneColumn = window.matchMedia('(max-width: 860px)');
+  let filter = 'all';
+  let expanded = false;
+
+  function render() {
+    const shown = cards.filter((c) => filter === 'all' || (c.dataset.tags ?? '').split(' ').includes(filter));
+    // The lead card takes a full row, so five cards end on a full row; without it, six do.
+    const limit = shown[0] === cards[0] ? 5 : 6;
+    const peek = oneColumn.matches ? 1 : 2;
+    const collapsible = shown.length > limit + 1;
+    const collapsed = collapsible && !expanded;
+    cards.forEach((card) => {
+      const at = shown.indexOf(card);
+      const isPeek = collapsed && at >= limit && at < limit + peek;
+      card.hidden = at < 0 || (collapsed && at >= limit + peek);
+      card.classList.toggle('is-peek', isPeek);
+      card.inert = isPeek;
+    });
+    grid.classList.toggle('is-collapsed', collapsed);
+    toggle.hidden = !collapsible;
+    toggle.setAttribute('aria-expanded', String(!collapsed));
+    toggle.querySelector('.count')!.textContent = collapsed ? `+${shown.length - limit}` : '';
+  }
+
   buttons.forEach((btn) =>
     btn.addEventListener('click', () => {
-      const f = btn.dataset.filter;
+      filter = btn.dataset.filter!;
+      expanded = false;
       buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-      document.querySelectorAll<HTMLElement>('.projects-grid .project').forEach((card) => {
-        card.hidden = f !== 'all' && !(card.dataset.tags ?? '').split(' ').includes(f!);
-      });
+      render();
     }),
   );
+  toggle.addEventListener('click', () => {
+    const top = toggle.getBoundingClientRect().top;
+    expanded = !expanded;
+    render();
+    // Collapsing removes rows above the button: keep it where the reader clicked it.
+    if (!expanded) window.scrollBy({ top: toggle.getBoundingClientRect().top - top, behavior: 'instant' });
+  });
+  oneColumn.addEventListener('change', render);
+  render();
 </script>

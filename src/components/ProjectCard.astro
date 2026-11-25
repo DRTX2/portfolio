@@ -23,11 +23,13 @@ interface Props {
   /** Stack groups used by the project filter (e.g. "node cloud"). */
   tags?: string[];
   status?: 'in-progress';
+  /** Lead card: highlights open one at a time instead of showing every paragraph. */
+  accordion?: boolean;
 }
 
 import { useTranslations } from '../i18n/utils';
 
-const { title, image, images, description, technologies, links, slug, highlights, tags = [], status } = Astro.props;
+const { title, image, images, description, technologies, links, slug, highlights, tags = [], status, accordion = false } = Astro.props;
 const t = useTranslations('en');
 const pageUrl = slug ? `${import.meta.env.BASE_URL}projects/${slug}/` : undefined;
 ---
@@ -54,12 +56,21 @@ const pageUrl = slug ? `${import.meta.env.BASE_URL}projects/${slug}/` : undefine
 
     {
       highlights && highlights.length > 0 ? (
-        <ul class="project-highlights">
-          {highlights.map((item) => (
-            <li>
-              <strong>{item.label}:</strong> <span set:html={item.text} />
-            </li>
-          ))}
+        <ul class:list={['project-highlights', { accordion }]}>
+          {highlights.map((item, i) =>
+            accordion ? (
+              <li>
+                <details name={`highlights-${slug}`} open={i === 0}>
+                  <summary data-h-label>{item.label}</summary>
+                  <p data-h-text set:html={item.text} />
+                </details>
+              </li>
+            ) : (
+              <li>
+                <strong data-h-label>{item.label}:</strong> <span data-h-text set:html={item.text} />
+              </li>
+            )
+          )}
         </ul>
       ) : (
         <p set:html={description} />

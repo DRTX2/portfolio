@@ -59,12 +59,9 @@
   document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('projectDetailModal');
     const closeBtn = document.querySelector('.close-detail-modal');
-    // We need to parse the projects data from the DOM
     const dataContainer = document.getElementById('projects-data');
 
     if (!dataContainer || !modal || !closeBtn) return;
-
-    const projects = JSON.parse(dataContainer.dataset.projects || '[]');
 
     const openButtons = document.querySelectorAll('.view-details-btn');
 
@@ -89,6 +86,8 @@
     };
 
     const populateModal = (slug) => {
+      // Read on every open: Projects.astro rewrites this data when the language changes.
+      const projects = JSON.parse(dataContainer.dataset.projects || '[]');
       const project = projects.find((p) => p.slug === slug);
       if (!project) return;
 

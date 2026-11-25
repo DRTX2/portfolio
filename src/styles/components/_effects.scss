@@ -66,3 +66,22 @@ html {
     .now-dot::after { animation: none; }
     html { scroll-behavior: auto; }
 }
+
+// Icon-font logos whose brand colour is (almost) black disappear on navy.
+:root:not([data-theme="light"]) {
+    [class*="devicon-apachekafka"].colored,
+    [class*="devicon-nextjs"].colored,
+    [class*="devicon-express"].colored,
+    [class*="devicon-github-"].colored { color: var(--text); }
+    [class*="devicon-discordjs"].colored { color: #7983f5; }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}

@@ -16,14 +16,14 @@ const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matc
 const REVEALS = [
   // [selector, variant, stagger siblings?]
   [".about-me > h2, .experience > h2, .skills-habilities > h2, .education > h2, .projects > h2, .atalaya-live > h2, .interests > h2, .cta-container > h2", "title"],
-  [".about-content > *, .contact-info > *", "soft", true],
+  [".about-content > *", "soft", true],
   [".expertise-tags .tag", "chip", true],
   [".experience .job", "up", true],
   [".skills-habilities article", "up", true],
   [".skill-mention > *", "chip", true],
   [".education-grid > *, .certificates > *", "up", true],
   [".projects .project", "card", true],
-  [".about-objective, .project-filters, .interests-subtitle, .flow-subtitle", "soft"],
+  [".about-objective, .project-filters, .projects-more, .interests-subtitle, .flow-subtitle", "soft"],
   [".flow-grid > *", "up", true],
   [".interest-card", "up", true],
   [".cta-container > :not(h2)", "up", true],
@@ -394,7 +394,7 @@ const initOffscreenPause = () => {
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) e.target.classList.toggle("is-offscreen", !e.isIntersecting);
   });
-  document.querySelectorAll(".presentation, .tech-marquee, .projects").forEach((el) => io.observe(el));
+  document.querySelectorAll(".presentation, .tech-marquee, .about-content, .projects").forEach((el) => io.observe(el));
 };
 
 // ---------------------------------------------------------------- keep scroll triggers accurate

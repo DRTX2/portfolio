@@ -1,4 +1,5 @@
 {
+  "marquee": {"label": "Tecnologías con las que trabajo", "prev": "Tecnologías anteriores", "next": "Tecnologías siguientes", "showAll": "Ver todas las tecnologías", "showLess": "Ver menos"},
   "flow": {"title": "Atalaya", "titleHighlight": "en acción", "subtitle": "Un incidente, cuatro productos. Reproduce la prueba de punta a punta: se detecta un pipeline atascado, se apaga la funcionalidad riesgosa, se avisa al equipo de guardia, todo se restaura al recuperarse y Bitácora redacta el postmortem.", "run": "Repetir", "source": "Escenario y salida real", "steps": ["El pipeline de pedidos se atasca: 200 mensajes en cola, el más antiguo de 10 min, el consumidor con 0 invocaciones.", "Nimbus ve dos ventanas degradadas y abre un incidente (consumer_stalled).", "Nimbus llama a Flagship con una petición firmada (HMAC): orders-v2 se apaga y queda auditado como nimbus (automation).", "Flagship transmite el cambio por SSE: tus servicios toman el camino seguro 680 ms después de la observación.", "Nimbus avisa a Hookrelay. La clave de idempotencia hace que un reintento no tenga efecto doble.", "Hookrelay entrega un webhook firmado incident.opened al endpoint de guardia, con reintentos y DLQ detrás.", "El pipeline está sano durante dos ventanas: Nimbus marca el incidente como recuperado.", "Flagship restaura orders-v2, porque nadie lo tocó durante el incidente.", "Hookrelay entrega incident.recovered. Ciclo cerrado: detectar, mitigar, notificar, recuperar.", "Bitácora, suscrita a través de Hookrelay, reconstruye la línea de tiempo (mitigado en 677 ms) y redacta el postmortem."]},
   "interests": {
     "loop": {"read": "Leer", "readText": "Libros · cursos · blogs", "applied": "De la lectura al código", "build": "Construir", "measure": "Medir"},
@@ -18,12 +19,12 @@
   },
   "site": {
     "title": "David Manjarres | Ingeniero Full Stack y Cloud Senior",
-    "description": "Ingeniero full-stack y cloud (Node.js, NestJS, React, .NET, Spring Boot). Más de 4 años diseñando, entregando y operando sistemas web en producción: APIs, datos, CI/CD y nube."
+    "description": "Ingeniero full-stack y cloud (Node.js, NestJS, React, .NET, Spring Boot). Más de 5 años diseñando, entregando y operando sistemas web en producción: APIs, datos, CI/CD y nube (AWS, Azure)."
   },
   "hero": {
     "role": "Ingeniero full-stack y cloud senior",
     "name": "David Manjarres",
-    "lede": "Diseño, despliego y opero sistemas en producción: SaaS multi-tenant en Azure, plataformas de salud y APIs orientadas a eventos con .NET, Spring Boot, NestJS y React.",
+    "lede": "Diseño, despliego y opero sistemas en producción sobre AWS y Azure: SaaS multi-tenant, plataformas de salud y APIs orientadas a eventos con NestJS, .NET, Spring Boot y React.",
     "ctaProjects": "Ver proyectos",
     "ctaResume": "Currículum",
     "now": "Ahora construyendo StayFlow Cloud, un SaaS hotelero multi-tenant sobre Azure Container Apps.",
@@ -37,19 +38,19 @@
     "titleHighlight": "Mí",
     "subtitle": "Ingeniero full-stack y cloud en Ambato, Ecuador",
     "highlights": [
-      "Construyendo <strong>aplicaciones escalables y nativas en la nube</strong> con ASP.NET Core, NestJS, Spring Boot y TypeScript — desplegadas en Azure Container Apps.",
+      "Construyendo <strong>aplicaciones escalables y nativas en la nube</strong> con ASP.NET Core, NestJS, Spring Boot y TypeScript — desplegadas en <strong>AWS</strong> y Azure Container Apps.",
       "Diseñando <strong>APIs RESTful</strong> con <strong>Arquitectura Limpia, Hexagonal y DDD</strong>, implementando pipelines CI/CD, autenticación OIDC y patrones SaaS multi-tenant.",
       "Experiencia con <strong>PostgreSQL, MySQL, MongoDB, Redis</strong> — incluyendo serverless (Neon) y patrones ORM con Entity Framework Core.",
-      "Proficiente en containerización (<strong>Docker</strong>), despliegue en la nube (<strong>Azure Container Apps, ACR, Bicep IaC</strong>), message brokers (<strong>MassTransit, RabbitMQ</strong>) y trabajos en segundo plano (<strong>Hangfire</strong>).",
+      "Entrega en la nube con <strong>Docker</strong> sobre <strong>AWS (EC2, S3, RDS, Lambda, SQS, CloudFront)</strong> y Azure (Container Apps, Bicep IaC); mensajería con <strong>Kafka, RabbitMQ</strong> y MassTransit, y trabajos en segundo plano con Hangfire.",
       "Automatización de flujos con <strong>n8n self-hosted</strong> y APIs de IA (<strong>Gemini, OpenAI</strong>) integradas con Discord, Trello, GitHub y correo.",
-      "Ingeniería de Software (2021-2026) en la Universidad Técnica de Ambato, Ecuador.",
+      "Ingeniería de Software en la Universidad Técnica de Ambato, Ecuador (2021 – presente, en curso).",
       "Apasionado por escribir código mantenible y de alta calidad, y resolver problemas complejos a escala."
     ],
     "expertise": "Áreas de Experiencia",
     "expertiseTags": [
       "Arquitectura Backend",
       "SaaS Multi-tenant",
-      "Infraestructura en la Nube",
+      "Nube AWS y Azure",
       "Microservicios",
       "Diseño de APIs y Autenticación OIDC",
       "Optimización de Bases de Datos",
@@ -68,7 +69,7 @@
     "current": "Actual",
     "items": [
       {
-        "role": "Ingeniero Full-Stack y Cloud Senior",
+        "role": "Ingeniero Full-Stack y Cloud",
         "company": "StayFlow Cloud",
         "period": "2026 – Presente",
         "context": "SaaS multi-tenant para gestión hotelera",
@@ -91,13 +92,13 @@
       {
         "role": "Desarrollador Full Stack y Cloud",
         "company": "SMARTMEDIC",
-        "period": "Ene 2026 – May 2026",
+        "period": "Ene 2026 – Jun 2026",
         "context": "Sistemas médicos para clínicas y hospitales",
         "bullets": [
           "Mantuve módulos clínicos y subsistemas integrados con <strong>PHP/Laravel</strong>, MySQL y PostgreSQL.",
-          "Desarrollé servicios internos con <strong>NestJS</strong>, Python, Redis y JWT, con <strong>AWS S3</strong> para archivos médicos.",
+          "Desarrollé servicios internos con <strong>NestJS</strong>, Python, Redis y JWT; archivos médicos en <strong>AWS S3</strong> y tareas asíncronas y correo con <strong>SQS, Lambda y SES</strong>.",
           "Construí dashboards, formularios y validaciones en <strong>React</strong>, TypeScript, Material UI, Zustand y WebSockets.",
-          "Gestioné infraestructura Linux/Debian: logs, respaldos, Docker, colas y optimización, documentado para soporte."
+          "Operé producción Linux/Debian en <strong>AWS EC2 y RDS</strong>: logs y métricas en CloudWatch, políticas IAM, respaldos, Docker y colas, documentado para soporte."
         ],
         "stack": [
           "Laravel",
@@ -105,26 +106,31 @@
           "Python",
           "React",
           "Redis",
+          "AWS EC2 · RDS",
           "AWS S3",
+          "AWS SQS · Lambda · SES",
+          "AWS CloudWatch · IAM",
           "Docker"
         ]
       },
       {
         "role": "Desarrollador Full Stack",
         "company": "Freelance",
-        "period": "Ene 2023 – Presente",
+        "period": "Jul 2021 – Presente",
         "context": "Aplicaciones web para pequeñas empresas y clientes académicos",
         "bullets": [
           "Diseñé y entregué aplicaciones con <strong>Spring Boot</strong>, ASP.NET Core, FastAPI, Odoo y React/Angular.",
           "Reduje la latencia de APIs hasta un <strong>60%</strong> con indexación, prevención de N+1 y caché Redis sobre PostgreSQL/MySQL.",
-          "Desplegué en <strong>AWS</strong> (EC2, S3, RDS, Lambda) y Azure con CI/CD en Jenkins/GitHub Actions y controles DevSecOps.",
+          "Desplegué en <strong>AWS</strong> (EC2, S3, RDS, Lambda) detrás de Elastic Load Balancing, CloudFront, Route 53 y WAF, con <strong>Bedrock</strong> para funciones de IA, y en Azure; CI/CD con Jenkins/GitHub Actions y controles DevSecOps.",
           "Escribí suites automatizadas con <strong>Playwright</strong>, Selenium, Jest y Postman, y reportes Power BI sobre SQL Server y SSIS."
         ],
         "stack": [
           "Spring Boot",
           "FastAPI",
           "Kafka",
-          "AWS",
+          "AWS EC2 · S3 · RDS · Lambda",
+          "AWS ELB · CloudFront · Route 53 · WAF",
+          "AWS Bedrock",
           "Jenkins",
           "Playwright",
           "Power BI"
@@ -150,7 +156,7 @@
     ]
   },
   "cvModal": {
-    "title": "Resume",
+    "title": "Hoja de vida",
     "download": "Descargar",
     "downloadAria": "Descargar CV",
     "closeAria": "Cerrar visor de CV",
@@ -162,7 +168,9 @@
     "backend": "Desarrollo Backend",
     "databases": "Bases de Datos & Caché",
     "frontend": "Frontend y Móvil",
-    "cloud": "Cloud & DevOps",
+    "aws": "AWS",
+    "azure": "Azure",
+    "cloud": "DevOps e Infraestructura",
     "messaging": "Message Brokers & Streaming de Eventos",
     "automation": "Automatización & Integración de IA",
     "data": "Datos y BI",
@@ -175,7 +183,7 @@
     "university": {
       "name": "Universidad Técnica de Ambato",
       "degree": "Ingeniería de Software",
-      "period": "2021 - Actualidad",
+      "period": "2021 – Presente (en curso)",
       "description": "Durante mi tiempo en la Universidad Técnica de Ambato, he adquirido una base sólida en desarrollo de software, incluyendo programación, algoritmos y diseño de sistemas. También he participado en varios proyectos que han perfeccionado mis habilidades de resolución de problemas y trabajo en equipo."
     },
     "certificates": {
@@ -186,12 +194,12 @@
       },
       "graphql": {
         "title": "GraphQL y Node.js: Aplicaciones modernas y eficientes",
-        "issuer": "Udemy - 2024",
+        "issuer": "Udemy - 2025 (15 h)",
         "description": "Este curso me proporcionó habilidades avanzadas para construir aplicaciones modernas y eficientes usando GraphQL y Node.js. Aprendí a diseñar APIs escalables e integrarlas con frameworks de front-end."
       },
       "fullstack": {
         "title": "Programación FullStack y de Escritorio de CERO a PROFESIONAL",
-        "issuer": "Udemy - 2022",
+        "issuer": "Udemy - 2025 (90,5 h)",
         "description": "En este curso, dominé el desarrollo full-stack, desde tecnologías front-end como HTML, CSS y JavaScript hasta frameworks back-end como Node.js y bases de datos. También adquirí experiencia en desarrollo de aplicaciones de escritorio."
       },
       "efset": {
@@ -202,6 +210,8 @@
     }
   },
   "projects": {
+    "showMore": "Ver más proyectos",
+    "showLess": "Ver menos",
     "inProgress": "En progreso",
     "filters": {"ai": "IA y automatización", "realtime": "Tiempo real", "testing": "Pruebas y QA", 
       "all": "Todos",
@@ -229,16 +239,16 @@
         "highlights": [
           {
             "label": "De punta a punta, verificado",
-            "text": "Un pipeline atascado en <strong>Nimbus</strong> apaga un flag en <strong>Flagship</strong> (los SDK lo ven en <strong>680 ms</strong>), <strong>Hookrelay</strong> avisa al webhook del cliente y <strong>Bitácora</strong> redacta el postmortem; al recuperarse, todo se restaura, y todo se ve en una sola <strong>Atalaya Console</strong>."
+            "text": "Un pipeline atascado en <strong>Nimbus</strong> apaga un flag en <strong>Flagship</strong> (los SDK lo ven en <strong>680 ms</strong>), <strong>Hookrelay</strong> avisa a guardia y al recuperarse todo se restaura, en una sola consola."
           },
-          {"label": "Aprende de cada incidente", "text": "<strong>Bitácora</strong>, serverless en AWS (API Gateway, Lambda, DynamoDB), reconstruye la línea de tiempo de cada incidente a partir de los webhooks, mide el tiempo hasta mitigar y recuperar, y redacta el <strong>postmortem</strong>."},
+          {"label": "Aprende de cada incidente", "text": "<strong>Bitácora</strong>, serverless en AWS (API Gateway, Lambda, DynamoDB), reconstruye la línea de tiempo de cada incidente desde los webhooks y redacta el <strong>postmortem</strong>."},
           {
             "label": "Probado con game days",
-            "text": "Cada modo de fallo es un <strong>experimento de caos</strong> declarativo que corre en CI: enlaces caídos, un consumidor que se cae, un failover de base de datos, todo con tráfico real de clientes. Los game days encontraron <strong>7 defectos</strong> que las pruebas unitarias no veían (eventos perdidos, una caída en el failover, SDKs desactualizados…), cada uno corregido con su prueba de regresión: ahora <strong>8/8</strong>, y si la mitigación falla, <strong>escala</strong> a on-call."
+            "text": "Ocho <strong>experimentos de caos</strong> corren en CI con tráfico real. Encontraron <strong>7 defectos</strong> que las pruebas unitarias no veían, todos corregidos: ahora <strong>8/8</strong>, y si la mitigación falla, <strong>escala</strong> a on-call."
           },
           {
             "label": "Listo para producción",
-            "text": "Núcleos hexagonales, <strong>una traza de OpenTelemetry por incidente</strong> a través de todos los productos, <strong>SSO (OIDC) con roles</strong> y acciones auditadas, medido con k6, E2E con Playwright, <strong>Terraform en AWS</strong> (ECS para los servicios, <strong>Lambda + DynamoDB</strong> para Bitácora), GitHub Actions con OIDC, CodeQL/Trivy sin hallazgos."
+            "text": "<strong>Una traza de OpenTelemetry por incidente</strong>, <strong>SSO con Keycloak</strong>, roles y acciones auditadas, <strong>Terraform en AWS</strong> (ECS, Lambda, DynamoDB), medido con k6, CodeQL/Trivy sin hallazgos."
           }
         ],
         "detailedDescription": "Atalaya es una plataforma de infraestructura para desarrolladores formada por cuatro productos, cada uno con su propio repositorio, base de datos y pipeline, y cada uno útil por separado.\n\nHookrelay es entrega de webhooks como servicio: ingesta idempotente, fan-out, firmas Standard Webhooks, reintentos con jitter, circuit breaker, cola de mensajes fallidos con reenvío masivo y protección SSRF aplicada al conectar. Flagship es gestión de funcionalidades con evaluación local: un SDK en TypeScript descarga las reglas una vez, evalúa en alrededor de 1 µs y recibe los cambios por streaming, distribuidos entre réplicas con LISTEN/NOTIFY de PostgreSQL. Nimbus es un guardián de pipelines asíncronos en AWS (SQS, Lambda, DLQ) escrito en Go: detectores explicables, incidentes deduplicados y un motor de workflows durable sobre leases de PostgreSQL. Bitácora es el registro de incidentes, serverless en AWS (API Gateway, Lambda, DynamoDB): se suscribe a Hookrelay, reconstruye la línea de tiempo de cada incidente con eventos de distintos productos, mide el tiempo hasta mitigar y recuperar, y redacta el postmortem.\n\nJuntos automatizan un incidente: Nimbus detecta un consumidor atascado y ejecuta un workflow de respuesta cuyos pasos llaman a Flagship (apagar el flag riesgoso) y a Hookrelay (notificar a los sistemas del cliente). Cuando el pipeline se recupera, el flag vuelve a su configuración previa, salvo que una persona lo haya cambiado mientras tanto. Todo el escenario corre en local con un solo Docker Compose y un script que verifica cada paso.\n\nSu resiliencia está probada, no supuesta. Cada enlace entre los productos pasa por un proxy de inyección de fallos, y los game days declarativos rompen un enlace a la vez y verifican lo que afirma la arquitectura con datos reales de los productos. El primer game day encontró tres defectos reales: un presupuesto de reintentos más corto que un reinicio, eventos de flags perdidos durante una caída breve y una restauración descartada cuando las entregas llegaban desordenadas. Cada uno se corrigió y ahora tiene su prueba. Un segundo game day rompió el sistema real: clientes simulados con k6 haciendo pedidos por SQS y un consumidor estilo Lambda, un consumidor caído, un failover de base de datos. Encontró una caída de Flagship en el failover, SDKs desactualizados después de él y dos errores en las propias herramientas de prueba; todos corregidos, y una mitigación imposible ahora escala a on-call. Cada incidente es una sola traza de OpenTelemetry a través de los productos. La Atalaya Console, un BFF en Next.js con SSO de Keycloak, muestra una sola línea de tiempo del incidente construida con los registros de los cuatro productos, enlaza su traza y permite que los operadores actúen, con cada acción auditada.",
