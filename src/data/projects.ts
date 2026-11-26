@@ -327,6 +327,7 @@ The application is deployed on Azure Container Apps with images stored in Azure 
     detailedDescription: `Impactex IMS is a full-stack operations platform for managing serialized assets and inventory without losing the context of where each item is, who is responsible for it, or what happened to it previously. Its Angular interface supports inventory, requests, maintenance work orders, loans and returns, purchasing, notifications, role-based administration, and PDF or spreadsheet reporting from a unified workspace.
 
 The .NET 10 API uses EF Core with SQL Server and a domain model designed for traceable, controlled transitions. JWT authentication and granular roles limit access by operational responsibility. Attachments are validated and stored outside the database with SHA-256 metadata, then served only through authorized endpoints. GitHub Actions builds and deploys the web and API containers to Azure Container Apps using Bicep. The infrastructure provisions secure service boundaries, an Azure Files mount for attachments, health probes, and a dedicated migration job.`,
+    features: ["Operations dashboard: live KPIs and shortcuts to the critical flows.", "Traceability: an immutable history of states and assignments for every asset.", "Loans: due dates and returns by employee or department.", "Maintenance: work orders, diagnostics and status reports.", "Roles: super administrator, systems administrator, department manager and user.", "Attachments: validated files stored outside the database with SHA-256 metadata."],
     challenges: [
       'Representing custody, location, maintenance, purchasing, and loan workflows while preserving an auditable history for each asset.',
       'Protecting files and operational data with permissions that remain consistent across the API and Angular interface.',
@@ -427,6 +428,7 @@ The backend is NestJS with TypeScript in a hexagonal architecture, WebSockets fo
     detailedDescription: `This hospital management system distributes operational responsibilities across independently deployable Spring Boot services. An API gateway is the controlled entry point for the React administration interface, while Eureka enables the services to locate one another without hard-coded addresses. The platform covers staff, doctors, specialties and medical centers, records consultations, and turns that data into reporting dashboards.
 
 Authentication is issued centrally and validated throughout the platform with JWTs. Each service exposes its own documented REST contract, which is collected into a single OpenAPI experience through the gateway. PostgreSQL is the primary data store, with an optional Citus layout that partitions information by medical center as the organization grows. Docker Compose profiles support both a local baseline and a distributed setup.`,
+    features: ["Auth service: users, login, registration and roles with JWT.", "API gateway: one entry point that routes and protects every request.", "Service discovery: services register in Eureka and find each other there.", "Administration: doctors, specialties and medical centers.", "Consultations: patients and medical consultations.", "Reporting: reports and analysis across the hospital network."],
     challenges: [
       'Separating hospital administration, consultation workflows, reporting, and access control without creating a tightly coupled backend.',
       'Keeping inter-service discovery, routing, and authorization manageable as services are added or scaled.',
@@ -597,25 +599,25 @@ Behind the storefront, custom modules model memberships and subscriptions, an ex
   },
   {
     slug: 'gasoline-system',
-    title: 'Fleet & Driver Management Platform',
+    title: "Fleet & Fuel Management Platform",
     image: `${import.meta.env.BASE_URL}assets/img/gasoline-system.png`,
-    description: `Distributed microservices platform for managing drivers, vehicles, and operations.`,
+    description: "A distributed platform to run a transport fleet: vehicles, drivers and licenses, routes and trips, and fuel consumption estimated against real, split into NestJS microservices.",
     highlights: [
-      { label: 'Architecture', text: 'Distributed microservices with NestJS, RabbitMQ, and gRPC.' },
-      { label: 'Performance', text: 'Real-time GPS tracking and reporting for fleet operations.' },
-      { label: 'Infrastructure', text: 'Dockerized environment with Eureka Service Discovery.' }
+      { label: "Microservices", text: "<strong>Ten NestJS services</strong> behind an API gateway, talking through <strong>gRPC</strong> contracts and found through <strong>Eureka</strong>." },
+      { label: "Events and logs", text: "<strong>RabbitMQ</strong> carries events between services, and a logging service sends records to <strong>Elasticsearch</strong> and Kibana." },
+      { label: "Operations", text: "Trips move from created to in route, review and finished; dashboards compare estimated and real fuel by vehicle, driver and route." }
     ],
     technologies: [
-      { name: 'NestJS', iconClass: 'devicon-nestjs-plain' },
-      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'RabbitMQ', iconClass: 'devicon-rabbitmq-original' },
-      { name: 'gRPC', iconClass: 'devicon-grpc-plain' },
-      { name: 'Kubernetes', iconClass: 'devicon-kubernetes-plain' },
-      { name: 'Elasticsearch', iconClass: 'devicon-elasticsearch-plain' },
-      { name: 'Kibana', iconClass: 'devicon-kibana-plain' },
-      { name: 'Swagger', iconClass: 'devicon-swagger-plain' },
-      { name: 'React', iconClass: 'devicon-react-original' },
-      { name: 'Docker', iconClass: 'devicon-docker-plain' },
+      { name: "NestJS", iconClass: "devicon-nestjs-plain" },
+      { name: "gRPC", iconClass: "devicon-grpc-plain" },
+      { name: "RabbitMQ", iconClass: "devicon-rabbitmq-original" },
+      { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
+      { name: "Prisma", iconImg: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/prisma/prisma-original.svg" },
+      { name: "Elasticsearch", iconClass: "devicon-elasticsearch-plain" },
+      { name: "Kibana", iconClass: "devicon-kibana-plain" },
+      { name: "React", iconClass: "devicon-react-original" },
+      { name: "Docker", iconClass: "devicon-docker-plain" },
+      { name: "Kubernetes", iconClass: "devicon-kubernetes-plain" }
     ],
     links: [
       {
@@ -629,20 +631,10 @@ Behind the storefront, custom modules model memberships and subscriptions, an ex
         iconClass: 'fab fa-github',
       },
     ],
-    detailedDescription: `This project was born out of the need to modernize a legacy fleet management system. 
-    The goal was to create a scalable, fault-tolerant system capable of handling thousands of concurrent requests 
-    from vehicle GPS trackers and administrative users. We chose a microservices architecture to allow independent 
-    scaling of the ingestion services (receiving GPS data) and the reporting services.`,
-    challenges: [
-      "Handling real-time data ingestion from hundreds of simultaneous connections without blocking the main event loop.",
-      "Ensuring data consistency across distributed services using eventual consistency patterns.",
-      "Managing complex permission levels for different types of administrative roles."
-    ],
-    solutions: [
-      "Implemented a message queue system (RabbitMQ) to buffer incoming GPS data.",
-      "Used Eureka for dynamic service discovery and load balancing.",
-      "Developed a custom RBAC guard in NestJS to manage permissions efficiently."
-    ]
+    detailedDescription: "Built by a team of four, the platform manages a transport operation: vehicle models and units, drivers and their license types, routes, trips and fuel.\n\nThe backend is a monorepo of NestJS services: gateway, auth, users, drivers, vehicles, routes, fuel, email, logging and an event publisher. The gateway exposes REST to the frontend and calls the services through gRPC contracts kept in one shared folder. Eureka handles discovery, RabbitMQ carries events, each service keeps its own PostgreSQL database (Prisma or TypeORM), and logs go to Elasticsearch and Kibana. GitHub Actions builds the images, with Kubernetes manifests for Azure (AKS).\n\nThe React frontend lets supervisors plan routes on a map, follow trips on a board by status, and read fuel dashboards and PDF reports by vehicle type, driver and route.",
+    features: ["Fleet: vehicle models and units, light and heavy fleets, and availability for each trip.", "Drivers: license types and a check of whether a driver can drive a given vehicle class.", "Trips: created, in route, in review and finished, with final odometer and comments.", "Routes: points picked on a map, with calculated distances.", "Fuel: estimated against real consumption, with dashboards and PDF reports.", "Platform: Eureka discovery, RabbitMQ events and centralized logs in Elasticsearch and Kibana."],
+    challenges: ["Splitting one business into services without letting them share a database.", "Letting services find and call each other while instances come and go.", "Following what happened across ten services when something fails."],
+    solutions: ["Each service owns its PostgreSQL database; the gateway composes them through typed gRPC contracts.", "Eureka for service discovery and RabbitMQ for events other services react to.", "A dedicated logging service that sends structured logs to Elasticsearch, searchable in Kibana."],
   },
   {
     slug: 'publication-management-and-moderation-system',
@@ -696,6 +688,7 @@ Behind the storefront, custom modules model memberships and subscriptions, an ex
 Catalog safety is a first-class workflow rather than an afterthought. Users can report a publication, moderators can investigate and resolve the case from their dashboard, and sellers can appeal decisions with the status history retained. The backend follows explicit entity, DTO, mapping, repository, service, and controller layers. Product images are stored in Azure Blob Storage, while Azure Key Vault supplies deployment secrets.
 
 Quality is enforced throughout the delivery path. Jenkins pipelines compile the applications, run static analysis and coverage checks, provision automatic integration environments with Testcontainers, execute Postman collections through Newman, and run performance, end-to-end, and dynamic security tests. The same containerized pipeline supports local validation and remote Azure deployments.`,
+    features: ["Accounts: JWT login, email verification and password recovery.", "Publications: products and services with full create, update and delete.", "Discovery: pagination and filters by category, price and distance.", "Moderation: user and system reports, assigned to moderators who decide.", "Appeals: sellers appeal a decision and a moderator resolves it.", "Background jobs: closing incidences, suspending publications and assigning appeals."],
     challenges: [
       'Making local product discovery accurate and efficient without reducing the catalog to a generic list of results.',
       'Supporting reports, reviews, resolution states, and seller appeals in an auditable moderation process.',
@@ -710,7 +703,7 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
   },
   {
     slug: 'medical-clinic',
-    title: 'Medical Clinic Management System',
+    title: "ClinicCare — Medical Clinic Management",
     image: `${import.meta.env.BASE_URL}assets/img/clinic/cover.webp`,
     images: [
       `${import.meta.env.BASE_URL}assets/img/clinic/cover.webp`,
@@ -724,23 +717,22 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
       `${import.meta.env.BASE_URL}assets/img/clinic/mobile-notifications.webp`,
       `${import.meta.env.BASE_URL}assets/img/clinic/mobile-doctors-light.webp`,
     ],
-    description: `HIPAA-compliant full-stack healthcare system.`,
+    description: "A clinic management system with one REST API, a web portal and a mobile app: appointments without overlaps, clinical records, cancellations reviewed by the doctor, and notifications.",
     highlights: [
-      { label: 'Impact', text: '<strong>60% faster</strong> medical record access via 3NF normalization.' },
-      { label: 'Architecture', text: 'Spring Boot backend following <strong>Clean Architecture</strong>.' },
-      { label: 'Security', text: 'RBAC & JWT authentication for HIPAA compliance.' },
-      { label: 'Mobile app', text: '<strong>React Native</strong> patient app to browse doctors, book and cancel appointments, and get notifications.' }
+      { label: "One API, two clients", text: "A <strong>Spring Boot</strong> API serves a <strong>React</strong> web portal and a <strong>React Native</strong> (Expo) mobile app." },
+      { label: "Safe scheduling", text: "The backend rejects <strong>overlapping appointments</strong>; patients request a cancellation and the doctor approves or rejects it." },
+      { label: "Three roles", text: "Admin, doctor and patient, with JWT, OTP password recovery and email notifications." }
     ],
     technologies: [
-      { name: 'Spring Boot', iconClass: 'devicon-spring-original' },
-      { name: 'React', iconClass: 'devicon-react-original' },
-      { name: 'React Native', iconClass: 'devicon-react-original' },
-      { name: 'Resilience4j', iconClass: 'devicon-java-plain' },
-      { name: 'PostgreSQL', iconClass: 'devicon-postgresql-plain' },
-      { name: 'Redis', iconClass: 'devicon-redis-plain' },
-      { name: 'Swagger', iconClass: 'devicon-swagger-plain' },
-      { name: 'Docker', iconClass: 'devicon-docker-plain' },
-      { name: 'TailwindCSS', iconClass: 'devicon-tailwindcss-original' },
+      { name: "Spring Boot", iconClass: "devicon-spring-original" },
+      { name: "Java 21", iconClass: "devicon-java-plain" },
+      { name: "PostgreSQL", iconClass: "devicon-postgresql-plain" },
+      { name: "Flyway", iconImg: "https://cdn.simpleicons.org/flyway" },
+      { name: "React 19", iconClass: "devicon-react-original" },
+      { name: "React Native · Expo", iconClass: "devicon-react-original" },
+      { name: "TailwindCSS", iconClass: "devicon-tailwindcss-original" },
+      { name: "OpenAPI", iconClass: "devicon-swagger-plain" },
+      { name: "Docker", iconClass: "devicon-docker-plain" }
     ],
     links: [
       {
@@ -749,35 +741,28 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
         iconClass: 'fab fa-github',
       },
     ],
-    detailedDescription: `HIPAA-compliant full-stack healthcare system handling appointments, medical history, and audit trails. 
-    Includes admin dashboards and a mobile app for patients. The focus was on data integrity, security, and performance.`,
-    challenges: [
-      "Ensuring strict data privacy compliance (HIPAA).",
-      "Handling complex relationships between doctors, patients, and appointments.",
-      "Optimizing response times for large medical history records."
-    ],
-    solutions: [
-      "Implemented strict RBAC middleware and audit logging.",
-      "Designed a highly normalized database schema (3NF) with proper indexing.",
-      "Used Redis for caching frequently accessed non-sensitive data."
-    ]
+    detailedDescription: "ClinicCare organizes a clinic's care from booking an appointment to recording the consultation. One repository holds the REST API, the web portal for administrators and doctors, and the mobile app.\n\nThe Spring Boot 3.5 API (Java 21) is organized in layers inspired by Clean Architecture, persists to PostgreSQL 16 with migrations versioned in Flyway, and documents its endpoints with OpenAPI. Spring Security with JWT enforces each role's permissions, so the clients only hide what the API already forbids. Scheduled jobs send reminders, and email goes out through SMTP templates.\n\nThe web portal uses React 19, Tailwind CSS and shadcn/ui, with FullCalendar for the agenda and PDF documents for appointments. The mobile app is built with Expo and React Native. Everything runs with Docker Compose behind Nginx.",
+    features: ["Appointments: booking, rescheduling and cancellation, with overlap checks in the backend.", "Cancellation workflow: the patient requests it, the doctor approves or rejects it with notes.", "Clinical records: diagnoses, notes and prescriptions linked to patient and doctor.", "Administration: doctors, patients, specialties and consulting rooms, with search and pagination.", "Identity: JWT sessions, OTP password recovery and an in-app notification inbox.", "Mobile app: doctor directory, booking, appointments and notifications on Expo."],
+    challenges: ["Preventing double bookings when several people schedule the same doctor at the same time.", "Letting patients cancel without taking control of the agenda away from the doctor.", "Serving a web portal and a mobile app from one set of business rules."],
+    solutions: ["Availability and overlap checks live in the backend, so every client gets the same answer.", "Modelled appointment states (scheduled, pending cancellation, cancelled, completed) with the doctor's decision and notes.", "One Spring Boot API with JWT and role checks, consumed by the React and React Native clients."],
   },
   {
     slug: 'inventory-system',
-    title: 'Inventory & Audits System',
+    title: "Inventory & Maintenance Audit System",
     image: `${import.meta.env.BASE_URL}assets/img/maintenance_system.png`,
-    description: `Web system for state entities managing inventories and compliance.`,
+    description: "A web system for public institutions to track assets, suppliers and locations, log every maintenance, and produce the PDF audit reports that public auditors ask for.",
     highlights: [
-      { label: 'Compliance', text: 'Automated PDF reports for judicial audits.' },
-      { label: 'Role Management', text: 'Custom role-based access for different state entities.' },
-      { label: 'Stack', text: 'Laravel + React with Material UI.' }
+      { label: "Audit-ready", text: "PDF reports flag assets that missed their <strong>mandatory maintenance</strong> in the first three years, as Ecuadorian public audit rules require." },
+      { label: "Full history", text: "Each maintenance records its activities, <strong>replaced components</strong>, observations and the person responsible." },
+      { label: "Accountability", text: "Reports on each technician's completed work and delays, so the institution knows who maintains what." }
     ],
     technologies: [
-      { name: 'Laravel', iconClass: 'devicon-laravel-original' },
-      { name: 'React', iconClass: 'devicon-react-original' },
-      { name: 'MySQL', iconClass: 'devicon-mysql-original' },
-      { name: 'Swagger', iconClass: 'devicon-swagger-plain' },
-      { name: 'Material UI', iconClass: 'devicon-materialui-plain' },
+      { name: "Laravel", iconClass: "devicon-laravel-original" },
+      { name: "PHP", iconClass: "devicon-php-plain" },
+      { name: "MySQL", iconClass: "devicon-mysql-original" },
+      { name: "React", iconClass: "devicon-react-original" },
+      { name: "Material UI", iconClass: "devicon-materialui-plain" },
+      { name: "Figma", iconImg: "https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/figma/figma-original.svg" }
     ],
     links: [
       {
@@ -786,6 +771,10 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
         iconClass: 'fab fa-github',
       },
     ],
+    detailedDescription: "Public institutions in Ecuador must prove that their assets are maintained, and auditors ask for that history on paper. This system replaces spreadsheets with one place to register assets, components, suppliers, locations and incoming goods, and to log each maintenance with its type, activities, replaced parts and observations.\n\nA Laravel REST API on MySQL, protected with JWT and roles, serves a React interface built with Material UI for inventory, maintenance and reports. Reports are generated as PDF: compliance with the three-year maintenance rule, the full history of an asset, and the performance of the staff in charge. The team worked in Scrum sprints from Figma designs.",
+    features: ["Inventory: assets with categories, components, suppliers, locations and incoming goods.", "Maintenance: type, activities, replaced components and observations for every intervention.", "Compliance report: assets that missed mandatory maintenance in their first three years.", "Asset history: every maintenance and change with the person responsible, exported to PDF.", "Staff performance: completed work and delays per technician.", "Access: JWT authentication and roles on a Laravel REST API."],
+    challenges: ["Turning a legal audit requirement into data the system can check on its own.", "Keeping a complete, trustworthy history of each asset across many maintenances and replaced parts."],
+    solutions: ["Modelled each maintenance as a record with its type, activities, replaced components and observations, linked to the asset and the person responsible.", "Built the PDF reports for compliance, asset history and staff performance on top of that history.", "Protected the API with JWT and roles, and kept the React client a thin consumer of the REST endpoints."],
   },
   {
     slug: 'uta-elections',
@@ -811,6 +800,7 @@ Quality is enforced throughout the delivery path. Jenkins pipelines compile the 
       { url: "https://gitlab.com/personalprojects5531442/manejo-proyecto/", label: "Source Code", iconClass: "fab fa-gitlab" },
     ],
     detailedDescription: "Built by a team of four for a university rector election campaign. The Laravel application models candidates with their academic and professional background, political parties, proposals, news and events, and exposes filtered listings for each. Voters complete a registration form, can send suggestions, and the campaign team sees aggregated statistics.",
+    features: ["Candidates: academic and professional background for each candidate.", "Parties and proposals, linked to their candidates.", "News and events, searchable by text, tag and date.", "Voter registration form for supporters.", "Suggestion box for the community.", "Statistics view for the campaign team."],
     challenges: [
       "Modelling many related entities (candidates, backgrounds, parties, proposals) without duplicating data.",
       "Making content easy to find for non-technical visitors.",

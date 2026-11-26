@@ -1,8 +1,38 @@
 {
-  "marquee": {"label": "Tecnologías con las que trabajo", "prev": "Tecnologías anteriores", "next": "Tecnologías siguientes", "showAll": "Ver todas las tecnologías", "showLess": "Ver menos"},
-  "flow": {"title": "Atalaya", "titleHighlight": "en acción", "subtitle": "Un incidente, cuatro productos. Reproduce la prueba de punta a punta: se detecta un pipeline atascado, se apaga la funcionalidad riesgosa, se avisa al equipo de guardia, todo se restaura al recuperarse y Bitácora redacta el postmortem.", "run": "Repetir", "source": "Escenario y salida real", "steps": ["El pipeline de pedidos se atasca: 200 mensajes en cola, el más antiguo de 10 min, el consumidor con 0 invocaciones.", "Nimbus ve dos ventanas degradadas y abre un incidente (consumer_stalled).", "Nimbus llama a Flagship con una petición firmada (HMAC): orders-v2 se apaga y queda auditado como nimbus (automation).", "Flagship transmite el cambio por SSE: tus servicios toman el camino seguro 680 ms después de la observación.", "Nimbus avisa a Hookrelay. La clave de idempotencia hace que un reintento no tenga efecto doble.", "Hookrelay entrega un webhook firmado incident.opened al endpoint de guardia, con reintentos y DLQ detrás.", "El pipeline está sano durante dos ventanas: Nimbus marca el incidente como recuperado.", "Flagship restaura orders-v2, porque nadie lo tocó durante el incidente.", "Hookrelay entrega incident.recovered. Ciclo cerrado: detectar, mitigar, notificar, recuperar.", "Bitácora, suscrita a través de Hookrelay, reconstruye la línea de tiempo (mitigado en 677 ms) y redacta el postmortem."]},
+  "marquee": {
+    "label": "Tecnologías con las que trabajo",
+    "prev": "Tecnologías anteriores",
+    "next": "Tecnologías siguientes",
+    "showAll": "Ver todas las tecnologías",
+    "showLess": "Ver menos"
+  },
+  "flow": {
+    "title": "Atalaya",
+    "titleHighlight": "en acción",
+    "subtitle": "Un incidente, cuatro productos. Reproduce la prueba de punta a punta: se detecta un pipeline atascado, se apaga la funcionalidad riesgosa, se avisa al equipo de guardia, todo se restaura al recuperarse y Bitácora redacta el postmortem.",
+    "run": "Repetir",
+    "source": "Escenario y salida real",
+    "steps": [
+      "El pipeline de pedidos se atasca: 200 mensajes en cola, el más antiguo de 10 min, el consumidor con 0 invocaciones.",
+      "Nimbus ve dos ventanas degradadas y abre un incidente (consumer_stalled).",
+      "Nimbus llama a Flagship con una petición firmada (HMAC): orders-v2 se apaga y queda auditado como nimbus (automation).",
+      "Flagship transmite el cambio por SSE: tus servicios toman el camino seguro 680 ms después de la observación.",
+      "Nimbus avisa a Hookrelay. La clave de idempotencia hace que un reintento no tenga efecto doble.",
+      "Hookrelay entrega un webhook firmado incident.opened al endpoint de guardia, con reintentos y DLQ detrás.",
+      "El pipeline está sano durante dos ventanas: Nimbus marca el incidente como recuperado.",
+      "Flagship restaura orders-v2, porque nadie lo tocó durante el incidente.",
+      "Hookrelay entrega incident.recovered. Ciclo cerrado: detectar, mitigar, notificar, recuperar.",
+      "Bitácora, suscrita a través de Hookrelay, reconstruye la línea de tiempo (mitigado en 677 ms) y redacta el postmortem."
+    ]
+  },
   "interests": {
-    "loop": {"read": "Leer", "readText": "Libros · cursos · blogs", "applied": "De la lectura al código", "build": "Construir", "measure": "Medir"},
+    "loop": {
+      "read": "Leer",
+      "readText": "Libros · cursos · blogs",
+      "applied": "De la lectura al código",
+      "build": "Construir",
+      "measure": "Medir"
+    },
     "title": "Más allá del",
     "titleHighlight": "código",
     "subtitle": "Lo que hago y aprendo fuera del trabajo, y cómo se refleja en mis proyectos.",
@@ -213,7 +243,10 @@
     "showMore": "Ver más proyectos",
     "showLess": "Ver menos",
     "inProgress": "En progreso",
-    "filters": {"ai": "IA y automatización", "realtime": "Tiempo real", "testing": "Pruebas y QA", 
+    "filters": {
+      "ai": "IA y automatización",
+      "realtime": "Tiempo real",
+      "testing": "Pruebas y QA",
       "all": "Todos",
       "events": "Mensajería y eventos",
       "cloud": "Nube y DevOps"
@@ -222,7 +255,16 @@
     "viewSource": "Código Fuente",
     "viewDetails": "Descripción",
     "close": "Cerrar",
-    "page": {"back": "Todos los proyectos", "highlights": "Lo más importante", "gallery": "Galería", "previous": "Proyecto anterior", "next": "Proyecto siguiente", "fullPage": "Ver caso completo", "stack": "Tecnologías", "links": "Código"},
+    "page": {
+      "back": "Todos los proyectos",
+      "highlights": "Lo más importante",
+      "gallery": "Galería",
+      "previous": "Proyecto anterior",
+      "next": "Proyecto siguiente",
+      "fullPage": "Ver caso completo",
+      "stack": "Tecnologías",
+      "links": "Código"
+    },
     "modal": {
       "eyebrow": "Detalle del proyecto",
       "keyFeatures": "Funcionalidades clave",
@@ -241,7 +283,10 @@
             "label": "De punta a punta, verificado",
             "text": "Un pipeline atascado en <strong>Nimbus</strong> apaga un flag en <strong>Flagship</strong> (los SDK lo ven en <strong>680 ms</strong>), <strong>Hookrelay</strong> avisa a guardia y al recuperarse todo se restaura, en una sola consola."
           },
-          {"label": "Aprende de cada incidente", "text": "<strong>Bitácora</strong>, serverless en AWS (API Gateway, Lambda, DynamoDB), reconstruye la línea de tiempo de cada incidente desde los webhooks y redacta el <strong>postmortem</strong>."},
+          {
+            "label": "Aprende de cada incidente",
+            "text": "<strong>Bitácora</strong>, serverless en AWS (API Gateway, Lambda, DynamoDB), reconstruye la línea de tiempo de cada incidente desde los webhooks y redacta el <strong>postmortem</strong>."
+          },
           {
             "label": "Probado con game days",
             "text": "Ocho <strong>experimentos de caos</strong> corren en CI con tráfico real. Encontraron <strong>7 defectos</strong> que las pruebas unitarias no veían, todos corregidos: ahora <strong>8/8</strong>, y si la mitigación falla, <strong>escala</strong> a on-call."
@@ -381,9 +426,18 @@
         "title": "StayFlow Cloud — SaaS Hotelero Multi-tenant",
         "description": "Plataforma SaaS cloud multi-tenant de grado productivo para gestión hotelera — reservas, recepción, facturación, housekeeping, analíticas y portal de huéspedes — desplegada en Azure Container Apps.",
         "highlights": [
-          { "label": "Multi-tenant", "text": "Aislamiento de datos por fila con <strong>filtros globales de EF Core</strong> y tenancy basada en claims." },
-          { "label": "Auth OIDC", "text": "Flujo <strong>OpenIddict Authorization Code + PKCE</strong> con BFF Next.js, cookies httpOnly y renovación automática de tokens." },
-          { "label": "Azure Cloud", "text": "Desplegado en <strong>Azure Container Apps</strong> con ACR, Bicep IaC y PostgreSQL serverless en Neon." }
+          {
+            "label": "Multi-tenant",
+            "text": "Aislamiento de datos por fila con <strong>filtros globales de EF Core</strong> y tenancy basada en claims."
+          },
+          {
+            "label": "Auth OIDC",
+            "text": "Flujo <strong>OpenIddict Authorization Code + PKCE</strong> con BFF Next.js, cookies httpOnly y renovación automática de tokens."
+          },
+          {
+            "label": "Azure Cloud",
+            "text": "Desplegado en <strong>Azure Container Apps</strong> con ACR, Bicep IaC y PostgreSQL serverless en Neon."
+          }
         ],
         "detailedDescription": "StayFlow Cloud es una plataforma SaaS multi-tenant de grado productivo para gestión hotelera. Construida con ASP.NET Core 9 (OpenIddict OIDC, MediatR CQRS, EF Core, MassTransit, Hangfire) y un BFF en Next.js 16. Gestiona el ciclo completo del hotel: reservas, habitaciones, huéspedes, facturas, housekeeping, mantenimiento, servicios, personal, analíticas y documentos. Multi-tenancy aplicado mediante filtros globales de EF Core. Autenticación con OpenIddict Authorization Code + PKCE y sesiones en cookies httpOnly. Desplegado en Azure Container Apps mediante Bicep IaC.",
         "challenges": [
@@ -403,9 +457,18 @@
         "title": "Impactex IMS - Operaciones de Activos e Inventario",
         "description": "Plataforma desplegada en la nube para rastrear activos organizacionales, operaciones de inventario, mantenimiento, préstamos, compras y reportes listos para auditoría.",
         "highlights": [
-          { "label": "Trazabilidad operativa", "text": "Registra cada activo a través de su custodia, ubicación, condición e historial inmutable de actividad." },
-          { "label": "Operaciones integrales", "text": "Reúne <strong>inventario, solicitudes, mantenimiento, préstamos, compras y reportes</strong> en un solo espacio según el rol." },
-          { "label": "Entrega en Azure", "text": "Construido y desplegado con <strong>GitHub Actions</strong> en Azure Container Apps mediante infraestructura como código en Bicep." }
+          {
+            "label": "Trazabilidad operativa",
+            "text": "Registra cada activo a través de su custodia, ubicación, condición e historial inmutable de actividad."
+          },
+          {
+            "label": "Operaciones integrales",
+            "text": "Reúne <strong>inventario, solicitudes, mantenimiento, préstamos, compras y reportes</strong> en un solo espacio según el rol."
+          },
+          {
+            "label": "Entrega en Azure",
+            "text": "Construido y desplegado con <strong>GitHub Actions</strong> en Azure Container Apps mediante infraestructura como código en Bicep."
+          }
         ],
         "detailedDescription": "Impactex IMS es una plataforma full-stack de operaciones para administrar activos serializados e inventario sin perder el contexto de dónde se encuentra cada artículo, quién es responsable de él o qué sucedió previamente. Su interfaz Angular soporta inventario, solicitudes, órdenes de mantenimiento, préstamos y devoluciones, compras, notificaciones, administración por roles y reportes PDF u hojas de cálculo desde un espacio unificado. La API en .NET 10 utiliza EF Core con SQL Server y un modelo de dominio diseñado para transiciones controladas y trazables. La autenticación JWT y los roles granulares limitan el acceso según la responsabilidad operativa. Los archivos adjuntos se validan y almacenan fuera de la base de datos con metadatos SHA-256, y solo se sirven mediante endpoints autorizados. GitHub Actions construye y despliega los contenedores web y API en Azure Container Apps usando Bicep. La infraestructura aprovisiona límites seguros entre servicios, un montaje Azure Files para adjuntos, health probes y un trabajo dedicado de migraciones.",
         "challenges": [
@@ -424,9 +487,18 @@
         "title": "Bot Project Manager con IA — Automatización Scrumban con n8n",
         "description": "Bot n8n self-hosted que actúa como Project Manager con IA para una metodología Scrumban, orquestando Discord, Trello, GitHub y correo.",
         "highlights": [
-          { "label": "Rol", "text": "Actúa como <strong>Project Manager con IA</strong> para Scrumban: tareas, bloqueos, retrabajo, reuniones, entregables y retrospectivas." },
-          { "label": "Análisis IA", "text": "Lee commits y PRs y explica los cambios en <strong>lenguaje no técnico</strong>, detecta deuda técnica y malas prácticas con recomendaciones accionables." },
-          { "label": "Integraciones", "text": "Discord (chat y reuniones), tablero Trello, GitHub (backend/frontend), alertas por correo, más una página web para <strong>aprobar/denegar PRs</strong>." }
+          {
+            "label": "Rol",
+            "text": "Actúa como <strong>Project Manager con IA</strong> para Scrumban: tareas, bloqueos, retrabajo, reuniones, entregables y retrospectivas."
+          },
+          {
+            "label": "Análisis IA",
+            "text": "Lee commits y PRs y explica los cambios en <strong>lenguaje no técnico</strong>, detecta deuda técnica y malas prácticas con recomendaciones accionables."
+          },
+          {
+            "label": "Integraciones",
+            "text": "Discord (chat y reuniones), tablero Trello, GitHub (backend/frontend), alertas por correo, más una página web para <strong>aprobar/denegar PRs</strong>."
+          }
         ],
         "detailedDescription": "Automatización n8n self-hosted desplegada en un VPS con Ubuntu Server que asume el rol de Project Manager para un equipo que trabaja con metodología Scrumban. El bot integra APIs de IA (Google Gemini / OpenAI) para gestionar el ciclo de vida completo del proyecto: gestión de tareas, reportes personalizados, bloqueos, seguimiento de retrabajo, coordinación de reuniones, alertas, entregables, avances, manejo de errores, logs y retrospectivas. Conecta Discord (reuniones y chat conversacional con el bot), un tablero Trello, repositorios de GitHub (backend y frontend) y notificaciones por correo. Además expone una página web para aprobar o denegar pull requests: el bot lee los commits y diffs de los PRs, entiende el contexto de lo que cambió y lo explica en lenguaje no técnico, incluyendo recomendaciones. Adicionalmente, vela continuamente por la deuda técnica y las malas prácticas del proyecto, explicando los problemas y proponiendo soluciones de forma comprensible para toda la organización.",
         "challenges": [
@@ -446,9 +518,18 @@
         "title": "Sistema de Gestión Hospitalaria",
         "description": "Plataforma hospitalaria modular que centraliza la administración clínica, las consultas y los reportes detrás de un gateway seguro de microservicios.",
         "highlights": [
-          { "label": "Microservicios", "text": "<strong>Seis servicios Spring Boot</strong> separan descubrimiento, acceso, administración, consultas y reportes." },
-          { "label": "Acceso seguro", "text": "Un servicio compartido de <strong>autenticación JWT</strong> y un API gateway protegen cada endpoint backend." },
-          { "label": "Datos escalables", "text": "PostgreSQL puede escalar horizontalmente con <strong>sharding de Citus</strong> por centro médico." }
+          {
+            "label": "Microservicios",
+            "text": "<strong>Seis servicios Spring Boot</strong> separan descubrimiento, acceso, administración, consultas y reportes."
+          },
+          {
+            "label": "Acceso seguro",
+            "text": "Un servicio compartido de <strong>autenticación JWT</strong> y un API gateway protegen cada endpoint backend."
+          },
+          {
+            "label": "Datos escalables",
+            "text": "PostgreSQL puede escalar horizontalmente con <strong>sharding de Citus</strong> por centro médico."
+          }
         ],
         "detailedDescription": "Este sistema de gestión hospitalaria distribuye las responsabilidades operativas entre servicios Spring Boot desplegables de forma independiente. Un API gateway es el punto de entrada controlado para la interfaz administrativa en React, mientras que Eureka permite que los servicios se ubiquen sin direcciones codificadas. La plataforma administra personal, doctores, especialidades y centros médicos, registra consultas y convierte esos datos en paneles de reportes. La autenticación se emite de forma centralizada y se valida en toda la plataforma mediante JWT. Cada servicio publica su propio contrato REST documentado, reunido en una experiencia OpenAPI única a través del gateway. PostgreSQL es el almacenamiento principal, con una configuración opcional de Citus que particiona la información por centro médico conforme crece la organización. Los perfiles de Docker Compose soportan tanto una base local como una instalación distribuida.",
         "challenges": [
@@ -464,32 +545,50 @@
         ]
       },
       "gasoline-system": {
-        "title": "Plataforma de Gestión de Flotas y Conductores",
-        "description": "Plataforma de microservicios distribuidos para gestionar conductores, vehículos y operaciones.",
+        "title": "Plataforma de Gestión de Flota y Combustible",
+        "description": "Plataforma distribuida para operar una flota de transporte: vehículos, conductores y licencias, rutas y viajes, y consumo de combustible estimado frente al real, dividida en microservicios NestJS.",
         "highlights": [
-          { "label": "Arquitectura", "text": "Microservicios distribuidos con NestJS, RabbitMQ y gRPC." },
-          { "label": "Rendimiento", "text": "Seguimiento GPS en tiempo real y reportes para operaciones de flotas." },
-          { "label": "Infraestructura", "text": "Entorno dockerizado con Eureka Service Discovery." }
+          {
+            "label": "Microservicios",
+            "text": "<strong>Diez servicios NestJS</strong> detrás de un API gateway, comunicados por contratos <strong>gRPC</strong> y descubiertos con <strong>Eureka</strong>."
+          },
+          {
+            "label": "Eventos y logs",
+            "text": "<strong>RabbitMQ</strong> lleva eventos entre servicios, y un servicio de logs envía los registros a <strong>Elasticsearch</strong> y Kibana."
+          },
+          {
+            "label": "Operación",
+            "text": "Los viajes pasan de creado a en ruta, revisión y terminado; los dashboards comparan combustible estimado y real por vehículo, conductor y ruta."
+          }
         ],
-        "detailedDescription": "Este proyecto nació de la necesidad de modernizar un sistema heredado de gestión de flotas. El objetivo era crear un sistema escalable y tolerante a fallos capaz de manejar miles de peticiones concurrentes de rastreadores GPS de vehículos y usuarios administrativos. Elegimos una arquitectura de microservicios para permitir el escalado independiente de los servicios de ingesta (recibiendo datos GPS) y los servicios de reportes.",
+        "detailedDescription": "Construida por un equipo de cuatro, la plataforma gestiona una operación de transporte: modelos y unidades de vehículos, conductores y sus tipos de licencia, rutas, viajes y combustible.\n\nEl backend es un monorepo de servicios NestJS: gateway, autenticación, usuarios, conductores, vehículos, rutas, combustible, correo, logs y un publicador de eventos. El gateway expone REST al frontend y llama a los servicios con contratos gRPC guardados en una carpeta compartida. Eureka resuelve el descubrimiento, RabbitMQ lleva los eventos, cada servicio tiene su propia base PostgreSQL (Prisma o TypeORM) y los logs van a Elasticsearch y Kibana. GitHub Actions construye las imágenes, con manifiestos de Kubernetes para Azure (AKS).\n\nEl frontend en React permite a los supervisores planificar rutas sobre un mapa, seguir los viajes en un tablero por estado y consultar dashboards y reportes PDF de combustible por tipo de vehículo, conductor y ruta.",
         "challenges": [
-          "Manejar la ingesta de datos en tiempo real desde cientos de conexiones simultáneas sin bloquear el event loop principal.",
-          "Asegurar la consistencia de datos entre servicios distribuidos usando patrones de consistencia eventual.",
-          "Gestionar niveles de permisos complejos para diferentes tipos de roles administrativos."
+          "Dividir un negocio en servicios sin que compartan base de datos.",
+          "Que los servicios se encuentren y se llamen entre sí mientras las instancias aparecen y desaparecen.",
+          "Seguir lo que pasó entre diez servicios cuando algo falla."
         ],
         "solutions": [
-          "Implementamos un sistema de cola de mensajes (RabbitMQ) para almacenar temporalmente los datos GPS entrantes.",
-          "Usamos Eureka para descubrimiento dinámico de servicios y balanceo de carga.",
-          "Desarrollamos un guard RBAC personalizado en NestJS para gestionar permisos eficientemente."
+          "Cada servicio es dueño de su base PostgreSQL; el gateway los compone con contratos gRPC tipados.",
+          "Eureka para el descubrimiento de servicios y RabbitMQ para eventos a los que reaccionan otros servicios.",
+          "Un servicio de logs dedicado que envía registros estructurados a Elasticsearch, consultables en Kibana."
         ]
       },
       "publication-management-and-moderation-system": {
         "title": "Plataforma de Gestión y Moderación de Publicaciones",
         "description": "Marketplace con geolocalización, multimedia alojada en Azure, flujo completo de moderación y controles de calidad automatizados desde la compilación hasta el despliegue.",
         "highlights": [
-          { "label": "Geolocalización", "text": "Las <strong>consultas espaciales de PostGIS</strong> filtran y ordenan publicaciones por distancia." },
-          { "label": "Servicios Azure", "text": "La multimedia se almacena en <strong>Azure Blob Storage</strong> y los secretos de despliegue se gestionan mediante Azure Key Vault." },
-          { "label": "QA automatizado", "text": "Jenkins ejecuta <strong>compilación, análisis estático, integración, API, rendimiento y seguridad</strong> antes de cada release." }
+          {
+            "label": "Geolocalización",
+            "text": "Las <strong>consultas espaciales de PostGIS</strong> filtran y ordenan publicaciones por distancia."
+          },
+          {
+            "label": "Servicios Azure",
+            "text": "La multimedia se almacena en <strong>Azure Blob Storage</strong> y los secretos de despliegue se gestionan mediante Azure Key Vault."
+          },
+          {
+            "label": "QA automatizado",
+            "text": "Jenkins ejecuta <strong>compilación, análisis estático, integración, API, rendimiento y seguridad</strong> antes de cada release."
+          }
         ],
         "detailedDescription": "Este marketplace full-stack conecta publicaciones de productos con las personas cercanas que probablemente las necesitan. La API de Spring Boot persiste la ubicación de las publicaciones con PostgreSQL y capacidades geoespaciales, mientras que el frontend en React y TypeScript ofrece el catálogo y la experiencia de cuenta. Los vendedores pueden adjuntar imágenes a sus publicaciones, y los usuarios verifican su correo, recuperan el acceso y navegan con sesiones protegidas por JWT. La seguridad del catálogo es un flujo principal, no un agregado posterior. Los usuarios pueden reportar una publicación, los moderadores investigan y resuelven el caso desde su dashboard, y los vendedores apelan las decisiones conservando el historial de estados. El backend sigue capas explícitas de entidades, DTOs, mapeo, repositorios, servicios y controladores. Las imágenes de producto se almacenan en Azure Blob Storage y Azure Key Vault suministra los secretos de despliegue. La calidad se aplica durante toda la entrega. Los pipelines de Jenkins compilan las aplicaciones, ejecutan análisis estático y verificaciones de cobertura, aprovisionan entornos de integración automáticos con Testcontainers, ejecutan colecciones Postman mediante Newman y realizan pruebas de rendimiento, end-to-end y seguridad dinámica. El mismo pipeline containerizado permite validaciones locales y despliegues remotos en Azure.",
         "challenges": [
@@ -505,33 +604,115 @@
         ]
       },
       "medical-clinic": {
-        "title": "Sistema de Gestión de Clínica Médica",
-        "description": "Sistema de salud full-stack compatible con HIPAA.",
+        "title": "ClinicCare — Gestión de Clínica Médica",
+        "description": "Sistema de gestión clínica con una API REST, un portal web y una app móvil: citas sin solapamientos, historiales clínicos, cancelaciones revisadas por el médico y notificaciones.",
         "highlights": [
-          { "label": "Impacto", "text": "<strong>60% más rápido</strong> acceso a registros médicos mediante normalización 3NF." },
-          { "label": "Arquitectura", "text": "Backend Spring Boot siguiendo <strong>Arquitectura Limpia</strong>." },
-          { "label": "Seguridad", "text": "Autenticación RBAC & JWT para cumplimiento HIPAA." },
-          { "label": "App móvil", "text": "App <strong>React Native</strong> para pacientes: explorar médicos, agendar y cancelar citas y recibir notificaciones." }
+          {
+            "label": "Una API, dos clientes",
+            "text": "Una API en <strong>Spring Boot</strong> sirve un portal web en <strong>React</strong> y una app móvil en <strong>React Native</strong> (Expo)."
+          },
+          {
+            "label": "Agenda segura",
+            "text": "El backend rechaza <strong>citas que se solapan</strong>; el paciente solicita la cancelación y el médico la aprueba o la rechaza."
+          },
+          {
+            "label": "Tres roles",
+            "text": "Administrador, médico y paciente, con JWT, recuperación de contraseña por OTP y notificaciones por correo."
+          }
         ],
-        "detailedDescription": "Sistema de salud full-stack compatible con HIPAA que maneja citas, historia médica y registros de auditoría. Incluye dashboards de administración y una aplicación móvil para pacientes. El enfoque fue en integridad de datos, seguridad y rendimiento.",
+        "detailedDescription": "ClinicCare organiza la atención de una clínica desde que se agenda la cita hasta que se registra la consulta. Un solo repositorio reúne la API REST, el portal web para administradores y médicos, y la app móvil.\n\nLa API en Spring Boot 3.5 (Java 21) está organizada en capas inspiradas en Clean Architecture, guarda los datos en PostgreSQL 16 con migraciones versionadas en Flyway y documenta sus endpoints con OpenAPI. Spring Security con JWT aplica los permisos de cada rol, así que los clientes solo ocultan lo que la API ya prohíbe. Tareas programadas envían recordatorios y el correo sale por plantillas SMTP.\n\nEl portal web usa React 19, Tailwind CSS y shadcn/ui, con FullCalendar para la agenda y documentos PDF para las citas. La app móvil está hecha con Expo y React Native. Todo corre con Docker Compose detrás de Nginx.",
         "challenges": [
-          "Garantizar el estricto cumplimiento de privacidad de datos (HIPAA).",
-          "Manejar relaciones complejas entre doctores, pacientes y citas.",
-          "Optimizar tiempos de respuesta para registros médicos extensos."
+          "Evitar citas duplicadas cuando varias personas agendan al mismo médico al mismo tiempo.",
+          "Permitir que el paciente cancele sin quitarle al médico el control de su agenda.",
+          "Servir un portal web y una app móvil con las mismas reglas de negocio."
         ],
         "solutions": [
-          "Implementamos middleware RBAC estricto y registro de auditoría.",
-          "Diseñamos un esquema de base de datos altamente normalizado (3NF) con indexación adecuada.",
-          "Usamos Redis para cachear datos no sensibles de acceso frecuente."
+          "Las validaciones de disponibilidad y solapamiento viven en el backend, así todos los clientes reciben la misma respuesta.",
+          "Modelé los estados de la cita (agendada, cancelación pendiente, cancelada, completada) con la decisión del médico y sus notas.",
+          "Una sola API en Spring Boot con JWT y control por rol, consumida por los clientes React y React Native."
         ]
       },
       "inventory-system": {
-        "title": "Sistema de Inventarios & Auditorías",
-        "description": "Sistema web para entidades estatales que gestionan inventarios y cumplimiento.",
+        "title": "Sistema de Inventario y Auditoría de Mantenimientos",
+        "description": "Sistema web para instituciones públicas que registra activos, proveedores y ubicaciones, cada mantenimiento realizado y genera los reportes PDF que piden los auditores.",
         "highlights": [
-          { "label": "Cumplimiento", "text": "Reportes PDF automatizados para auditorías judiciales." },
-          { "label": "Gestión de Roles", "text": "Acceso basado en roles personalizado para diferentes entidades estatales." },
-          { "label": "Stack", "text": "Laravel + React con Material UI." }
+          {
+            "label": "Listo para auditoría",
+            "text": "Los reportes PDF señalan los activos que no recibieron su <strong>mantenimiento obligatorio</strong> en sus primeros tres años, como exige la normativa de auditoría pública del Ecuador."
+          },
+          {
+            "label": "Historial completo",
+            "text": "Cada mantenimiento guarda sus actividades, <strong>componentes reemplazados</strong>, observaciones y responsable."
+          },
+          {
+            "label": "Responsabilidad",
+            "text": "Reportes del trabajo completado y los retrasos de cada técnico, para saber quién mantiene qué."
+          }
+        ],
+        "detailedDescription": "Las instituciones públicas del Ecuador deben demostrar que sus activos reciben mantenimiento, y los auditores piden ese historial en papel. Este sistema reemplaza las hojas de cálculo con un solo lugar para registrar activos, componentes, proveedores, ubicaciones e ingresos, y cada mantenimiento con su tipo, actividades, piezas reemplazadas y observaciones.\n\nUna API REST en Laravel sobre MySQL, protegida con JWT y roles, alimenta una interfaz React con Material UI para inventario, mantenimiento y reportes. Los reportes se generan en PDF: cumplimiento de la regla de mantenimiento de tres años, historial completo de un activo y desempeño del personal a cargo. El equipo trabajó en sprints de Scrum a partir de diseños en Figma.",
+        "challenges": [
+          "Convertir un requisito legal de auditoría en datos que el sistema pueda verificar por sí solo.",
+          "Mantener un historial completo y confiable de cada activo a lo largo de muchos mantenimientos y piezas reemplazadas."
+        ],
+        "solutions": [
+          "Modelé cada mantenimiento como un registro con su tipo, actividades, componentes reemplazados y observaciones, vinculado al activo y a su responsable.",
+          "Construí sobre ese historial los reportes PDF de cumplimiento, historial del activo y desempeño del personal.",
+          "Protegí la API con JWT y roles, y dejé al cliente React como un consumidor ligero de los endpoints REST."
+        ]
+      },
+      "petsafe": {
+        "title": "PetSafe — Gestión de Clínica Veterinaria",
+        "description": "Plataforma full-stack para operar una clínica veterinaria de punta a punta: dueños y mascotas, citas, cola de atención en vivo, consultas, vacunas y adopciones.",
+        "highlights": [
+          {
+            "label": "Arquitectura limpia",
+            "text": "Dominio, aplicación, infraestructura y presentación separados."
+          },
+          {
+            "label": "Tiempo real",
+            "text": "Cola de espera y alertas en vivo con WebSockets."
+          },
+          {
+            "label": "Núcleo clínico",
+            "text": "Historias con adjuntos, borradores, seguimientos y vacunas."
+          }
+        ],
+        "detailedDescription": "PetSafe es una plataforma full-stack para operar una clínica veterinaria de punta a punta: dueños y sus mascotas, citas y la cola del día, consultas médicas, vacunas e incluso adopciones. Combina un backend en NestJS con un frontend en Angular.\n\nTodos los flujos pasan por una sola API. El backend en NestJS, organizado en capas separadas, expone una API REST documentada sobre PostgreSQL con TypeORM, y la interfaz en Angular la convierte en las pantallas que la clínica usa a diario. El acceso se protege con JWT y recuperación de contraseña por correo.\n\nEl backend usa TypeScript con arquitectura hexagonal, WebSockets para la cola y las notificaciones en tiempo real, correo SMTP y una especificación OpenAPI. Todo está en contenedores Docker y se despliega en un VPS con un pipeline de CI/CD.",
+        "challenges": [
+          "Operar una clínica de punta a punta atendiendo a la vez las consultas médicas y la operación diaria.",
+          "Mantener sincronizadas en tiempo real las solicitudes de cita, la cola de espera y las notificaciones."
+        ],
+        "solutions": [
+          "Construí un sistema full-stack con una API REST centralizada en NestJS y un frontend en Angular.",
+          "Integré WebSockets para sincronizar la cola de espera y las notificaciones entre todos los clientes conectados.",
+          "Puse todo en contenedores Docker y lo desplegué en un VPS con CI/CD y pruebas de sistema en Playwright."
+        ]
+      },
+      "iron-zone": {
+        "title": "Iron Zone — Gestión de Gimnasio sobre Odoo",
+        "description": "Plataforma Odoo 18 personalizada que reúne en un solo sistema modular el sitio web, la tienda en línea, las membresías, las clases y la facturación de un gimnasio.",
+        "highlights": [
+          {
+            "label": "Addons propios",
+            "text": "Seis módulos de Iron Zone y cinco addons de facturación y localización."
+          },
+          {
+            "label": "Planes",
+            "text": "Membresías y facturación periódica con suscripciones personalizadas."
+          },
+          {
+            "label": "Tienda + portal",
+            "text": "Tienda pública, checkout y un portal de cliente para pedidos y facturas."
+          }
+        ],
+        "detailedDescription": "Iron Zone es una plataforma de gestión integral para un gimnasio y centro deportivo, construida como una solución personalizada de Odoo 18. Reúne el sitio web, la tienda en línea, las membresías, las clases y la facturación en un solo sistema en lugar de varias herramientas desconectadas.\n\nLas apps nativas de sitio web, tienda, ventas, inventario, eventos y contabilidad se extienden con addons propios: los visitantes ven planes y productos, se suscriben desde la tienda y cada pedido se convierte en facturación recurrente y una factura electrónica válida.\n\nDetrás de la tienda, módulos propios modelan membresías y suscripciones, un catálogo de ejercicios con máquinas y categorías, una capa de inventario, un tablero de tareas y un tema renovado del backend, mientras clientes, entrenadores, eventos, pedidos y facturas se gestionan desde vistas administrativas con permisos por rol.",
+        "challenges": [
+          "Manejar membresías y pagos recurrentes, un catálogo de productos, reservas de clases, contenido de entrenamiento, facturación y obligaciones tributarias locales con herramientas desconectadas."
+        ],
+        "solutions": [
+          "Construí una sola plataforma Odoo 18 cuya estructura modular se adapta al flujo de trabajo del gimnasio.",
+          "Empaqueté todo con Docker Compose sobre PostgreSQL 15, con verificaciones automáticas en cada cambio mediante pipelines de CI.",
+          "Integré Stripe para los pagos y Playwright para las pruebas end to end."
         ]
       }
     }
